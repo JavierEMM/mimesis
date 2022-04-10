@@ -4,6 +4,33 @@
     <body>
         <header th:replace="/includes/navbar.html :: navbar-operador" id="header" class="d-flex align-items-center">
         </header>
+        <div style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre de la obra</th>
+                        <th scope="col">Fecha y Hora</th>
+                        <th scope="col">Sede</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Dinero recaudado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Movidick</td>
+                        <td>Hoy xd</td>
+                        <td>San Miguel</td>
+                        <td><a class="btn btn-primary">Editar</a></td>
+                        <td>Vigente</td>
+                        <td><a class="btn btn-primary">Descargar</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <footer th:replace="/includes/footer.html :: footer"></footer>
     </body>
 </html>
