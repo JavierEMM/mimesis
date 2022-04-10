@@ -9,7 +9,7 @@
 # General
 --------------------------------------------------------------*/
 body {
-  background: black;
+  background: white;
   color: #2f3138;
   font-family: "Open Sans", sans-serif;
 }
@@ -34,7 +34,7 @@ p {
 h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway", sans-serif;
   font-weight: 400;
-  margin: 0 0 20px 0;
+  margin: 0 0 0 0;
   padding: 0;
   color: #0e1b4d;
 }
@@ -1418,3 +1418,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 13px;
   color: #ddd;
 }
+.me-auto {
+  margin-right: auto!important;
+}
+.bi-list::before { content: "\f479"; }

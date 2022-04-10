@@ -1,32 +1,17 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <header th:fragment="navbar" id="header" class="d-flex align-items-center ">
+    <header th:fragment="navbar" style="background-color: black;" id="header" class="d-flex align-items-center ">
         <div class="container-fluid container-xxl d-flex align-items-center">
-            <div class="col" style="width: 70px !important; "  >
-                <img style="height: 60px; width: 60px; float: right ; margin-right: 10px " th:src="@{img/logoWhiteFace.png}" alt="" title="">
+            <div class="me-auto" id="logo">
+                <a href=""><img th:src="@{img/logo.png}" alt="MIMESIS"></a>
             </div>
-            <div class="col" id="logo"  >
-                <div class="col" style="width: 220px; " ><h1><a>MI<span>MESI</span></a></h1></div>
-            </div>
-
-
-            <nav id="navbar" class="navbar order-last order-lg-0">
-                <ul>
-                    <li><a class="nav-link scrollto active" href="">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">About</a></li>
-                    <li><a class="nav-link scrollto" href="#speakers">Speakers</a></li>
-                    <li><a class="nav-link scrollto" href="#schedule">Schedule</a></li>
-                    <li><a class="nav-link scrollto" href="#venue">Venue</a></li>
-                    <li><a class="nav-link scrollto" href="#hotels">Hotels</a></li>
-                    <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
-                    <li><a class="nav-link scrollto" href="#supporters">Sponsors</a></li>
-
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- .navbar -->
-            <a class="buy-tickets scrollto" href="#buy-tickets">Buy Tickets</a>
-
+            <nav id="navbar" class="navbar navbar-expand-lg order-lg-0">
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    </ul>
+                </div>
+            </nav>
+            <a class="buy-tickets scrollto" href="#buy-tickets"><i style="margin-right: 4px; " class="bi bi-person-fill"></i> Cerrar Sesion </a>
         </div>
     </header>
 </html>
