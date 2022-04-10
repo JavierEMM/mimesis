@@ -8,6 +8,14 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+.scrolled-down{
+    transform:translateY(-100%); transition: all 0.3s ease-in-out;
+}
+.scrolled-up{
+    transform:translateY(0); transition: all 0.3s ease-in-out;
+}
+
+
 body {
   background: white;
   color: #2f3138;
@@ -1418,6 +1426,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 13px;
   color: #ddd;
 }
+
 .me-auto {
   margin-right: auto!important;
 }
