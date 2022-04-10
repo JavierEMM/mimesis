@@ -1,6 +1,7 @@
 package com.mimesis.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("")
 public class UsuarioController {
     @GetMapping("")
-    public String paginaPrincipal(){
+    public String paginaPrincipal(Model model){
         return "usuario/main";
     }
 }
