@@ -12,4 +12,9 @@ public class UsuarioController {
     public String paginaPrincipal(Model model){
         return "usuario/main";
     }
+
+    @GetMapping("/funciones/listar")
+    public String paginaFunciones(Model model){
+        return "usuario/funciones";
+    }
 }
