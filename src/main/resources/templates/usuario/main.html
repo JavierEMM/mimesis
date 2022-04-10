@@ -8,31 +8,16 @@
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body style="background-color:black;">
-        <header id="header" class="d-flex align-items-center ">
-                <div class="container-fluid container-xxl d-flex align-items-center">
-                    <div class="col" style="width: 70px !important; "  >
-                        <img style="height: 60px; width: 60px; float: right ; margin-right: 10px " th:src="@{img/logoWhiteFace.png}" alt="" title="">
-                    </div>
-                    <div class="col" id="logo"  >
-                        <div class="col" style="width: 220px; " ><h1><a>MI<span>MESI</span></a></h1></div>
-                    </div>
-
-
-                    <nav id="navbar" class="navbar order-last order-lg-0">
-                        <ul>
-                            <li><a class="nav-link scrollto active" href="">Home</a></li>
-                            <li><a class="nav-link scrollto" href="#about">Teatros</a></li>
-                            <li><a class="nav-link scrollto" href="#speakers">Funciones</a></li>
-                            <li><a class="nav-link scrollto" href="#schedule">Actores</a></li>
-                            <li><a class="nav-link scrollto" href="#venue">Directores</a></li>
-                        </ul>
-                        <i class="bi bi-list mobile-nav-toggle"></i>
-                    </nav><!-- .navbar -->
-                    <a class="buy-tickets scrollto" href="#buy-tickets">Iniciar sesion</a>
-
-                </div>
+        <header th:replace="includes/navbar.html :: navbar">
         </header>
 
-    <footer th:replace="includes/footer.html :: footer"></footer>
+        <section id="hero">
+            <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
+                <h1 class="mb-4 pb-0">Teatros<br>MI<span>MESIS</span></h1>
+                <p class="mb-4 pb-0">El arte de imitar a la naturaleza</p>
+            </div>
+        </section>
+
+        <footer th:replace="includes/footer.html :: footer"></footer>
     </body>
 </html>

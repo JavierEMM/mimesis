@@ -6,10 +6,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("")
 public class UsuarioController {
     @GetMapping("")
     public String paginaPrincipal(Model model){
         return "usuario/main";
+    }
+
+    @GetMapping("/funciones")
+    public String paginaFunciones(Model model){
+        return "usuario/funciones";
     }
 }
