@@ -8,10 +8,16 @@
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body style="background-color:black;">
-        <header th:replace="includes/navbar.html :: header">
-
+        <header th:replace="includes/navbar.html :: navbar">
         </header>
 
-    <footer th:replace="includes/footer.html :: footer"></footer>
+        <section id="hero">
+            <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
+                <h1 class="mb-4 pb-0">Teatros<br>MI<span>MESIS</span></h1>
+                <p class="mb-4 pb-0">El arte de imitar a la naturaleza</p>
+            </div>
+        </section>
+
+        <footer th:replace="includes/footer.html :: footer"></footer>
     </body>
 </html>
