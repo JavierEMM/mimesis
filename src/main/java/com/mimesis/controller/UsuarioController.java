@@ -13,7 +13,7 @@ public class UsuarioController {
         return "usuario/main";
     }
 
-    @GetMapping("/funciones/listar")
+    @GetMapping("/funciones")
     public String paginaFunciones(Model model){
         return "usuario/funciones";
     }
