@@ -1431,3 +1431,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-right: auto!important;
 }
 .bi-list::before { content: "\f479"; }
+
+div > .btn-success{
+  margin-right: 10px;
+}
