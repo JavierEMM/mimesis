@@ -2,37 +2,97 @@
 <html lang="en">
 <head th:replace="includes/head.html :: head">MIMESIS</head>
 <body>
+<div class="form-group" style="width:400px; margin:auto; margin-bottom:30px;">
+    <h6 style="font-size: 0.7rem; font-family: Maven Pro, Helvetica, Arial, sans-serif; color: gray;" >Fecha inicio:</h6>
+    <input style="color:gray;width:400px;" type="date" name="FechaNacimiento"/>
+</div>
+<div class="form-group" style="width:400px; margin:auto; margin-bottom:30px;">
+    <h6 style="font-size: 0.7rem; font-family: Maven Pro, Helvetica, Arial, sans-serif; color: gray;" >Fecha fin:</h6>
+    <input style="color:gray;width:400px;" type="date" name="FechaNacimiento"/>
+    <button type="button" class="btn btn-outline-danger">Lista Funciones</button>
+</div>
+<h6 style="font-size: 0.7rem; font-family: Maven Pro, Helvetica, Arial, sans-serif; color: gray;" >Filtrar por:</h6>
+<select class="form-select" aria-label="Default select example">
+    <option selected>Mas vistas</option>
+    <option value="1">Sede</option>
+</select>
+<form>
+    <div class = "box">
+        <input  type="text" name="search" placeholder="Buscar" class="src" autocomplete = "off">
+    </div>
+</form>
 <table class="table">
     <thead class="thead-dark">
     <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Fecha y Hora</th>
+        <th scope="col">Sede</th>
+        <th scope="col">Cantidad de espectadores</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <th scope="row">1</th>
         <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
+        <td>Martes 29 de marzo de 2022 4:00pm - 6:00pm</td>
+        <td>San Borja</td>
+        <td>148</td>
     </tr>
     </tbody>
 </table>
-</div>
+
+<form>
+    <h6>Actores mejores calificados:</h6>
+    <div class = "box">
+        <input  type="text" name="search" placeholder="Buscar" class="src" autocomplete = "off">
+    </div>
+</form>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Nombre de la obra</th>
+        <th scope="col">Puntuación</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Mark</td>
+        <td>Movidick</td>
+        <td>:o</td>
+    </tr>
+    </tbody>
+</table>
+
+<form>
+    <h6>Directores mejores calificados:</h6>
+    <div class = "box">
+        <input  type="text" name="search" placeholder="Buscar" class="src" autocomplete = "off">
+    </div>
+</form>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Nombre de la obra</th>
+        <th scope="col">Puntuación</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Mark2</td>
+        <td>Movidick</td>
+        <td>:o</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<h4 style="font-size: 0.7rem; font-family: Maven Pro, Helvetica, Arial, sans-serif; color: gray;" >Porcentaje de asistencia:</h4>
+<select class="form-select" aria-label="Default select example">
+    <option selected>Funcion</option>
+    <option value="1">Hamlet - SB - 20/03/22 -  4pm</option>
+</select>
+
 <footer th:replace="/includes/footer.html :: footer"></footer>
 </body>
 </html>
