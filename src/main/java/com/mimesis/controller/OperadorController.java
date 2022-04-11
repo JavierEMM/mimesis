@@ -11,4 +11,8 @@ public class OperadorController {
     public String paginaPrincipal(){
         return "operador/listafunciones";
     }
+    @RequestMapping("/crearfuncion")
+    public String nuevaFuncion (){return "operador/crearFuncion";}
+    @RequestMapping("/estadisticas")
+    public String estadisticas (){ return "operador/estadisticas";}
 }
