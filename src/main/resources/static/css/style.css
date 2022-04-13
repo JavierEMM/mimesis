@@ -8,13 +8,28 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+.title{
+  margin-top: 20px;
+  font-size: xx-large;
+  text-align: center;
+}
+td, th{
+ text-align: center;
+}
+.letter{
+  font-size: 0.7rem;
+  font-family: Maven Pro, Helvetica, Arial, sans-serif;
+  color: gray;
+}
 .scrolled-down{
     transform:translateY(-100%); transition: all 0.3s ease-in-out;
 }
 .scrolled-up{
     transform:translateY(0); transition: all 0.3s ease-in-out;
 }
-
+.row{
+  margin-bottom: 20px;
+}
 
 body {
   background: white;
