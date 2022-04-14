@@ -1,115 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
     <head th:replace="includes/head.html :: head">MIMESIS</head>
-</head>
-<body>
-<h1>Nueva Función</h1>
-<button type="button" class="btn btn-secondary">Volver</button>
+    <body>
+        <div class="row" >
+            <div class="col-sm-12 text-center"><header th:replace="/includes/navbar.html :: navbar-operador" id="header" class="d-flex align-items-center">
+            </header></div>
+        </div>
+        <div class='container'>
+            <div class="row" >
+                <div class="col-xl">
+                    <p class="title">Nueva Funcion</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xl-4">
+                    <label for="nombre" class="letter">Nombre</label>
+                    <input id="nombre" class="form-control" type="text" name="nombre"/>
+                </div>
+                <div class="form-group col-xl-4">
+                    <label for="fechainicio" class="letter">Fecha Inicio</label>
+                    <input id="fechainicio" class="form-control" type="date" name="fechainicio"/>
+                </div>
+                <div class="form-group col-xl-2">
+                    <label for="horainicio" class="letter">Hora Inicio</label>
+                    <input id="horainicio" class="form-control" type="time" name="horainicio"/>
+                    <label for="horafin" class="letter">Hora Fin</label>
+                    <input id="horafin" class="form-control" type="time" name="horafin"/>
+                </div>
+                <div class="form-group col-xl-2">
+                    <label for="genero" class="letter">Genero</label>
+                    <select class="form-select" id="genero" name="genero">
+                        <option hidden selected>Genero</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Comedia">Comedia</option>
+                        <option value="Ciencia ficcion">Ciencia ficcion</option>
+                        <option value="Aventura">Aventura</option>
+                        <option value="Suspenso">Suspenso</option>
+                        <option value="Terror">Terror</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xl-4">
+                    <label for="director" class="letter">Director</label>
+                    <select class="form-select" id="director" name="director">>
+                        <option hidden selected>Director</option>
+                        <option value="Mark">Mark</option>
+                        <option value="Teddy">Teddy</option>
+                        <option value="Javier">Javier</option>
+                        <option value="Jose">Jose</option>
+                        <option value="Piero">Piero</option>
+                        <option value="Diego">Diego</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-4">
+                    <label for="restriccion" class="letter">Restriccion de Edad</label>
+                    <select id="restriccion" class="form-select" name="restriccion">
+                        <option hidden selected>Restriccion de edad</option>
+                        <option value="Apto para todo publico">Apto para todo publico</option>
+                        <option value="+12">+12</option>
+                        <option value="+14">+14</option>
+                        <option value="+16">+16</option>
+                        <option value="+18">+18</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-4">
+                    <label for="sede" class="letter">Sede</label>
+                    <select id="sede" class="form-select" name="sede">
+                        <option hidden selected>Sede</option>
+                        <option value="San Miguel">San Miguel</option>
+                        <option value="San Borja">San Borja</option>
+                        <option value="San Borja">San Isidro</option>
+                        <option value="San Juan de Lurigancho">San Juan de Lurigancho</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xl-2">
+                    <label for="sala" class="letter">Sala</label>
+                    <select id="sala" class="form-select" name="sala">
+                        <option hidden selected>Sala</option>
+                        <option value="Sala 1">Sala 1</option>
+                        <option value="Sala 2">Sala 2</option>
+                        <option value="Sala 3">Sala 3</option>
+                        <option value="Sala 4">Sala 4</option>
+                        <option value="Sala 5">Sala 5</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-2">
+                    <label for="precio" class="letter">Precio</label>
+                    <input id="precio" class="form-control" type="number" name="precio"/>
+                    <label for="aforo" class="letter">Aforo</label>
+                    <input id="aforo" class="form-control" type="number" name="aforo"/>
+                </div>
+                <div class="col-xl-8">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <th scope="col">Actores</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                            </tr>
+                            <tr>
+                                <td>Mark2</td>
+                                <td>Otto</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <th scope="col">Imagenes</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img class="img-fluid" style="width: 10px;height: 10px;" th:src="@{/img/teatro.jpg}"></td>
+                            </tr>
+                            <tr>
+                                <td><img class="img-fluid" style="width: 10px;height: 10px;" th:src="@{/img/teatro.jpg}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group col-xl-7">
+                    <label for="actor" class="letter">Actor</label>
+                    <select id="actor" class="form-select" name="actor">
+                        <option hidden selected>Actor</option>
+                        <option value="Sala 1">Willy Rex</option>
+                        <option value="Sala 2">AuronPlay</option>
+                        <option value="Sala 3">Ibai</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-1">
+                    <br>
+                    <button type="button" class="btn btn-primary">Añadir</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-1">
+                    <input style="color: transparent;" type="file">
+                    <button type="button" class="btn btn-primary">Aceptar imagen</button>
+                </div>
 
-<div class="form-group" style="width:400px; margin:auto; margin-bottom:30px;">
-    <label for="name2"><i class="zmdi zmdi-account material-icons-name"></i></label>
-    <input style="width:400px;" type="text" name="Nombres" id="name2" placeholder="Nombre"/>
-</div>
-<div class="form-group" style="width:400px; margin:auto; margin-bottom:30px;">
-    <h6 style="font-size: 0.7rem; font-family: Maven Pro, Helvetica, Arial, sans-serif; color: gray;" >Fecha y hora:</h6>
-    <input style="color:gray;width:400px;" type="date" name="fecha"/>
-    <input style="width:400px;" type="time" name="Hora" id="name" placeholder="Hora"/>
-</div>
-<div class=" form-group" style="width:400px;height:45px;margin:auto">
-    <i class="zmdi zmdi-home" style="position: absolute;margin-bottom: 20px"></i>
-    <select class="form-select form-select-sm" style="color:gray;width:400px;height:30px;border-top: none;border-left: none;border-right: none;text-indent: 30px; display:flex;align-items: center" name="Genero">
-        <option hidden selected>Genero</option>
-        <option value="Drama">Drama</option>
-        <option value="Comedia">Comedia</option>
-        <option value="Ciencia ficcion">Ciencia ficcion</option>
-        <option value="Aventura">Aventura</option>
-        <option value="Suspenso">Suspenso</option>
-        <option value="Terror">Terror</option>
-    </select>
-</div>
-<div class=" form-group" style="width:400px;height:45px;margin:auto">
-    <i class="zmdi zmdi-home" style="position: absolute;margin-bottom: 20px"></i>
-    <select class="form-select form-select-sm" style="color:gray;width:400px;height:30px;border-top: none;border-left: none;border-right: none;text-indent: 30px; display:flex;align-items: center" name="director">
-        <option hidden selected>Director</option>
-        <option value="Mark">Mark</option>
-        <option value="Teddy">Teddy</option>
-        <option value="Javier">Javier</option>
-        <option value="Jose">Jose</option>
-        <option value="Piero">Piero</option>
-        <option value="Diego">Diego</option>
-    </select>
-</div>
-<div class=" form-group" style="width:400px;height:45px;margin:auto">
-    <i class="zmdi zmdi-home" style="position: absolute;margin-bottom: 20px"></i>
-    <select class="form-select form-select-sm" style="color:gray;width:400px;height:30px;border-top: none;border-left: none;border-right: none;text-indent: 30px; display:flex;align-items: center" name="restriccion">
-        <option hidden selected>Restriccion de edad</option>
-        <option value="Apto para todo publico">Apto para todo publico</option>
-        <option value="+12">+12</option>
-        <option value="+14">+14</option>
-        <option value="+16">+16</option>
-        <option value="+18">+18</option>
-    </select>
-</div>
-<div class="form-group" style="width:400px; margin:auto; margin-bottom:30px;">
-    <h6 style="font-size: 0.7rem; font-family: Maven Pro, Helvetica, Arial, sans-serif; color: gray;" >Precio:</h6>
-    <input style="color:gray;width:400px;" type="number" name="precio"/>
-</div>
-<div class=" form-group" style="width:400px;height:45px;margin:auto">
-    <i class="zmdi zmdi-home" style="position: absolute;margin-bottom: 20px"></i>
-    <select class="form-select form-select-sm" style="color:gray;width:400px;height:30px;border-top: none;border-left: none;border-right: none;text-indent: 30px; display:flex;align-items: center" name="sede">
-        <option hidden selected>Restriccion de edad</option>
-        <option value="Sede">Sede</option>
-        <option value="San Miguel">San Miguel</option>
-        <option value="San Borja">San Borja</option>
-        <option value="San Borja">San Isidro</option>
-        <option value="San Juan de Lurigancho">San Juan de Lurigancho</option>
-    </select>
-</div>
-<div class=" form-group" style="width:400px;height:45px;margin:auto">
-    <i class="zmdi zmdi-home" style="position: absolute;margin-bottom: 20px"></i>
-    <select class="form-select form-select-sm" style="color:gray;width:400px;height:30px;border-top: none;border-left: none;border-right: none;text-indent: 30px; display:flex;align-items: center" name="sala">
-        <option hidden selected>Sala</option>
-        <option value="Sala 1">Sala 1</option>
-        <option value="Sala 2">Sala 2</option>
-        <option value="Sala 3">Sala 3</option>
-        <option value="Sala 4">Sala 4</option>
-        <option value="Sala 5">Sala 5</option>
-    </select>
-</div>
-<div class="form-group" style="width:400px; margin:auto; margin-bottom:30px;">
-    <h6 style="font-size: 0.7rem; font-family: Maven Pro, Helvetica, Arial, sans-serif; color: gray;" >Aforo:</h6>
-    <input style="color:gray;width:400px;" type="number" name="aforo"/>
-</div>
-<table class="table">
-    <thead class="thead-dark">
-    <tr>
-        <th scope="col">Actores</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>Mark</td>
-        <td>Otto</td>
-    </tr>
-    </tbody>
-</table>
-<div class=" form-group" style="width:400px;height:45px;margin:auto">
-    <i class="zmdi zmdi-home" style="position: absolute;margin-bottom: 20px"></i>
-    <select class="form-select form-select-sm" style="color:gray;width:400px;height:30px;border-top: none;border-left: none;border-right: none;text-indent: 30px; display:flex;align-items: center" name="actores">
-        <option hidden selected>Actor</option>
-        <option value="Sala 1">Willy Rex</option>
-        <option value="Sala 2">AuronPlay</option>
-        <option value="Sala 3">Ibai</option>
-    </select>
-</div>
-<div>
-    <h6 style="font-size: 0.7rem; font-family: Maven Pro, Helvetica, Arial, sans-serif; color: gray;" >Imagen:</h6>
-    <input style="color:gray;width:400px;" type="image" name="imagen"/>
-    <button >Importar</button>
-</div>
-
-<button type="button" class="btn btn-outline-danger">Cancelar</button>
-<button type="button" class="btn btn-primary">Crear</button>
-</body>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/operador}" type="button" class="btn btn-success">Crear Funcion</a>
+                    <a th:href="@{/operador}" type="button" class="btn btn-danger">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
