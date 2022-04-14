@@ -3,7 +3,7 @@
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body style="background-color: white;">
         <section>
-        <header th:replace="includes/navbar.html :: navbar-usuario"></header>
+        <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
         </section>
 
 
@@ -25,11 +25,15 @@
                 <div class="col-sm bg-light text-start" style="max-width:30%;">
                 <label>Sede</label>
                  <select class="form-select text-left text-lg text-medium">
-                <option>San Miki</option>
+                     <option>San Miki</option>
+                     <option>San Martin de Porres</option>
+                     <option>Lince</option>
+                     <option>Jesus Maria</option>
+
                   </select>
                 </div>
                 <div class="col-sm bg-light text-end">
-                    <a class="btn btn-secondary" th:href="@{/agregarsala}">Agregar sala</a>
+                    <a class="btn btn-secondary" th:href="@{'/admin/agregarsalas'}">Agregar sala</a>
                 </div>
 
             </div>
@@ -59,7 +63,7 @@
                 <td class="text-center text-lg text-medium">15</td>
                 <td class="text-center text-lg text-medium">Diciembre 10,1815</td>
                 <td class="text-center text-lg text-medium">
-                    <div class="column"><a style="width:120px; margin:5px;" class="btn btn-secondary" th:src="@{img/logoWhiteFace.png}">Editar</a></div>
+                    <a class="btn btn-primary" th:href="@{'/admin/editarsalas'}"><i class="bi bi-pencil-square"></i></a>
                 </td>
                 <td class="text-center">
                     <!--
@@ -84,7 +88,7 @@
                     <!-- <div class="column"><a style="width:120px; margin:5px;" class="btn btn-success" > <i class="bi bi-trash" ></i> </a></div> -->
                     <form id="1" method="post" action="">
                         <input name="test" value="1" type="hidden"/>
-                        <button onclick="return confirm('¿Esta seguro de cancelar el Pedido?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
+                        <button onclick="return confirm('¿Esta seguro que desea eliminar la sala?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                             <i class="bi bi-trash"></i>
                         </button>
                     </form>

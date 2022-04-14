@@ -7,8 +7,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @RequestMapping("")
-    public String paginaPrincipal(){
+    @RequestMapping("salas")
+    public String paginaSalas(){
         return "admin/salas";
     }
+    @RequestMapping("sedes")
+    public String paginaSedes(){
+        return "admin/sedes";
+    }
+
+    @RequestMapping("actoresydirectores")
+    public String paginaActoresydirectores(){
+        return "admin/actoresydirectores";
+    }
+    @RequestMapping("agregarsalas")
+    public String paginaAgregarsalas(){
+        return "admin/agregarsalas";
+    }
+    @RequestMapping("agregarsedes")
+    public String paginaAgregarsedes(){
+        return "admin/agregarsedes";
+    }
+    @RequestMapping("agregaractoresydirectores")
+    public String paginaAgregaractoresydirectores(){
+        return "admin/agregaractoresydirectores";
+    }
+    @RequestMapping("editarsalas")
+    public String paginaEditarsalas(){
+        return "admin/editarsalas";
+    }
+    @RequestMapping("editarsedes")
+    public String paginaEditarsedes(){
+        return "admin/editarsedes";
+    }
+    @RequestMapping("editaractoresydirectores")
+    public String paginaEditaractoresydirectores(){
+        return "admin/editaractoresydirectores";
+    }
+
+
+
 }
