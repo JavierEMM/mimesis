@@ -1,10 +1,13 @@
 package com.mimesis.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
+
 public class AdminController {
 
     @RequestMapping("salas")
@@ -43,6 +46,25 @@ public class AdminController {
     @RequestMapping("editaractoresydirectores")
     public String paginaEditaractoresydirectores(){
         return "admin/editaractoresydirectores";
+    }
+
+    @RequestMapping("operadores")
+    public String operadores(){
+        return "admin/operadores";
+    }
+
+    @RequestMapping("editaroperador")
+    public String editarOperador(){
+        return "admin/editaroperador";
+    }
+    @RequestMapping("agregaroperador")
+    public String agregarOperador(){
+        return "admin/agregaroperador";
+    }
+
+    @RequestMapping("clientes")
+    public String clientes(){
+        return "admin/clientes";
     }
 
 

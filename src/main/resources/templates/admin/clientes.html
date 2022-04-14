@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="includes/head.html :: head">MIMESIS</head>
+<body style="background-color: white;">
+<section>
+    <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
+</section>
+<div class="container mt-3"></div>
+
+<div class="container mt-3">
+    <div style="margin-right: auto; margin-left: auto; max-width: 1000px; text-align: center">
+        <h2 class="pb-2">Gestión de Clientes</h2>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row" style="margin-right: auto; margin-left: auto; max-width: 1000px;">
+        <div class="col-sm text-start" style="max-width:30%;">
+            <label>Filtrar por:</label>
+            <select class="form-select text-left text-lg text-medium">
+                <option>San Miki</option>
+                <option>San Martin de Porres</option>
+                <option>Lince</option>
+                <option>Jesus Maria</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th class="text-center">Cliente</th>
+            <th class="text-center">DNI</th>
+            <th class="text-center">Sede</th>
+            <th class="text-center">Eliminar</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td class="text-center text-lg text-medium">Diego Guillen</td>
+            <td class="text-center text-lg text-medium">12345678</td>
+            <td class="text-center text-lg text-medium">San Isidro</td>
+            <td class="text-center">
+                <form id="1" method="post" action="">
+                    <input name="test" value="1" type="hidden"/>
+                    <button onclick="return confirm('¿Esta seguro que desea eliminar la sala?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div class="column" style="margin-top:20px;">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+<footer th:replace="includes/footer.html :: footer"></footer>
+
+</body>
+</html>
