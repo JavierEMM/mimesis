@@ -2,10 +2,8 @@
 <html lang="en">
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body>
-        <div class="row" >
-            <div class="col-sm-12 text-center"><header th:replace="/includes/navbar.html :: navbar-operador" id="header" class="d-flex align-items-center">
-            </header></div>
-        </div>
+        <header th:replace="/includes/navbar.html :: navbar-operador" id="header" class="d-flex align-items-center">
+        </header>
         <div class='container'>
             <div class="row" >
                 <div class="col-xl">
@@ -150,8 +148,8 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a th:href="@{/operador}" type="button" class="btn btn-success">Crear Funcion</a>
-                    <a th:href="@{/operador}" type="button" class="btn btn-danger">Cancelar</a>
+                    <a th:href="@{/operador}" type="button" class="btn btn-outline-success">Crear Funcion</a>
+                    <a th:href="@{/operador}" type="button" class="btn btn-outline-danger">Cancelar</a>
                 </div>
             </div>
         </div>
