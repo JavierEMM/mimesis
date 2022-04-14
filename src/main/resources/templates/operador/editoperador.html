@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head th:replace="includes/head.html :: head">MIMESIS</head>
+    <body>
+        <header th:replace="/includes/navbar.html :: navbar-operador" id="header" class="d-flex align-items-center">
+        </header>
+        <div class='container'>
+            <div class="row" >
+                <div class="col-xl">
+                    <p class="title">Editar Funcion</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xl-4">
+                    <label for="nombre" class="letter">Nombre</label>
+                    <input id="nombre" value="Mobydick" disabled class="form-control" type="text" name="nombre"/>
+                </div>
+                <div class="form-group col-xl-4">
+                    <label for="fechainicio" class="letter">Fecha Inicio</label>
+                    <input id="fechainicio" value="10/04/2022" class="form-control" type="date" name="fechainicio"/>
+                </div>
+                <div class="form-group col-xl-2">
+                    <label for="horainicio" class="letter">Hora Inicio</label>
+                    <input id="horainicio" value="10:00" class="form-control" type="time" name="horainicio"/>
+                    <label for="horafin" class="letter">Hora Fin</label>
+                    <input id="horafin" value="12:00" class="form-control" type="time" name="horafin"/>
+                </div>
+                <div class="form-group col-xl-2">
+                    <label for="genero" class="letter">Genero</label>
+                    <select disabled class="form-select" id="genero" name="genero">
+                        <option hidden >Genero</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Comedia">Comedia</option>
+                        <option value="Ciencia ficcion">Ciencia ficcion</option>
+                        <option value="Aventura">Aventura</option>
+                        <option value="Suspenso">Suspenso</option>
+                        <option value="Terror" selected>Terror</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xl-4">
+                    <label for="director" class="letter">Director</label>
+                    <select disabled class="form-select" id="director" name="director">>
+                        <option hidden>Director</option>
+                        <option value="Mark">Mark</option>
+                        <option value="Teddy">Teddy</option>
+                        <option value="Javier">Javier</option>
+                        <option value="Jose">Jose</option>
+                        <option value="Piero">Piero</option>
+                        <option value="Diego" selected>Diego</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-4">
+                    <label for="restriccion" class="letter">Restriccion de Edad</label>
+                    <select disabled id="restriccion" class="form-select" name="restriccion">
+                        <option hidden>Restriccion de edad</option>
+                        <option value="Apto para todo publico">Apto para todo publico</option>
+                        <option value="+12">+12</option>
+                        <option value="+14">+14</option>
+                        <option value="+16" selected>+16</option>
+                        <option value="+18">+18</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-4">
+                    <label for="sede" class="letter">Sede</label>
+                    <select disabled id="sede" class="form-select" name="sede">
+                        <option hidden>Sede</option>
+                        <option value="San Miguel" selected>San Miguel</option>
+                        <option value="San Borja">San Borja</option>
+                        <option value="San Borja">San Isidro</option>
+                        <option value="San Juan de Lurigancho">San Juan de Lurigancho</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xl-2">
+                    <label for="sala" class="letter">Sala</label>
+                    <select disabled id="sala" class="form-select" name="sala">
+                        <option hidden>Sala</option>
+                        <option value="Sala 1">Sala 1</option>
+                        <option value="Sala 2" selected>Sala 2</option>
+                        <option value="Sala 3">Sala 3</option>
+                        <option value="Sala 4">Sala 4</option>
+                        <option value="Sala 5">Sala 5</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-2">
+                    <label for="precio" class="letter">Precio</label>
+                    <input id="precio" value="30" class="form-control" type="number" name="precio"/>
+                    <label for="aforo" class="letter">Aforo</label>
+                    <input disabled value="50" id="aforo" class="form-control" type="number" name="aforo"/>
+                </div>
+                <div class="col-xl-8">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <th scope="col">Actores</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                            </tr>
+                            <tr>
+                                <td>Mark2</td>
+                                <td>Otto</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <th scope="col">Imagenes</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img class="img-fluid" style="width: 10px;height: 10px;" th:src="@{/img/teatro.jpg}"></td>
+                            </tr>
+                            <tr>
+                                <td><img class="img-fluid" style="width: 10px;height: 10px;" th:src="@{/img/teatro.jpg}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group col-xl-7">
+                    <label for="actor" class="letter">Actor</label>
+                    <select disabled id="actor" class="form-select" name="actor">
+                        <option hidden selected>Actor</option>
+                        <option value="Sala 1">Willy Rex</option>
+                        <option value="Sala 2">AuronPlay</option>
+                        <option value="Sala 3">Ibai</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-1">
+                    <br>
+                    <button type="button" class="btn btn-primary">Añadir</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-1">
+                    <input disabled style="color: transparent;" type="file">
+                    <button type="button" class="btn btn-primary">Aceptar imagen</button>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/operador}" type="button" class="btn btn-outline-success">Editar Funcion</a>
+                    <a th:href="@{/operador}" type="button" class="btn btn-outline-danger">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

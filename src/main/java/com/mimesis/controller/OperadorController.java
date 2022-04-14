@@ -15,4 +15,6 @@ public class OperadorController {
     public String nuevaFuncion (){return "operador/crearFuncion";}
     @RequestMapping("/estadisticas")
     public String estadisticas (){ return "operador/estadisticas";}
+    @RequestMapping("/edit")
+    public String editarOperador (){ return "operador/editoperador";}
 }
