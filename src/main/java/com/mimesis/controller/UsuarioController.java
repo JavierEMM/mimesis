@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("")
 public class UsuarioController {
-    @GetMapping("")
+    @GetMapping(value={"","/"})
     public String paginaPrincipal(Model model){
         return "usuario/main";
     }

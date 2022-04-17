@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="includes/head.html :: head">MIMESIS</head>
 <body style="background-color:black;">
-    <section class="py-5 text-center container">
-        <header th:replace="includes/navbar.html :: navbar-usuario"></header>
-    </section>
-    <div class="album py-5">
-        <div class="container">
+    <!--section class="py-5 text-center container"-->
+        <header th:replace="includes/navbar.html :: navbar-usuario(option ='Funciones')"></header>
+    <!--/section-->
+    <div class="album py-5" >
+        <div class="container" style="margin-top: 100px">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col">
                     <div class="card shadow-sm">
@@ -15,7 +15,7 @@
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group" style="justify-content: center;">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Ver Detalles</button>
+                                    <a type="button"  th:href="@{/detalles}" class="btn btn-sm btn-outline-secondary">Ver Detalles</a>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Reservar</button>
                                 </div>
                                 <small class="text-muted">9 mins</small>
@@ -31,7 +31,7 @@
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Ver Detalles</button>
+                                    <a type="button"  th:href="@{/detalles}" class="btn btn-sm btn-outline-secondary">Ver Detalles</a>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Reservar</button>
                                 </div>
                                 <small class="text-muted">9 mins</small>
