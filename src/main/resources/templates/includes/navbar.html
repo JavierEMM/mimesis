@@ -15,18 +15,24 @@
         </div>
     </header>
 
- <header th:fragment="navbar-usuario" style="background-color: black;" id="header" class="d-flex align-items-center">
+ <header th:fragment="navbar-usuario(option)" style="background-color: black; position: fixed" id="header" class="d-flex align-items-center">
         <div class="container-fluid container-xxl d-flex align-items-center ">
             <div class="me-auto" id="logo">
                 <a href=""><img th:src="@{img/logo.png}" alt="MIMESIS"></a>
             </div>
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active" th:href="@{/}">Página Principal</a></li>
-                    <li><a class="nav-link scrollto"  th:href="@{/teatros}">Teatros</a></li>
-                    <li><a class="nav-link scrollto" th:href="@{/funciones}">Funciones</a></li>
-                    <li><a class="nav-link scrollto" th:href="@{/actores}">Actores</a></li>
-                    <li><a class="nav-link scrollto" th:href="@{/directores}">Directores</a></li>
+
+                    <li th:if="${option=='Principal'}"><a   class="nav-link scrollto active" th:href="@{/}">Página Principal</a></li>
+                    <li th:if="${option!='Principal'}"><a   class="nav-link scrollto " th:href="@{/}">Página Principal</a></li>
+                    <li th:if="${option=='Teatros'}" ><a  class="nav-link scrollto active"  th:href="@{/teatros}">Teatros</a></li>
+                    <li th:if="${option!='Teatros'}"><a  class="nav-link scrollto"  th:href="@{/teatros}">Teatros</a></li>
+                    <li th:if="${option=='Funciones'}"><a  class="nav-link scrollto active" th:href="@{/funciones}">Funciones</a></li>
+                    <li th:if="${option!='Funciones'}" ><a class="nav-link scrollto" th:href="@{/funciones}">Funciones</a></li>
+                    <li th:if="${option=='Actores'}"><a  class="nav-link scrollto active" th:href="@{/actores}">Actores</a></li>
+                    <li th:if="${option!='Actores'}"><a  class="nav-link scrollto" th:href="@{/actores}">Actores</a></li>
+                    <li th:if="${option=='Directores'}" ><a  class="nav-link scrollto active" th:href="@{/directores}">Directores</a></li>
+                    <li th:if="${option!='Directores'}" ><a class="nav-link scrollto " th:href="@{/directores}">Directores</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
