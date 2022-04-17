@@ -27,7 +27,9 @@
     transform: translateY(0);
   }
 }
-
+.bi-instagram{
+  animation-delay: 1.5s;
+}
 .bi-facebook{
   animation-delay: 1s;
 }
