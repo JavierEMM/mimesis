@@ -8,6 +8,32 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+.icon{
+  display: inline-block;
+  font-size: 44px;
+  animation: float 5s ease-in-out infinite;
+}
+
+
+
+@keyframes float {
+  0%{
+    transform: translateY(0);
+  }
+  50%{
+    transform: translateY(-15px);
+  }
+  100%{
+    transform: translateY(0);
+  }
+}
+
+.bi-facebook{
+  animation-delay: 1s;
+}
+bi-twitter{
+  animation-delay: 2s;
+}
 .title{
   margin-top: 20px;
   font-size: xx-large;
@@ -24,6 +50,9 @@ td, th{
 .row{
   margin-bottom: 20px;
 }
+
+
+
 
 body {
   background: white;
