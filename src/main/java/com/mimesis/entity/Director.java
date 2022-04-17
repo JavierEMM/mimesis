@@ -20,7 +20,7 @@ public class Director {
     @OneToMany(mappedBy = "directorIddirector")
     private Set<Calificacione> calificaciones = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "directorIddirector1")
+    @OneToMany(mappedBy = "iddirector")
     private Set<Funcion> funcions = new LinkedHashSet<>();
 
     public Set<Funcion> getFuncions() {

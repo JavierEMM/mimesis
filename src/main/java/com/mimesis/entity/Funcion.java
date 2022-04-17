@@ -14,8 +14,8 @@ public class Funcion {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "director_iddirector1")
-    private Director directorIddirector1;
+    @JoinColumn(name = "iddirector")
+    private Director iddirector;
 
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
@@ -56,6 +56,20 @@ public class Funcion {
 
     @OneToMany(mappedBy = "funcionIdfuncion")
     private Set<Boleto> boletos = new LinkedHashSet<>();
+
+
+
+    @Column(name = "costo", length = 45)
+    private String costo;
+
+    public String getCosto() {
+        return costo;
+    }
+
+    public void setCosto(String costo) {
+        this.costo = costo;
+    }
+
 
     public Set<Boleto> getBoletos() {
         return boletos;
@@ -161,13 +175,6 @@ public class Funcion {
         this.nombre = nombre;
     }
 
-    public Director getDirectorIddirector1() {
-        return directorIddirector1;
-    }
-
-    public void setDirectorIddirector1(Director directorIddirector1) {
-        this.directorIddirector1 = directorIddirector1;
-    }
 
     public Integer getId() {
         return id;
@@ -175,5 +182,13 @@ public class Funcion {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Director getIddirector() {
+        return iddirector;
+    }
+
+    public void setIddirector(Director iddirector) {
+        this.iddirector = iddirector;
     }
 }

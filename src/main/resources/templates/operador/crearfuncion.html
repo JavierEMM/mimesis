@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body>
         <header th:replace="/includes/navbar.html :: navbar-operador" id="header" class="d-flex align-items-center">
@@ -11,20 +11,22 @@
                 </div>
             </div>
             <div class="row">
+                <form th:action="@{/operador/new}" th:object="${funcionNueva}" method="post">
                 <div class="form-group col-xl-4">
                     <label for="nombre" class="letter">Nombre</label>
                     <input id="nombre" class="form-control" type="text" name="nombre"/>
                 </div>
                 <div class="form-group col-xl-4">
                     <label for="fechainicio" class="letter">Fecha Inicio</label>
-                    <input id="fechainicio" class="form-control" type="date" name="fechainicio"/>
+                    <input id="fechainicio" class="form-control" type="date" name="fechai"/>
                 </div>
                 <div class="form-group col-xl-2">
-                    <label for="horainicio" class="letter">Hora Inicio</label>
-                    <input id="horainicio" class="form-control" type="time" name="horainicio"/>
-                    <label for="horafin" class="letter">Hora Fin</label>
-                    <input id="horafin" class="form-control" type="time" name="horafin"/>
+                    <label for="horai" class="letter">Hora Inicio</label>
+                    <input id="horai" class="form-control" type="time" name="horai"/>
+                    <label for="horaf" class="letter">Hora Fin</label>
+                    <input id="horaf" class="form-control" type="time" name="horaf"/>
                 </div>
+
                 <div class="form-group col-xl-2">
                     <label for="genero" class="letter">Genero</label>
                     <select class="form-select" id="genero" name="genero">
@@ -37,18 +39,11 @@
                         <option value="Terror">Terror</option>
                     </select>
                 </div>
-            </div>
-            <div class="row">
+                <div class="row">
                 <div class="form-group col-xl-4">
-                    <label for="director" class="letter">Director</label>
-                    <select class="form-select" id="director" name="director">>
-                        <option hidden selected>Director</option>
-                        <option value="Mark">Mark</option>
-                        <option value="Teddy">Teddy</option>
-                        <option value="Javier">Javier</option>
-                        <option value="Jose">Jose</option>
-                        <option value="Piero">Piero</option>
-                        <option value="Diego">Diego</option>
+                    <label for="iddirector" class="letter">Director</label>
+                    <select class="form-select" id="iddirector" name="iddirector">
+                        <option th:each="director : ${listaDirectores}" th:value="${director.id}" th:text="${director.nombre}">Mark</option>
                     </select>
                 </div>
                 <div class="form-group col-xl-4">
@@ -66,10 +61,7 @@
                     <label for="sede" class="letter">Sede</label>
                     <select id="sede" class="form-select" name="sede">
                         <option hidden selected>Sede</option>
-                        <option value="San Miguel">San Miguel</option>
-                        <option value="San Borja">San Borja</option>
-                        <option value="San Borja">San Isidro</option>
-                        <option value="San Juan de Lurigancho">San Juan de Lurigancho</option>
+                        <option th:each="sede : ${listaSedes}" th:value="${sede.id}" th:text="${sede.nombre}">San Miguel</option>
                     </select>
                 </div>
             </div>
@@ -78,16 +70,12 @@
                     <label for="sala" class="letter">Sala</label>
                     <select id="sala" class="form-select" name="sala">
                         <option hidden selected>Sala</option>
-                        <option value="Sala 1">Sala 1</option>
-                        <option value="Sala 2">Sala 2</option>
-                        <option value="Sala 3">Sala 3</option>
-                        <option value="Sala 4">Sala 4</option>
-                        <option value="Sala 5">Sala 5</option>
+                        <option th:each="sala : ${listaSalas} " th:value="${sala.id}" th:text="'Sala de id '+ ${sala.id}">Sala 1</option>
                     </select>
                 </div>
                 <div class="form-group col-xl-2">
                     <label for="precio" class="letter">Precio</label>
-                    <input id="precio" class="form-control" type="number" name="precio" min="0"/>
+                    <input id="precio" class="form-control" type="number" name="costo" min="0"/>
                     <label for="aforo" class="letter">Aforo</label>
                     <input id="aforo" class="form-control" type="number" name="aforo" min="0"/>
                 </div>
@@ -97,13 +85,10 @@
                             <th scope="col">Actores</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                            </tr>
-                            <tr>
-                                <td>Mark2</td>
-                                <td>Otto</td>
+                            <tr th:each="actor: ${listaActores}" >
+                                <td th:text="${actor.nombre}" ></td>
+                                <td th:text="${actor.apellido}">Mark</td>
+                                <td><input type="checkbox" th:field="*{actors}" th:value="${actor.id}"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -125,19 +110,18 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="form-group col-xl-7">
+                <!--div class="form-group col-xl-7">
                     <label for="actor" class="letter">Actor</label>
                     <select id="actor" class="form-select" name="actor">
                         <option hidden selected>Actor</option>
-                        <option value="Sala 1">Willy Rex</option>
-                        <option value="Sala 2">AuronPlay</option>
-                        <option value="Sala 3">Ibai</option>
+                        <option value="1">Auron Play</option>
+                        <option value="2">Willy Rex</option>
                     </select>
                 </div>
                 <div class="form-group col-xl-1">
                     <br>
-                    <button type="button" class="btn btn-primary">Añadir</button>
-                </div>
+                    <button class="btn btn-primary">Añadir</button>
+                </div-->
             </div>
             <div class="row">
                 <div class="col-xl-1">
@@ -148,10 +132,12 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a th:href="@{/operador}" type="button" class="btn btn-outline-success">Crear Funcion</a>
+                    <button type="submit" class="btn btn-outline-success">Crear Funcion</button>
                     <a th:href="@{/operador}" type="button" class="btn btn-outline-danger">Cancelar</a>
                 </div>
             </div>
+            </form>
+        </div>
         </div>
     </body>
 </html>
