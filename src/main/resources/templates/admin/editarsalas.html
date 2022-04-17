@@ -10,10 +10,11 @@
     </head>
     <body>
         <main>
-            <div class="container px-4 py-5">
+            <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 400px; text-align: center">
+                <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
                 <h1 class="pb-2 mb-4 border-bottom">Editar Salas</h1>
-                <form method="post"  class="col-4" >
-                    <input type="hidden"  />
+                <form method="post">
+                    <input type="hidden" />
                     <div class="mb-3">
                         <label class="form-label">Número de sala</label>
                         <input type="text" class="form-control" >
@@ -22,8 +23,7 @@
                         <label class="form-label">Aforo</label>
                         <input type="text" class="form-control" >
                     </div>
-
-                    <div class="col-sm bg-light text-start" style="max-width:30%;">
+                    <div>
                         <label>Sede</label>
                         <select class="form-select text-left text-lg text-medium">
                             <option>San Miki</option>
@@ -32,10 +32,11 @@
                             <option>Jesus Maria</option>
                         </select>
                     </div>
-
+                    <br>
                     <a th:href="@{'/admin/salas'}" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </form>
+                </section>
             </div>
         </main>
 
