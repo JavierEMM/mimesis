@@ -1,7 +1,5 @@
 package com.mimesis.entity;
 
-import com.mimesis.entity.Funcion;
-
 import javax.persistence.*;
 
 @Entity
@@ -14,9 +12,21 @@ public class Foto {
     @Column(name = "foto", nullable = false)
     private byte[] foto;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "funcion_idfuncion", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "funcion_idfuncion")
     private Funcion funcionIdfuncion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sede_idsede")
+    private Sede sedeIdsede;
+
+    public Sede getSedeIdsede() {
+        return sedeIdsede;
+    }
+
+    public void setSedeIdsede(Sede sedeIdsede) {
+        this.sedeIdsede = sedeIdsede;
+    }
 
     public Funcion getFuncionIdfuncion() {
         return funcionIdfuncion;
