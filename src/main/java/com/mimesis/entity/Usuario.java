@@ -2,8 +2,6 @@ package com.mimesis.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
@@ -42,28 +40,6 @@ public class Usuario {
 
     @Column(name = "rol", nullable = false, length = 45)
     private String rol;
-
-    @OneToMany(mappedBy = "usuarioIdusuario")
-    private Set<Calificacione> calificaciones = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "usuarioIdusuario")
-    private Set<Boleto> boletos = new LinkedHashSet<>();
-
-    public Set<Boleto> getBoletos() {
-        return boletos;
-    }
-
-    public void setBoletos(Set<Boleto> boletos) {
-        this.boletos = boletos;
-    }
-
-    public Set<Calificacione> getCalificaciones() {
-        return calificaciones;
-    }
-
-    public void setCalificaciones(Set<Calificacione> calificaciones) {
-        this.calificaciones = calificaciones;
-    }
 
     public String getRol() {
         return rol;

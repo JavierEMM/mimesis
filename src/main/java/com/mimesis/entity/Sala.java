@@ -1,13 +1,14 @@
 package com.mimesis.entity;
 
+import com.mimesis.entity.Sede;
+
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "sala")
 public class Sala {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idsala", nullable = false)
     private Integer id;
 
@@ -15,26 +16,26 @@ public class Sala {
     private Integer aforo;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "sede_idsede", nullable = false)
-    private Sede sedeIdsede;
+    @JoinColumn(name = "idsede", nullable = false)
+    private Sede idsede;
 
-    @OneToMany(mappedBy = "salaIdsala")
-    private Set<Boleto> boletos = new LinkedHashSet<>();
+    @Column(name = "nombre", nullable = false, length = 45)
+    private String nombre;
 
-    public Set<Boleto> getBoletos() {
-        return boletos;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setBoletos(Set<Boleto> boletos) {
-        this.boletos = boletos;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public Sede getSedeIdsede() {
-        return sedeIdsede;
+    public Sede getIdsede() {
+        return idsede;
     }
 
-    public void setSedeIdsede(Sede sedeIdsede) {
-        this.sedeIdsede = sedeIdsede;
+    public void setIdsede(Sede idsede) {
+        this.idsede = idsede;
     }
 
     public Integer getAforo() {
@@ -52,6 +53,4 @@ public class Sala {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    //TODO Reverse Engineering! Migrate other columns to the entity
 }

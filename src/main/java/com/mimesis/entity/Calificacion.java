@@ -1,20 +1,30 @@
 package com.mimesis.entity;
 
+import com.mimesis.entity.Actor;
+import com.mimesis.entity.Director;
 import com.mimesis.entity.Funcion;
 import com.mimesis.entity.Usuario;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "boleto")
-public class Boleto {
+@Table(name = "calificaciones")
+public class Calificacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idboleto", nullable = false)
+    @Column(name = "idcalificaciones", nullable = false)
     private Integer id;
 
-    @Column(name = "estado", nullable = false, length = 45)
-    private String estado;
+    @Column(name = "calificacion", nullable = false)
+    private Integer calificacion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idactor")
+    private Actor idactor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iddirector")
+    private Director iddirector;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idfuncion", nullable = false)
@@ -23,17 +33,6 @@ public class Boleto {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idusuario", nullable = false)
     private Usuario idusuario;
-
-    @Column(name = "codigoaleatorio", nullable = false, length = 45)
-    private String codigoaleatorio;
-
-    public String getCodigoaleatorio() {
-        return codigoaleatorio;
-    }
-
-    public void setCodigoaleatorio(String codigoaleatorio) {
-        this.codigoaleatorio = codigoaleatorio;
-    }
 
     public Usuario getIdusuario() {
         return idusuario;
@@ -51,12 +50,28 @@ public class Boleto {
         this.idfuncion = idfuncion;
     }
 
-    public String getEstado() {
-        return estado;
+    public Director getIddirector() {
+        return iddirector;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setIddirector(Director iddirector) {
+        this.iddirector = iddirector;
+    }
+
+    public Actor getIdactor() {
+        return idactor;
+    }
+
+    public void setIdactor(Actor idactor) {
+        this.idactor = idactor;
+    }
+
+    public Integer getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(Integer calificacion) {
+        this.calificacion = calificacion;
     }
 
     public Integer getId() {

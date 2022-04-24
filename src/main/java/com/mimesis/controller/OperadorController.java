@@ -1,7 +1,5 @@
 package com.mimesis.controller;
 
-import com.mimesis.entity.Actor;
-import com.mimesis.entity.Funcion;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/operador")

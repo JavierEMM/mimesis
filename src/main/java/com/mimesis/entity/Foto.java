@@ -1,11 +1,15 @@
 package com.mimesis.entity;
 
+import com.mimesis.entity.Funcion;
+import com.mimesis.entity.Sede;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "fotos")
 public class Foto {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idfotos", nullable = false)
     private Integer id;
 
@@ -13,27 +17,27 @@ public class Foto {
     private byte[] foto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "funcion_idfuncion")
-    private Funcion funcionIdfuncion;
+    @JoinColumn(name = "idfuncion")
+    private Funcion idfuncion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sede_idsede")
-    private Sede sedeIdsede;
+    @JoinColumn(name = "idsede")
+    private Sede idsede;
 
-    public Sede getSedeIdsede() {
-        return sedeIdsede;
+    public Sede getIdsede() {
+        return idsede;
     }
 
-    public void setSedeIdsede(Sede sedeIdsede) {
-        this.sedeIdsede = sedeIdsede;
+    public void setIdsede(Sede idsede) {
+        this.idsede = idsede;
     }
 
-    public Funcion getFuncionIdfuncion() {
-        return funcionIdfuncion;
+    public Funcion getIdfuncion() {
+        return idfuncion;
     }
 
-    public void setFuncionIdfuncion(Funcion funcionIdfuncion) {
-        this.funcionIdfuncion = funcionIdfuncion;
+    public void setIdfuncion(Funcion idfuncion) {
+        this.idfuncion = idfuncion;
     }
 
     public byte[] getFoto() {

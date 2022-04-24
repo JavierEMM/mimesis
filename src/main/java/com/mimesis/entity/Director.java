@@ -1,13 +1,12 @@
 package com.mimesis.entity;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "director")
 public class Director {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "iddirector", nullable = false)
     private Integer id;
 
@@ -16,28 +15,6 @@ public class Director {
 
     @Column(name = "apellido", nullable = false, length = 45)
     private String apellido;
-
-    @OneToMany(mappedBy = "directorIddirector")
-    private Set<Calificacione> calificaciones = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "iddirector")
-    private Set<Funcion> funcions = new LinkedHashSet<>();
-
-    public Set<Funcion> getFuncions() {
-        return funcions;
-    }
-
-    public void setFuncions(Set<Funcion> funcions) {
-        this.funcions = funcions;
-    }
-
-    public Set<Calificacione> getCalificaciones() {
-        return calificaciones;
-    }
-
-    public void setCalificaciones(Set<Calificacione> calificaciones) {
-        this.calificaciones = calificaciones;
-    }
 
     public String getApellido() {
         return apellido;
@@ -62,6 +39,4 @@ public class Director {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    //TODO Reverse Engineering! Migrate other columns to the entity
 }
