@@ -1,8 +1,9 @@
 package com.mimesis.entity;
 
-import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "sede")
@@ -14,26 +15,15 @@ public class Sede {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
-    @OneToMany(mappedBy = "sedeIdsede")
-    private Set<Sala> salas = new LinkedHashSet<>();
+    @Column(name = "ubicacion", nullable = false, length = 45)
+    private String ubicacion;
 
-    @OneToMany(mappedBy = "idsede")
-    private Set<Funcion> funcions = new LinkedHashSet<>();
-
-    public Set<Funcion> getFuncions() {
-        return funcions;
+    public String getUbicacion() {
+        return ubicacion;
     }
 
-    public void setFuncions(Set<Funcion> funcions) {
-        this.funcions = funcions;
-    }
-
-    public Set<Sala> getSalas() {
-        return salas;
-    }
-
-    public void setSalas(Set<Sala> salas) {
-        this.salas = salas;
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
     public String getNombre() {
@@ -51,6 +41,4 @@ public class Sede {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    //TODO Reverse Engineering! Migrate other columns to the entity
 }
