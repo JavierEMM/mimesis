@@ -52,13 +52,13 @@
                          Usuario
                      </a>
                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                         <li><a class="dropdown-item" >Ver perfil</a></li>
-                         <li><a class="dropdown-item" >Cerrar sesión</a></li>
+                         <li><a th:href="@{/perfil}" class="dropdown-item" >Ver perfil</a></li>
+                         <li><a th:href="@{/}" class="dropdown-item" >Cerrar sesión</a></li>
                      </ul>
                  </div>
              </div>
              <div class="col-1 header-display">
-                 <form method="post" class="hundred-percent">
+                 <form method="get" th:action="@{/carrito}"  class="hundred-percent">
                      <form class="d-flex">
                          <button class="btn btn-outline-dark" type="submit">
                              <i class="bi-cart-fill me-1"></i>
