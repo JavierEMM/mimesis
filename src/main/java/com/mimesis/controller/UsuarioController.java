@@ -40,4 +40,16 @@ public class UsuarioController {
 
         return "usuario/directores";
     }
+    @GetMapping("/perfil")
+    public String perfil(Model model){
+
+        return "usuario/perfil";
+    }
+    @GetMapping("/carrito")
+    public String carrito(Model model){
+
+        return "usuario/carrito";
+    }
+
+
 }
