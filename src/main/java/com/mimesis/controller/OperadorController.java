@@ -45,7 +45,9 @@ public class OperadorController {
     @GetMapping("/estadisticas")
     public String estadisticas (){ return "operador/estadisticas";}
     @GetMapping("/edit")
-    public String editarOperador (){ return "operador/editoperador";}
+    public String editarOperador (@RequestParam("id") Integer id){
+
+        return "operador/editoperador";}
 
     @PostMapping("/new")
     public String newFuncion (@ModelAttribute("funcion") Funcion funcion, Model model,@RequestParam("actoresObra") List<Actor> actoresObra){
