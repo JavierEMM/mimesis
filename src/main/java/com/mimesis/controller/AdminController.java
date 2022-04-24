@@ -2,16 +2,17 @@ package com.mimesis.controller;
 
 import com.mimesis.entity.Sala;
 import com.mimesis.entity.Sede;
-import com.mimesis.repository.SalasRepository;
-import com.mimesis.repository.SedesRepository;
-import com.mimesis.repository.UsuarioRepository;
+import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -27,8 +28,14 @@ public class AdminController {
     @Autowired
     SalasRepository salasRepository;
 
+    @Autowired
+    ActorRepository actorRepository;
+
+    @Autowired
+    DirectorRepository directorRepository;
+
     @GetMapping("salas")
-    public String paginaSalas( Model model){
+    public String paginaSalas(Model model){
         List<Sala> salaList = salasRepository.findAll();
         model.addAttribute("salaList",salaList);
         return "admin/salas";
@@ -70,22 +77,20 @@ public class AdminController {
         return "redirect:/admin/salas";
     }
 
-
-
     @GetMapping("sedes")
     public String paginaSedes(Model model){
         model.addAttribute("listaSedes",sedesRepository.findAll());
         return "admin/sedes";
     }
 
-    @RequestMapping("actoresydirectores")
-    public String paginaActoresydirectores(){
+    @GetMapping("actoresydirectores")
+    public String paginaActoresydirectores(Model model){
+        model.addAttribute("listaActores",actorRepository.findAll());
+        model.addAttribute("listaDirectores",directorRepository.findAll());
         return "admin/actoresydirectores";
     }
-    @RequestMapping("agregarsalas")
-    public String paginaAgregarsalas(){
-        return "admin/agregarsalas";
-    }
+
+
     @RequestMapping("agregarsedes")
     public String paginaAgregarsedes(){
         return "admin/agregarsedes";
@@ -93,10 +98,6 @@ public class AdminController {
     @RequestMapping("agregaractoresydirectores")
     public String paginaAgregaractoresydirectores(){
         return "admin/agregaractoresydirectores";
-    }
-    @RequestMapping("editarsalas")
-    public String paginaEditarsalas(){
-        return "admin/editarsalas";
     }
     @RequestMapping("editarsedes")
     public String paginaEditarsedes(){
