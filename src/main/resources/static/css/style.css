@@ -12,6 +12,7 @@
 :root{
   --black: black;
   --principal-title: 6rem;
+  --red: #f82249;
   --font-family-primary: 'Krub', sans-serif;
 }
 html{
@@ -1454,4 +1455,21 @@ div > .btn-success{
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+}
+
+.btn-outline-dark {
+  color: var(--red);
+  border-color: var(--red);
+}
+.hundred-percent{
+  width: 100%;
+}
+.margin-0{
+  margin-bottom: 0;
+}
+
+.header-display{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

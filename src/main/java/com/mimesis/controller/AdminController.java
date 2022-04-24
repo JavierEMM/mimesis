@@ -9,12 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,8 +27,14 @@ public class AdminController {
     @Autowired
     SalasRepository salasRepository;
 
+    @Autowired
+    ActorRepository actorRepository;
+
+    @Autowired
+    DirectorRepository directorRepository;
+
     @GetMapping("salas")
-    public String paginaSalas( Model model){
+    public String paginaSalas(Model model){
         List<Sala> salaList = salasRepository.findAll();
         model.addAttribute("salaList",salaList);
         return "admin/salas";
@@ -81,6 +84,10 @@ public class AdminController {
         return "admin/sedes";
     }
 
+    @GetMapping("actoresydirectores")
+    public String paginaActoresydirectores(Model model){
+        model.addAttribute("listaActores",actorRepository.findAll());
+        model.addAttribute("listaDirectores",directorRepository.findAll());
     @RequestMapping("agregarsedes")
     public String paginaAgregarsedes(Sede sede){
         return "admin/agregarsedes";
@@ -124,11 +131,17 @@ public class AdminController {
     }
 
 
-
-
+    @RequestMapping("agregarsedes")
+    public String paginaAgregarsedes(){
+        return "admin/agregarsedes";
+    }
     @RequestMapping("agregaractoresydirectores")
     public String paginaAgregaractoresydirectores(){
         return "admin/agregaractoresydirectores";
+    }
+    @RequestMapping("editarsedes")
+    public String paginaEditarsedes(){
+        return "admin/editarsedes";
     }
 
 
