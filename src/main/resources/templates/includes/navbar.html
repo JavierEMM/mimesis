@@ -15,30 +15,61 @@
         </div>
     </header>
 
- <header th:fragment="navbar-usuario(option)"  id="header" class="d-flex align-items-center" th:classappend="${'display-block'}">
-        <div class="container-fluid container-xxl d-flex align-items-center ">
-            <div class="me-auto" id="logo">
-                <a href=""><img th:src="@{img/logo.png}" alt="MIMESIS"></a>
-            </div>
-            <nav id="navbar" class="navbar order-last order-lg-0">
-                <ul>
-
-                    <li th:if="${option=='Principal'}"><a   class="nav-link scrollto active" th:href="@{/}">Página Principal</a></li>
-                    <li th:if="${option!='Principal'}"><a   class="nav-link scrollto " th:href="@{/}">Página Principal</a></li>
-                    <li th:if="${option=='Teatros'}" ><a  class="nav-link scrollto active"  th:href="@{/teatros}">Teatros</a></li>
-                    <li th:if="${option!='Teatros'}"><a  class="nav-link scrollto"  th:href="@{/teatros}">Teatros</a></li>
-                    <li th:if="${option=='Funciones'}"><a  class="nav-link scrollto active" th:href="@{/funciones}">Funciones</a></li>
-                    <li th:if="${option!='Funciones'}" ><a class="nav-link scrollto" th:href="@{/funciones}">Funciones</a></li>
-                    <li th:if="${option=='Actores'}"><a  class="nav-link scrollto active" th:href="@{/actores}">Actores</a></li>
-                    <li th:if="${option!='Actores'}"><a  class="nav-link scrollto" th:href="@{/actores}">Actores</a></li>
-                    <li th:if="${option=='Directores'}" ><a  class="nav-link scrollto active" th:href="@{/directores}">Directores</a></li>
-                    <li th:if="${option!='Directores'}" ><a class="nav-link scrollto " th:href="@{/directores}">Directores</a></li>
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- .navbar -->
-            <a style="margin-right: 10px;margin-left: 10px;"><input type="text" class="form-control" style=" border-radius: 20px;" placeholder="Buscar obra"></a>
-            <a class="buy-tickets scrollto" th:href="@{/}"><i style="margin-right: 4px; " class="bi bi-person-fill"></i> Cerrar Sesion </a>
-        </div>
+ <header th:fragment="navbar-usuario(option)" id="header" th:classappend="${'display-block'}" class="header-display">
+     <div class="hundred-percent">
+         <div class="row margin-0">
+             <div class="col-md-2 header-display">
+                 <div class="me-auto" id="logo">
+                     <a href=""><img class="hundred-percent" th:src="@{img/logo.png}" alt="MIMESIS"></a>
+                 </div>
+             </div>
+             <div class="col-md-5 header-display">
+                 <div class="container-fluid container-xxl">
+                     <nav id="navbar" class="navbar order-last order-lg-0">
+                         <ul>
+                             <li th:if="${option=='Principal'}"><a   class="nav-link scrollto active" th:href="@{/}">Página Principal</a></li>
+                             <li th:if="${option!='Principal'}"><a   class="nav-link scrollto " th:href="@{/}">Página Principal</a></li>
+                             <li th:if="${option=='Teatros'}" ><a  class="nav-link scrollto active"  th:href="@{/teatros}">Teatros</a></li>
+                             <li th:if="${option!='Teatros'}"><a  class="nav-link scrollto"  th:href="@{/teatros}">Teatros</a></li>
+                             <li th:if="${option=='Funciones'}"><a  class="nav-link scrollto active" th:href="@{/funciones}">Funciones</a></li>
+                             <li th:if="${option!='Funciones'}" ><a class="nav-link scrollto" th:href="@{/funciones}">Funciones</a></li>
+                             <li th:if="${option=='Actores'}"><a  class="nav-link scrollto active" th:href="@{/actores}">Actores</a></li>
+                             <li th:if="${option!='Actores'}"><a  class="nav-link scrollto" th:href="@{/actores}">Actores</a></li>
+                             <li th:if="${option=='Directores'}" ><a  class="nav-link scrollto active" th:href="@{/directores}">Directores</a></li>
+                             <li th:if="${option!='Directores'}" ><a class="nav-link scrollto " th:href="@{/directores}">Directores</a></li>
+                         </ul>
+                         <i class="bi bi-list mobile-nav-toggle"></i>
+                     </nav>
+                 </div>
+             </div>
+             <div class="col-3 header-display">
+                 <input class="hundred-percent form-control" type="text" placeholder="Buscar obra">
+             </div>
+             <div class="col-1 header-display">
+                 <div class="dropdown">
+                     <a class="btn btn-outline-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                         <i class='bi bi-person-circle'></i>
+                         Usuario
+                     </a>
+                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                         <li><a class="dropdown-item" >Ver perfil</a></li>
+                         <li><a class="dropdown-item" >Cerrar sesión</a></li>
+                     </ul>
+                 </div>
+             </div>
+             <div class="col-1 header-display">
+                 <form method="post" class="hundred-percent">
+                     <form class="d-flex">
+                         <button class="btn btn-outline-dark" type="submit">
+                             <i class="bi-cart-fill me-1"></i>
+                             Carrito
+                             <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                         </button>
+                     </form>
+                 </form>
+             </div>
+         </div>
+     </div>
     </header>
 
 
