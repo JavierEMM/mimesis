@@ -17,7 +17,7 @@ public class Sede {
     @OneToMany(mappedBy = "sedeIdsede")
     private Set<Sala> salas = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "sedeIdsede")
+    @OneToMany(mappedBy = "idsede")
     private Set<Funcion> funcions = new LinkedHashSet<>();
 
     public Set<Funcion> getFuncions() {
