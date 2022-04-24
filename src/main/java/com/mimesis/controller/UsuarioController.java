@@ -56,4 +56,9 @@ public class UsuarioController {
     public String login(){
         return "login/login";
     }
+
+    @GetMapping("/recuperarcontrasenia")
+    public String nuevacontrasenia(){
+        return "login/nuevacontrasenia";
+    }
 }
