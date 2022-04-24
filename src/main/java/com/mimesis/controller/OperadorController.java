@@ -63,7 +63,6 @@ public class OperadorController {
         System.out.println(funcion.getCosto());
         System.out.println(funcion.getGenero());
         funcion.setId(0);
-        funcion.setDuración(2.0);
         funcion.setHorainicio(LocalTime.parse(horainicio));
         funcion.setHorafin(LocalTime.parse(horafin));
         funcion.setFecha(LocalDate.parse(fechainicio));
@@ -71,7 +70,7 @@ public class OperadorController {
         for(Actor act : listaActSelect){
             System.out.println("Actors size :"+act.getNombre());
         }
-
+        funcionRepository.save(funcion);
         return  "redirect:/operador";
     }
 

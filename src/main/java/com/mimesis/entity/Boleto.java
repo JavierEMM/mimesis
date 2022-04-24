@@ -29,6 +29,17 @@ public class Boleto {
     @JoinColumn(name = "sala_idsala", nullable = false)
     private Sala salaIdsala;
 
+    @Column(name = "codigoaleatorio", nullable = false, length = 45)
+    private String codigoaleatorio;
+
+    public String getCodigoaleatorio() {
+        return codigoaleatorio;
+    }
+
+    public void setCodigoaleatorio(String codigoaleatorio) {
+        this.codigoaleatorio = codigoaleatorio;
+    }
+
     public Sala getSalaIdsala() {
         return salaIdsala;
     }

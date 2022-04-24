@@ -12,6 +12,11 @@ public class AdminController {
 
     @RequestMapping("salas")
     public String paginaSalas(){
+
+
+
+
+
         return "admin/salas";
     }
     @RequestMapping("sedes")
