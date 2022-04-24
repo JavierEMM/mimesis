@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="includes/head.html :: head">MIMESIS</head>
-<body style="background-color:white;">
+<body>
+
   <div class="row">
     <div class="col">
       <header th:replace="includes/navbar.html :: navbar-usuario(option='Funciones')"></header>
@@ -10,18 +11,37 @@
   <div class="row">
     <div class="col">
       <main id="main" class="main-page">
-        <div style="justify-content: center;">
-          <h1 style="text-align: center"> DETALLES DE LA FUNCION </h1>
+        <div>
+          <h1 class="title-principal text-center"> Detalles de la funcion </h1>
         </div>
         <div class="container">
           <div class="section-right">
-            <h1>Moby Dick</h1>
+            <h2>Moby Dick</h2>
             <p>Drama | +16 </p>
           </div>
 
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 display-col">
               <img th:src="@{/img/moby_dick.jpg}" alt="moby_dick" class="img-fluid">
+                  <form>
+                    <h2 class="text-center">Añade la función a tu reserva</h2>
+                    <select class="form-select select-center">
+                      <option selected>Selecciona el teatro</option>
+                      <option>San Miguel</option>
+                      <option>San Juan</option>
+                    </select>
+                    <select class="form-select select-center">
+                      <option selected>Selecciona la fecha</option>
+                      <option>18/10/2022</option>
+                      <option>19/10/2022</option>
+                    </select>
+                    <div class="btn-center">
+                      <button type="submit" class="btn-success"> Reservar </button>
+                      <button type="submit" class="btn-secondary"> Comprar ahora </button>
+                    </div>
+                  </form>
+
+
             </div>
 
             <div class="col-md-6">
@@ -56,80 +76,12 @@
 
               </div>
             </div>
-
           </div>
         </div>
       </main>
     </div>
   </div>
-
-
-<footer id="footer">
-  <div class="footer-top">
-    <div class="container">
-      <div class="row">
-
-        <div class="col-lg-3 col-md-6 footer-info">
-          <img th:src="@{/img/logo.png}" alt="TheEvenet">
-          <p>“Si es absolutamente necesario que el arte o el teatro sirvan para algo, será para enseñar a la gente que hay actividades que no sirven para nada y que es indispensable que las haya.”</p>
-        </div>
-
-        <div class="col-lg-3 col-md-6 footer-links">
-          <h4>Links Utiles</h4>
-          <ul>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Pagina Principal</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Equipo</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Horarios</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Actores</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Directores</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-3 col-md-6 footer-links">
-          <h4>Informacion</h4>
-          <ul>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Presidente</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Administradores</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Operadores</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Programdores</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-3 col-md-6 footer-contact">
-          <h4>Contactnos</h4>
-          <p>
-            Av. Universitaria 1801 <br>
-            Lima, Lima 535022<br>
-            Peru <br>
-            <strong>Telefono:</strong> +1 963852741 <br>
-            <strong>Email:</strong> Pucp@pucp.edu.pe<br>
-          </p>
-
-          <div class="social-links">
-            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="google-plus"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="copyright">
-      &copy; Copyright <strong>TheEvent</strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </div>
-</footer>
-
-
+  <footer th:replace="includes/footer.html :: footer"></footer>
 <footer th:replace="includes/footer.html :: footer"></footer>
 </body>
 </html>

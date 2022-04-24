@@ -8,14 +8,24 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+
+:root{
+  --black: black;
+  --principal-title: 6rem;
+  --font-family-primary: 'Krub', sans-serif;
+}
+html{
+  font-size: 62.5%;
+}
+body{
+  font-size: 16px;
+  font-family: var(--font-family-primary);
+}
 .icon{
   display: inline-block;
   font-size: 44px;
   animation: float 5s ease-in-out infinite;
 }
-
-
-
 @keyframes float {
   0%{
     transform: translateY(0);
@@ -37,8 +47,13 @@ bi-twitter{
   animation-delay: 2s;
 }
 .title{
-  margin-top: 20px;
+  margin-top: 2rem;
   font-size: xx-large;
+  text-align: center;
+}
+.title-principal{
+  margin-top: 2rem;
+  font-size:  var(--principal-title);
   text-align: center;
 }
 td, th{
@@ -100,7 +115,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: 100%;
   overflow: visible;
-  background: #fff url("../img/preloader.svg") no-repeat center center;
+
 }
 
 /*--------------------------------------------------------------
@@ -449,20 +464,19 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
-#hero {
+.hero {
   width: 100%;
   height: 100vh;
-  background: url(../img/hero-bg.jpg) top center;
   background-size: cover;
   overflow: hidden;
   position: relative;
 }
 @media (min-width: 1024px) {
-  #hero {
+  .hero {
     background-attachment: fixed;
   }
 }
-#hero:before {
+.hero:before {
   content: "";
   background: rgba(6, 12, 34, 0.8);
   position: absolute;
@@ -471,7 +485,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   right: 0;
 }
-#hero .hero-container {
+.hero .hero-container {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -485,36 +499,36 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0 15px;
 }
 @media (max-width: 991px) {
-  #hero .hero-container {
+  .hero .hero-container {
     top: 70px;
   }
 }
-#hero h1 {
+.hero h1 {
   color: #fff;
   font-family: "Raleway", sans-serif;
   font-size: 56px;
   font-weight: 600;
   text-transform: uppercase;
 }
-#hero h1 span {
+.hero h1 span {
   color: #f82249;
 }
 @media (max-width: 991px) {
-  #hero h1 {
+  .hero h1 {
     font-size: 34px;
   }
 }
-#hero p {
+.hero p {
   color: #ebebeb;
   font-weight: 700;
   font-size: 20px;
 }
 @media (max-width: 991px) {
-  #hero p {
+  .hero p {
     font-size: 16px;
   }
 }
-#hero .play-btn {
+.hero .play-btn {
   width: 94px;
   height: 94px;
   background: radial-gradient(#f82249 50%, rgba(101, 111, 150, 0.15) 52%);
@@ -523,7 +537,7 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   overflow: hidden;
 }
-#hero .play-btn::after {
+.hero .play-btn::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -537,33 +551,11 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 100;
   transition: all 400ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
-#hero .play-btn:before {
-  content: "";
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  -webkit-animation-delay: 0s;
-  animation-delay: 0s;
-  -webkit-animation: pulsate-btn 2s;
-  animation: pulsate-btn 2s;
-  -webkit-animation-direction: forwards;
-  animation-direction: forwards;
-  -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
-  -webkit-animation-timing-function: steps;
-  animation-timing-function: steps;
-  opacity: 1;
-  border-radius: 50%;
-  border: 2px solid rgba(163, 163, 163, 0.4);
-  top: -15%;
-  left: -15%;
-  background: rgba(198, 16, 0, 0);
-}
-#hero .play-btn:hover::after {
+.hero .play-btn:hover::after {
   border-left: 15px solid #f82249;
   transform: scale(20);
 }
-#hero .play-btn:hover::before {
+.hero .play-btn:hover::before {
   content: "";
   position: absolute;
   left: 50%;
@@ -580,7 +572,7 @@ h1, h2, h3, h4, h5, h6 {
   animation: none;
   border-radius: 0;
 }
-#hero .about-btn {
+.hero .about-btn {
   font-family: "Raleway", sans-serif;
   font-weight: 500;
   font-size: 14px;
@@ -596,7 +588,7 @@ h1, h2, h3, h4, h5, h6 {
   animation-delay: 0.8s;
   border: 2px solid #f82249;
 }
-#hero .about-btn:hover {
+.hero .about-btn:hover {
   background: #f82249;
   color: #fff;
 }
@@ -625,14 +617,6 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
-#about {
-  background: url("../img/about-bg.jpg");
-  background-size: cover;
-  overflow: hidden;
-  position: relative;
-  color: #fff;
-  padding: 60px 0 40px 0;
-}
 @media (min-width: 1024px) {
   #about {
     background-attachment: fixed;
@@ -871,13 +855,6 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
   min-height: 300px;
 }
-#venue .venue-info {
-  background: url("../img/venue-info-bg.jpg") top center no-repeat;
-  background-size: cover;
-  position: relative;
-  padding-top: 60px;
-  padding-bottom: 60px;
-}
 #venue .venue-info:before {
   content: "";
   background: rgba(13, 20, 41, 0.8);
@@ -1046,18 +1023,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 20px;
   padding-bottom: 20px;
 }
-#faq .faq-list .question {
-  display: block;
-  position: relative;
-  font-family: #f82249;
-  font-size: 18px;
-  line-height: 24px;
-  font-weight: 400;
-  padding-left: 25px;
-  cursor: pointer;
-  color: #e0072f;
-  transition: 0.3s;
-}
+
 #faq .faq-list i {
   font-size: 16px;
   position: absolute;
@@ -1089,13 +1055,6 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # Subscribe Section
 --------------------------------------------------------------*/
-#subscribe {
-  padding: 60px;
-  background: url(../img/subscribe-bg.jpg) center center no-repeat;
-  background-size: cover;
-  overflow: hidden;
-  position: relative;
-}
 #subscribe:before {
   content: "";
   background: rgba(6, 12, 34, 0.6);
@@ -1474,4 +1433,25 @@ h1, h2, h3, h4, h5, h6 {
 
 div > .btn-success{
   margin-right: 10px;
+}
+.display-block{
+  background-color: var(--black);
+  display: block;
+}
+.text-center{
+  text-align: center;
+}
+.select-center{
+  width: 20rem;
+  margin: 1rem auto;
+}
+.btn-center{
+  display: flex;
+  justify-content: space-evenly;
+}
+.display-col{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 }

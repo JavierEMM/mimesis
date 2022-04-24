@@ -66,7 +66,4 @@ public class AdminController {
     public String clientes(){
         return "admin/clientes";
     }
-
-
-
 }
