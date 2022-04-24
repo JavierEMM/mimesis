@@ -1,5 +1,7 @@
 package com.mimesis.controller;
 
+import com.mimesis.entity.Actor;
+import com.mimesis.entity.Funcion;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,23 +53,7 @@ public class OperadorController {
     public String editarOperador (){ return "operador/editoperador";}
 
     @PostMapping("/new")
-    public String newFuncion (Funcion funcion, @RequestParam("horai") String horainicio,@RequestParam("horaf") String horafin,
-                              @RequestParam("fechai") String fechainicio){
-        ArrayList<Actor> listaActSelect = new ArrayList<>();
-        listaActSelect.addAll(funcion.getActors());
-        System.out.println(funcion.getNombre());
-        System.out.println(funcion.getAforo());
-        System.out.println(funcion.getCosto());
-        System.out.println(funcion.getGenero());
-        funcion.setId(0);
-        funcion.setHorainicio(LocalTime.parse(horainicio));
-        funcion.setHorafin(LocalTime.parse(horafin));
-        funcion.setFecha(LocalDate.parse(fechainicio));
-        System.out.println(funcion.getIddirector());
-        for(Actor act : listaActSelect){
-            System.out.println("Actors size :"+act.getNombre());
-        }
-        funcionRepository.save(funcion);
+    public String newFuncion (){
         return  "redirect:/operador";
     }
 
