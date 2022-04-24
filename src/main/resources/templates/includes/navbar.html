@@ -15,7 +15,7 @@
         </div>
     </header>
 
- <header th:fragment="navbar-usuario(option)" style="background-color: black; position: fixed" id="header" class="d-flex align-items-center">
+ <header th:fragment="navbar-usuario(option)"  id="header" class="d-flex align-items-center" th:classappend="${'display-block'}">
         <div class="container-fluid container-xxl d-flex align-items-center ">
             <div class="me-auto" id="logo">
                 <a href=""><img th:src="@{img/logo.png}" alt="MIMESIS"></a>
