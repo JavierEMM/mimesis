@@ -52,4 +52,8 @@ public class UsuarioController {
     }
 
 
+    @GetMapping("/iniciarsesion")
+    public String login(){
+        return "login/login";
+    }
 }
