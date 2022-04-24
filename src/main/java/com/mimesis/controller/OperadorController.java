@@ -6,9 +6,7 @@ import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -29,31 +27,44 @@ public class OperadorController {
     @Autowired
     SalasRepository salasRepository;
 
-    @RequestMapping("")
+    @GetMapping(value = {"/",""})
     public String paginaPrincipal(Model model){
         List<Funcion> lista = funcionRepository.findAll();
         model.addAttribute("listaFunciones",funcionRepository.findAll());
 
         return "operador/listafunciones";
     }
-    @RequestMapping("/crearfuncion")
-    public String nuevaFuncion (Model model){
-        Funcion funcionNueva = new Funcion();
-        funcionNueva.setId(0);
-        model.addAttribute("funcionNueva",funcionNueva);
+    @GetMapping("/crearfuncion")
+    public String nuevaFuncion (@ModelAttribute("funcion") Funcion funcion, Model model){
         model.addAttribute("listaActores",actorRepository.findAll());
         model.addAttribute("listaDirectores",directorRepository.findAll());
         model.addAttribute("listaSedes",sedesRepository.findAll());
         model.addAttribute("listaSalas",salasRepository.findAll());
         return "operador/crearfuncion";
     }
-    @RequestMapping("/estadisticas")
+    @GetMapping("/estadisticas")
     public String estadisticas (){ return "operador/estadisticas";}
-    @RequestMapping("/edit")
+    @GetMapping("/edit")
     public String editarOperador (){ return "operador/editoperador";}
 
     @PostMapping("/new")
-    public String newFuncion (){
+    public String newFuncion (@ModelAttribute("funcion") Funcion funcion, Model model,@RequestParam("actoresObra") List<Actor> actoresObra){
+        ArrayList<Actor> listaActSelect = new ArrayList<>();
+        listaActSelect.addAll(actoresObra);
+        funcion.setActoresPorFuncion(actoresObra);
+        System.out.println(funcion.getNombre());
+        System.out.println(funcion.getAforo());
+        System.out.println(funcion.getCosto());
+        System.out.println(funcion.getGenero());
+        System.out.println(funcion.getIdsala().getNombre());
+        System.out.println(funcion.getIddirector().getNombre());
+        for(Actor act : listaActSelect){
+            System.out.println("Actors size :"+act.getNombre());
+        }
+        System.out.println(funcion.getHorainicio());
+        System.out.println(funcion.getHorafin() );
+        System.out.println(funcion.getActoresPorFuncion().get(0).getNombre());
+        funcionRepository.save(funcion);
         return  "redirect:/operador";
     }
 

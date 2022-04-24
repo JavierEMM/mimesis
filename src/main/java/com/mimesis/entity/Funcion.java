@@ -4,9 +4,12 @@ import com.mimesis.entity.Director;
 import com.mimesis.entity.Sala;
 import com.mimesis.entity.Sede;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "funcion")
@@ -15,6 +18,20 @@ public class Funcion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idfuncion", nullable = false)
     private Integer id;
+
+    @ManyToMany
+    @JoinTable(name="funciontieneactor",
+    joinColumns = @JoinColumn(name = "idfuncion"),
+    inverseJoinColumns = @JoinColumn(name = "idactor"))
+    private List<Actor> actoresPorFuncion;
+
+    public List<Actor> getActoresPorFuncion() {
+        return actoresPorFuncion;
+    }
+
+    public void setActoresPorFuncion(List<Actor> actoresPorFuncion) {
+        this.actoresPorFuncion = actoresPorFuncion;
+    }
 
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
@@ -26,12 +43,14 @@ public class Funcion {
     private String restricciondeedad;
 
     @Column(name = "fecha", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
     @Column(name = "aforo", nullable = false)
     private Integer aforo;
 
     @Column(name = "horainicio", nullable = false)
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime horainicio;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -39,6 +58,7 @@ public class Funcion {
     private Director iddirector;
 
     @Column(name = "horafin", nullable = false)
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime horafin;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -47,6 +67,7 @@ public class Funcion {
 
     @Column(name = "costo", nullable = false, length = 45)
     private String costo;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idsala", nullable = false)
@@ -59,6 +80,7 @@ public class Funcion {
     public void setIdsala(Sala idsala) {
         this.idsala = idsala;
     }
+
 
     public String getCosto() {
         return costo;
