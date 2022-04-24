@@ -24,8 +24,8 @@
                         <input type="text" class="form-control" th:field="*{aforo}">
                     </div>
                     <div>
-                        <label for="idsede">Sede</label>
-                        <select id="idsede" name="idsede" class="form-select text-left text-lg text-medium">
+                        <label >Sede</label>
+                        <select th:field="*{idsede}" class="form-select text-left text-lg text-medium">
                             <option th:each="sede:${sedeList}"
                                     th:value="${sede.id}"
                                     th:text="${sede.nombre}">

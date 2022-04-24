@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -78,30 +81,57 @@ public class AdminController {
         return "admin/sedes";
     }
 
+    @RequestMapping("agregarsedes")
+    public String paginaAgregarsedes(Sede sede){
+        return "admin/agregarsedes";
+    }
+
+    @PostMapping("savesedes")
+    public String savesedes(Sede sede){
+        sedesRepository.save(sede);
+        return "redirect:/admin/sedes";
+    }
+
+    @GetMapping("editarsedes")
+    public String paginaEditarsedes(@RequestParam("id") Integer id, Model model){
+        Optional<Sede> optionalSede = sedesRepository.findById(id);
+        if(optionalSede.isPresent()){
+            Sede sede = optionalSede.get();
+            model.addAttribute("sede",sede);
+            //List<Sede> sedeList=sedesRepository.findAll();
+            //model.addAttribute("sedeList",sedeList);
+            return "admin/editarsedes";
+        } else {
+            return "redirect:/admin/sedes";
+        }
+    }
+
+    @GetMapping("/borrarsede")
+    public  String borrarsede(@RequestParam("id") Integer id){
+        Optional<Sede> optionalSede = sedesRepository.findById(id);
+        if(optionalSede.isPresent()){
+            sedesRepository.deleteById(id);
+        }
+        return "redirect:/admin/sedes";
+    }
+
+
+
+
     @RequestMapping("actoresydirectores")
     public String paginaActoresydirectores(){
         return "admin/actoresydirectores";
     }
-    @RequestMapping("agregarsalas")
-    public String paginaAgregarsalas(){
-        return "admin/agregarsalas";
-    }
-    @RequestMapping("agregarsedes")
-    public String paginaAgregarsedes(){
-        return "admin/agregarsedes";
-    }
+
+
+
+
     @RequestMapping("agregaractoresydirectores")
     public String paginaAgregaractoresydirectores(){
         return "admin/agregaractoresydirectores";
     }
-    @RequestMapping("editarsalas")
-    public String paginaEditarsalas(){
-        return "admin/editarsalas";
-    }
-    @RequestMapping("editarsedes")
-    public String paginaEditarsedes(){
-        return "admin/editarsedes";
-    }
+
+
     @RequestMapping("editaractoresydirectores")
     public String paginaEditaractoresydirectores(){
         return "admin/editaractoresydirectores";
@@ -127,4 +157,7 @@ public class AdminController {
         model.addAttribute("listaClientes",usuarioRepository.findByRol("Cliente"));
         return "admin/clientes";
     }
+
+
+
 }
