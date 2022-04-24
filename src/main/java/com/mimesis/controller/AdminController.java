@@ -2,16 +2,17 @@ package com.mimesis.controller;
 
 import com.mimesis.entity.Sala;
 import com.mimesis.entity.Sede;
-import com.mimesis.repository.SalasRepository;
-import com.mimesis.repository.SedesRepository;
-import com.mimesis.repository.UsuarioRepository;
+import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -88,8 +89,11 @@ public class AdminController {
     public String paginaActoresydirectores(Model model){
         model.addAttribute("listaActores",actorRepository.findAll());
         model.addAttribute("listaDirectores",directorRepository.findAll());
+        return "admin/actoresydirectores";
+    }
+
     @RequestMapping("agregarsedes")
-    public String paginaAgregarsedes(Sede sede){
+    public String paginaAgregarsedes(Sede sede) {
         return "admin/agregarsedes";
     }
 
@@ -123,18 +127,6 @@ public class AdminController {
     }
 
 
-
-
-    @RequestMapping("actoresydirectores")
-    public String paginaActoresydirectores(){
-        return "admin/actoresydirectores";
-    }
-
-
-    @RequestMapping("agregarsedes")
-    public String paginaAgregarsedes(){
-        return "admin/agregarsedes";
-    }
     @RequestMapping("agregaractoresydirectores")
     public String paginaAgregaractoresydirectores(){
         return "admin/agregaractoresydirectores";
