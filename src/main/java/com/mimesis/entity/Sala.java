@@ -1,6 +1,6 @@
 package com.mimesis.entity;
 
-import com.mimesis.entity.Sede;
+
 
 import javax.persistence.*;
 
@@ -53,4 +53,6 @@ public class Sala {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    //TODO Reverse Engineering! Migrate other columns to the entity
 }
