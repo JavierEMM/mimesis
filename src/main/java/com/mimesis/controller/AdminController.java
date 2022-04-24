@@ -77,6 +77,8 @@ public class AdminController {
         return "redirect:/admin/salas";
     }
 
+
+
     @GetMapping("sedes")
     public String paginaSedes(Model model){
         model.addAttribute("listaSedes",sedesRepository.findAll());
@@ -90,11 +92,41 @@ public class AdminController {
         return "admin/actoresydirectores";
     }
 
-
     @RequestMapping("agregarsedes")
-    public String paginaAgregarsedes(){
+    public String paginaAgregarsedes(Sede sede) {
         return "admin/agregarsedes";
     }
+
+    @PostMapping("savesedes")
+    public String savesedes(Sede sede){
+        sedesRepository.save(sede);
+        return "redirect:/admin/sedes";
+    }
+
+    @GetMapping("editarsedes")
+    public String paginaEditarsedes(@RequestParam("id") Integer id, Model model){
+        Optional<Sede> optionalSede = sedesRepository.findById(id);
+        if(optionalSede.isPresent()){
+            Sede sede = optionalSede.get();
+            model.addAttribute("sede",sede);
+            //List<Sede> sedeList=sedesRepository.findAll();
+            //model.addAttribute("sedeList",sedeList);
+            return "admin/editarsedes";
+        } else {
+            return "redirect:/admin/sedes";
+        }
+    }
+
+    @GetMapping("/borrarsede")
+    public  String borrarsede(@RequestParam("id") Integer id){
+        Optional<Sede> optionalSede = sedesRepository.findById(id);
+        if(optionalSede.isPresent()){
+            sedesRepository.deleteById(id);
+        }
+        return "redirect:/admin/sedes";
+    }
+
+
     @RequestMapping("agregaractoresydirectores")
     public String paginaAgregaractoresydirectores(){
         return "admin/agregaractoresydirectores";
@@ -103,6 +135,8 @@ public class AdminController {
     public String paginaEditarsedes(){
         return "admin/editarsedes";
     }
+
+
     @RequestMapping("editaractoresydirectores")
     public String paginaEditaractoresydirectores(){
         return "admin/editaractoresydirectores";
@@ -128,4 +162,7 @@ public class AdminController {
         model.addAttribute("listaClientes",usuarioRepository.findByRol("Cliente"));
         return "admin/clientes";
     }
+
+
+
 }
