@@ -1,5 +1,7 @@
 package com.mimesis.controller;
 
+import com.mimesis.entity.Actor;
+import com.mimesis.entity.Funcion;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,10 +53,10 @@ public class OperadorController {
     public String editarOperador (){ return "operador/editoperador";}
 
     @PostMapping("/new")
-    public String newFuncion (Funcion funcion, @RequestParam("horai") String horainicio,@RequestParam("horaf") String horafin,
+    public String newFuncion (Funcion funcion, @RequestParam("horai") String horainicio, @RequestParam("horaf") String horafin,
                               @RequestParam("fechai") String fechainicio){
         ArrayList<Actor> listaActSelect = new ArrayList<>();
-        listaActSelect.addAll(funcion.getActors());
+        //listaActSelect.addAll(funcion.getActors());
         System.out.println(funcion.getNombre());
         System.out.println(funcion.getAforo());
         System.out.println(funcion.getCosto());

@@ -1,6 +1,7 @@
 package com.mimesis.controller;
 
 import com.mimesis.repository.SedesRepository;
+import com.mimesis.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,9 @@ public class AdminController {
 
     @Autowired
     SedesRepository sedesRepository;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @RequestMapping("salas")
     public String paginaSalas(){
@@ -56,7 +60,8 @@ public class AdminController {
     }
 
     @RequestMapping("operadores")
-    public String operadores(){
+    public String operadores(Model model){
+        model.addAttribute("listaOperadores",usuarioRepository.findByRol("Operador"));
         return "admin/operadores";
     }
 
@@ -70,7 +75,8 @@ public class AdminController {
     }
 
     @RequestMapping("clientes")
-    public String clientes(){
+    public String clientes(Model model){
+        model.addAttribute("listaClientes",usuarioRepository.findByRol("Cliente"));
         return "admin/clientes";
     }
 }

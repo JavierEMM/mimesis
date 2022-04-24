@@ -34,30 +34,28 @@
     <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
-            <th class="text-center">Sede</th>
-            <th class="text-center">Ubicacion</th>
-            <th class="text-center">Foto</th>
-            <th class="text-center">Editar</th>
+            <th class="text-center">#</th>
+            <th class="text-center">Operador</th>
+            <th class="text-center">Correo</th>
             <th class="text-center">Eliminar</th>
         </tr>
         </thead>
 
         <tbody>
         <tr>
-            <td class="text-center text-lg text-medium">San Isidro</td>
-            <td class="text-center text-lg text-medium">###############</td>
-            <td class="text-center text-lg text-medium">Foto</td>
-            <td class="text-center text-lg text-medium">
-                <a class="btn btn-primary" th:href="@{'/admin/editaroperador'}"><i class="bi bi-pencil-square"></i></a>
-            </td>
+        <tr th:each="operador,i : ${listaOperadores}">
+            <td th:text="${i.index + 1}"></td>
+            <td th:text="${operador.nombre}+' '+${operador.apellido}"></td>
+            <td th:text="${operador.correo}"></td>
             <td class="text-center">
                 <form id="1" method="post" action="">
                     <input name="test" value="1" type="hidden"/>
-                    <button onclick="return confirm('¿Esta seguro que desea eliminar la sala?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
+                    <button onclick="return confirm('¿Esta seguro que desea eliminar el cliente?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                         <i class="bi bi-trash"></i>
                     </button>
                 </form>
             </td>
+        </tr>
         </tr>
 
         </tbody>
