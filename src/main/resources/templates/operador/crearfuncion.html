@@ -11,26 +11,26 @@
                 </div>
             </div>
             <div class="row">
-                <form th:action="@{/operador/new}" th:object="${funcionNueva}" method="post">
+                <form th:action="@{/operador/new}" th:object="${funcion}" method="post">
+                    <input th:field="*{id}" type="hidden"/>
                 <div class="form-group col-xl-4">
                     <label for="nombre" class="letter">Nombre</label>
-                    <input id="nombre" class="form-control" type="text" name="nombre"/>
+                    <input id="nombre" class="form-control" type="text" th:field="*{nombre}"/>
                 </div>
                 <div class="form-group col-xl-4">
                     <label for="fechainicio" class="letter">Fecha Inicio</label>
-                    <input id="fechainicio" class="form-control" type="date" name="fechai"/>
+                    <input id="fechainicio" class="form-control" type="date" th:field="*{fecha}" />
                 </div>
                 <div class="form-group col-xl-2">
                     <label for="horai" class="letter">Hora Inicio</label>
-                    <input id="horai" class="form-control" type="time" name="horai"/>
+                    <input id="horai" class="form-control" type="time" th:field="*{horainicio}"/>
                     <label for="horaf" class="letter">Hora Fin</label>
-                    <input id="horaf" class="form-control" type="time" name="horaf"/>
+                    <input id="horaf" class="form-control" type="time" th:field="*{horafin}"/>
                 </div>
 
                 <div class="form-group col-xl-2">
                     <label for="genero" class="letter">Genero</label>
-                    <select class="form-select" id="genero" name="genero">
-                        <option hidden selected>Genero</option>
+                    <select class="form-select" id="genero" th:field="*{genero}">
                         <option value="Drama">Drama</option>
                         <option value="Comedia">Comedia</option>
                         <option value="Ciencia ficcion">Ciencia ficcion</option>
@@ -42,13 +42,13 @@
                 <div class="row">
                 <div class="form-group col-xl-4">
                     <label for="iddirector" class="letter">Director</label>
-                    <select class="form-select" id="iddirector" name="iddirector">
+                    <select class="form-select" id="iddirector" th:field="*{iddirector}">
                         <option th:each="director : ${listaDirectores}" th:value="${director.id}" th:text="${director.nombre}">Mark</option>
                     </select>
                 </div>
                 <div class="form-group col-xl-4">
                     <label for="restriccion" class="letter">Restriccion de Edad</label>
-                    <select id="restriccion" class="form-select" name="restricciondeedad">
+                    <select id="restriccion" class="form-select" th:name="restricciondeedad">
                         <option hidden selected>Restriccion de edad</option>
                         <option value="Apto para todo publico">Apto para todo publico</option>
                         <option value="+12">+12</option>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="form-group col-xl-4">
                     <label for="sede" class="letter">Sede</label>
-                    <select id="sede" class="form-select" name="sede">
+                    <select id="sede" class="form-select" th:name="idsede">
                         <option hidden selected>Sede</option>
                         <option th:each="sede : ${listaSedes}" th:value="${sede.id}" th:text="${sede.nombre}">San Miguel</option>
                     </select>
@@ -68,19 +68,19 @@
             <div class="row">
                 <div class="form-group col-xl-2">
                     <label for="sala" class="letter">Sala</label>
-                    <select id="sala" class="form-select" name="sala">
+                    <select id="sala" class="form-select" name="idsala">
                         <option hidden selected>Sala</option>
                         <option th:each="sala : ${listaSalas} " th:value="${sala.id}" th:text="'Sala de id '+ ${sala.id}">Sala 1</option>
                     </select>
                 </div>
                 <div class="form-group col-xl-2">
                     <label for="precio" class="letter">Precio</label>
-                    <input id="precio" class="form-control" type="number" name="costo" min="0"/>
+                    <input id="precio" class="form-control" type="number" th:field="*{costo}" min="0"/>
                     <label for="aforo" class="letter">Aforo</label>
-                    <input id="aforo" class="form-control" type="number" name="aforo" min="0"/>
+                    <input id="aforo" class="form-control" type="number" th:field="*{aforo}" min="0"/>
                 </div>
-                <div class="col-xl-8">
-                    <table class="table">
+                <div class="col-xl-8" data-bs-spy="scroll" data-bs-offset="0" tabindex="0">
+                    <table class="table" >
                         <thead class="thead-dark">
                             <th scope="col">Actores</th>
                         </thead>
@@ -88,7 +88,7 @@
                             <tr th:each="actor: ${listaActores}" >
                                 <td th:text="${actor.nombre}" ></td>
                                 <td th:text="${actor.apellido}">Mark</td>
-                                <td><input type="checkbox" th:field="*{actors}" th:value="${actor.id}"></td>
+                                <td><input type="checkbox" th:name="actoresObra" th:value="${actor.id}"></td>
                             </tr>
                         </tbody>
                     </table>

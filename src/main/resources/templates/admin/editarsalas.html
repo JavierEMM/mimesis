@@ -13,23 +13,23 @@
             <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 400px; text-align: center">
                 <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
                 <h1 class="pb-2 mb-4 border-bottom">Editar Salas</h1>
-                <form method="post">
-                    <input type="hidden" />
+                <form method="post" th:action="@{'/admin/savesalas'}" th:object="${sala}">
+                    <input type="hidden" th:field="*{id}"/>
                     <div class="mb-3">
                         <label class="form-label">Número de sala</label>
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" th:field="*{nombre}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Aforo</label>
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" th:field="*{aforo}">
                     </div>
                     <div>
-                        <label>Sede</label>
-                        <select class="form-select text-left text-lg text-medium">
-                            <option>San Miki</option>
-                            <option>San Martin de Porres</option>
-                            <option>Lince</option>
-                            <option>Jesus Maria</option>
+                        <label for="idsede">Sede</label>
+                        <select id="idsede" name="idsede" class="form-select text-left text-lg text-medium">
+                            <option th:each="sede:${sedeList}"
+                                    th:value="${sede.id}"
+                                    th:text="${sede.nombre}">
+                            </option>
                         </select>
                     </div>
                     <br>

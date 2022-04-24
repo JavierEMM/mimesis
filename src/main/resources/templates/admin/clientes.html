@@ -31,26 +31,23 @@
     <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
+            <th class="text-center">#</th>
             <th class="text-center">Cliente</th>
             <th class="text-center">DNI</th>
-            <th class="text-center">Sede</th>
-            <th class="text-center">Eliminar</th>
+            <th class="text-center">Correo</th>
+            <th class="text-center">Numero telefonico</th>
+            <th class="text-center">Direccion</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr>
-            <td class="text-center text-lg text-medium">Diego Guillen</td>
-            <td class="text-center text-lg text-medium">12345678</td>
-            <td class="text-center text-lg text-medium">San Isidro</td>
-            <td class="text-center">
-                <form id="1" method="post" action="">
-                    <input name="test" value="1" type="hidden"/>
-                    <button onclick="return confirm('¿Esta seguro que desea eliminar la sala?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </form>
-            </td>
+        <tr th:each="usuario,i : ${listaClientes}">
+            <td th:text="${i.index + 1}"></td>
+            <td th:text="${usuario.nombre}+' '+${usuario.apellido}"></td>
+            <td th:text="${usuario.dni}"></td>
+            <td th:text="${usuario.correo}"></td>
+            <td th:text="${usuario.numerotelefonico}"></td>
+            <td th:text="${usuario.direccion}"></td>
         </tr>
 
         </tbody>

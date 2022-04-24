@@ -34,22 +34,22 @@
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th class="text-center">Número de sala</th>
+                    <th class="text-center">Nombre de la sala</th>
                     <th class="text-center">Sede</th>
                     <th class="text-center">Aforo</th>
-                    <th class="text-center">Fecha de creación</th>
+                    <!--th class="text-center">Fecha de creación</th-->
                     <th class="text-center">Editar</th>
                     <th class="text-center">Eliminar</th>
                 </tr>
             </thead>
         <tbody>
-            <tr>
-                <td class="text-center text-lg text-medium">Número de sala</td>
-                <td class="text-center text-lg text-medium">San Isidro</td>
-                <td class="text-center text-lg text-medium">15</td>
-                <td class="text-center text-lg text-medium">Diciembre 10,1815</td>
+            <tr th:each="sala: ${salaList}">
+                <td th:text="${sala.nombre}"></td>
+                <td th:text="${sala.idsede.getNombre()}"></td>
+                <td th:text="${sala.aforo}"></td>
+                <!--td class="text-center text-lg text-medium">Diciembre 10,1815</td-->
                 <td class="text-center text-lg text-medium">
-                    <a class="btn btn-primary" th:href="@{'/admin/editarsalas'}"><i class="bi bi-pencil-square"></i></a>
+                    <a class="btn btn-primary" th:href="@{'/admin/editarsalas?id=' + ${sala.id}}"><i class="bi bi-pencil-square"></i></a>
                 </td>
                 <td class="text-center">
                     <!--
@@ -72,18 +72,14 @@
                     </div> -->
                     <!-- <a class="remove-from-cart" data-bs-toggle="modal" href="#exampleModalToggle" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="bi bi-trash"></i></a> -->
                     <!-- <div class="column"><a style="width:120px; margin:5px;" class="btn btn-success" > <i class="bi bi-trash" ></i> </a></div> -->
-                    <form id="1" method="post" action="">
-                        <input name="test" value="1" type="hidden"/>
-                        <button onclick="return confirm('¿Esta seguro que desea eliminar la sala?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
+                    <form id="id" method="get" th:action="@{'/admin/borrar?id=' + ${sala.id}}">
+                        <input name="id" th:value="${sala.id}" type="hidden"/>
+                        <button onclick="return confirm('¿Esta seguro que desea eliminar la sala?')"  class="btn btn-outline-danger flex-shrink-0" type="submit" >
                             <i class="bi bi-trash"></i>
                         </button>
                     </form>
                 </td>
             </tr>
-
-
-
-
 
         </tbody>
         </table>
