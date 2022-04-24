@@ -1,10 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="includes/head.html :: head">MIMESIS</head>
+<body style="background-color: white;">
+<div class="main">
+    <section class="sign-in">
+        <div class="container">
+                <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 400px; text-align: center">
+                    <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; color: white;box-shadow: 7px 13px 37px #000;">
+                        <h1 class="border-bottom" style="color:crimson"><b>Iniciar sesión</b></h1>
+                        <br>
+                        <h5 style="color: white">Ingresa a tu cuenta para que puedas vivir al maximo la experiencia en Mimesis</h5>
+                        <br>
+                    <form method="POST" id="login-form">
+                        <div class="form-group">
+                            <label for="correo">Correo      :</label>
+                            <input type="correo" name="correo" id="correo" placeholder="Correo electrónico"/>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="contrasenia">Contraseña :</label>
+                            <input type="password" name="constrasenia" id="contrasenia" placeholder="Contraseña"/>
+                        </div>
+                        <br>
+                        <div class="form-group" >
+                            <a href="" style="color: #4869df">¿Has olvidado tu contraseña?</a>
+                        </div>
+                        <br>
+                        <div class="form-group form-button">
+                            <div style="display:flex; align-items:center; justify-content:center;" class="column">
+                                <button class="btn btn-outline-danger" style="width:150px" type="submit">Ingresar</button>
+                            </div>
+                        </div>
+                    </form>
+                    </section>
 
-    </body>
+                    <br>
+                    <br>
+
+                    <div class="d-flex align-items-center justify-content-center pb-4">
+                        <p class="mb-0 me-2">¿Aún no tienes una cuenta?</p>
+                        <hr>
+                        <a href="" type="button"
+                           class=" btn btn-danger">Registrate
+                        </a>
+                    </div>
+
+                </div>
+           </div>
+    </section>
+
+</div>
+</body>
 </html>
