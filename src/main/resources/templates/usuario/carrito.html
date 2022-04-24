@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 
-<html lang="es">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body>
         <header th:replace="includes/navbar.html :: navbar-usuario(option='Funciones')"></header>
-        <div class="container padding-bottom-3x mb-1", style=" margin-top: 25px;">
+        <div class="container padding-bottom-3x mb-1" style=" margin-top: 25px;">
             <form method="post" enctype="multipart/form-data">
                 <div class="table-responsive shopping-cart">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Productos</th>
+                                <th>IMAGEN</th>
+                                <th>Funcion</th>
+                                <th class="text-center">Fecha/Hora</th>
                                 <th class="text-center">Cantidad</th>
-                                <th class="text-center">Precio</th>
-                                <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="">Limpiar Carrito</a></th>
-                                <th class="text-center">Receta</th>
+                                <th class="text-center">Sede</th>
+                                <th class="text-center">Costo</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             <tr>
-                                <td>
-                                    <div class="product-item">
-                                        <a class="product-thumb" href="#"><img alt="Product"></a>
-                                        <div class="product-info">
-                                            <h4 class="product-title"><a href="#"></a></h4><span><em>Codigo:</em></span><span><em>Stock:</em></span>
-                                        </div>
-                                    </div>
+                                <td><img th:src="@{/img/moby_dick.jpg}" width="30rem" height="30rem">
                                 </td>
-                                <td class="text-center text-lg text-medium"></td>
-                                <td class="text-center text-lg text-medium">S/</td>
+                                <td class="text-center text-lg text-medium">Mobydick</td>
+                                <td class="text-center text-lg text-medium">20/10/2022</td>
+                                <td class="text-center text-lg text-medium"><input type="number" class="form-control"></td>
+                                <td class="text-center text-lg text-medium">San Miguel</td>
+                                <td class="text-center text-lg text-medium">S/ 20</td>
                                 <td class="text-center">
                                     <a class="btn btn-outline-danger flex-shrink-0" type="submit">
                                         <i class="bi bi-trash"></i>
@@ -39,9 +37,9 @@
                         </tbody>
                     </table>
                     <div class="shopping-cart-footer">
-                        <div class="column">
+                        <div class="column header-display">
                             <button onclick="" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Comprar
+                                Comprar Ahora
                             </button>
                         </div>
                     </div>
@@ -50,14 +48,6 @@
         </div>
 
         </div>
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Proyecto Ingenieria Web : TeleDrugs</p></div>
-        </footer>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="FlujoUsuario/js/scripts.js"></script>
+        <footer th:replace="includes/footer.html :: footer"></footer>
     </body>
-            </html>
+</html>

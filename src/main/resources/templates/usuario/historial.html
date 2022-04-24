@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="includes/head.html :: head">MIMESIS</head>
+    <body>
+        <header th:replace="/includes/navbar.html :: navbar-usuario(option = 'Historial')" id="header" class="d-flex align-items-center">
+        </header>
+        <div class="container">
+            <div class="row" >
+                <div class="col-xl">
+                    <p class="title">Calificacion</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h2>OBRA</h2>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="text-align: center;" scope="col">Foto</th>
+                                <th style="text-align: center;" scope="col">Funcion</th>
+                                <th style="text-align: center;" scope="col">Calificacion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;"><img th:src="@{/img/moby_dick.jpg}" width="40rem" height="40rem"></td>
+                                <td style="text-align: center;">Mobydick</td>
+                                <td style="text-align: center;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h2>DIRECTOR</h2>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="text-align: center;" scope="col">Foto</th>
+                                <th style="text-align: center;" scope="col">Nombre</th>
+                                <th style="text-align: center;" scope="col">Apellido</th>
+                                <th style="text-align: center;" scope="col">Correo</th>
+                                <th style="text-align: center;" scope="col">Calificacion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;"><img th:src="@{/img/director.jpg}" width="40rem" height="40rem"></td>
+                                <td style="text-align: center;">Juan</td>
+                                <td style="text-align: center;">Perez</td>
+                                <td style="text-align: center;">juan.perez@gmail.com</td>
+                                <td style="text-align: center;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h2>ACTORES</h2>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="text-align: center;" scope="col">Foto</th>
+                                <th style="text-align: center;" scope="col">Nombre</th>
+                                <th style="text-align: center;" scope="col">Apellido</th>
+                                <th style="text-align: center;" scope="col">Correo</th>
+                                <th style="text-align: center;" scope="col">Calificacion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;"><img th:src="@{/img/cachin.png}" width="40rem" height="40rem"></td>
+                                <td style="text-align: center;">Cachin</td>
+                                <td style="text-align: center;">Alcantara</td>
+                                <td style="text-align: center;">alcantara.12@gmail.com</td>
+                                <td style="text-align: center;"></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;"><img th:src="@{/img/cachin.png}" width="40rem" height="40rem"></td>
+                                <td style="text-align: center;">Cachin2</td>
+                                <td style="text-align: center;">Alcantara2</td>
+                                <td style="text-align: center;">alcantara2.12@gmail.com</td>
+                                <td style="text-align: center;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+        </div>
+        <footer th:replace="/includes/footer.html :: footer"></footer>
+    </body>
+</html>

@@ -23,7 +23,7 @@
                      <a href=""><img class="hundred-percent" th:src="@{img/logo.png}" alt="MIMESIS"></a>
                  </div>
              </div>
-             <div class="col-md-5 header-display">
+             <div class="col-md-6 header-display">
                  <div class="container-fluid container-xxl">
                      <nav id="navbar" class="navbar order-last order-lg-0">
                          <ul>
@@ -37,12 +37,14 @@
                              <li th:if="${option!='Actores'}"><a  class="nav-link scrollto" th:href="@{/actores}">Actores</a></li>
                              <li th:if="${option=='Directores'}" ><a  class="nav-link scrollto active" th:href="@{/directores}">Directores</a></li>
                              <li th:if="${option!='Directores'}" ><a class="nav-link scrollto " th:href="@{/directores}">Directores</a></li>
+                             <li th:if="${option=='Historial'}" ><a class="nav-link scrollto active" th:href="@{/historial}">Historial</a></li>
+                             <li th:if="${option!='Historial'}" ><a class="nav-link scrollto" th:href="@{/historial}">Historial</a></li>
                          </ul>
                          <i class="bi bi-list mobile-nav-toggle"></i>
                      </nav>
                  </div>
              </div>
-             <div class="col-3 header-display">
+             <div class="col-2 header-display">
                  <input class="hundred-percent form-control" type="text" placeholder="Buscar obra">
              </div>
              <div class="col-1 header-display">
@@ -58,7 +60,7 @@
                  </div>
              </div>
              <div class="col-1 header-display">
-                 <form method="get" th:action="@{/carrito}"  class="hundred-percent">
+                 <form method="post" th:action="@{/carrito/comprar}"  class="hundred-percent">
                      <form class="d-flex">
                          <button class="btn btn-outline-dark" type="submit">
                              <i class="bi-cart-fill me-1"></i>

@@ -1473,3 +1473,8 @@ div > .btn-success{
   align-items: center;
   justify-content: center;
 }
+.fondo{
+  padding: 1rem;
+  border: medium solid black;
+  border-radius: 0.5rem;
+}
