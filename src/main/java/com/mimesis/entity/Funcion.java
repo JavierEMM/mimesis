@@ -20,9 +20,6 @@ public class Funcion {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
-    @Column(name = "`duración`", nullable = false)
-    private Double duración;
-
     @Column(name = "genero", nullable = false, length = 45)
     private String genero;
 
@@ -42,8 +39,8 @@ public class Funcion {
     private LocalTime horafin;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "sede_idsede", nullable = false)
-    private Sede sedeIdsede;
+    @JoinColumn(name = "idsede", nullable = false)
+    private Sede idsede;
 
     @OneToMany(mappedBy = "funcionIdfuncion")
     private Set<Calificacione> calificaciones = new LinkedHashSet<>();
@@ -56,9 +53,7 @@ public class Funcion {
 
     @OneToMany(mappedBy = "funcionIdfuncion")
     private Set<Boleto> boletos = new LinkedHashSet<>();
-
-
-
+    
     @Column(name = "costo", length = 45)
     private String costo;
 
@@ -103,13 +98,9 @@ public class Funcion {
         this.calificaciones = calificaciones;
     }
 
-    public Sede getSedeIdsede() {
-        return sedeIdsede;
-    }
+    public Sede getIdsede() {return idsede;}
 
-    public void setSedeIdsede(Sede sedeIdsede) {
-        this.sedeIdsede = sedeIdsede;
-    }
+    public void setIdsede(Sede idsede) {this.idsede = idsede;}
 
     public LocalTime getHorafin() {
         return horafin;
@@ -159,13 +150,6 @@ public class Funcion {
         this.genero = genero;
     }
 
-    public Double getDuración() {
-        return duración;
-    }
-
-    public void setDuración(Double duración) {
-        this.duración = duración;
-    }
 
     public String getNombre() {
         return nombre;
