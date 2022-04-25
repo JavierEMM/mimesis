@@ -85,4 +85,9 @@ public class UsuarioController {
         return "login/register";
     }
 
+    @GetMapping("/cambiarcontrasenia")
+    public String cambiarContrasenia(){
+        return "login/cambiarcontra";
+    }
+
 }

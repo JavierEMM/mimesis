@@ -22,13 +22,13 @@
                             <div class="col-md-6 mb-4">
                                 <div class="form-outline">
                                     <label class="form-label">Nombres </label>
-                                    <input type="text" name="nombre" class="form-control form-control" required/>
+                                    <input type="text" name="nombre" class="form-control form-control" placeholder="Nombres" required/>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="form-outline">
                                     <label class="form-label">Apellidos </label>
-                                    <input type="text" name="apellido" class="form-control form-control" required/>
+                                    <input type="text" name="apellido" class="form-control form-control" placeholder="Apellidos" required/>
                                 </div>
                             </div>
                         </div>
@@ -44,22 +44,20 @@
                             </div>
                             <div class="col-md-6 mb-4 pb-2">
                                 <label class="form-label select-label fontStyle2">Fecha de nacimiento</label>
-                                <input type="date" class="form-control form-control" name="dni"  required>
+                                <input type="date" class="form-control form-control" name="nacimiento" required>
                             </div>
                         </div>
 
                         <div class="form-outline mb-4">
                             <label class="form-label">Correo</label>
-                            <input type="email" name="usuario"
-                                   class="form-control form-control"/>
+                            <input type="email" name="usuario" class="form-control form-control" placeholder="Correo"/>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-4 pb-2">
                                 <div class="form-outline">
                                     <label class="form-label">Contraseña</label>
-                                    <input type="password" name="contrasena" id="contrasena" required
-                                           class="form-control form-control"/>
+                                    <input type="password" name="contrasena" id="contrasena"  class="form-control form-control" required/>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4 pb-2">
@@ -76,15 +74,16 @@
                         <div class="row">
                             <div class="col-md-6 mb-4 pb-2">
                                 <div class="form-outline mb-4">
-                                     <label class="form-label">Número de teléfono</label>
+                                     <label class="form-label">Número de celular</label>
                                       <input type="tel" name="telefono" class="form-control form-control"
-                                             maxlength="9"  pattern="[0-9]{9}" title="Debe ingresar un número telefonico de 9 numeros" required>
+                                             maxlength="9"  pattern="[0-9]{9}" title="Debe ingresar un número telefonico de 9 numeros"
+                                             placeholder="123456789" required>
                                 </div>
                             </div>
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline mb-4">
                                           <label class="form-label">Direccion</label>
-                                          <input type="text" name="telefono" class="form-control form-control" required>
+                                          <input type="text" name="direccion" class="form-control form-control" required>
                                     </div>
                                 </div>
                         </div>
