@@ -3,6 +3,7 @@ package com.mimesis.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -45,6 +46,16 @@ public class UsuarioController {
 
         return "usuario/perfil";
     }
+    @PostMapping("/perfil/save")
+    public String guardarPerfil(Model model){
+
+        return "redirect:/perfil";
+    }
+    @PostMapping("/carrito/comprar")
+    public String comprarCarrito(Model model){
+
+        return "redirect:/carrito";
+    }
     @GetMapping("/carrito")
     public String carrito(Model model){
 
@@ -61,9 +72,17 @@ public class UsuarioController {
     public String nuevacontrasenia(){
         return "login/nuevacontrasenia";
     }
-
+    @GetMapping("/historial")
+    public String historialCompra(){
+        return "usuario/historial";
+    }
+    @GetMapping("/calificacion")
+    public String calificacion(){
+        return "usuario/calificacion";
+    }
     @GetMapping("/registro")
     public String registro(){
         return "login/register";
     }
+
 }
