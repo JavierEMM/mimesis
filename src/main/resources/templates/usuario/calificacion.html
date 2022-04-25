@@ -25,7 +25,13 @@
                             <tr>
                                 <td style="text-align: center;"><img th:src="@{/img/moby_dick.jpg}" width="40rem" height="40rem"></td>
                                 <td style="text-align: center;">Mobydick</td>
-                                <td style="text-align: center;"></td>
+                                <td style="text-align: center;">
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="1estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="2estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="3estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="4estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="5estrella"></span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -50,7 +56,13 @@
                                 <td style="text-align: center;">Juan</td>
                                 <td style="text-align: center;">Perez</td>
                                 <td style="text-align: center;">juan.perez@gmail.com</td>
-                                <td style="text-align: center;"></td>
+                                <td style="text-align: center;">
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="21estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="22estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="23estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="24estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="25estrella"></span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -75,14 +87,26 @@
                                 <td style="text-align: center;">Cachin</td>
                                 <td style="text-align: center;">Alcantara</td>
                                 <td style="text-align: center;">alcantara.12@gmail.com</td>
-                                <td style="text-align: center;"></td>
+                                <td style="text-align: center;">
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="11estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="12estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="13estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="14estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="15estrella"></span>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="text-align: center;"><img th:src="@{/img/cachin.png}" width="40rem" height="40rem"></td>
                                 <td style="text-align: center;">Cachin2</td>
                                 <td style="text-align: center;">Alcantara2</td>
                                 <td style="text-align: center;">alcantara2.12@gmail.com</td>
-                                <td style="text-align: center;"></td>
+                                <td style="text-align: center;">
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="16estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="17estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="18estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="19estrella"></span>
+                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="20estrella"></span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -93,5 +117,20 @@
 
         </div>
         <footer th:replace="/includes/footer.html :: footer"></footer>
+        <script>
+            var contador;
+            function calificar(item){
+                console.log(item);
+                contador=item.id[0];//capturamos el primer caracter
+                let nombre = item.id.substring(1);
+                for(let i=0;i<5;i++){
+                    if(i<contador){
+                        document.getElementById((i+1)+nombre).style.color="orange";
+                    }else{
+                        document.getElementById((i+1)+nombre).style.color="black";
+                    }
+                }
+            }
+        </script>
     </body>
 </html>
