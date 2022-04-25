@@ -61,4 +61,9 @@ public class UsuarioController {
     public String nuevacontrasenia(){
         return "login/nuevacontrasenia";
     }
+
+    @GetMapping("/registro")
+    public String registro(){
+        return "login/register";
+    }
 }
