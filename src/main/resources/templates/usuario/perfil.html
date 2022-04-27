@@ -1,103 +1,22 @@
-<html lang="es">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Perfil - TeleDrugs</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="FlujoUsuario/css/styles.css" rel="stylesheet" />
-
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+        <head th:replace="includes/head.html :: head">MIMESIS</head>
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="<%=request.getContextPath()%>/Usuario">Teledrugs</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link" aria-current="page" href="<%=request.getContextPath()%>/Usuario">Pagina principal</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/Usuario?opcion=historialPedidos">Estado de pedido</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Farmacias</a>
-                            <ul class="dropdown-menu" style="height: 200px;width: 300px;" aria-labelledby="navbarDropdown">
-                                <div style="text-align: center; margin-top: 20px;"><h4 class="form-title">ELEGIR FARMACIA</h4></div>
-                                <div class="modal-body">
-                                    <form method="post" action="<%=request.getContextPath()%>/Usuario?opcion=mostrarFarmacia" class= "register-form">
-                                        <div style="margin-bottom: 20px; display: flex; justify-content: center;" class="form-group">
-                                            <select class="form-control form-select-sm" name="ruc">
-                                                <%for (BFarmacia bFarmacia : listafarmacias){%>
-                                                <option value="<%=bFarmacia.getRuc()%>"><%=bFarmacia.getNombre()%> - <%=bFarmacia.getDistrito()%> - <%=bFarmacia.getDireccion()%></option>
-                                                <%}%>
-                                            </select>
-                                        </div>
-                                        <div class="form-group form-button">
-                                            <div style="margin-top:5px; text-align: center;"><button type="submit" class="btn btn-success">Continuar</button></div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </ul>
-                        </li>
-                    </ul>
-                    <div class="dropdown">
-                        <a class="btn btn-outline-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class='bi bi-person-circle' style='font-size:15px'></i>
-                            Usuario
-                        </a>
-
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a href="<%= request.getContextPath()%>/Usuario?opcion=mostrarPerfil" class="dropdown-item" >Ver perfil</a></li>
-                            <li><a href="<%= request.getContextPath()%>/Usuario?opcion=logout" class="dropdown-item" >Cerrar sesión</a></li>
-                        </ul>
-                    </div>
-
-                    <form method="post" action="<%=request.getContextPath()%>/Usuario?opcion=carrito">
-                        <form class="d-flex">
-                            <button class="btn btn-outline-dark" type="submit">
-                                <i class="bi-cart-fill me-1"></i>
-                                Carrito
-                                <span class="badge bg-dark text-white ms-1 rounded-pill"><%=listaCarrito.size()%></span>
-                            </button>
-                        </form>
-                    </form>
-                </div>
-            </div>
-        </nav>
-
-
-        <div class="container bootstrap snippets bootdey" style=" margin-top: 25px;">
-            <% if (session.getAttribute("msg") != null){ %>
-            <div id="mensaje" class="alert alert-danger">
-                <%=session.getAttribute("msg")%>
-            </div>
-            <script type="text/javascript">
-                window.setTimeout("closeHelpDiv();", 5000);
-                function closeHelpDiv(){
-                    document.getElementById("mensaje").style.display=" none";
-                }
-            </script>
-            <% session.removeAttribute("msg");
-            }%>
+        <header th:replace="includes/navbar.html :: navbar-usuario(option = 'Principal')">
+        </header>
+        <div class="container bootstrap snippets bootdey">
             <div class="panel-body inf-content">
-                <div id="contenedor2" class="row">
+                <h1 class="title-principal">Mi perfil</h1>
+                <div id="contenedor2" class="row header-display fondo">
                     <div class="col-md-4">
-                        <br>
-                        <img alt="" style="width:600px; " title="" class="img-circle img-thumbnail isTooltip" src="FlujoUsuario/images/Logo.png" data-original-title="Usuario">
-                        <ul title="Ratings" class="list-inline ratings text-center">
-                            <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-                        </ul>
+                        <img title="" class="img-circle img-thumbnail isTooltip" th:src="@{/img/cachin.png}" data-original-title="Usuario">
+                        <div style="display:flex; align-items:center; justify-content:center;"class="column">
+                            <a><label  style="margin-top:10px;"for="files" class="btn btn-primary">Subir imagen</label>
+                                <input formenctype="multipart/form-data"  onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" id="files" style="visibility:hidden; position:absolute" name="file" type="file" accept="image/*"></a>
+                        </div>
                     </div>
                     <div class="col-md-6">
-                        <br>
-                        <strong>Informacion</strong><br>
                         <div class="table-responsive">
                             <table class="table table-user-information">
                                 <tbody>
@@ -109,7 +28,7 @@
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            <%=bCliente.getDNI()%>
+                                            666666666
                                         </td>
                                     </tr>
                                     <tr>
@@ -120,7 +39,7 @@
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            <%=bCliente.getNombre()%>
+                                            Kchin
                                         </td>
                                     </tr>
                                     <tr>
@@ -131,7 +50,7 @@
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            <%=bCliente.getApellidos()%>
+                                            ALcantara
                                         </td>
                                     </tr>
 
@@ -145,7 +64,7 @@
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            <%=bCliente.getDistrito()%>
+                                            San Miguel
                                         </td>
                                     </tr>
                                     <tr>
@@ -156,13 +75,46 @@
                                             </strong>
                                         </td>
                                         <td class="text-primary">
-                                            <%=bCliente.getLogueoCorreo()%>
+                                            kchin@pucp.edu.pe
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                                Numero Telefonico
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            972551391
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                                Fecha de nacimiento
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            15/03/01
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                                Direccion
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            Jr. Mirones 1672
                                         </td>
                                     </tr>
 
                                 </tbody>
                             </table>
-                            <div id="cont_button_edit">
+                            <div class="header-display">
                                 <button id="botoneditar" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Editar Perfil</button>
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -172,14 +124,18 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="post" action="<%=request.getContextPath()%>/Usuario?opcion=Update">
+                                                <form method="post" th:action="@{/perfil/save}">
                                                     <div class="mb-3">
-                                                        <label for="recipient-name" class="col-form-label">Nombres</label>
-                                                        <input name="Nombres" type="text" class="form-control" id="recipient-name">
+                                                        <label for="recipient-name" class="col-form-label">Numero de Telefono</label>
+                                                        <input name="telefono" type="text" class="form-control" id="recipient-name">
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="recipient-name2" class="col-form-label">Apellidos</label>
-                                                        <input name="Apellidos" type="text" class="form-control" id="recipient-name2">
+                                                        <label for="recipient-name2" class="col-form-label">Fecha de nacimiento</label>
+                                                        <input name="fechadenacimiento" type="date" class="form-control" id="recipient-name2">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="recipient-name4" class="col-form-label">Direccion</label>
+                                                        <input name="direccion" type="text" class="form-control" id="recipient-name4">
                                                     </div>
                                                     <div class="mb-3">
                                                         <div class="form-group">
@@ -246,13 +202,6 @@
                 </div>
             </div>
         </div>
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Proyecto Ingenieria Web : TeleDrugs</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <footer th:replace="includes/footer.html :: footer"></footer>
     </body>
 </html>

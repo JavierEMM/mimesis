@@ -2,9 +2,7 @@ package com.mimesis.controller;
 
 import com.mimesis.entity.Sala;
 import com.mimesis.entity.Sede;
-import com.mimesis.repository.SalasRepository;
-import com.mimesis.repository.SedesRepository;
-import com.mimesis.repository.UsuarioRepository;
+import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +28,14 @@ public class AdminController {
     @Autowired
     SalasRepository salasRepository;
 
+    @Autowired
+    ActorRepository actorRepository;
+
+    @Autowired
+    DirectorRepository directorRepository;
+
     @GetMapping("salas")
-    public String paginaSalas( Model model){
+    public String paginaSalas(Model model){
         List<Sala> salaList = salasRepository.findAll();
         model.addAttribute("salaList",salaList);
         return "admin/salas";
@@ -81,30 +85,58 @@ public class AdminController {
         return "admin/sedes";
     }
 
-    @RequestMapping("actoresydirectores")
-    public String paginaActoresydirectores(){
+    @GetMapping("actoresydirectores")
+    public String paginaActoresydirectores(Model model){
+        model.addAttribute("listaActores",actorRepository.findAll());
+        model.addAttribute("listaDirectores",directorRepository.findAll());
         return "admin/actoresydirectores";
     }
-    @RequestMapping("agregarsalas")
-    public String paginaAgregarsalas(){
-        return "admin/agregarsalas";
-    }
+
     @RequestMapping("agregarsedes")
-    public String paginaAgregarsedes(){
+    public String paginaAgregarsedes(Sede sede) {
         return "admin/agregarsedes";
     }
+
+    @PostMapping("savesedes")
+    public String savesedes(Sede sede){
+        sedesRepository.save(sede);
+        return "redirect:/admin/sedes";
+    }
+
+    @GetMapping("editarsedes")
+    public String paginaEditarsedes(@RequestParam("id") Integer id, Model model){
+        Optional<Sede> optionalSede = sedesRepository.findById(id);
+        if(optionalSede.isPresent()){
+            Sede sede = optionalSede.get();
+            model.addAttribute("sede",sede);
+            //List<Sede> sedeList=sedesRepository.findAll();
+            //model.addAttribute("sedeList",sedeList);
+            return "admin/editarsedes";
+        } else {
+            return "redirect:/admin/sedes";
+        }
+    }
+
+    @GetMapping("/borrarsede")
+    public  String borrarsede(@RequestParam("id") Integer id){
+        Optional<Sede> optionalSede = sedesRepository.findById(id);
+        if(optionalSede.isPresent()){
+            sedesRepository.deleteById(id);
+        }
+        return "redirect:/admin/sedes";
+    }
+
+
     @RequestMapping("agregaractoresydirectores")
     public String paginaAgregaractoresydirectores(){
         return "admin/agregaractoresydirectores";
-    }
-    @RequestMapping("editarsalas")
-    public String paginaEditarsalas(){
-        return "admin/editarsalas";
     }
     @RequestMapping("editarsedes")
     public String paginaEditarsedes(){
         return "admin/editarsedes";
     }
+
+
     @RequestMapping("editaractoresydirectores")
     public String paginaEditaractoresydirectores(){
         return "admin/editaractoresydirectores";
@@ -130,4 +162,7 @@ public class AdminController {
         model.addAttribute("listaClientes",usuarioRepository.findByRol("Cliente"));
         return "admin/clientes";
     }
+
+
+
 }

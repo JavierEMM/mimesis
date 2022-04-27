@@ -37,7 +37,6 @@
             <th class="text-center">Correo</th>
             <th class="text-center">Numero telefonico</th>
             <th class="text-center">Direccion</th>
-            <th class="text-center">Eliminar</th>
         </tr>
         </thead>
 
@@ -49,14 +48,6 @@
             <td th:text="${usuario.correo}"></td>
             <td th:text="${usuario.numerotelefonico}"></td>
             <td th:text="${usuario.direccion}"></td>
-            <td class="text-center">
-                <form id="1" method="post" action="">
-                    <input name="test" value="1" type="hidden"/>
-                    <button onclick="return confirm('¿Esta seguro que desea eliminar el cliente?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </form>
-            </td>
         </tr>
 
         </tbody>
