@@ -4,6 +4,7 @@ import com.mimesis.entity.Actor;
 import com.mimesis.entity.Funcion;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class OperadorController {
         model.addAttribute("listaActores",actorRepository.findAll());
         model.addAttribute("listaDirectores",directorRepository.findAll());
         model.addAttribute("listaSedes",sedesRepository.findAll());
-        model.addAttribute("listaSalas",salasRepository.findAll());
+        model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
         return "operador/crearfuncion";
     }
     @GetMapping("/estadisticas")

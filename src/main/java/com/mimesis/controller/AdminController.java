@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
-
 public class AdminController {
 
     @Autowired
@@ -34,7 +33,7 @@ public class AdminController {
     @Autowired
     DirectorRepository directorRepository;
 
-    @GetMapping("salas")
+    @GetMapping("/salas")
     public String paginaSalas(Model model){
         List<Sala> salaList = salasRepository.findAll();
         model.addAttribute("salaList",salaList);
