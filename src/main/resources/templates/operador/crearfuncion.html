@@ -10,7 +10,7 @@
                 <!-- Contenido -->
                 <br>
                 <div class="page-header text-center">
-                    <h2 > Nueva Funcion</h2>
+                    <h2 th:text="${funcion.id == 0 ? 'Nueva Funcion' : 'Editar Funcion'}">Nueva Funcion</h2>
                 </div>
                 <div class="container-fluid form-center">
                     <form method="POST" class="row g-3" th:action="@{/operador/save}" th:object="${funcion}">
@@ -21,7 +21,7 @@
                             <div class="form-group col-8">
                                 <label>Nombre</label>
                                 <br>
-                                <input class="form-control" type="text" th:field="*{nombre}" >
+                                <input class="form-control " type="text" th:field="*{nombre}"  th:disabled="${funcion.id != 0}">
 
                             </div>
                             <div class="col"></div>
@@ -34,7 +34,7 @@
                             <div class="form-group col-8">
                                 <label>Fecha Inicio</label>
                                 <br>
-                                <input  class="form-control" type="date" th:field="*{fecha}" > </input>
+                                <input  class="form-control" type="date" th:field="*{fecha}" th:disabled="${funcion.id != 0}" >
                             </div>
                             <div class="col">
                             </div>
@@ -46,7 +46,7 @@
                             <div class="form-group col-8">
                                 <label>Hora Inicio</label>
                                 <br>
-                                <input  class="form-control" type="time" th:field="*{horainicio}" > </input>
+                                <input  class="form-control" type="time" th:field="*{horainicio}" >
                             </div>
                             <div class="col">
                             </div>
@@ -58,7 +58,7 @@
                             <div class="form-group col-8">
                                 <label>Hora Fin</label>
                                 <br>
-                                <input  class="form-control" type="time" th:field="*{horafin}" > </input>
+                                <input  class="form-control" type="time" th:field="*{horafin}" >
                             </div>
                             <div class="col">
                             </div>
@@ -161,6 +161,18 @@
                             <div class="col">
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label>Aforo</label>
+                                <br>
+                                <input  class="form-control" type="number" th:field="*{aforo}" >
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
 
                         <div class="row">
                             <div class="col">
@@ -176,7 +188,7 @@
                                         <tr th:each="actor: ${listaActores}" >
                                             <td th:text="${actor.nombre}" ></td>
                                             <td th:text="${actor.apellido}">Mark</td>
-                                            <td><input type="checkbox" th:name="actoresObra" th:value="${actor.id}"></td>
+                                            <td><input type="checkbox" th:name="actoresObra" th:disabled="${funcion.id != 0}" th:value="${actor.id}" th:checked="${funcion.id != 0}" ></td>
                                         </tr>
                                     </tbody>
                                 </table>
