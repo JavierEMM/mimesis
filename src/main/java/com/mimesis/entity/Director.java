@@ -1,6 +1,7 @@
 package com.mimesis.entity;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 
 @Entity
 @Table(name = "director")
@@ -16,6 +17,27 @@ public class Director {
     @Column(name = "apellido", nullable = false, length = 45)
     private String apellido;
 
+
+    @Column(name = "correo", nullable = false, length = 45)
+    private String correo;
+    @Column(name = "telefono", nullable = false, length = 45)
+    private Integer telefono;
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public Integer getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(Integer telefono) {
+        this.telefono = telefono;
+    }
     public String getApellido() {
         return apellido;
     }
