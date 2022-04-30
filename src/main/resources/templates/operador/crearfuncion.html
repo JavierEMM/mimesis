@@ -4,140 +4,240 @@
     <body>
         <header th:replace="/includes/navbar.html :: navbar-operador" id="header" class="d-flex align-items-center">
         </header>
-        <div class='container'>
-            <div class="row" >
-                <div class="col-xl">
-                    <p class="title">Nueva Funcion</p>
-                </div>
-            </div>
-            <div class="row">
-                <form th:action="@{/operador/new}" th:object="${funcion}" method="post">
-                    <input th:field="*{id}" type="hidden"/>
-                <div class="form-group col-xl-4">
-                    <label for="nombre" class="letter">Nombre</label>
-                    <input id="nombre" class="form-control" type="text" th:field="*{nombre}"/>
-                </div>
-                <div class="form-group col-xl-4">
-                    <label for="fechainicio" class="letter">Fecha Inicio</label>
-                    <input id="fechainicio" class="form-control" type="date" th:field="*{fecha}" />
-                </div>
-                <div class="form-group col-xl-2">
-                    <label for="horai" class="letter">Hora Inicio</label>
-                    <input id="horai" class="form-control" type="time" th:field="*{horainicio}"/>
-                    <label for="horaf" class="letter">Hora Fin</label>
-                    <input id="horaf" class="form-control" type="time" th:field="*{horafin}"/>
-                </div>
 
-                <div class="form-group col-xl-2">
-                    <label for="genero" class="letter">Genero</label>
-                    <select class="form-select" id="genero" th:field="*{genero}">
-                        <option value="Drama">Drama</option>
-                        <option value="Comedia">Comedia</option>
-                        <option value="Ciencia ficcion">Ciencia ficcion</option>
-                        <option value="Aventura">Aventura</option>
-                        <option value="Suspenso">Suspenso</option>
-                        <option value="Terror">Terror</option>
-                    </select>
+        <div id="content">
+            <main>
+                <!-- Contenido -->
+                <br>
+                <div class="page-header text-center">
+                    <h2 th:text="${funcion.id == 0 ? 'Nueva Funcion' : 'Editar Funcion'}">Nueva Funcion</h2>
                 </div>
-                <div class="row">
-                <div class="form-group col-xl-4">
-                    <label for="iddirector" class="letter">Director</label>
-                    <select class="form-select" id="iddirector" th:field="*{iddirector}">
-                        <option th:each="director : ${listaDirectores}" th:value="${director.id}" th:text="${director.nombre}">Mark</option>
-                    </select>
-                </div>
-                <div class="form-group col-xl-4">
-                    <label for="restriccion" class="letter">Restriccion de Edad</label>
-                    <select id="restriccion" class="form-select" th:name="restricciondeedad">
-                        <option hidden selected>Restriccion de edad</option>
-                        <option value="Apto para todo publico">Apto para todo publico</option>
-                        <option value="+12">+12</option>
-                        <option value="+14">+14</option>
-                        <option value="+16">+16</option>
-                        <option value="+18">+18</option>
-                    </select>
-                </div>
-                <div class="form-group col-xl-4">
-                    <label for="sede" class="letter">Sede</label>
-                    <select id="sede" class="form-select" th:name="idsede">
-                        <option hidden selected>Sede</option>
-                        <option th:each="sede : ${listaSedes}" th:value="${sede.id}" th:text="${sede.nombre}">San Miguel</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-xl-2">
-                    <label for="sala" class="letter">Sala</label>
-                    <select id="sala" class="form-select" name="idsala">
-                        <option hidden selected>Sala</option>
-                        <option th:each="sala : ${listaSalas} " th:value="${sala.id}" th:text="'Sala de id '+ ${sala.id}">Sala 1</option>
-                    </select>
-                </div>
-                <div class="form-group col-xl-2">
-                    <label for="precio" class="letter">Precio</label>
-                    <input id="precio" class="form-control" type="number" th:field="*{costo}" min="0"/>
-                    <label for="aforo" class="letter">Aforo</label>
-                    <input id="aforo" class="form-control" type="number" th:field="*{aforo}" min="0"/>
-                </div>
-                <div class="col-xl-8" data-bs-spy="scroll" data-bs-offset="0" tabindex="0">
-                    <table class="table" >
-                        <thead class="thead-dark">
-                            <th scope="col">Actores</th>
-                        </thead>
-                        <tbody>
-                            <tr th:each="actor: ${listaActores}" >
-                                <td th:text="${actor.nombre}" ></td>
-                                <td th:text="${actor.apellido}">Mark</td>
-                                <td><input type="checkbox" th:name="actoresObra" th:value="${actor.id}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-4">
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <th scope="col">Imagenes</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><img class="img-fluid" style="width: 10px;height: 10px;" th:src="@{/img/teatro.jpg}"></td>
-                            </tr>
-                            <tr>
-                                <td><img class="img-fluid" style="width: 10px;height: 10px;" th:src="@{/img/teatro.jpg}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!--div class="form-group col-xl-7">
-                    <label for="actor" class="letter">Actor</label>
-                    <select id="actor" class="form-select" name="actor">
-                        <option hidden selected>Actor</option>
-                        <option value="1">Auron Play</option>
-                        <option value="2">Willy Rex</option>
-                    </select>
-                </div>
-                <div class="form-group col-xl-1">
-                    <br>
-                    <button class="btn btn-primary">Añadir</button>
-                </div-->
-            </div>
-            <div class="row">
-                <div class="col-xl-1">
-                    <input style="color: transparent;" type="file">
-                    <button type="button" class="btn btn-primary">Aceptar imagen</button>
-                </div>
+                <div class="container-fluid form-center">
+                    <form method="POST" class="row g-3" th:action="@{/operador/save}" th:object="${funcion}">
+                        <input type="hidden" th:field="*{id}">
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label>Nombre</label>
+                                <br>
+                                <input class="form-control " type="text" th:field="*{nombre}"  th:disabled="${funcion.id != 0}">
 
-            </div>
-            <div class="row">
-                <div class="col">
-                    <button type="submit" class="btn btn-outline-success">Crear Funcion</button>
-                    <a th:href="@{/operador}" type="button" class="btn btn-outline-danger">Cancelar</a>
+                            </div>
+                            <div class="col"></div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label>Fecha Inicio</label>
+                                <br>
+                                <input  class="form-control" type="date" th:field="*{fecha}" th:disabled="${funcion.id != 0}" >
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label>Hora Inicio</label>
+                                <br>
+                                <input  class="form-control" type="time" th:field="*{horainicio}" >
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label>Hora Fin</label>
+                                <br>
+                                <input  class="form-control" type="time" th:field="*{horafin}" >
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label for="genero">Género</label>
+                                <br>
+                                <select class="form-select" id="genero" th:field="*{genero}">
+                                    <option value="Drama">Drama</option>
+                                    <option value="Comedia">Comedia</option>
+                                    <option value="Ciencia ficcion">Ciencia ficcion</option>
+                                    <option value="Aventura">Aventura</option>
+                                    <option value="Suspenso">Suspenso</option>
+                                    <option value="Terror">Terror</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label for="iddirector" >Director</label>
+                                <select class="form-select" id="iddirector" th:field="*{iddirector}">
+                                    <option th:each="director : ${listaDirectores}" th:value="${director.id}" th:text="${director.nombre}">Mark</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label for="restriccion" >Restriccion de Edad</label>
+                                <select id="restriccion" class="form-select" th:name="restricciondeedad">
+                                    <option hidden selected>Restriccion de edad</option>
+                                    <option value="Apto para todo publico">Apto para todo publico</option>
+                                    <option value="+12">+12</option>
+                                    <option value="+14">+14</option>
+                                    <option value="+16">+16</option>
+                                    <option value="+18">+18</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label for="sede" >Sede</label>
+                                <select id="sede" class="form-select" th:name="idsede">
+                                    <option hidden selected>Sede</option>
+                                    <option th:each="sede : ${listaSedes}" th:value="${sede.id}" th:text="${sede.nombre}">San Miguel</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label for="sala" >Sala</label>
+                                <select id="sala" class="form-select" name="idsala">
+                                    <option hidden selected>Sala</option>
+                                    <option th:each="sala : ${listaSalas} " th:value="${sala.id}" th:text="${sala.idsede.nombre} + ' '+ ${sala.nombre}  ">Sala 1</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label>Precio</label>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">S/</div>
+                                    </div>
+                                    <input class="form-control" type="text" th:field="*{costo}">
+
+                                </div>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <label>Aforo</label>
+                                <br>
+                                <input  class="form-control" type="number" th:field="*{aforo}" >
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="col-8" data-bs-spy="scroll" data-bs-offset="0" tabindex="0">
+                                <h3>Actores</h3>
+                                <table class="table" >
+                                    <thead class="thead-dark">
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col"> Apellido</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="actor: ${listaActores}" >
+                                            <td th:text="${actor.nombre}" ></td>
+                                            <td th:text="${actor.apellido}">Mark</td>
+                                            <td><input type="checkbox" th:name="actoresObra" th:disabled="${funcion.id != 0}" th:value="${actor.id}" th:checked="${funcion.id != 0}" ></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <th scope="col">Imagenes</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><img class="img-fluid" style="width: 50px;height: 50px;" th:src="@{/img/teatro.jpg}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><img class="img-fluid" style="width: 50px;height: 50px;" th:src="@{/img/teatro.jpg}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="col-xl-1">
+                                    <input style="color: transparent;" type="file">
+                                    <button type="button" class="btn btn-primary">Aceptar imagen</button>
+                                </div>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8">
+                            </div>
+                            <div class="form-group col">
+                                <a th:href="@{/operador}" class="btn btn-danger">Cancelar</a>
+                                <button type="submit" class="btn btn-primary" >Registrar</button>
+                            </div>
+                            <div class="col-2">
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
-            </div>
-            </form>
+            </main>
         </div>
-        </div>
+
     </body>
 </html>

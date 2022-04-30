@@ -4,6 +4,7 @@ import com.mimesis.entity.Actor;
 import com.mimesis.entity.Funcion;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,17 +42,27 @@ public class OperadorController {
         model.addAttribute("listaActores",actorRepository.findAll());
         model.addAttribute("listaDirectores",directorRepository.findAll());
         model.addAttribute("listaSedes",sedesRepository.findAll());
-        model.addAttribute("listaSalas",salasRepository.findAll());
+        model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
         return "operador/crearfuncion";
     }
     @GetMapping("/estadisticas")
     public String estadisticas (){ return "operador/estadisticas";}
     @GetMapping("/edit")
-    public String editarOperador (@RequestParam("id") Integer id){
+    public String editarOperador (@RequestParam("id") Integer id,@ModelAttribute("funcion") Funcion funcion,Model model){
+        Optional<Funcion> optionalFuncion= funcionRepository.findById(id);
+        if(optionalFuncion.isPresent()){
+            model.addAttribute("funcion",optionalFuncion.get());
+            model.addAttribute("listaActores",optionalFuncion.get().getActoresPorFuncion());
+            model.addAttribute("listaDirectores",directorRepository.findAll());
+            model.addAttribute("listaSedes",sedesRepository.findAll());
+            model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
+            return "operador/crearfuncion";
+        }
 
-        return "operador/editoperador";}
+        return "redirect:/operador";
+        }
 
-    @PostMapping("/new")
+    @PostMapping("/save")
     public String newFuncion (@ModelAttribute("funcion") Funcion funcion, Model model,@RequestParam("actoresObra") List<Actor> actoresObra){
         ArrayList<Actor> listaActSelect = new ArrayList<>();
         listaActSelect.addAll(actoresObra);
