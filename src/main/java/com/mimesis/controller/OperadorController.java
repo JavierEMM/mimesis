@@ -38,6 +38,8 @@ public class OperadorController {
     }
     @GetMapping("/crearfuncion")
     public String nuevaFuncion (@ModelAttribute("funcion") Funcion funcion, Model model){
+        funcion.setId(0);
+        model.addAttribute("funcion",funcion);
         model.addAttribute("listaActores",actorRepository.findAll());
         model.addAttribute("listaDirectores",directorRepository.findAll());
         model.addAttribute("listaSedes",sedesRepository.findAll());
