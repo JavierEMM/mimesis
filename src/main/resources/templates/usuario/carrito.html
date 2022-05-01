@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body>
-        <header th:replace="includes/navbar.html :: navbar-usuario(option='Funciones')"></header>
+        <header th:replace="includes/navbar.html :: navbar(option='Funciones')"></header>
         <div class="container padding-bottom-3x mb-1" style=" margin-top: 25px;">
             <form method="post" enctype="multipart/form-data">
                 <div class="table-responsive shopping-cart">
@@ -38,9 +38,9 @@
                     </table>
                     <div class="shopping-cart-footer">
                         <div class="column header-display">
-                            <button onclick="" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <a type="button" class="btn btn-success" th:href="@{/carrito/comprar}">
                                 Comprar Ahora
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

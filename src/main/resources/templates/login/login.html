@@ -8,7 +8,7 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous">
 </head>
-<body style="background-color: white;">
+<body>
 
 <div class="main">
     <section class="sign-in">
@@ -20,19 +20,19 @@
                         <h6>Ingresa a tu cuenta para que puedas vivir al maximo la experiencia en Mimesis</h6>
                         <br>
 
-                        <form method="POST">
+                        <form method="POST" th:action="@{/processLogin}">
                             <div class="mb-3">
                                 <label class="form-label">Correo :</label>
-                                <input type="correo" class="form-control" placeholder="Correo electrónico"/>
+                                <input name="username" type="correo" class="form-control" placeholder="Correo electrónico"/>
                             </div>
                             <br>
                             <div class="mb-3">
                                 <label class="form-label">Contraseña :</label>
-                                <input type="password" class="form-control" placeholder="Contraseña"/>
+                                <input name="password" type="password" class="form-control" placeholder="Contraseña"/>
                             </div>
                             <br>
                             <div class="mb-3" >
-                                <a href="/recuperarcontrasenia" style="color: #4869df"><b>¿Has olvidado tu contraseña?</b></a>
+                                <a th:href="@{/cambiarcontrasenia}" style="color: #4869df"><b>¿Has olvidado tu contraseña?</b></a>
                             </div>
                             <br>
                             <div class="mb-3">
@@ -40,6 +40,7 @@
                                     <button class="btn btn-outline-danger" style="width:150px" type="submit">Ingresar</button>
                                 </div>
                             </div>
+                            <h4 th:if="${param.error}" class="form-signin-heading" style="color:red">Acceso denegado</h4>
                         </form>
                     </section>
 

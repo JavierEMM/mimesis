@@ -1,78 +1,64 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <header th:fragment="navbar-operador" style="background-color: black;" id="header" class="d-flex align-items-center ">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <header th:fragment="navbar(option)" style="background-color: black;" id="header" class="d-flex align-items-center ">
         <div class="container-fluid container-xxl d-flex align-items-center">
             <div class="me-auto" id="logo">
-                <a th:href="@{/operador}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
+                <a sec:authorize="hasAnyAuthority('Operador')" th:href="@{/operador}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
+                <a sec:authorize="hasAnyAuthority('Cliente')"  th:href="@{/}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
+                <a sec:authorize="isAnonymous()"  th:href="@{/}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
+                <a sec:authorize="hasAnyAuthority('Admin')"  th:href="@{/admin}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
             </div>
             <nav id="navbar" class="navbar navbar-expand-lg order-lg-0">
                 <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul sec:authorize="isAnonymous()" class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li th:if="${option=='Principal'}"><a   class="nav-link scrollto active" th:href="@{/}">Página Principal</a></li>
+                        <li th:if="${option!='Principal'}"><a   class="nav-link scrollto " th:href="@{/}">Página Principal</a></li>
+                        <li th:if="${option=='Teatros'}" ><a  class="nav-link scrollto active"  th:href="@{/teatros}">Teatros</a></li>
+                        <li th:if="${option!='Teatros'}"><a  class="nav-link scrollto"  th:href="@{/teatros}">Teatros</a></li>
+                        <li th:if="${option=='Funciones'}"><a  class="nav-link scrollto active" th:href="@{/funciones}">Funciones</a></li>
+                        <li th:if="${option!='Funciones'}" ><a class="nav-link scrollto" th:href="@{/funciones}">Funciones</a></li>
+                        <li th:if="${option=='Actores'}"><a  class="nav-link scrollto active" th:href="@{/actores}">Actores</a></li>
+                        <li th:if="${option!='Actores'}"><a  class="nav-link scrollto" th:href="@{/actores}">Actores</a></li>
+                        <li th:if="${option=='Directores'}" ><a  class="nav-link scrollto active" th:href="@{/directores}">Directores</a></li>
+                        <li th:if="${option!='Directores'}" ><a class="nav-link scrollto " th:href="@{/directores}">Directores</a></li>
+                        <li th:if="${option=='Historial'}" ><a class="nav-link scrollto active" th:href="@{/historial}">Historial</a></li>
+                        <li th:if="${option!='Historial'}" ><a class="nav-link scrollto" th:href="@{/historial}">Historial</a></li>
+                    </ul>
+                    <ul sec:authorize="hasAnyAuthority('Cliente')" class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li th:if="${option=='Principal'}"><a   class="nav-link scrollto active" th:href="@{/}">Página Principal</a></li>
+                        <li th:if="${option!='Principal'}"><a   class="nav-link scrollto " th:href="@{/}">Página Principal</a></li>
+                        <li th:if="${option=='Teatros'}" ><a  class="nav-link scrollto active"  th:href="@{/teatros}">Teatros</a></li>
+                        <li th:if="${option!='Teatros'}"><a  class="nav-link scrollto"  th:href="@{/teatros}">Teatros</a></li>
+                        <li th:if="${option=='Funciones'}"><a  class="nav-link scrollto active" th:href="@{/funciones}">Funciones</a></li>
+                        <li th:if="${option!='Funciones'}" ><a class="nav-link scrollto" th:href="@{/funciones}">Funciones</a></li>
+                        <li th:if="${option=='Actores'}"><a  class="nav-link scrollto active" th:href="@{/actores}">Actores</a></li>
+                        <li th:if="${option!='Actores'}"><a  class="nav-link scrollto" th:href="@{/actores}">Actores</a></li>
+                        <li th:if="${option=='Directores'}" ><a  class="nav-link scrollto active" th:href="@{/directores}">Directores</a></li>
+                        <li th:if="${option!='Directores'}" ><a class="nav-link scrollto " th:href="@{/directores}">Directores</a></li>
+                        <li th:if="${option=='Historial'}" ><a class="nav-link scrollto active" th:href="@{/historial}">Historial</a></li>
+                        <li th:if="${option!='Historial'}" ><a class="nav-link scrollto" th:href="@{/historial}">Historial</a></li>
                     </ul>
                 </div>
             </nav>
-            <a class="buy-tickets scrollto" href=""><i style="margin-right: 4px; " class="bi bi-person-fill"></i> Cerrar Sesion </a>
+            <div class="dropdown" sec:authorize="hasAnyAuthority('Cliente')">
+                <a class="btn btn-outline-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class='bi bi-person-circle'></i>
+                    Usuario
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><a th:href="@{/perfil}" class="dropdown-item" >Ver perfil</a></li>
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="dropdown-item" >Cerrar sesión</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <a class="buy-tickets scrollto" sec:authorize="hasAnyAuthority('Cliente')" th:href="@{/carrito}"><i class="bi-cart-fill me-1"></i>Carrito</a>
+            <a class="buy-tickets scrollto" sec:authorize="isAnonymous()" th:href="@{/login}"><i style="margin-right: 4px; " class="bi bi-person-fill"></i>Iniciar Sesion</a>
+            <form sec:authorize="hasAnyAuthority('Operador','Admin')" th:action="@{/logout}" method="post">
+                <button type="submit" class="buy-tickets scrollto"><i style="margin-right: 4px; " class="bi bi-person-fill"></i>Cerrar Sesion</button>
+            </form>
         </div>
     </header>
 
- <header th:fragment="navbar-usuario(option)" id="header" th:classappend="${'display-block'}" class="header-display">
-     <div class="hundred-percent">
-         <div class="row margin-0">
-             <div class="col-md-2 header-display">
-                 <div class="me-auto" id="logo">
-                     <a href=""><img class="hundred-percent" th:src="@{img/logo.png}" alt="MIMESIS"></a>
-                 </div>
-             </div>
-             <div class="col-md-6 header-display">
-                 <div class="container-fluid container-xxl">
-                     <nav id="navbar" class="navbar order-last order-lg-0">
-                         <ul>
-                             <li th:if="${option=='Principal'}"><a   class="nav-link scrollto active" th:href="@{/}">Página Principal</a></li>
-                             <li th:if="${option!='Principal'}"><a   class="nav-link scrollto " th:href="@{/}">Página Principal</a></li>
-                             <li th:if="${option=='Teatros'}" ><a  class="nav-link scrollto active"  th:href="@{/teatros}">Teatros</a></li>
-                             <li th:if="${option!='Teatros'}"><a  class="nav-link scrollto"  th:href="@{/teatros}">Teatros</a></li>
-                             <li th:if="${option=='Funciones'}"><a  class="nav-link scrollto active" th:href="@{/funciones}">Funciones</a></li>
-                             <li th:if="${option!='Funciones'}" ><a class="nav-link scrollto" th:href="@{/funciones}">Funciones</a></li>
-                             <li th:if="${option=='Actores'}"><a  class="nav-link scrollto active" th:href="@{/actores}">Actores</a></li>
-                             <li th:if="${option!='Actores'}"><a  class="nav-link scrollto" th:href="@{/actores}">Actores</a></li>
-                             <li th:if="${option=='Directores'}" ><a  class="nav-link scrollto active" th:href="@{/directores}">Directores</a></li>
-                             <li th:if="${option!='Directores'}" ><a class="nav-link scrollto " th:href="@{/directores}">Directores</a></li>
-                             <li th:if="${option=='Historial'}" ><a class="nav-link scrollto active" th:href="@{/historial}">Historial</a></li>
-                             <li th:if="${option!='Historial'}" ><a class="nav-link scrollto" th:href="@{/historial}">Historial</a></li>
-                         </ul>
-                         <i class="bi bi-list mobile-nav-toggle"></i>
-                     </nav>
-                 </div>
-             </div>
-             <div class="col-2 header-display">
-                 <input class="hundred-percent form-control" type="text" placeholder="Buscar obra">
-             </div>
-             <div class="col-1 header-display">
-                 <div class="dropdown">
-                     <a class="btn btn-outline-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                         <i class='bi bi-person-circle'></i>
-                         Usuario
-                     </a>
-                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                         <li><a th:href="@{/perfil}" class="dropdown-item" >Ver perfil</a></li>
-                         <li><a th:href="@{/}" class="dropdown-item" >Cerrar sesión</a></li>
-                     </ul>
-                 </div>
-             </div>
-             <div class="col-1 header-display">
-                 <form method="post" th:action="@{/carrito/comprar}"  class="hundred-percent">
-                     <form class="d-flex">
-                         <button class="btn btn-outline-dark" type="submit">
-                             <i class="bi-cart-fill me-1"></i>
-                             Carrito
-                             <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
-                         </button>
-                     </form>
-                 </form>
-             </div>
-         </div>
-     </div>
-    </header>
-
-
-</html>

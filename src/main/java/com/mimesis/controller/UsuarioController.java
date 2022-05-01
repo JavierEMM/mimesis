@@ -73,11 +73,10 @@ public class UsuarioController {
 
         return "usuario/carrito";
     }
+    @GetMapping("/carrito/comprar")
+    public String carritoComprar(Model model){
 
-
-    @GetMapping("/iniciarsesion")
-    public String login(){
-        return "login/login";
+        return "redirect:/";
     }
 
     @GetMapping("/recuperarcontrasenia")
