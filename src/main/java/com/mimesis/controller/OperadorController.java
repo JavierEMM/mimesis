@@ -78,18 +78,33 @@ public class OperadorController {
         return "redirect:/operador";
         }
 
+    @GetMapping("/delete")
+    public String delteFuncion(@RequestParam("id") Integer id){
+        Optional<Funcion> optionalFuncion = funcionRepository.findById(id);
+
+        if(optionalFuncion.isPresent()){
+            Funcion funcionMod= optionalFuncion.get();
+            funcionMod.setValido(false);
+            funcionRepository.save(funcionMod);
+        }
+        return "redirect:/operador";
+    }
+
     @PostMapping("/save")
     public String newFuncion (@ModelAttribute("funcion")@Valid Funcion funcion, BindingResult bindingResult, Model model, @RequestParam("actoresObra") Optional<List<Actor>> actoresObra,
                                @RequestParam("foto") List<MultipartFile> file ){
         double costoInvalid=0.0;
         System.out.println("entro al controller");
         System.out.println(bindingResult.getAllErrors());
-        if(bindingResult.hasErrors()|| funcion.getGenero().equalsIgnoreCase("no") || !actoresObra.isPresent() ){
+        if(bindingResult.hasErrors()|| funcion.getGenero().equalsIgnoreCase("no") || !actoresObra.isPresent()|| funcion.getIdsede().getId()!=funcion.getIdsala().getIdsede().getId() ){
             model.addAttribute("listaActores",actorRepository.findAll());
             model.addAttribute("listaDirectores",directorRepository.findAll());
             model.addAttribute("listaSedes",sedesRepository.findAll());
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
             System.out.println("entro al primer if");
+            if (funcion.getIdsede().getId()!=funcion.getIdsala().getIdsede().getId()){
+                model.addAttribute("errorMatching","La sala debe coincidir con la sede");
+            }
             if(bindingResult.hasErrors()){
                 System.out.println("Error de binding");
             }

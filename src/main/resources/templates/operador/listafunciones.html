@@ -52,6 +52,8 @@
                         <th style="text-align: center;" scope="col">Estado</th>
                         <th style="text-align: center;" scope="col">Restricion de edad</th>
                         <th style="text-align: center;" scope="col">Generar Reporte</th>
+                        <th style="text-align: center;" scope="col">Borrar</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -64,6 +66,7 @@
                         <td style="text-align: center;" th:text="${funcion.valido == true ? 'Vigente' : 'No vigente'}">Vigente</td>
                         <td style="text-align: center;" th:text="'+'+${funcion.restricciondeedad}">+18</td>
                         <td style="text-align: center;"><a class="btn btn-success"><i class="bi bi-download"></i></a></td>
+                        <td style="text-align: center;"><a class="btn btn-danger" th:href="@{'/operador/delete?id='+${funcion.id}}"><i class="bi bi-trash"></i></a></td>
                     </tr>
 
                 </tbody>
