@@ -4,36 +4,32 @@
 <body>
     <header th:replace="includes/navbar.html :: navbar(option='Actores')"></header>
     <main>
-        <h1 class="title-principal text-center">Actores</h1>
+        <h1 class="title">Actores</h1>
+
         <div class="album py-5">
             <div class="container">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <div class="text-center">
-                                <h2>Nombre</h2>
-                            </div>
-                            <img th:src="@{img/actor.png}">
-                            <div class="card-body">
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <div class="text-center">
-                                    <p>Correo Electronico</p>
-                                    <p>Numero de Telefono</p>
-                                </div>
-                            </div>
+                <form class="form-group mb-3" method="post" th:action="@{/actores/buscar}">
+                    <div class="row">
+                        <div class="col-10">
+                            <input class="form-control" placeholder="Texto a buscar" name="search" >
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                            <a class="btn btn-outline-danger ml-2" th:href="@{/actores}">Limpiar</a>
                         </div>
                     </div>
-                    <div class="col">
+                </form>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <div class="col" th:each="actor : ${listaActores}">
                         <div class="card shadow-sm">
                             <div class="text-center">
-                                <h2>Nombre</h2>
+                                <h2 th:text="${actor.nombre}"></h2>
                             </div>
                             <img th:src="@{img/actor.png}">
                             <div class="card-body">
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                                 <div class="text-center">
-                                    <p>Correo Electronico</p>
-                                    <p>Numero de Telefono</p>
+                                    <p class="card-text" th:text="|Correo: ${actor.correo}|"></p>
+                                    <p class="card-text" th:text="|Telefono: ${actor.telefono}|"></p>
                                 </div>
                             </div>
                         </div>

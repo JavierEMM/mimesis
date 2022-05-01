@@ -26,6 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout().logoutSuccessUrl("/");
         http.authorizeRequests()
+                .antMatchers("/historial","/historial/**").hasAuthority("Cliente")
+                .antMatchers("/calificacion","/calificacion/**").hasAuthority("Cliente")
                 .antMatchers("/carrito","/carrito/**").hasAuthority("Cliente")
                 .antMatchers("/operador","/operador/**").hasAuthority("Operador")
                 .antMatchers("/admin","/admin/**").hasAuthority("Admin")

@@ -59,4 +59,13 @@ public class LoginController {
         usuarioRepository.save(usuario);
         return "redirect:/login";
     }
+    @GetMapping("/recuperarcontrasenia")
+    public String nuevacontrasenia(){
+        return "login/nuevacontrasenia";
+    }
+
+    @GetMapping("/cambiarcontrasenia")
+    public String cambiarContrasenia(){
+        return "login/cambiarcontra";
+    }
 }
