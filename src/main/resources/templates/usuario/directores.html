@@ -9,32 +9,16 @@
         <div class="album py-5">
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <div class="col">
+                    <div class="col" th:each="director : ${listaDirectores}">
                         <div class="card shadow-sm">
                             <div class="text-center">
-                                <h2>Nombre</h2>
+                                <h2 th:text="${director.nombre}"></h2>
                             </div>
                             <img th:src="@{img/director.jpg}">
                             <div class="card-body">
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                                 <div class="text-center">
-                                    <p>Correo Electronico</p>
-                                    <p>Numero de Telefono</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <div class="text-center">
-                                <h2>Nombre</h2>
-                            </div>
-                            <img th:src="@{img/director.jpg}">
-                            <div class="card-body">
-                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <div class="text-center">
-                                    <p>Correo Electronico</p>
-                                    <p>Numero de Telefono</p>
+                                    <p th:text="${director.correo}"></p>
+                                    <p th:text="${director.telefono}"></p>
                                 </div>
                             </div>
                         </div>

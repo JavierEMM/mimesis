@@ -7,6 +7,7 @@ import com.mimesis.entity.Sede;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -17,31 +18,37 @@ public class Funcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idfuncion", nullable = false)
-    private Integer id;
+    private int id;
 
     @ManyToMany
     @JoinTable(name="funciontieneactor",
     joinColumns = @JoinColumn(name = "idfuncion"),
     inverseJoinColumns = @JoinColumn(name = "idactor"))
+    @NotNull(message = "Debe seleccionar al menos un actor por funcion")
     private List<Actor> actoresPorFuncion;
 
     @Column(name = "valido", nullable = false)
     private Boolean valido = true;
 
-    @Column(name = "nombre", nullable = false, length = 45)
+    @Column(name = "nombre", nullable = false, length = 255)
+    @Size(max = 255,min=1,message = "Debe ingresar un nombre para la función")
     private String nombre;
 
-    @Column(name = "genero", nullable = false, length = 45)
+    @Column(name = "genero", nullable = false, length = 255)
+    @Size(max = 255,min=1,message = "Debe ingresar un genero para la función")
     private String genero;
 
-    @Column(name = "restricciondeedad", nullable = false, length = 45)
-    private String restricciondeedad;
+    @Column(name = "restricciondeedad", nullable = false, length = 255)
+    @Min(value = 0,message = "Debe escoger una restricción de edad")
+    private Integer restricciondeedad;
 
     @Column(name = "fecha", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
     @Column(name = "aforo", nullable = false)
+    @Min(value = 0,message = "Debe escoger un aforo mayor a 0")
+    @NotNull(message = "Debe ingresar un valor")
     private Integer aforo;
 
     @Column(name = "horainicio", nullable = false)
@@ -50,6 +57,7 @@ public class Funcion {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "iddirector", nullable = false)
+    @NotNull(message = "Debe escoger un director")
     private Director iddirector;
 
     @Column(name = "horafin", nullable = false)
@@ -58,14 +66,24 @@ public class Funcion {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idsede", nullable = false)
+    @NotNull(message = "Debe seleccionar una sede")
     private Sede idsede;
 
     @Column(name = "costo", nullable = false, length = 45)
-    private String costo;
+    @Min(value =0 ,message = "El valor debe ser mayor que 0")
+    @Max(value = 500,message = "El valor debe ser menor a 500")
+    @NotNull(message = "Debe ingresar un valor")
+    private double costo;
+
+    @Column(name = "descripcion", nullable = false, length = 45)
+    @NotBlank(message = "Debe de escribir una descripcion")
+    private String descripcion;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idsala", nullable = false)
+    @NotNull(message = "Debe seleccionar una sala")
     private Sala idsala;
+
 
     public List<Actor> getActoresPorFuncion() {
         return actoresPorFuncion;
@@ -92,11 +110,11 @@ public class Funcion {
     }
 
 
-    public String getCosto() {
+    public double getCosto() {
         return costo;
     }
 
-    public void setCosto(String costo) {
+    public void setCosto(double costo) {
         this.costo = costo;
     }
 
@@ -148,11 +166,11 @@ public class Funcion {
         this.fecha = fecha;
     }
 
-    public String getRestricciondeedad() {
+    public Integer getRestricciondeedad() {
         return restricciondeedad;
     }
 
-    public void setRestricciondeedad(String restricciondeedad) {
+    public void setRestricciondeedad(Integer restricciondeedad) {
         this.restricciondeedad = restricciondeedad;
     }
 
@@ -178,5 +196,13 @@ public class Funcion {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

@@ -14,17 +14,19 @@
                     <h2 th:if="${funcion.id != 0}" th:text="${funcion.nombre}"></h2>
                     <br>
                 </div>
+
                 <div class="container-fluid form-center">
                     <form method="POST" class="row g-3" th:action="@{/operador/save}" th:object="${funcion}">
-                        <input type="hidden" th:field="*{id}">
+                        <input type="hidden" th:field="*{id}"  >
                         <div class="row" th:hidden="${funcion.id != 0}">
                             <div class="col">
                             </div>
                             <div class="form-group col-8" >
                                 <label>Nombre</label>
                                 <br>
-                                <input class="form-control " type="text" th:field="*{nombre}" >
-
+                                <input class="form-control " type="text" th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}" >
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                                     th:errors="*{nombre}"></div>
                             </div>
                             <div class="col"></div>
 
@@ -72,7 +74,8 @@
                             <div class="form-group col-8" >
                                 <label for="genero">Género</label>
                                 <br>
-                                <select class="form-select" id="genero" th:field="*{genero}">
+                                <select class="form-select" id="genero" th:field="*{genero}" th:classappend="${errorGenero!=null?'is-invalid':''}">
+                                    <option value="no">-Seleccione-</option>
                                     <option value="Drama">Drama</option>
                                     <option value="Comedia">Comedia</option>
                                     <option value="Ciencia ficcion">Ciencia ficcion</option>
@@ -80,6 +83,8 @@
                                     <option value="Suspenso">Suspenso</option>
                                     <option value="Terror">Terror</option>
                                 </select>
+                                <div class="invalid-feedback" th:if="${errorGenero!=null}"
+                                     th:text="${errorGenero}"></div>
                             </div>
                             <div class="col">
                             </div>
@@ -91,9 +96,12 @@
                             </div>
                             <div class="form-group col-8">
                                 <label for="iddirector" >Director</label>
-                                <select class="form-select" id="iddirector" th:field="*{iddirector}">
+                                <select class="form-select" id="iddirector" th:field="*{iddirector}" th:classappend="${#fields.hasErrors('iddirector')?'is-invalid':''}">
+                                    <option th:value="-1">-Seleccione-</option>
                                     <option th:each="director : ${listaDirectores}" th:value="${director.id}" th:text="${director.nombre}">Mark</option>
                                 </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('iddirector')}"
+                                     th:errors="*{iddirector}"></div>
                             </div>
                             <div class="col">
                             </div>
@@ -105,15 +113,17 @@
                             </div>
                             <div class="form-group col-8">
                                 <label for="restriccion" >Restriccion de Edad</label>
-                                <select id="restriccion" class="form-select" th:name="restricciondeedad">
-                                    <option hidden selected>Restriccion de edad</option>
-                                    <option value="Apto para todo publico">Apto para todo publico</option>
-                                    <option value="+12">+12</option>
-                                    <option value="+14">+14</option>
-                                    <option value="+16">+16</option>
-                                    <option value="+18">+18</option>
+                                <select id="restriccion" class="form-select" th:field="*{restricciondeedad}" th:classappend="${#fields.hasErrors('restricciondeedad')?'is-invalid':''}">
+                                    <option th:value="-1">-Seleccione-</option>
+                                    <option value="0">Apto para todo publico</option>
+                                    <option value="12">+12</option>
+                                    <option value="16">+16</option>
+                                    <option value="18">+18</option>
                                 </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('restricciondeedad')}"
+                                     th:errors="*{restricciondeedad}"></div>
                             </div>
+
                             <div class="col">
                             </div>
                         </div>
@@ -124,10 +134,12 @@
                             </div>
                             <div class="form-group col-8" >
                                 <label for="sede" >Sede</label>
-                                <select id="sede" class="form-select" th:name="idsede">
-
+                                <select id="sede" class="form-select" th:field="*{idsede}" th:classappend="${#fields.hasErrors('idsede')?'is-invalid':''}">
+                                    <option th:value="-1">-Seleccione-</option>
                                     <option th:each="sede : ${listaSedes}" th:value="${sede.id}" th:text="${sede.nombre}">San Miguel</option>
                                 </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('idsede')}"
+                                     th:errors="*{idsede}"></div>
                             </div>
                             <div class="col">
                             </div>
@@ -138,10 +150,12 @@
                             </div>
                             <div class="form-group col-8" >
                                 <label for="sala" >Sala</label>
-                                <select id="sala" class="form-select" name="idsala">
-
+                                <select id="sala" class="form-select" th:field="*{idsala}" th:classappend="${#fields.hasErrors('idsala')?'is-invalid':''}">
+                                    <option th:value="-1">-Seleccione-</option>
                                     <option th:each="sala : ${listaSalas} " th:value="${sala.id}" th:text="${sala.idsede.nombre} + ' '+ ${sala.nombre}  ">Sala 1</option>
                                 </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('idsala')}"
+                                     th:errors="*{idsala}"></div>
                             </div>
                             <div class="col">
                             </div>
@@ -156,9 +170,12 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">S/</div>
                                     </div>
-                                    <input class="form-control" type="text" th:field="*{costo}">
+                                    <input class="form-control" type="number" th:field="*{costo}" th:classappend="${#fields.hasErrors('costo') ||errorCosto!=null ?'is-invalid':''}"  >
 
                                 </div>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('costo')}"
+                                     th:errors="*{costo}"></div>
+                                <p th:if="${errorCosto!=null}" style="color: #dc3545;font-size: .875em;"> Debe ingresar un costo mayor a 0<p>
                             </div>
                             <div class="col">
                             </div>
@@ -169,7 +186,22 @@
                             <div class="form-group col-8" >
                                 <label>Aforo</label>
                                 <br>
-                                <input  class="form-control" type="number" th:field="*{aforo}" >
+                                <input  class="form-control" type="number" th:field="*{aforo}" th:classappend="${#fields.hasErrors('aforo')?'is-invalid':''}" >
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('aforo')}"
+                                     th:errors="*{aforo}"></div>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                        <div class="row" th:hidden="${funcion.id != 0}">
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8" >
+                                <label>Descripcion</label>
+                                <br>
+                                <textarea class="form-control" th:field="*{descripcion}" th:classappend="${#fields.hasErrors('descripcion')?'is-invalid':''}"></textarea>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}"
+                                     th:errors="*{descripcion}"></div>
                             </div>
                             <div class="col">
                             </div>
@@ -181,6 +213,7 @@
                             </div>
                             <div class="col-8" data-bs-spy="scroll" data-bs-offset="0" tabindex="0">
                                 <h3>Actores</h3>
+                                <p th:if="${errorActor!=null}" style="color: #dc3545;font-size: .875em;"> Debe seleccionar al menos un actor</p>
                                 <table class="table" >
                                     <thead class="thead-dark">
                                         <th scope="col">Nombre</th>
@@ -194,9 +227,11 @@
                                         </tr>
                                     </tbody>
                                 </table>
+
                             </div>
                             <div class="col">
                             </div>
+
                         </div>
 
                         <div class="row" th:hidden="${funcion.id != 0}">

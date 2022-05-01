@@ -5,19 +5,41 @@
 <header th:replace="/includes/navbar.html :: navbar(option='Operador')" id="header" class="d-flex align-items-center">
 </header>
 <div class="container">
-        <div class="row" >
-            <div class="col-xl">
-                <p class="title">Lista Funciones</p>
-            </div>
+    <div class="row" >
+        <div class="col-xl">
+            <p class="title">Lista Funciones</p>
         </div>
+    </div>
+    <div class="row">
+        <form class="form-group mb-3" method="post" th:action="@{/operador/search}">
+            <div class="row">
+                <div class="col-8">
+                    <input class="form-control" placeholder="Texto a buscar" name="busqueda" >
+                </div>
+                <div class="col-2">
+                    <select class="form-select" name="categoria" >
+                        <option value="Nombre">Nombre</option>
+                        <option value="Género">Género</option>
+                    </select>
+                </div>
+               <div class="col">
+                   <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                   <a class="btn btn-outline-danger ml-2" th:href="@{/operador}">Limpiar</a>
+               </div>
+            </div>
+        </form>
+    </div>
         <div class="row" >
-            <div style="display:flex; align-items:center; justify-content:center; margin-top: 50px; margin-bottom: 50px;" class="col">
-                <a class="btn btn-success" th:href="@{/operador/crearfuncion}" style="width:250px; background-color: black !important;">Agregar Funcion</a>
-
-                <a class="btn btn-success" th:href="@{/operador/estadisticas}" style="width:250px; background-color: #f82249 !important;">Estadisticas</a>
+            <div class="col-8"></div>
+            <div class="col" style="text-align: center">
+                <a class="btn btn-success" th:href="@{/operador/crearfuncion}" style=" background-color: black !important;">Agregar Funcion</a>
+            </div>
+            <div class="col" style="text-align: center">
+                <a class="btn btn-success" th:href="@{/operador/estadisticas}" style=" background-color: #f82249 !important;">Estadisticas</a>
             </div>
         </div>
     <div class="row">
+
         <div class="col">
             <table class="table">
                 <thead class="thead-dark">
@@ -28,7 +50,8 @@
                         <th style="text-align: center;" scope="col">Sede</th>
                         <th style="text-align: center;" scope="col">Editar</th>
                         <th style="text-align: center;" scope="col">Estado</th>
-                        <th style="text-align: center;" scope="col">Dinero recaudado</th>
+                        <th style="text-align: center;" scope="col">Restricion de edad</th>
+                        <th style="text-align: center;" scope="col">Generar Reporte</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,8 +61,9 @@
                         <td style="text-align: center;" th:text="${funcion.fecha} + '  ' + ${funcion.horainicio}">Hoy xd</td>
                         <td style="text-align: center;" th:text="${funcion.idsede.nombre}">San Miguel</td>
                         <td style="text-align: center;"><a th:href="@{'/operador/edit' + '?id=' + ${funcion.id}}" ><i class="bi bi-pencil-square"></i></a></td>
-                        <td style="text-align: center;">Vigente</td>
-                        <td style="text-align: center;"><a><i class="bi bi-download"></i></a></td>
+                        <td style="text-align: center;" th:text="${funcion.valido == true ? 'Vigente' : 'No vigente'}">Vigente</td>
+                        <td style="text-align: center;" th:text="'+'+${funcion.restricciondeedad}">+18</td>
+                        <td style="text-align: center;"><a class="btn btn-success"><i class="bi bi-download"></i></a></td>
                     </tr>
 
                 </tbody>
