@@ -16,6 +16,16 @@ public class Sede {
     @Column(name = "ubicacion", nullable = false, length = 45)
     private String ubicacion;
 
+    @Column(name = "valido", nullable = false)
+    private Boolean valido;
+
+    public Boolean getValido() {
+        return valido;
+    }
+
+    public void setValido(Boolean valido) {
+        this.valido = valido;
+    }
     public String getUbicacion() {
         return ubicacion;
     }

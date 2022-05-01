@@ -23,6 +23,16 @@ public class Director {
     @Column(name = "telefono", nullable = false, length = 45)
     private Integer telefono;
 
+    @Column(name = "valido", nullable = false)
+    private Boolean valido;
+
+    public Boolean getValido() {
+        return valido;
+    }
+
+    public void setValido(Boolean valido) {
+        this.valido = valido;
+    }
     public String getCorreo() {
         return correo;
     }

@@ -25,6 +25,17 @@ public class Funcion {
     inverseJoinColumns = @JoinColumn(name = "idactor"))
     private List<Actor> actoresPorFuncion;
 
+    @Column(name = "valido", nullable = false)
+    private Boolean valido;
+
+    public Boolean getValido() {
+        return valido;
+    }
+
+    public void setValido(Boolean valido) {
+        this.valido = valido;
+    }
+
     public List<Actor> getActoresPorFuncion() {
         return actoresPorFuncion;
     }

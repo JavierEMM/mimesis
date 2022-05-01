@@ -22,6 +22,16 @@ public class Sala {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
+    @Column(name = "valido", nullable = false)
+    private Boolean valido;
+
+    public Boolean getValido() {
+        return valido;
+    }
+
+    public void setValido(Boolean valido) {
+        this.valido = valido;
+    }
     public String getNombre() {
         return nombre;
     }
