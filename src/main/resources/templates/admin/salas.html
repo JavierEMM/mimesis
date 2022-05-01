@@ -12,32 +12,31 @@
             </div>
         </div>
 
-        <div class="container">
+    <div class="container">
+            <label>Sede</label>
             <div class="row">
-                <div class="col-sm bg-light text-start" style="max-width:30%;">
-                <label>Sede</label>
-                 <select class="form-select text-left text-lg text-medium">
-                     <option>San Miki</option>
-                     <option>San Martin de Porres</option>
-                     <option>Lince</option>
-                     <option>Jesus Maria</option>
-                  </select>
-                </div>
-                <div class="col-sm bg-light text-end">
-                    <a class="btn btn-secondary" th:href="@{'/admin/agregarsalas'}">Agregar sala</a>
-                </div>
-
+                <form class="form-group mb-3" method="post" th:action="@{/admin/searchsalas}">
+                    <div class="row">
+                        <div class="col-9">
+                         <select class="form-select text-left text-lg text-medium" name="sedes">
+                             <option th:each="sedes:${listasedes}" th:text="${sedes.nombre}" th:value="${sedes.id}"></option>
+                          </select>
+                        </div>
+                        <div class="col-1">
+                            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                        </div>
+                        <div class="col-2">
+                            <a class="btn btn-secondary" th:href="@{'/admin/agregarsalas'}">Agregar sala</a>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
-
-    <div style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
                     <th class="text-center">Nombre de la sala</th>
                     <th class="text-center">Sede</th>
                     <th class="text-center">Aforo</th>
-                    <!--th class="text-center">Fecha de creación</th-->
                     <th class="text-center">Editar</th>
                     <th class="text-center">Eliminar</th>
                 </tr>
@@ -52,26 +51,6 @@
                     <a class="btn btn-primary" th:href="@{'/admin/editarsalas?id=' + ${sala.id}}"><i class="bi bi-pencil-square"></i></a>
                 </td>
                 <td class="text-center">
-                    <!--
-                    <div class="modal" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalToggleLabel">Confirmación</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    ¿Estas seguro de que quiere eliminar la sala?
-                                </div>
-                                <div class="modal-footer">
-                                    <button style="margin-right:10px" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <button class="btn btn-success" onclick="alert('Se ha eliminado la sala')" data-bs-dismiss="modal">Aceptar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- <a class="remove-from-cart" data-bs-toggle="modal" href="#exampleModalToggle" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="bi bi-trash"></i></a> -->
-                    <!-- <div class="column"><a style="width:120px; margin:5px;" class="btn btn-success" > <i class="bi bi-trash" ></i> </a></div> -->
                     <form id="id" method="get" th:action="@{'/admin/borrar?id=' + ${sala.id}}">
                         <input name="id" th:value="${sala.id}" type="hidden"/>
                         <button onclick="return confirm('¿Esta seguro que desea eliminar la sala?')"  class="btn btn-outline-danger flex-shrink-0" type="submit" >
@@ -80,11 +59,9 @@
                     </form>
                 </td>
             </tr>
-
         </tbody>
         </table>
     </div>
-
         <div class="column" style="margin-top:20px;">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
@@ -99,13 +76,7 @@
                     </li>
                 </ul>
             </nav>
-
         </div>
-
-
-
-
-
         <footer th:replace="includes/footer.html :: footer"></footer>
 
     </body>

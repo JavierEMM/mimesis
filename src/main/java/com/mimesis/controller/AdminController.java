@@ -44,6 +44,13 @@ public class AdminController {
     public String paginaSalas(Model model){
         List<Sala> salaList = salasRepository.findAll();
         model.addAttribute("salaList",salaList);
+        model.addAttribute("listasedes",sedesRepository.findAll());
+        return "admin/salas";
+    }
+    @PostMapping("/searchsalas")
+    public String buscarsala(Model model,@RequestParam("sedes") Sede sedes){
+        model.addAttribute("listasedes",sedesRepository.findAll());
+        model.addAttribute("salaList",sedes.getListasalas());
         return "admin/salas";
     }
 
@@ -82,13 +89,21 @@ public class AdminController {
         }
         return "redirect:/admin/salas";
     }
-
-
+   /////////////////////////////////////////////////////////////////////////////////////////////
 
     @GetMapping("sedes")
-    public String paginaSedes( Model model){
-        model.addAttribute("listaSedes",sedesRepository.findAll());
+    public String paginaSedes( Model model, @RequestParam(value="search",required = false) String search){
+        if(search!=null){
+            model.addAttribute("listaSedes",sedesRepository.busquedaTeatro(search));
+        }else{
+            model.addAttribute("listaSedes",sedesRepository.findAll());
+        }
+
         return "admin/sedes";
+    }
+    @PostMapping("/searchsedes")
+    public String sedesBuscar(Model model,@RequestParam(value = "search",required = false) String search){
+        return "redirect:/admin/sedes?search="+search;
     }
 
     @GetMapping("actoresydirectores")
@@ -118,7 +133,7 @@ public class AdminController {
         } catch (IOException e){
             e.printStackTrace();
         }
-        return "agregarsedes";
+        return "admin/agregarsedes";
 
     }
 

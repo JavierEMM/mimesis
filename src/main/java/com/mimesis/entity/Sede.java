@@ -23,6 +23,17 @@ public class Sede {
     @OneToMany(mappedBy = "idsede")
     private List<Foto> fotosporsede;
 
+    @OneToMany(mappedBy = "idsede")
+    private List<Sala> listasalas;
+
+    public List<Sala> getListasalas() {
+        return listasalas;
+    }
+
+    public void setListasalas(List<Sala> listasalas) {
+        this.listasalas = listasalas;
+    }
+
     public List<Foto> getFotosporsede() {
         return fotosporsede;
     }
