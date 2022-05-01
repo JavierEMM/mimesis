@@ -35,7 +35,7 @@ public class LoginController {
         } else if(rol.equals("Operador")) {
             return "redirect:/operador";
         }else if(rol.equals("Admin")){
-            return "redirect:/admin";
+            return "redirect:/admin/salas";
         }else {
             return "/loginForm";
         }

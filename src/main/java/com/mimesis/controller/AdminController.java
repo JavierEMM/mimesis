@@ -175,7 +175,7 @@ public class AdminController {
         }
         return "redirect:/admin/sedes";
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping("agregaractoresydirectores")
     public String paginaAgregaractoresydirectores(){

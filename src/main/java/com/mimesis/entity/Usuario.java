@@ -44,8 +44,8 @@ public class Usuario {
     @Column(name = "valido", nullable = false)
     private Boolean valido = true;
 
-    @Column(name = "emailconfirm", nullable = false)
-    private Boolean emailconfirm = false;
+   //@Column(name = "emailconfirm", nullable = false)
+    //private Boolean emailconfirm = false;
 
     public String getRol() {
         return rol;
@@ -143,11 +143,11 @@ public class Usuario {
         this.valido = valido;
     }
 
-    public Boolean getEmailconfirm() {
-        return emailconfirm;
-    }
+    //public Boolean getEmailconfirm() {
+      //  return emailconfirm;
+    //}
 
-    public void setEmailconfirm(Boolean emailconfirm) {
-        this.emailconfirm = emailconfirm;
-    }
+    //public void setEmailconfirm(Boolean emailconfirm) {
+        //this.emailconfirm = emailconfirm;
+    //}
 }
