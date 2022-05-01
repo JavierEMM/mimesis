@@ -23,7 +23,7 @@
           <div class="row">
             <div class="col-md-6 display-col">
               <img th:src="@{/img/moby_dick.jpg}" alt="moby_dick" class="img-fluid">
-                  <form>
+                  <form method="post" th:action="@{/carrito/reserva}">
                     <h2 class="text-center">Añade la función a tu reserva</h2>
                     <select class="form-select select-center">
                       <option selected>Selecciona el teatro</option>

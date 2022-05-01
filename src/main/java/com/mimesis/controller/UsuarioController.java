@@ -73,6 +73,10 @@ public class UsuarioController {
 
         return "usuario/carrito";
     }
+    @PostMapping("/carrito/reservar")
+    public String carritoReservar(Model model){
+        return "usuario/carrito";
+    }
     @GetMapping("/carrito/comprar")
     public String carritoComprar(Model model){
 
