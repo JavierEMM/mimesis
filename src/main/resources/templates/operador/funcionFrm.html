@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="container-fluid form-center">
-                    <form method="POST" class="row g-3" th:action="@{/operador/save}" th:object="${funcion}">
+                    <form  method="POST" class="row g-3" th:action="@{/operador/save}" enctype="multipart/form-data" th:object="${funcion}">
                         <input type="hidden" th:field="*{id}"  >
                         <div class="row" th:hidden="${funcion.id != 0}">
                             <div class="col">
@@ -237,24 +237,9 @@
                         <div class="row" th:hidden="${funcion.id != 0}">
                             <div class="col">
                             </div>
-                            <div class="form-group col-8">
-                                <table class="table">
-                                    <thead class="thead-dark">
-                                        <th scope="col">Imagenes</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><img class="img-fluid" style="width: 50px;height: 50px;" th:src="@{/img/teatro.jpg}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="img-fluid" style="width: 50px;height: 50px;" th:src="@{/img/teatro.jpg}"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="col-xl-1">
-                                    <input style="color: transparent;" type="file">
-                                    <button type="button" class="btn btn-primary">Aceptar imagen</button>
-                                </div>
+                            <div class="col-8">
+                                <label for="foto" class="form-label">Fotos</label>
+                                <input style="color: transparent;" type="file" accept="image/*" id="foto" name="foto" multiple>
                             </div>
                             <div class="col">
                             </div>
