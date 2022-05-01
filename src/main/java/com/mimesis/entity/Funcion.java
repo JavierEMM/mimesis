@@ -26,6 +26,10 @@ public class Funcion {
     inverseJoinColumns = @JoinColumn(name = "idactor"))
     private List<Actor> actoresPorFuncion;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @OneToMany(mappedBy = "idfuncion")
     private List<Foto> fotosporfuncion;
 
