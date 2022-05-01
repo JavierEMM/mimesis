@@ -55,7 +55,8 @@
                 </ul>
             </div>
             <a class="buy-tickets scrollto" sec:authorize="hasAnyAuthority('Cliente')" th:href="@{/carrito}"><i class="bi-cart-fill me-1"></i>Carrito</a>
-            <a class="buy-tickets scrollto" sec:authorize="isAnonymous()" th:href="@{/login}"><i style="margin-right: 4px; " class="bi bi-person-fill"></i>Iniciar Sesion</a>
+            <a class="buy-tickets scrollto" sec:authorize="isAnonymous()" th:href="@{/login}">Iniciar Sesion</a>
+            <a class="buy-tickets scrollto" sec:authorize="isAnonymous()" th:href="@{/registro}">Registrarse</a>
             <form sec:authorize="hasAnyAuthority('Operador','Admin')" th:action="@{/logout}" method="post">
                 <button type="submit" class="buy-tickets scrollto"><i style="margin-right: 4px; " class="bi bi-person-fill"></i>Cerrar Sesion</button>
             </form>

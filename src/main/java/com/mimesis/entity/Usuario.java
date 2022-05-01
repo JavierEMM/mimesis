@@ -2,6 +2,7 @@ package com.mimesis.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "usuario")
@@ -20,14 +21,14 @@ public class Usuario {
     @Column(name = "correo", nullable = false, length = 45)
     private String correo;
 
-    @Column(name = "`contraseña`", nullable = false, length = 45)
-    private String contraseña;
+    @Column(name = "contrasena", nullable = false, length = 45)
+    private String contrasena;
 
     @Column(name = "numerotelefonico", length = 45)
     private String numerotelefonico;
 
     @Column(name = "fechanacimiento")
-    private LocalDate fechanacimiento;
+    private Date fechanacimiento;
 
     @Column(name = "direccion", length = 45)
     private String direccion;
@@ -40,6 +41,8 @@ public class Usuario {
 
     @Column(name = "rol", nullable = false, length = 45)
     private String rol;
+    @Column(name = "valido", nullable = false)
+    private Boolean valido = true;
 
     public String getRol() {
         return rol;
@@ -73,11 +76,11 @@ public class Usuario {
         this.direccion = direccion;
     }
 
-    public LocalDate getFechanacimiento() {
+    public Date getFechanacimiento() {
         return fechanacimiento;
     }
 
-    public void setFechanacimiento(LocalDate fechanacimiento) {
+    public void setFechanacimiento(Date fechanacimiento) {
         this.fechanacimiento = fechanacimiento;
     }
 
@@ -89,12 +92,12 @@ public class Usuario {
         this.numerotelefonico = numerotelefonico;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public String getCorreo() {
@@ -127,5 +130,13 @@ public class Usuario {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Boolean getValido() {
+        return valido;
+    }
+
+    public void setValido(Boolean valido) {
+        this.valido = valido;
     }
 }

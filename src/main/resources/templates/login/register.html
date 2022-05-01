@@ -17,18 +17,18 @@
                 <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; color: white;box-shadow: 7px 13px 37px #000;">
                     <h1 class="border-bottom" style="color:crimson"><b>Registro</b></h1>
                     <br>
-                    <form method="POST">
+                    <form method="POST" th:object="${usuario}" th:action="@{/registrar}">
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <div class="form-outline">
                                     <label class="form-label">Nombres </label>
-                                    <input type="text" name="nombre" class="form-control form-control" placeholder="Nombres" required/>
+                                    <input type="text" th:field="*{nombre}" class="form-control form-control" placeholder="Nombres" required/>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="form-outline">
                                     <label class="form-label">Apellidos </label>
-                                    <input type="text" name="apellido" class="form-control form-control" placeholder="Apellidos" required/>
+                                    <input type="text" th:field="*{apellido}" class="form-control form-control" placeholder="Apellidos" required/>
                                 </div>
                             </div>
                         </div>
@@ -37,27 +37,25 @@
                             <div class="col-md-6 mb-4 pb-2">
                                 <div class="form-outline">
                                     <label class="form-label">DNI</label>
-                                    <input type="text" class="form-control form-control" name="dni"
-                                           maxlength="8"
-                                           pattern="[0-9]{8}" title="Debe ingresar un número de DNI valido" required>
+                                    <input type="number" class="form-control form-control" th:field="*{dni}">
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4 pb-2">
                                 <label class="form-label select-label fontStyle2">Fecha de nacimiento</label>
-                                <input type="date" class="form-control form-control" name="nacimiento" required>
+                                <input type="text" placeholder="AAAA-MM-DD" class="form-control form-control" name="dateStr">
                             </div>
                         </div>
 
                         <div class="form-outline mb-4">
                             <label class="form-label">Correo</label>
-                            <input type="email" name="usuario" class="form-control form-control" placeholder="Correo"/>
+                            <input type="email" th:field="*{correo}" class="form-control form-control" placeholder="Correo"/>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-4 pb-2">
                                 <div class="form-outline">
                                     <label class="form-label">Contraseña</label>
-                                    <input type="password" name="contrasena" id="contrasena"  class="form-control form-control" required/>
+                                    <input type="password" th:field="*{contrasena}" class="form-control form-control" required/>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4 pb-2">
@@ -75,15 +73,13 @@
                             <div class="col-md-6 mb-4 pb-2">
                                 <div class="form-outline mb-4">
                                      <label class="form-label">Número de celular</label>
-                                      <input type="tel" name="telefono" class="form-control form-control"
-                                             maxlength="9"  pattern="[0-9]{9}" title="Debe ingresar un número telefonico de 9 numeros"
-                                             placeholder="123456789" required>
+                                      <input type="tel" th:field="*{numerotelefonico}" class="form-control form-control">
                                 </div>
                             </div>
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline mb-4">
                                           <label class="form-label">Direccion</label>
-                                          <input type="text" name="direccion" class="form-control form-control" required>
+                                          <input type="text" th:field="*{direccion}" class="form-control form-control" required>
                                     </div>
                                 </div>
                         </div>

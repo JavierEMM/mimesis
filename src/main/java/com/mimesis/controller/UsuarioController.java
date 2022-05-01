@@ -95,10 +95,7 @@ public class UsuarioController {
     public String calificacion(){
         return "usuario/calificacion";
     }
-    @GetMapping("/registro")
-    public String registro(){
-        return "login/register";
-    }
+
 
     @GetMapping("/cambiarcontrasenia")
     public String cambiarContrasenia(){
