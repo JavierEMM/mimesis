@@ -7,12 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,15 +36,26 @@ public class OperadorController {
 
         return "operador/listafunciones";
     }
+
+    @PostMapping("/search")
+    public String buscarFuncion(Model model,@RequestParam("busqueda") String busqueda,@RequestParam("categoria") String categoria){
+        if(categoria.equalsIgnoreCase("Nombre")){
+            model.addAttribute("listaFunciones",funcionRepository.listaBuscarFuncionesNombre(busqueda));
+        }else{
+            model.addAttribute("listaFunciones",funcionRepository.listaBuscarFuncionesGenero(busqueda));
+        }
+
+        return "operador/listafunciones";
+    }
+
     @GetMapping("/crearfuncion")
     public String nuevaFuncion (@ModelAttribute("funcion") Funcion funcion, Model model){
-        funcion.setId(0);
-        model.addAttribute("funcion",funcion);
+        System.out.println(funcion.getCosto());
         model.addAttribute("listaActores",actorRepository.findAll());
         model.addAttribute("listaDirectores",directorRepository.findAll());
         model.addAttribute("listaSedes",sedesRepository.findAll());
         model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
-        return "operador/crearfuncion";
+        return "operador/funcionFrm";
     }
     @GetMapping("/estadisticas")
     public String estadisticas (){ return "operador/estadisticas";}
@@ -58,31 +68,42 @@ public class OperadorController {
             model.addAttribute("listaDirectores",directorRepository.findAll());
             model.addAttribute("listaSedes",sedesRepository.findAll());
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
-            return "operador/crearfuncion";
+            return "operador/funcionFrm";
         }
 
         return "redirect:/operador";
         }
 
     @PostMapping("/save")
-    public String newFuncion (@ModelAttribute("funcion") Funcion funcion, Model model,@RequestParam("actoresObra") List<Actor> actoresObra){
-        ArrayList<Actor> listaActSelect = new ArrayList<>();
-        listaActSelect.addAll(actoresObra);
-        funcion.setActoresPorFuncion(actoresObra);
-        System.out.println(funcion.getNombre());
-        System.out.println(funcion.getAforo());
-        System.out.println(funcion.getCosto());
-        System.out.println(funcion.getGenero());
-        System.out.println(funcion.getIdsala().getNombre());
-        System.out.println(funcion.getIddirector().getNombre());
-        for(Actor act : listaActSelect){
-            System.out.println("Actors size :"+act.getNombre());
+    public String newFuncion (@ModelAttribute("funcion")@Valid Funcion funcion, BindingResult bindingResult, Model model, @RequestParam("actoresObra") Optional<List<Actor>> actoresObra,
+                              RedirectAttributes redirectAttributes){
+        System.out.println("El costo es " + funcion.getCosto());
+        double costoInvalid=0.0;
+        if(bindingResult.hasErrors()|| funcion.getGenero().equalsIgnoreCase("no") || !actoresObra.isPresent() ){
+            model.addAttribute("listaActores",actorRepository.findAll());
+            model.addAttribute("listaDirectores",directorRepository.findAll());
+            model.addAttribute("listaSedes",sedesRepository.findAll());
+            model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
+            if(funcion.getCosto()==costoInvalid){
+                System.out.println("entra al error de costo");
+                model.addAttribute("errorCosto","Deber ingresar un valor mayor a 0");
+            }
+            if(funcion.getGenero().equalsIgnoreCase("no")) {
+                System.out.println("Error genero");
+                model.addAttribute("errorGenero", "Debe seleccionar un género");
+            }
+            if(!actoresObra.isPresent()){
+                System.out.println("Error actor");
+                model.addAttribute("errorActor", "Debe seleccionar un género");
+            }
+            return "operador/funcionFrm";
+
+        }else{
+            funcion.setActoresPorFuncion(actoresObra.get());
+            funcionRepository.save(funcion);
+            return  "redirect:/operador";
         }
-        System.out.println(funcion.getHorainicio());
-        System.out.println(funcion.getHorafin() );
-        System.out.println(funcion.getActoresPorFuncion().get(0).getNombre());
-        funcionRepository.save(funcion);
-        return  "redirect:/operador";
+
     }
 
 }
