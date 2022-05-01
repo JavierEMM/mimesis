@@ -1,16 +1,20 @@
 package com.mimesis.controller;
 
+import com.mimesis.entity.Foto;
 import com.mimesis.entity.Sala;
 import com.mimesis.entity.Sede;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +36,9 @@ public class AdminController {
 
     @Autowired
     DirectorRepository directorRepository;
+
+    @Autowired
+    FotoRepository fotoRepository;
 
     @GetMapping("/salas")
     public String paginaSalas(Model model){
@@ -79,7 +86,7 @@ public class AdminController {
 
 
     @GetMapping("sedes")
-    public String paginaSedes(Model model){
+    public String paginaSedes( Model model){
         model.addAttribute("listaSedes",sedesRepository.findAll());
         return "admin/sedes";
     }
@@ -97,10 +104,39 @@ public class AdminController {
     }
 
     @PostMapping("savesedes")
-    public String savesedes(Sede sede){
+    public String savesedes(Sede sede, @RequestParam("archivo") List<MultipartFile> file  ){
         sedesRepository.save(sede);
-        return "redirect:/admin/sedes";
+        Collections.reverse(file);
+        try{
+            for (MultipartFile file1: file ) {
+                Foto foto= new Foto();
+                foto.setFoto(file1.getBytes());
+                foto.setIdsede(sede);
+                fotoRepository.save(foto);
+            }
+            return "redirect:/admin/sedes";
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return "agregarsedes";
+
     }
+
+    @GetMapping("/imagesedes/{id}")
+    public ResponseEntity<byte[]> mostrarimagen(@PathVariable("id") int id){
+        Optional<Sede> opt = sedesRepository.findById(id);
+        if (opt.isPresent()) {
+            Sede sedefoto = opt.get();
+            byte[] imagenComoBytes = sedefoto.getFotosporsede().get(0).getFoto();
+            return new ResponseEntity<>(
+                    imagenComoBytes,
+                    HttpStatus.OK);
+        }else{
+            return null;
+        }
+    }
+
+
 
     @GetMapping("editarsedes")
     public String paginaEditarsedes(@RequestParam("id") Integer id, Model model){

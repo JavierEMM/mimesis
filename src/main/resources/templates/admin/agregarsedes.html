@@ -10,31 +10,29 @@
         <main>
             <div class="container px-4 py-5">
                 <h1 class="pb-2 mb-4 border-bottom">Agregar Sedes</h1>
-                <form method="post"  class="col-4" th:action="@{'/admin/savesedes'}">
+                <form method="post"  class="col-4" th:action="@{'/admin/savesedes'}" enctype="multipart/form-data">
                     <input type="hidden"/>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre de la sede</label>
                         <input name="nombre" id="nombre" type="text" class="form-control" >
                     </div>
-                    <div class="col-sm bg-light text-start" style="max-width:30%;">
+                    <div class="col-sm bg-light text-start" >
                         <label for="ubicacion" class="form-label">Ubicacion</label>
                         <input name="ubicacion" id="ubicacion" type="text" class="form-control" >
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-xl-1">
-                            <label class="form-label">Fotos</label>
-                            <input style="color: transparent;" type="file">
+                            <label for="archivo" class="form-label">Fotos</label>
+                            <input style="color: transparent;" type="file" accept="image/*" id="archivo" name="archivo" multiple>
                         </div>
                     </div>
                     <br>
                     <a th:href="@{'/admin/sedes'}" class="btn btn-danger">Cancelar</a>
-                    <a th:href="@{'/admin/sedes'}" class="btn btn-primary">Guardar</a>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </form>
 
             </div>
         </main>
-
-
     </body>
 </html>

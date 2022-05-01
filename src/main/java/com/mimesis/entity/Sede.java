@@ -1,6 +1,7 @@
 package com.mimesis.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "sede")
@@ -18,6 +19,17 @@ public class Sede {
 
     @Column(name = "valido", nullable = false)
     private Boolean valido = true;
+
+    @OneToMany(mappedBy = "idsede")
+    private List<Foto> fotosporsede;
+
+    public List<Foto> getFotosporsede() {
+        return fotosporsede;
+    }
+
+    public void setFotosporsede(List<Foto> fotosporsede) {
+        this.fotosporsede = fotosporsede;
+    }
 
     public Boolean getValido() {
         return valido;

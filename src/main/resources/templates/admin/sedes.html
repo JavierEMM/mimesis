@@ -54,31 +54,11 @@
                         <td th:text="${i.index + 1}"></td>
                         <td th:text="${sede.nombre}"></td>
                         <td th:text="${sede.ubicacion}"></td>
-                        <td class="text-center text-lg text-medium"><a style="margin-right: 10px;margin-left: 10px;"><img th:src="@{/img/ubicacion.jpg}" width="50" height="50" ></a></td>
+                        <td><img th:if="${sede.fotosporsede !=null}" th:src="@{|imagesedes/${sede.id}|}" width="50" height="50" ></td>
                         <td class="text-center">
                             <a class="btn btn-primary" th:href="@{'/admin/editarsedes?id=' + ${sede.id}}"><i class="bi bi-pencil-square"></i></a>
                         </td>
                         <td class="text-center">
-                            <!--
-                            <div class="modal" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalToggleLabel">Confirmación</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ¿Estas seguro de que quiere eliminar la sala?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button style="margin-right:10px" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <button class="btn btn-success" onclick="alert('Se ha eliminado la sala')" data-bs-dismiss="modal">Aceptar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                            <!-- <a class="remove-from-cart" data-bs-toggle="modal" href="#exampleModalToggle" data-toggle="tooltip" title="" data-original-title="Remove item"><i class="bi bi-trash"></i></a> -->
-                            <!-- <div class="column"><a style="width:120px; margin:5px;" class="btn btn-success" > <i class="bi bi-trash" ></i> </a></div> -->
                             <form id="id" method="get" th:action="@{'/admin/borrarsede?id=' + ${sede.id}}">
                                 <input name="id" th:value="${sede.id}" type="hidden"/>
                                 <button onclick="return confirm('¿Esta seguro que desea eliminar la sede?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
