@@ -23,7 +23,7 @@ public class Actor {
     private Integer telefono;
 
     @Column(name = "valido", nullable = false)
-    private Boolean valido;
+    private Boolean valido = true;
 
     public Boolean getValido() {
         return valido;

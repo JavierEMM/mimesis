@@ -26,23 +26,7 @@ public class Funcion {
     private List<Actor> actoresPorFuncion;
 
     @Column(name = "valido", nullable = false)
-    private Boolean valido;
-
-    public Boolean getValido() {
-        return valido;
-    }
-
-    public void setValido(Boolean valido) {
-        this.valido = valido;
-    }
-
-    public List<Actor> getActoresPorFuncion() {
-        return actoresPorFuncion;
-    }
-
-    public void setActoresPorFuncion(List<Actor> actoresPorFuncion) {
-        this.actoresPorFuncion = actoresPorFuncion;
-    }
+    private Boolean valido = true;
 
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
@@ -79,10 +63,25 @@ public class Funcion {
     @Column(name = "costo", nullable = false, length = 45)
     private String costo;
 
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idsala", nullable = false)
     private Sala idsala;
+
+    public List<Actor> getActoresPorFuncion() {
+        return actoresPorFuncion;
+    }
+
+    public void setActoresPorFuncion(List<Actor> actoresPorFuncion) {
+        this.actoresPorFuncion = actoresPorFuncion;
+    }
+
+    public Boolean getValido() {
+        return valido;
+    }
+
+    public void setValido(Boolean valido) {
+        this.valido = valido;
+    }
 
     public Sala getIdsala() {
         return idsala;

@@ -17,7 +17,7 @@ public class Sede {
     private String ubicacion;
 
     @Column(name = "valido", nullable = false)
-    private Boolean valido;
+    private Boolean valido = true;
 
     public Boolean getValido() {
         return valido;
