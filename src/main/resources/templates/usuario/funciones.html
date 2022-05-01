@@ -4,9 +4,20 @@
 <body>
         <header th:replace="includes/navbar.html :: navbar(option ='Funciones')"></header>
     <main>
-        <h1 class="text-center title-principal">Funciones</h1>
+        <h1 class="title">Funciones</h1>
         <div class="album py-5">
             <div class="container">
+                <form class="form-group mb-3" method="post" th:action="@{/funciones/buscar}">
+                    <div class="row">
+                        <div class="col-10">
+                            <input class="form-control" placeholder="Texto a buscar" name="search">
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                            <a class="btn btn-outline-danger ml-2" th:href="@{/funciones}">Limpiar</a>
+                        </div>
+                    </div>
+                </form>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     <div class="col" th:each="funcion : ${listaFunciones}">
                         <div class="card shadow-sm">
