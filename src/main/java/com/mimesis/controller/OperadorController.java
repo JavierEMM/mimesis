@@ -1,6 +1,7 @@
 package com.mimesis.controller;
 
 import com.mimesis.entity.Actor;
+import com.mimesis.entity.Foto;
 import com.mimesis.entity.Funcion;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +31,8 @@ public class OperadorController {
     SedesRepository sedesRepository;
     @Autowired
     SalasRepository salasRepository;
+    @Autowired
+    FotoRepository fotoRepository;
 
     @GetMapping(value = {"/",""})
     public String paginaPrincipal(Model model){
@@ -50,7 +55,6 @@ public class OperadorController {
 
     @GetMapping("/crearfuncion")
     public String nuevaFuncion (@ModelAttribute("funcion") Funcion funcion, Model model){
-        System.out.println(funcion.getCosto());
         model.addAttribute("listaActores",actorRepository.findAll());
         model.addAttribute("listaDirectores",directorRepository.findAll());
         model.addAttribute("listaSedes",sedesRepository.findAll());
@@ -76,14 +80,19 @@ public class OperadorController {
 
     @PostMapping("/save")
     public String newFuncion (@ModelAttribute("funcion")@Valid Funcion funcion, BindingResult bindingResult, Model model, @RequestParam("actoresObra") Optional<List<Actor>> actoresObra,
-                              RedirectAttributes redirectAttributes){
-        System.out.println("El costo es " + funcion.getCosto());
+                               @RequestParam("foto") List<MultipartFile> file ){
         double costoInvalid=0.0;
+        System.out.println("entro al controller");
+        System.out.println(bindingResult.getAllErrors());
         if(bindingResult.hasErrors()|| funcion.getGenero().equalsIgnoreCase("no") || !actoresObra.isPresent() ){
             model.addAttribute("listaActores",actorRepository.findAll());
             model.addAttribute("listaDirectores",directorRepository.findAll());
             model.addAttribute("listaSedes",sedesRepository.findAll());
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
+            System.out.println("entro al primer if");
+            if(bindingResult.hasErrors()){
+                System.out.println("Error de binding");
+            }
             if(funcion.getCosto()==costoInvalid){
                 System.out.println("entra al error de costo");
                 model.addAttribute("errorCosto","Deber ingresar un valor mayor a 0");
@@ -99,9 +108,23 @@ public class OperadorController {
             return "operador/funcionFrm";
 
         }else{
+            System.out.println("Entro al else");
             funcion.setActoresPorFuncion(actoresObra.get());
+
             funcionRepository.save(funcion);
-            return  "redirect:/operador";
+            try{
+                System.out.println("entro al try");
+                for (MultipartFile file1: file ) {
+                    Foto foto= new Foto();
+                    foto.setFoto(file1.getBytes());
+                    foto.setIdfuncion(funcion);
+                    fotoRepository.save(foto);
+                }
+
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            return "redirect:/operador";
         }
 
     }

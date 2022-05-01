@@ -24,8 +24,18 @@ public class Funcion {
     @JoinTable(name="funciontieneactor",
     joinColumns = @JoinColumn(name = "idfuncion"),
     inverseJoinColumns = @JoinColumn(name = "idactor"))
-    @NotNull(message = "Debe seleccionar al menos un actor por funcion")
     private List<Actor> actoresPorFuncion;
+
+    @OneToMany(mappedBy = "idfuncion")
+    private List<Foto> fotosporfuncion;
+
+    public List<Foto> getFotosporfuncion() {
+        return fotosporfuncion;
+    }
+
+    public void setFotosporfuncion(List<Foto> fotosporfuncion) {
+        this.fotosporfuncion = fotosporfuncion;
+    }
 
     @Column(name = "valido", nullable = false)
     private Boolean valido = true;
