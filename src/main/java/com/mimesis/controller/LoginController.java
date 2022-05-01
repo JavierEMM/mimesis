@@ -44,6 +44,7 @@ public class LoginController {
     public String registro(@ModelAttribute("usuario") Usuario usuario){
         return "login/register";
     }
+
     @PostMapping("/registrar")
     public String registrar(@ModelAttribute("usuario") Usuario usuario, @RequestParam("dateStr") String fecha){
         String contrasena= usuario.getContrasena();

@@ -14,20 +14,13 @@
   height:10em;
 }
 
-
 :root{
   --black: black;
   --principal-title: 6rem;
   --red: #f82249;
   --font-family-primary: 'Krub', sans-serif;
 }
-html{
-  font-size: 62.5%;
-}
-body{
-  font-size: 16px;
-  font-family: var(--font-family-primary);
-}
+
 .icon{
   display: inline-block;
   font-size: 44px;
@@ -1479,6 +1472,7 @@ div > .btn-success{
   align-items: center;
   justify-content: center;
 }
+
 .fondo{
   padding: 1rem;
   border: medium solid black;

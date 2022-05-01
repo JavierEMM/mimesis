@@ -2,6 +2,7 @@ package com.mimesis.controller;
 
 import com.mimesis.repository.ActorRepository;
 import com.mimesis.repository.DirectorRepository;
+import com.mimesis.repository.FuncionRepository;
 import com.mimesis.repository.SedesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ public class UsuarioController {
     ActorRepository actorRepository;
     @Autowired
     DirectorRepository directorRepository;
+    @Autowired
+    FuncionRepository funcionRepository;
 
 
     @GetMapping(value={"","/"})
@@ -28,6 +31,7 @@ public class UsuarioController {
 
     @GetMapping("/funciones")
     public String paginaFunciones(Model model){
+        model.addAttribute("listaFunciones",funcionRepository.findAll());
         return "usuario/funciones";
     }
     @GetMapping("/detalles")

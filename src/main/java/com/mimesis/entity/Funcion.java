@@ -63,6 +63,9 @@ public class Funcion {
     @Column(name = "costo", nullable = false, length = 45)
     private String costo;
 
+    @Column(name = "descripcion", nullable = false, length = 45)
+    private String descripcion;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idsala", nullable = false)
     private Sala idsala;
@@ -178,5 +181,13 @@ public class Funcion {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }
