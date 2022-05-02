@@ -1,15 +1,16 @@
 package com.mimesis.controller;
 
-import com.mimesis.repository.ActorRepository;
-import com.mimesis.repository.DirectorRepository;
-import com.mimesis.repository.FuncionRepository;
-import com.mimesis.repository.SedesRepository;
+import com.mimesis.entity.Usuario;
+import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("")
@@ -22,6 +23,8 @@ public class UsuarioController {
     DirectorRepository directorRepository;
     @Autowired
     FuncionRepository funcionRepository;
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @GetMapping(value={"","/"})
     public String paginaPrincipal(Model model){
@@ -32,8 +35,21 @@ public class UsuarioController {
     public String perfil(Model model){
         return "usuario/perfil";
     }
+
     @PostMapping("/perfil/save")
-    public String guardarPerfil(Model model){
+    public String guardarPerfil(Usuario usuario, @RequestParam("numerotelefonico")String numerotelefonico,
+                    @RequestParam("direccion")String direccion, @RequestParam("dateStr")String fecha){
+
+        usuario.setDireccion(direccion);
+        usuario.setNumerotelefonico(numerotelefonico);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            usuario.setFechanacimiento(formatter.parse(fecha));
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        usuarioRepository.save(usuario);
         return "redirect:/perfil";
     }
 
