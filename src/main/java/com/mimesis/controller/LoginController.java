@@ -12,24 +12,32 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Controller
 public class LoginController {
     @Autowired
     UsuarioRepository usuarioRepository;
+
     @GetMapping("/login")
     public String loginForm(){
         return "login/login";
     }
     @GetMapping("/redirectByRole")
-    public String redirectByRole(Authentication auth){
+    public String redirectByRole(
+            Authentication auth, HttpSession session){
         String rol="";
         for (GrantedAuthority role : auth.getAuthorities()) {
             rol = role.getAuthority();
             break;
         }
+        Usuario usuario = usuarioRepository.findByCorreo(auth.getName());
+        session.setAttribute("usuario", usuario);
+
+
         if (rol.equals("Cliente")) {
             return "redirect:/";
         } else if(rol.equals("Operador")) {
@@ -39,6 +47,7 @@ public class LoginController {
         }else {
             return "/loginForm";
         }
+
     }
     @GetMapping("/registro")
     public String registro(@ModelAttribute("usuario") Usuario usuario){

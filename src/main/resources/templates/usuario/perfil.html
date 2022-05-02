@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         <head th:replace="includes/head.html :: head">MIMESIS</head>
     </head>
     <body>
@@ -17,41 +18,33 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="table-responsive">
+                        <div class="table-responsive" sec:authorize="isAuthenticated()">
                             <table class="table table-user-information">
+
                                 <tbody>
-                                    <tr>
+                                    <tr >
                                         <td>
                                             <strong>
                                                 <span class="glyphicon glyphicon-asterisk text-primary"></span>
                                                 DNI
                                             </strong>
                                         </td>
-                                        <td class="text-primary">
-                                            666666666
+
+                                        <td class="text-primary" th:text="${session.usuario.dni}">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-user  text-primary"></span>
-                                                Nombre
-                                            </strong>
+                                            <strong><span class="glyphicon glyphicon-user text-primary"></span></strong>
+                                            Nombre
                                         </td>
-                                        <td class="text-primary">
-                                            Kchin
-                                        </td>
+                                        <td class="text-primary" th:text="${session.usuario.nombre}"></td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <strong>
-                                                <span class="glyphicon glyphicon-cloud text-primary"></span>
-                                                Apellido
-                                            </strong>
+                                            <strong><span class="glyphicon glyphicon-cloud text-primary"></span>Apellido</strong>
                                         </td>
-                                        <td class="text-primary">
-                                            ALcantara
-                                        </td>
+                                        <td class="text-primary" th:text="${session.usuario.apellido}"></td>
                                     </tr>
 
 
@@ -74,20 +67,18 @@
                                                 Correo
                                             </strong>
                                         </td>
-                                        <td class="text-primary">
+                                        <td class="text-primary" th:text="${session.usuario.correo}">
                                             kchin@pucp.edu.pe
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <strong>
-                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                                <span class="glyphicon glyphicon-envelope text-primary" ></span>
                                                 Numero Telefonico
                                             </strong>
                                         </td>
-                                        <td class="text-primary">
-                                            972551391
-                                        </td>
+                                        <td class="text-primary" th:text="${session.usuario.numerotelefonico}"></td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -96,9 +87,7 @@
                                                 Fecha de nacimiento
                                             </strong>
                                         </td>
-                                        <td class="text-primary">
-                                            15/03/01
-                                        </td>
+                                        <td class="text-primary" th:text="${session.usuario.fechanacimiento}"></td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -107,15 +96,17 @@
                                                 Direccion
                                             </strong>
                                         </td>
-                                        <td class="text-primary">
-                                            Jr. Mirones 1672
+                                        <td class="text-primary" th:text="${session.usuario.direccion}">
                                         </td>
                                     </tr>
-
                                 </tbody>
                             </table>
                             <div class="header-display">
-                                <button id="botoneditar" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Editar Perfil</button>
+                                <button id="botoneditar" type="button" class="btn btn-primary"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                        data-bs-whatever="@getbootstrap">Editar Perfil</button>
+
+
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -123,73 +114,35 @@
                                                 <h5 class="modal-title" id="exampleModalLabel">Editar datos</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
+
                                             <div class="modal-body">
                                                 <form method="post" th:action="@{/perfil/save}">
                                                     <div class="mb-3">
                                                         <label for="recipient-name" class="col-form-label">Numero de Telefono</label>
-                                                        <input name="telefono" type="text" class="form-control" id="recipient-name">
+                                                        <input name="numerotelefonico" th:value="${session.usuario.numerotelefonico}"type="text" class="form-control" id="recipient-name">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="recipient-name2" class="col-form-label">Fecha de nacimiento</label>
-                                                        <input name="fechadenacimiento" type="date" class="form-control" id="recipient-name2">
+                                                        <input type="text" class="form-control" name="fechaStr" placeholder="dd-mm-yyyy" id="recipient-name2"
+                                                               th:value="${#dates.format(session.usuario.fechanacimiento, 'yyyy-MM-dd')}"/>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="recipient-name4" class="col-form-label">Direccion</label>
-                                                        <input name="direccion" type="text" class="form-control" id="recipient-name4">
+                                                        <input name="direccion" th:value="${session.usuario.direccion}" type="text" class="form-control" id="recipient-name4">
                                                     </div>
-                                                    <div class="mb-3">
+                                                 <!--  <div class="mb-3">
                                                         <div class="form-group">
                                                             <label for="recipient-name3" class="col-form-label">Distrito:</label>
                                                             <select id="recipient-name3" class="form-control form-select-sm" name="Distrito">
                                                                 <option value="Ancón">Ancón</option>
-                                                                <option value="Ate">Ate</option>
-                                                                <option value="Barranco">Barranco</option>
-                                                                <option value="Breña">Breña</option>
-                                                                <option value="Carabayllo">Carabayllo</option>
-                                                                <option value="Chaclacayo">Chaclacayo</option>
-                                                                <option value="Chorrillos">Chorrillos</option>
-                                                                <option value="Cieneguilla">Cieneguilla</option>
-                                                                <option value="Comas">Comas</option>
-                                                                <option value="El Agustino">El Agustino</option>
-                                                                <option value="Independencia">Independencia</option>
-                                                                <option value="Jesus María">Jesus María</option>
-                                                                <option value="La Molina">La Molina</option>
-                                                                <option value="La Victoria">La Victoria</option>
-                                                                <option value="Lima">Lima</option>
-                                                                <option value="Lince">Lince</option>
-                                                                <option value="Los Olivos">Los Olivos</option>
-                                                                <option value="Lurigancho">Lurigancho</option>
-                                                                <option value="Lurín">Lurín</option>
-                                                                <option value="Magdalena del Mar">Magdalena del Mar</option>
-                                                                <option value="Miraflores">Miraflores</option>
-                                                                <option value="Pachacamac">Pachacamac</option>
-                                                                <option value="Pucusana">Pucusana</option>
-                                                                <option value="Pueblo Libre">Pueblo Libre</option>
-                                                                <option value="Puente Piedra">Puente Piedra</option>
-                                                                <option value="Punta Hermosa">Punta Hermosa</option>
-                                                                <option value="Punta Negra">Punta Negra</option>
-                                                                <option value="Rimac">Rimac</option>
-                                                                <option value="San Bartolo">San Bartolo</option>
-                                                                <option value="San Borja">San Borja</option>
-                                                                <option value="San Isidro">San Isidro</option>
-                                                                <option value="San Juan de Lurigancho">San Juan de Lurigancho</option>
-                                                                <option value="San Juan de Miraflores">San Juan de Miraflores</option>
-                                                                <option value="San Luis">San Luis</option>
-                                                                <option value="San Martin de Porres">San Martin de Porres</option>
-                                                                <option value="San Miguel">San Miguel</option>
-                                                                <option value="Santa Anita">Santa Anita</option>
-                                                                <option value="Santa María del Mar">Santa María del Mar</option>
-                                                                <option value="Santa Rosa">Santa Rosa</option>
-                                                                <option value="Santiago de Surco">Santiago de Surco</option>
-                                                                <option value="Surquillo">Surquillo</option>
-                                                                <option value="Villa el Salvador">Villa el Salvador</option>
-                                                                <option value="Villa María del Triunfo">Villa María del Triunfo</option>
                                                             </select>
                                                         </div>
-                                                    </div>
+                                                </div>-->
+
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                        <button onclick="return confirm('¿Estas seguro que deseas editar tus datos?')" type="submit" class="btn btn-primary">Aceptar</button>
+                                                        <button type="submit"
+                                                                class="btn btn-primary">Aceptar</button>
                                                     </div>
                                                 </form>
                                             </div>
