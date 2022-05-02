@@ -58,6 +58,7 @@ public class Funcion {
 
     @Column(name = "fecha", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Debe ingresar una fecha válida")
     private LocalDate fecha;
 
     @Column(name = "aforo", nullable = false)
@@ -67,6 +68,7 @@ public class Funcion {
 
     @Column(name = "horainicio", nullable = false)
     @DateTimeFormat(pattern = "HH:mm")
+    @NotNull(message = "Debe ingresar una hora válida")
     private LocalTime horainicio;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -76,6 +78,7 @@ public class Funcion {
 
     @Column(name = "horafin", nullable = false)
     @DateTimeFormat(pattern = "HH:mm")
+    @NotNull(message = "Debe ingresar una hora válida")
     private LocalTime horafin;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

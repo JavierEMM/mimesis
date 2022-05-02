@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,9 @@ public class OperadorController {
     SalasRepository salasRepository;
     @Autowired
     FotoRepository fotoRepository;
+
+
+
 
     @GetMapping(value = {"/",""})
     public String paginaPrincipal(Model model){
@@ -59,6 +63,16 @@ public class OperadorController {
         model.addAttribute("listaDirectores",directorRepository.findAll());
         model.addAttribute("listaSedes",sedesRepository.findAll());
         model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
+        ArrayList<String> listaGeneros = new ArrayList<>();
+        listaGeneros.add("Drama");
+        listaGeneros.add("Comedia");
+        listaGeneros.add("Ciencia ficcion");
+        listaGeneros.add("Aventura");
+        listaGeneros.add("Suspenso");
+        listaGeneros.add("Terror");
+        listaGeneros.add("Musical");
+        model.addAttribute("listaGeneros",listaGeneros);
+
         return "operador/funcionFrm";
     }
     @GetMapping("/estadisticas")
@@ -72,6 +86,15 @@ public class OperadorController {
             model.addAttribute("listaDirectores",directorRepository.findAll());
             model.addAttribute("listaSedes",sedesRepository.findAll());
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
+            ArrayList<String> listaGeneros = new ArrayList<>();
+            listaGeneros.add("Drama");
+            listaGeneros.add("Comedia");
+            listaGeneros.add("Ciencia ficcion");
+            listaGeneros.add("Aventura");
+            listaGeneros.add("Suspenso");
+            listaGeneros.add("Terror");
+            listaGeneros.add("Musical");
+            model.addAttribute("listaGeneros",listaGeneros);
             return "operador/funcionFrm";
         }
 
@@ -96,17 +119,26 @@ public class OperadorController {
         double costoInvalid=0.0;
         System.out.println("entro al controller");
         System.out.println(bindingResult.getAllErrors());
-        if(bindingResult.hasErrors()|| funcion.getGenero().equalsIgnoreCase("no") || !actoresObra.isPresent()|| funcion.getIdsede().getId()!=funcion.getIdsala().getIdsede().getId() ){
+        if(bindingResult.hasErrors()|| funcion.getGenero().equalsIgnoreCase("no") || !actoresObra.isPresent()||
+                funcion.getIdsede().getId()!=funcion.getIdsala().getIdsede().getId()|| funcion.getHorainicio().compareTo(funcion.getHorafin())>0 ){
             model.addAttribute("listaActores",actorRepository.findAll());
             model.addAttribute("listaDirectores",directorRepository.findAll());
             model.addAttribute("listaSedes",sedesRepository.findAll());
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
+            ArrayList<String> listaGeneros = new ArrayList<>();
+            listaGeneros.add("Drama");
+            listaGeneros.add("Comedia");
+            listaGeneros.add("Ciencia ficcion");
+            listaGeneros.add("Aventura");
+            listaGeneros.add("Suspenso");
+            listaGeneros.add("Terror");
+            listaGeneros.add("Musical");
+            model.addAttribute("listaGeneros",listaGeneros);
             System.out.println("entro al primer if");
-            if (funcion.getIdsede().getId()!=funcion.getIdsala().getIdsede().getId()){
-                model.addAttribute("errorMatching","La sala debe coincidir con la sede");
-            }
-            if(bindingResult.hasErrors()){
-                System.out.println("Error de binding");
+            if (funcion.getIdsede() != null) {
+                if (funcion.getIdsede().getId()!=funcion.getIdsala().getIdsede().getId()){
+                    model.addAttribute("errorMatching","La sala debe coincidir con la sede");
+                }
             }
             if(funcion.getCosto()==costoInvalid){
                 System.out.println("entra al error de costo");
@@ -120,6 +152,12 @@ public class OperadorController {
                 System.out.println("Error actor");
                 model.addAttribute("errorActor", "Debe seleccionar un género");
             }
+            if(funcion.getHorainicio()!=null && funcion.getHorafin()!=null){
+                if(funcion.getHorainicio().compareTo(funcion.getHorafin())>0){
+                    model.addAttribute("errorTime","Ingrese un rango de horas válido");
+                }
+            }
+
             return "operador/funcionFrm";
 
         }else{
