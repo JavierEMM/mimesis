@@ -36,16 +36,12 @@ public class UsuarioController {
         return "usuario/perfil";
     }
 
-    @GetMapping("/perfil/editar")
-    public String perfil(@RequestParam("id") int id,
-                         Model model){
-        model.addAttribute("usuario", usuarioRepository.findById(id));
-        return "usuario/perfil";
-    }
-
     @PostMapping("/perfil/save")
-    public String guardarPerfil(Model model, Usuario usuario, @RequestParam("numerotelefonico")String numerotelefonico,
-                    @RequestParam("direccion")String direccion, @RequestParam("fechaStr")String fecha){
+    public String guardarPerfil(Usuario usuario, @RequestParam("numerotelefonico")String numerotelefonico,
+                    @RequestParam("direccion")String direccion, @RequestParam("dateStr")String fecha){
+
+        usuario.setDireccion(direccion);
+        usuario.setNumerotelefonico(numerotelefonico);
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -53,11 +49,7 @@ public class UsuarioController {
         }catch (ParseException e){
             e.printStackTrace();
         }
-            usuario.setDireccion(direccion);
-            usuario.setNumerotelefonico(numerotelefonico);
-
-
-            usuarioRepository.save(usuario);
+        usuarioRepository.save(usuario);
         return "redirect:/perfil";
     }
 
