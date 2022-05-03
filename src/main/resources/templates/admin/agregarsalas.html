@@ -10,7 +10,7 @@
         <main>
             <div class="container px-4 py-5">
                 <h1 class="pb-2 mb-4 border-bottom">Nueva Sala</h1>
-                <form method="post"  class="col-4" th:action="@{'/admin/savesalas'}"  th:object="${salas}">
+                <form method="post"  class="col-4" th:action="@{'/admin/savesalas'}"  th:object="${sala}">
                     <input type="hidden" th:field="*{id}"/>
                     <input type="hidden" th:field="*{valido}"/>
                     <div class="mb-3">

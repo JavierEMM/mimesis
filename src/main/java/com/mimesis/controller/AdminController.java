@@ -61,19 +61,26 @@ public class AdminController {
     }
 
     @GetMapping("/agregarsalas")
-    public String paginaAgregarsalas( @ModelAttribute("salas") Sala sala, Model model){
+    public String paginaAgregarsalas( @ModelAttribute("sala") Sala sala, Model model){
         List<Sede> sedeList=sedesRepository.findAll();
         model.addAttribute("sedeList",sedeList);
         return "admin/agregarsalas";
     }
 
     @PostMapping("/savesalas")
-    public String savesalas(@ModelAttribute("salas") @Valid Sala sala, BindingResult bindingResult,Model model, RedirectAttributes attr){
+    public String savesalas(@ModelAttribute("sala") @Valid Sala sala, BindingResult bindingResult,Model model, RedirectAttributes attr){
 
         if(bindingResult.hasErrors()) {
-            List<Sede> sedeList = sedesRepository.findAll();
-            model.addAttribute("sedeList", sedeList);
-            return "admin/agregarsalas";
+            if(sala.getId()==null){
+                List<Sede> sedeList = sedesRepository.findAll();
+                model.addAttribute("sedeList", sedeList);
+                return "admin/agregarsalas";
+            }else{
+                List<Sede> sedeList = sedesRepository.findAll();
+                model.addAttribute("sedeList", sedeList);
+                return "admin/editarsalas";
+            }
+
         }else {
             String msg ="sala " + (sala.getId()== null ? "creada " : "actualizada ") + "exitosamente";
             attr.addFlashAttribute("msg", msg);
@@ -85,10 +92,10 @@ public class AdminController {
     }
 
     @GetMapping("/editarsalas")
-    public String paginaEditarsalas(@RequestParam("id") Integer id, Model model){
+    public String paginaEditarsalas(@ModelAttribute("sala") Sala sala, @RequestParam("id") Integer id, Model model){
         Optional<Sala> optionalSala = salasRepository.findById(id);
         if(optionalSala.isPresent()){
-            Sala sala = optionalSala.get();
+            sala = optionalSala.get();
             model.addAttribute("sala",sala);
             List<Sede> sedeList=sedesRepository.findAll();
             model.addAttribute("sedeList",sedeList);
