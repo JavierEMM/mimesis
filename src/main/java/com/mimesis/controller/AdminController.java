@@ -109,6 +109,14 @@ public class AdminController {
     public  String borrar(@RequestParam("id") Integer id, RedirectAttributes attr){
         Optional<Sala> optionalSala = salasRepository.findById(id);
         if(optionalSala.isPresent()){
+            List<Integer> listaSalas = salasRepository.obtenerIdFuncion();
+            for(int i: listaSalas){
+                if(i == id){
+                    attr.addFlashAttribute("msg","La sala presenta funciones pendientes");
+                    attr.addFlashAttribute("opcion","alert-danger");
+                    return "redirect:/admin/salas";
+                }
+            }
             salasRepository.deleteById(id);
             attr.addFlashAttribute("msg","Sala borrada exitosamente");
             attr.addFlashAttribute("opcion","alert-danger");
