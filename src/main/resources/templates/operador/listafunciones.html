@@ -62,7 +62,9 @@
                         <td style="text-align: center;"th:text="${funcion.nombre}">Movidick</td>
                         <td style="text-align: center;" th:text="${funcion.fecha} + '  ' + ${funcion.horainicio}">Hoy xd</td>
                         <td style="text-align: center;" th:text="${funcion.idsede.nombre}">San Miguel</td>
-                        <td style="text-align: center;"><a class="btn btn-outline-danger" th:href="@{'/operador/edit' + '?id=' + ${funcion.id}}" th:hidden="${funcion.valido!=true}" ><i class="bi bi-pencil-square"></i></a></td>
+                        <td style="text-align: center;" th:if="${funcion.valido==true}"><a class="btn btn-outline-danger" th:href="@{'/operador/edit' + '?id=' + ${funcion.id}}" th:hidden="${funcion.valido!=true}" ><i class="bi bi-pencil-square"></i></a></td>
+                        <!--td style="text-align: center;"><a class="btn btn-outline-danger" th:href="@{'/operador/edit' + '?id=' + ${funcion.id}}" th:if="${funcion.valido==true}" disabled ><i class="bi bi-pencil-square"></i></a></td-->
+                        <td style="text-align: center;"th:if="${funcion.valido!=true}"><a type="button" class="btn btn-secondary" disabled><i class="bi bi-pencil-square"></i></a></td>
                         <td style="text-align: center;" th:text="${funcion.valido == true ? 'Vigente' : 'No vigente'}">Vigente</td>
                         <td style="text-align: center;" th:text="'+'+${funcion.restricciondeedad}">+18</td>
                         <td style="text-align: center;"><a class="btn btn-success"><i class="bi bi-download"></i></a></td>
