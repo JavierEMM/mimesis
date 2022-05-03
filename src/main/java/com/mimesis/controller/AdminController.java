@@ -82,6 +82,15 @@ public class AdminController {
             }
 
         }else {
+            List<Sala> listaSala = salasRepository.findAll();
+
+            for(Sala i : listaSala) {
+                if (sala.getNombre().equalsIgnoreCase(i.getNombre()) && sala.getIdsede() == i.getIdsede()) {
+                    attr.addFlashAttribute("msg","La sala ya ha sido creada previamente");
+                    attr.addFlashAttribute("opcion","alert-danger");
+                    return "redirect:/admin/salas";
+                }
+            }
             String msg ="sala " + (sala.getId()== null ? "creada " : "actualizada ") + "exitosamente";
             attr.addFlashAttribute("msg", msg);
             attr.addFlashAttribute("opcion","alert-success");
