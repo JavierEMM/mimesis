@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
@@ -83,9 +84,10 @@ public class AdminController {
 
         }else {
             List<Sala> listaSala = salasRepository.findAll();
-
+            String result = sala.getNombre().replace(" ", "");
             for(Sala i : listaSala) {
-                if (sala.getNombre().equalsIgnoreCase(i.getNombre()) && sala.getIdsede() == i.getIdsede()) {
+                String result2 = i.getNombre().replace(" ", "");
+                if (result.equalsIgnoreCase(result2) && sala.getIdsede() == i.getIdsede()) {
                     attr.addFlashAttribute("msg","La sala ya ha sido creada previamente");
                     attr.addFlashAttribute("opcion","alert-danger");
                     return "redirect:/admin/salas";
