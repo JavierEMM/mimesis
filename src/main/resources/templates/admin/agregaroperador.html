@@ -16,18 +16,30 @@
     <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
         <div style="max-width: 1000px; text-align: center">
             <h1 class="pb-2 mb-4 border-bottom">Agregar Operador</h1>
-            <form method="post">
+            <form method="post" th:action="@{'/admin/saveoperador'}">
                 <input type="hidden"/>
                 <div class="mb-3">
-                    <label class="form-label">Nombre</label>
-                    <input type="text" class="form-control" >
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input name="nombre" id="nombre" type="text" class="form-control" >
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">DNI</label>
-                    <input type="text" class="form-control" >
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input name="apellido" id="apellido" type="text" class="form-control" >
                 </div>
-
-                <div class="col-sm mb-3">
+                <div class="mb-3">
+                    <label for="correo" class="form-label">Correo</label>
+                    <input name="correo" id="correo" type="text" class="form-control" >
+                </div>
+                <div class="mb-3">
+                    <label for="contrasena" class="form-label">Contraseña</label>
+                    <input name="contrasena" id="contrasena" type="text" class="form-control" >
+                </div>
+                <input type="hidden" name="rol" id="rol" value="Operador"/>
+                <div class="mb-3">
+                    <label for="emailconfirm" class="form-label">Correo</label>
+                    <input name="emailconfirm" id="emailconfirm" type="text" class="form-control" >
+                </div>
+                <!--<div class="col-sm mb-3">
                     <label class="form-label">Sede</label>
                     <select class="form-select text-left text-lg text-medium">
                         <option>San Miki</option>
@@ -35,7 +47,7 @@
                         <option>Lince</option>
                         <option>Jesus Maria</option>
                     </select>
-                </div>
+                </div>-->
 
                 <a th:href="@{'/admin/operadores'}" class="btn btn-danger">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Guardar</button>

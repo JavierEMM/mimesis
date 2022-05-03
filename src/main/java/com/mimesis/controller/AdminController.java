@@ -3,6 +3,7 @@ package com.mimesis.controller;
 import com.mimesis.entity.Foto;
 import com.mimesis.entity.Sala;
 import com.mimesis.entity.Sede;
+import com.mimesis.entity.Usuario;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
+
 public class AdminController {
 
     @Autowired
@@ -54,20 +56,20 @@ public class AdminController {
         return "admin/salas";
     }
 
-    @GetMapping("agregarsalas")
+    @GetMapping("/agregarsalas")
     public String paginaAgregarsalas( Model model){
         List<Sede> sedeList=sedesRepository.findAll();
         model.addAttribute("sedeList",sedeList);
         return "admin/agregarsalas";
     }
 
-    @PostMapping("savesalas")
+    @PostMapping("/savesalas")
     public String savesalas(Sala sala){
         salasRepository.save(sala);
         return "redirect:/admin/salas";
     }
 
-    @GetMapping("editarsalas")
+    @GetMapping("/editarsalas")
     public String paginaEditarsalas(@RequestParam("id") Integer id, Model model){
         Optional<Sala> optionalSala = salasRepository.findById(id);
         if(optionalSala.isPresent()){
@@ -91,7 +93,7 @@ public class AdminController {
     }
    /////////////////////////////////////////////////////////////////////////////////////////////
 
-    @GetMapping("sedes")
+    @GetMapping("/sedes")
     public String paginaSedes( Model model, @RequestParam(value="search",required = false) String search){
         if(search!=null){
             model.addAttribute("listaSedes",sedesRepository.busquedaTeatro(search));
@@ -106,19 +108,19 @@ public class AdminController {
         return "redirect:/admin/sedes?search="+search;
     }
 
-    @GetMapping("actoresydirectores")
-    public String paginaActoresydirectores(Model model){
-        model.addAttribute("listaActores",actorRepository.findAll());
-        model.addAttribute("listaDirectores",directorRepository.findAll());
+    @GetMapping("/actoresydirectores")
+    public String paginaActoresydirectores(Model model) {
+        model.addAttribute("listaActores", actorRepository.findAll());
+        model.addAttribute("listaDirectores", directorRepository.findAll());
         return "admin/actoresydirectores";
     }
 
-    @RequestMapping("agregarsedes")
-    public String paginaAgregarsedes(Sede sede) {
+    @RequestMapping("/agregarsedes")
+    public String paginaAgregarsedes(Sede sede){
         return "admin/agregarsedes";
     }
 
-    @PostMapping("savesedes")
+    @PostMapping("/savesedes")
     public String savesedes(Sede sede, @RequestParam("archivo") List<MultipartFile> file  ){
         sedesRepository.save(sede);
         Collections.reverse(file);
@@ -153,7 +155,7 @@ public class AdminController {
 
 
 
-    @GetMapping("editarsedes")
+    @GetMapping("/editarsedes")
     public String paginaEditarsedes(@RequestParam("id") Integer id, Model model){
         Optional<Sede> optionalSede = sedesRepository.findById(id);
         if(optionalSede.isPresent()){
@@ -177,6 +179,13 @@ public class AdminController {
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    @RequestMapping("actoresydirectores")
+    public String paginaActoresydirectores(){
+        return "admin/actoresydirectores";
+    }
+
+
+
     @RequestMapping("agregaractoresydirectores")
     public String paginaAgregaractoresydirectores(){
         return "admin/agregaractoresydirectores";
@@ -192,7 +201,7 @@ public class AdminController {
         return "admin/editaractoresydirectores";
     }
 
-    @RequestMapping("operadores")
+    @GetMapping("operadores")
     public String operadores(Model model){
         model.addAttribute("listaOperadores",usuarioRepository.findByRol("Operador"));
         return "admin/operadores";
@@ -202,8 +211,9 @@ public class AdminController {
     public String editarOperador(){
         return "admin/editaroperador";
     }
-    @RequestMapping("agregaroperador")
-    public String agregarOperador(){
+
+    @GetMapping("agregaroperador")
+    public String agregarOperador(Model model){
         return "admin/agregaroperador";
     }
 
@@ -213,6 +223,19 @@ public class AdminController {
         return "admin/clientes";
     }
 
+    @PostMapping("/saveoperador")
+    public String savesedes(Usuario usuario){
+        usuarioRepository.save(usuario);
+        return "redirect:/admin/operadores";
+    }
 
+    @GetMapping("/borraroperador")
+    public String borraroperador(@RequestParam("id") Integer id){
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
+        if(optionalUsuario.isPresent()){
+            usuarioRepository.deleteById(id);
+        }
+        return "redirect:/admin/operadores";
+    }
 
 }

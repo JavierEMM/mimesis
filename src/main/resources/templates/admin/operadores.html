@@ -39,9 +39,9 @@
             <td th:text="${operador.nombre}+' '+${operador.apellido}"></td>
             <td th:text="${operador.correo}"></td>
             <td class="text-center">
-                <form id="1" method="post" action="">
-                    <input name="test" value="1" type="hidden"/>
-                    <button onclick="return confirm('¿Esta seguro que desea eliminar el cliente?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
+                <form id="1" method="get" th:action="@{'/admin/borraroperador?id=' + ${operador.id}}">
+                    <input name="id" th:value="${operador.id}" type="hidden"/>
+                    <button onclick="return confirm('¿Esta seguro que desea eliminar el operador?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                         <i class="bi bi-trash"></i>
                     </button>
                 </form>
