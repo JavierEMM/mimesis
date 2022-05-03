@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,7 +65,14 @@ public class AdminController {
     }
 
     @PostMapping("/savesalas")
-    public String savesalas(Sala sala){
+    public String savesalas(Sala sala, RedirectAttributes attr){
+        if(sala.getId() == null){
+            attr.addFlashAttribute("msg","Sala creada exitosamente");
+            attr.addFlashAttribute("opcion","alert-success");
+        }else{
+            attr.addFlashAttribute("msg","Sala actualizada exitosamente");
+            attr.addFlashAttribute("opcion","alert-warning");
+        }
         salasRepository.save(sala);
         return "redirect:/admin/salas";
     }
@@ -84,10 +92,12 @@ public class AdminController {
     }
 
     @GetMapping("/borrar")
-    public  String borrar(@RequestParam("id") Integer id){
+    public  String borrar(@RequestParam("id") Integer id, RedirectAttributes attr){
         Optional<Sala> optionalSala = salasRepository.findById(id);
         if(optionalSala.isPresent()){
             salasRepository.deleteById(id);
+            attr.addFlashAttribute("msg","Sala borrada exitosamente");
+            attr.addFlashAttribute("opcion","alert-danger");
         }
         return "redirect:/admin/salas";
     }
@@ -224,16 +234,20 @@ public class AdminController {
     }
 
     @PostMapping("/saveoperador")
-    public String savesedes(Usuario usuario){
+    public String savesedes(Usuario usuario, RedirectAttributes attr){
         usuarioRepository.save(usuario);
+        attr.addFlashAttribute("msg","Operador creado exitosamente");
+        attr.addFlashAttribute("opcion","alert-success");
         return "redirect:/admin/operadores";
     }
 
     @GetMapping("/borraroperador")
-    public String borraroperador(@RequestParam("id") Integer id){
+    public String borraroperador(@RequestParam("id") Integer id, RedirectAttributes attr){
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
         if(optionalUsuario.isPresent()){
             usuarioRepository.deleteById(id);
+            attr.addFlashAttribute("msg","Operador borrado exitosamente");
+            attr.addFlashAttribute("opcion","alert-danger");
         }
         return "redirect:/admin/operadores";
     }

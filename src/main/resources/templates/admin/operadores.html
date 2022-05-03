@@ -21,6 +21,12 @@
     </div>
 </div>
 
+<div th:if="${msg != null}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert">
+    <i class="bi bi-check-circle-fill"></i>
+    <span th:text="${msg}">Registro Exitoso</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <div style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">
     <table class="table table-striped">
         <thead class="thead-dark">
