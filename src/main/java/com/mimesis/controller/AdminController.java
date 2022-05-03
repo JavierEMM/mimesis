@@ -10,10 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,23 +61,27 @@ public class AdminController {
     }
 
     @GetMapping("/agregarsalas")
-    public String paginaAgregarsalas( @ModelAttribute("sedes") Sede sede, Model model){
+    public String paginaAgregarsalas( @ModelAttribute("salas") Sala sala, Model model){
         List<Sede> sedeList=sedesRepository.findAll();
         model.addAttribute("sedeList",sedeList);
         return "admin/agregarsalas";
     }
 
     @PostMapping("/savesalas")
-    public String savesalas(Sala sala, RedirectAttributes attr){
-        if(sala.getId() == null){
-            attr.addFlashAttribute("msg","Sala creada exitosamente");
+    public String savesalas(@ModelAttribute("salas") @Valid Sala sala, BindingResult bindingResult,Model model, RedirectAttributes attr){
+
+        if(bindingResult.hasErrors()) {
+            List<Sede> sedeList = sedesRepository.findAll();
+            model.addAttribute("sedeList", sedeList);
+            return "admin/agregarsalas";
+        }else {
+            String msg ="sala " + (sala.getId()== null ? "creada " : "actualizada ") + "exitosamente";
+            attr.addFlashAttribute("msg", msg);
             attr.addFlashAttribute("opcion","alert-success");
-        }else{
-            attr.addFlashAttribute("msg","Sala actualizada exitosamente");
-            attr.addFlashAttribute("opcion","alert-warning");
+            salasRepository.save(sala);
+            return "redirect:/admin/salas";
         }
-        salasRepository.save(sala);
-        return "redirect:/admin/salas";
+
     }
 
     @GetMapping("/editarsalas")

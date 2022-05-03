@@ -12,6 +12,7 @@ public class Sala {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idsala", nullable = false)
     private Integer id;
+    @NotNull
     @Positive
     @Digits(integer = 10, fraction=0)
     @Max(value=32767)

@@ -10,15 +10,20 @@
         <main>
             <div class="container px-4 py-5">
                 <h1 class="pb-2 mb-4 border-bottom">Nueva Sala</h1>
-                <form method="post"  class="col-4" th:action="@{'/admin/savesalas'}" >
-                    <input type="hidden"  />
+                <form method="post"  class="col-4" th:action="@{'/admin/savesalas'}"  th:object="${salas}">
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{valido}"/>
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre de la Sala</label>
-                        <input name="nombre" type="text" class="form-control" id="nombre">
+                        <label  class="form-label" >Nombre de la Sala</label>
+                        <input type="text" class="form-control" th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                        th:errors="*{nombre}"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="aforo" class="form-label">Aforo</label>
-                        <input name="aforo" type="text" class="form-control" id="aforo" >
+                        <label class="form-label" >Aforo</label>
+                        <input type="number" class="form-control" th:field="*{aforo}" th:classappend="${#fields.hasErrors('aforo')?'is-invalid':''}"   >
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('aforo')}"
+                             th:errors="*{aforo}"></div>
                     </div>
                     <div class="col-sm bg-light text-start">
                         <label for="idsede" >Sede</label>
