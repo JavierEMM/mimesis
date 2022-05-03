@@ -58,7 +58,7 @@ public class AdminController {
     }
 
     @GetMapping("/agregarsalas")
-    public String paginaAgregarsalas( Model model){
+    public String paginaAgregarsalas( @ModelAttribute("sedes") Sede sede, Model model){
         List<Sede> sedeList=sedesRepository.findAll();
         model.addAttribute("sedeList",sedeList);
         return "admin/agregarsalas";
