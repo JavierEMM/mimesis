@@ -3,9 +3,14 @@ package com.mimesis.controller;
 import com.mimesis.entity.Actor;
 import com.mimesis.entity.Foto;
 import com.mimesis.entity.Funcion;
+import com.mimesis.entity.Sede;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,10 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/operador")
@@ -84,6 +86,9 @@ public class OperadorController {
             model.addAttribute("listaSedes",sedesRepository.findAll());
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
             model.addAttribute("listaGeneros",generoRepository.findAll());
+            model.addAttribute("listaFotos",optionalFuncion.get().getFotosporfuncion());
+            System.out.println("id funcion" + funcion.getId());
+            System.out.println("Tamaño de lista de fotos" + optionalFuncion.get().getFotosporfuncion().size());
             return "operador/editarFrm";
         }
 
@@ -102,6 +107,22 @@ public class OperadorController {
         return "redirect:/operador";
     }
 
+    @GetMapping("/image/{id}/{index}")
+    public ResponseEntity<byte[]> mostrarimagen(@PathVariable("id") int id,@PathVariable("index") int index){
+        System.out.println("index = " + index);
+        Optional<Funcion> opt = funcionRepository.findById(id);
+        if (opt.isPresent()) {
+            Funcion funcion = opt.get();
+            byte[] imagenComoBytes = funcion.getFotosporfuncion().get(index).getFoto();
+            return new ResponseEntity<>(
+                    imagenComoBytes,
+                    HttpStatus.OK);
+        }else{
+            return null;
+        }
+    }
+
+
     @PostMapping("/saveEdit")
     public String guardarFuncionEditada(@ModelAttribute("funcion")@Valid Funcion funcion, BindingResult bindingResult,Model model){
         if(bindingResult.hasErrors() || funcion.getHorainicio().compareTo(funcion.getHorafin())>0 ){
@@ -111,6 +132,8 @@ public class OperadorController {
             model.addAttribute("listaSedes",sedesRepository.findAll());
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
             model.addAttribute("listaGeneros",generoRepository.findAll());
+            model.addAttribute("listaFotos",funcion.getFotosporfuncion());
+
             if(funcion.getHorainicio()!=null && funcion.getHorafin()!=null){
                 if(funcion.getHorainicio().compareTo(funcion.getHorafin())>0){
                     model.addAttribute("errorTime","Ingrese un rango de horas válido");
@@ -158,8 +181,8 @@ public class OperadorController {
 
         }else{
             System.out.println("Entro al else");
-            funcion.setActors((Set<Actor>) actoresObra.get());
-
+            funcion.setActors(actoresObra.get());
+            Collections.reverse(file);
             funcionRepository.save(funcion);
             try{
                 System.out.println("entro al try");
