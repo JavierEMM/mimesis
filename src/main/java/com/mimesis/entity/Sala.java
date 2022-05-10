@@ -12,6 +12,7 @@ public class Sala {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idsala", nullable = false)
     private Integer id;
+
     @NotNull
     @Positive
     @Digits(integer = 10, fraction=0)
@@ -26,7 +27,7 @@ public class Sala {
 
     @Column(name = "nombre", nullable = false, length = 45)
     @NotBlank
-    @Size(max = 40, message = "El nombre de la sala no puede ser mayor a 45 caracteres")
+    @Size(max = 45, message = "El nombre de la sala no puede ser mayor a 45 caracteres")
     private String nombre;
 
     @Column(name = "valido", nullable = false)

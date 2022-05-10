@@ -1,60 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<head th:replace="includes/head.html :: head">MIMESIS</head>
-<body style="background-color: white;">
-<section>
-    <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
-</section>
-<div class="container mt-3"></div>
-
-<div class="container mt-3">
-    <div style="margin-right: auto; margin-left: auto; max-width: 1000px; text-align: center">
-        <h2 class="pb-2">Gestión de Operadores</h2>
+    <head th:replace="includes/head.html :: head">MIMESIS</head>
+    <body style="background-color: white;">
+        <section>
+            <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
+        </section>
+    <div class="container mt-3"></div>
+    <div class="container mt-3">
+        <div style="margin-right: auto; margin-left: auto; max-width: 1000px; text-align: center">
+            <h2 class="pb-2 border-bottom">Gestión de Operadores</h2>
+        </div>
     </div>
-</div>
 
 <div class="container">
-    <div class="row" style="margin-right: auto; margin-left: auto; max-width: 1000px;">
+    <div class="row" style="margin-right: auto; margin-right: auto; max-width: 1200px;">
         <div class="col-sm text-end">
             <a class="btn btn-secondary mt-4" th:href="@{'/admin/agregaroperador'}">Agregar operador</a>
         </div>
     </div>
-</div>
 
-<div th:if="${msg != null}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert">
-    <i class="bi bi-check-circle-fill"></i>
-    <span th:text="${msg}">Registro Exitoso</span>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-
-<div style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">
+    <div th:if="${msg != null}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert">
+        <i class="bi bi-check-circle-fill"></i>
+        <span th:text="${msg}">Registro Exitoso</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <table class="table table-striped">
         <thead class="thead-dark">
-        <tr>
-            <th class="text-center">#</th>
-            <th class="text-center">Operador</th>
-            <th class="text-center">Correo</th>
-            <th class="text-center">Eliminar</th>
-        </tr>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Operador</th>
+                <th class="text-center">Correo</th>
+                <th class="text-center">Eliminar</th>
+            </tr>
         </thead>
-
         <tbody>
-        <tr>
-        <tr th:each="operador,i : ${listaOperadores}">
-            <td th:text="${i.index + 1}"></td>
-            <td th:text="${operador.nombre}+' '+${operador.apellido}"></td>
-            <td th:text="${operador.correo}"></td>
-            <td class="text-center">
-                <form id="1" method="get" th:action="@{'/admin/borraroperador?id=' + ${operador.id}}">
-                    <input name="id" th:value="${operador.id}" type="hidden"/>
-                    <button onclick="return confirm('¿Esta seguro que desea eliminar el operador?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </form>
-            </td>
-        </tr>
-        </tr>
-
+            <tr th:each="operador,i : ${listaOperadores}">
+                <td th:text="${i.index + 1}"></td>
+                <td th:text="${operador.nombre}+' '+${operador.apellido}"></td>
+                <td th:text="${operador.correo}"></td>
+                <td class="text-center">
+                    <form id="1" method="get" th:action="@{'/admin/borraroperador?id=' + ${operador.id}}">
+                        <input name="id" th:value="${operador.id}" type="hidden"/>
+                        <button onclick="return confirm('¿Esta seguro que desea eliminar el operador?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>

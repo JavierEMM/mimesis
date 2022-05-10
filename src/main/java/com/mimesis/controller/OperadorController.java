@@ -77,6 +77,7 @@ public class OperadorController {
     }
     @GetMapping("/estadisticas")
     public String estadisticas (){ return "operador/estadisticas";}
+
     @GetMapping("/edit")
     public String editarOperador (@RequestParam("id") Integer id,@ModelAttribute("funcion") Funcion funcion,Model model){
         Optional<Funcion> optionalFuncion= funcionRepository.findById(id);

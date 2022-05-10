@@ -8,30 +8,36 @@
             <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
         </section>
         <main>
-            <div class="container px-4 py-5">
-                <h1 class="pb-2 mb-4 border-bottom">Agregar Sedes</h1>
-                <form method="post"  class="col-4" th:action="@{'/admin/savesedes'}" enctype="multipart/form-data">
-                    <input type="hidden"/>
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre de la sede</label>
-                        <input name="nombre" id="nombre" type="text" class="form-control" >
+            <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 500px;">
+                <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
+                    <div style="max-width: 1000px; text-align: center">
+                        <h1 class="pb-2 mb-4 border-bottom">Nueva Sede</h1>
+                        <form method="post" th:action="@{'/admin/savesedes'}" th:object="${sede}" enctype="multipart/form-data">
+                            <input type="hidden" th:field="*{id}"/>
+                            <input type="hidden" th:field="*{valido}"/>
+                            <div class="mb-3">
+                                <label class="form-label">Nombre de la sede</label>
+                                <input type="text" class="form-control" th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}"/>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                                     th:errors="*{nombre}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ubicación</label>
+                                <input  type="text" class="form-control" th:field="*{ubicacion}" th:classappend="${#fields.hasErrors('ubicacion')?'is-invalid':''}"/>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('ubicacion')}"
+                                     th:errors="*{ubicacion}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Fotos</label>
+                                <p th:if="${errorFoto!=null}" style="color: #dc3545;font-size: .875em;"> Debe ingresar al menos una foto<p>
+                                <br>
+                                <input class="btn" style="color: transparent; width: 146px; height: 40px;" type="file" accept="image/*" id="archivo" name="archivo" multiple>
+                            </div>
+                            <a th:href="@{'/admin/sedes'}" class="btn btn-danger">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </form>
                     </div>
-                    <div class="col-sm bg-light text-start" >
-                        <label for="ubicacion" class="form-label">Ubicacion</label>
-                        <input name="ubicacion" id="ubicacion" type="text" class="form-control" >
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-xl-1">
-                            <label for="archivo" class="form-label">Fotos</label>
-                            <input style="color: transparent;" type="file" accept="image/*" id="archivo" name="archivo" multiple>
-                        </div>
-                    </div>
-                    <br>
-                    <a th:href="@{'/admin/sedes'}" class="btn btn-danger">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </form>
-
+                </section>
             </div>
         </main>
     </body>

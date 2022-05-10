@@ -3,7 +3,7 @@
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body style="background-color: white;">
         <section>
-        <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
+            <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
         </section>
         <div class="container mt-3"></div>
         <div class="container mt-3">
@@ -11,7 +11,6 @@
                 <h2 class="pb-2 border-bottom">Gestión de salas</h2>
             </div>
         </div>
-
     <div class="container">
             <label>Sede</label>
             <div class="row">
@@ -42,6 +41,7 @@
                     <th class="text-center">Nombre de la sala</th>
                     <th class="text-center">Sede</th>
                     <th class="text-center">Aforo</th>
+                    <th class="text-center">Estado</th>
                     <th class="text-center">Editar</th>
                     <th class="text-center">Eliminar</th>
                 </tr>
@@ -51,12 +51,10 @@
                 <td th:text="${sala.nombre}"></td>
                 <td th:text="${sala.idsede.getNombre()}"></td>
                 <td th:text="${sala.aforo}"></td>
-                <!--td class="text-center text-lg text-medium">Diciembre 10,1815</td-->
-                <td class="text-center text-lg text-medium">
-                    <a class="btn btn-primary" th:href="@{'/admin/editarsalas?id=' + ${sala.id}}"><i class="bi bi-pencil-square"></i></a>
-                </td>
-                <td class="text-center">
-                    <form id="id" method="get" th:action="@{'/admin/borrar?id=' + ${sala.id}}">
+                <td th:text="${sala.valido == true ? 'Vigente' : 'No vigente'}"></td>
+                <td th:if="${sala.valido==true}"><a class="btn btn-primary" th:href="@{'/admin/editarsalas?id=' + ${sala.id}}" disabled><i class="bi bi-pencil-square"></i></a></td>
+                <td class="text-center" th:if="${sala.valido==true}">
+                    <form id="id" method="get" th:action="@{'/admin/borrar?id=' + ${sala.id}}" disabled>
                         <input name="id" th:value="${sala.id}" type="hidden"/>
                         <button onclick="return confirm('¿Esta seguro que desea eliminar la sala?')"  class="btn btn-outline-danger flex-shrink-0" type="submit" >
                             <i class="bi bi-trash"></i>

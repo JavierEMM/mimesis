@@ -1,55 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<head th:replace="includes/head.html :: head">MIMESIS</head>
-<body style="background-color: white;">
-<section>
-    <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
-</section>
-<div class="container mt-3"></div>
-
-<div class="container mt-3">
-    <div style="margin-right: auto; margin-left: auto; max-width: 1000px; text-align: center">
-        <h2 class="pb-2">Gestión de Clientes</h2>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row" style="margin-right: auto; margin-left: auto; max-width: 1000px;">
-        <div class="col-sm text-start" style="max-width:30%;">
-            <label>Filtrar por:</label>
-            <select class="form-select text-left text-lg text-medium">
-                <option>San Miki</option>
-                <option>San Martin de Porres</option>
-                <option>Lince</option>
-                <option>Jesus Maria</option>
-            </select>
+    <head th:replace="includes/head.html :: head">MIMESIS</head>
+    <body style="background-color: white;">
+        <section>
+            <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
+        </section>
+        <div class="container mt-3"></div>
+        <div class="container mt-3">
+            <div style="margin-right: auto; margin-left: auto; max-width: 1000px; text-align: center">
+                <h2 class="pb-2">Gestión de Clientes</h2>
+            </div>
         </div>
-    </div>
-</div>
 
-<div style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">
+    <div class="container">
+        <label>Buscar por Sede</label>
+        <div class="row">
+            <form class="form-group mb-3" method="post" th:action="@{/admin/searchclientes}">
+                <div class="row">
+                    <div class="col-9">
+                        <select name="sedes" id="sedes" class="form-select text-left text-lg text-medium">
+                            <option th:each="sedes:${listasedes}" th:text="${sedes.nombre}" th:value="${sedes.id}"></option>
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     <table class="table table-striped">
         <thead class="thead-dark">
-        <tr>
-            <th class="text-center">#</th>
-            <th class="text-center">Cliente</th>
-            <th class="text-center">DNI</th>
-            <th class="text-center">Correo</th>
-            <th class="text-center">Numero telefonico</th>
-            <th class="text-center">Direccion</th>
-        </tr>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Cliente</th>
+                <th class="text-center">DNI</th>
+                <th class="text-center">Correo</th>
+                <th class="text-center">Numero telefonico</th>
+                <th class="text-center">Direccion</th>
+            </tr>
         </thead>
-
         <tbody>
-        <tr th:each="usuario,i : ${listaClientes}">
-            <td th:text="${i.index + 1}"></td>
-            <td th:text="${usuario.nombre}+' '+${usuario.apellido}"></td>
-            <td th:text="${usuario.dni}"></td>
-            <td th:text="${usuario.correo}"></td>
-            <td th:text="${usuario.numerotelefonico}"></td>
-            <td th:text="${usuario.direccion}"></td>
-        </tr>
-
+            <tr th:each="usuario,i : ${listaClientes}">
+                <td th:text="${i.index + 1}"></td>
+                <td th:text="${usuario.nombre}+' '+${usuario.apellido}"></td>
+                <td th:text="${usuario.dni}"></td>
+                <td th:text="${usuario.correo}"></td>
+                <td th:text="${usuario.numerotelefonico}"></td>
+                <td th:text="${usuario.direccion}"></td>
+            </tr>
         </tbody>
     </table>
 </div>
