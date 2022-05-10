@@ -16,21 +16,21 @@
                 </div>
 
                 <div class="container-fluid form-center">
-                    <form  method="POST" class="row g-3" th:action="@{/operador/save}" enctype="multipart/form-data" th:object="${funcion}">
+                    <form  method="POST" class="row g-3" th:action="@{/operador/saveEdit}" enctype="multipart/form-data" th:object="${funcion}">
                         <input type="hidden" th:field="*{id}"  >
                         <input type="hidden" th:field="*{valido}"  >
-                        <div class="row" th:hidden="${funcion.id != 0}">
+                        <input type="hidden" th:field="*{idobra}"  >
+                        <input type="hidden" th:field="*{iddirector}">
+                        <input type="hidden" th:field="*{idsala}">
+                        <input type="hidden" th:field="*{costo}">
+                        <input type="hidden" th:field="*{aforo}">
+                        <input type="hidden" th:field="*{actors}">
+                        <div class="row" >
                             <div class="col-2">
                             </div>
                             <div class="form-group col-8" >
-                                <label for="obra" >Obra</label>
-                                <br>
-                                <select id="obra" class="form-select"  th:field="*{idobra}"  th:classappend="${#fields.hasErrors('idobra') ?'is-invalid':''}">
-                                    <option value="-1">-Seleccione-</option>
-                                    <option th:each="obra:${listaObras}" th:value="${obra.id}" th:text="${obra.nombre} + ' | ' +${obra.getGeneroIdgenero().nombre} +' | +'+ ${obra.restricciondeedad}"></option>
-                                </select>
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('idobra')}"
-                                     th:errors="*{idobra}"></div>
+                                <label >Nombre</label>
+                                <input  class="form-control" disabled th:placeholder="${funcion.idobra.nombre}">
                             </div>
                             <div class="col"></div>
 
@@ -40,14 +40,14 @@
                             <div class="col-2">
                             </div>
                             <div class="form-group col">
-                                <label>Fecha Inicio</label>
+                                <label >Fecha Inicio</label>
                                 <br>
-                                <input  class="form-control" type="date" th:field="*{fecha}" th:classappend="${#fields.hasErrors('fecha')?'is-invalid':''}" >
+                                <input  class="form-control" type="date" th:field="*{fecha}" th:classappend="${#fields.hasErrors('fecha')?'is-invalid':''}">
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('fecha')}"
                                      th:errors="*{fecha}"></div>
                             </div>
                             <div class="form-group col">
-                                <label>Hora Inicio</label>
+                                <label >Hora Inicio</label>
                                 <br>
                                 <input  class="form-control" type="time" th:field="*{horainicio}" th:classappend="${#fields.hasErrors('horainicio')|| errorTime !=null ?'is-invalid':''}" >
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('horainicio')}"
@@ -56,9 +56,9 @@
                                      th:text="${errorTime}"></div>
                             </div>
                             <div class="form-group col">
-                                <label>Hora Fin</label>
+                                <label >Hora Fin</label>
                                 <br>
-                                <input  class="form-control" type="time" th:field="*{horafin}" th:classappend="${#fields.hasErrors('horafin')|| errorTime !=null ?'is-invalid':''}"  >
+                                <input  class="form-control" type="time" th:field="*{horafin}"  th:classappend="${#fields.hasErrors('horafin')|| errorTime !=null ?'is-invalid':''}"  >
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('horainicio')}"
                                      th:errors="*{horafin}"></div>
                                 <div class="invalid-feedback" th:if="${errorTime!=null}"
@@ -69,40 +69,30 @@
                         </div>
 
 
-                        <div class="row" th:hidden="${funcion.id != 0}" >
-                            <div class="col">
-                            </div>
-                            <div class="form-group col-8">
-                                <label for="iddirector" >Director</label>
-                                <select class="form-select" id="iddirector" th:field="*{iddirector}" th:classappend="${#fields.hasErrors('iddirector')?'is-invalid':''}">
-                                    <option th:value="-1">-Seleccione-</option>
-                                    <option th:each="director : ${listaDirectores}" th:value="${director.id}" th:text="${director.nombre}">Mark</option>
-                                </select>
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('iddirector')}"
-                                     th:errors="*{iddirector}"></div>
-                            </div>
-                            <div class="col">
-                            </div>
-                        </div>
-
-                        <div class="row" th:hidden="${funcion.id != 0}">
+                        <div class="row" >
                             <div class="col">
                             </div>
                             <div class="form-group col-8" >
-                                <label for="sala" >Sala</label>
-                                <select id="sala" class="form-select" th:field="*{idsala}" th:classappend="${#fields.hasErrors('idsala') ?'is-invalid':''}">
-                                    <option th:value="-1">-Seleccione-</option>
-                                    <option th:each="sala : ${listaSalas} " th:value="${sala.id}" th:text="${sala.idsede.nombre} + ' '+ ${sala.nombre}  ">Sala 1</option>
-                                </select>
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('idsala')}"
-                                     th:errors="*{idsala}"></div>
+                                <label >Director</label>
+                                <input  class="form-control" disabled th:placeholder="${funcion.iddirector.nombre}">
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+                        <div class="row" >
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8" >
+                                <label >Sala</label>
+                                <input  class="form-control" disabled th:placeholder="${funcion.idsala.idsede.nombre} + ' '+ ${funcion.idsala.nombre}" >
 
                             </div>
                             <div class="col">
                             </div>
                         </div>
 
-                        <div class="row" th:hidden="${funcion.id != 0}">
+                        <div class="row">
                             <div class="col">
                             </div>
                             <div class="form-group col-8">
@@ -111,51 +101,46 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">S/</div>
                                     </div>
-                                    <input class="form-control" type="number" th:field="*{costo}" th:classappend="${#fields.hasErrors('costo') ?'is-invalid':''}"  >
-                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('costo')}"
-                                         th:errors="*{costo}"></div>
+                                    <input class="form-control" disabled th:placeholder="*{costo}"  >
+
                                 </div>
 
                             </div>
                             <div class="col">
                             </div>
                         </div>
-                        <div class="row"th:hidden="${funcion.id != 0}" >
+                        <div class="row" >
                             <div class="col">
                             </div>
                             <div class="form-group col-8" >
                                 <label>Aforo</label>
                                 <br>
-                                <input  class="form-control" type="number" th:field="*{aforo}" th:classappend="${#fields.hasErrors('aforo')?'is-invalid':''}" >
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('aforo')}"
-                                     th:errors="*{aforo}"></div>
+                                <input  class="form-control" disabled th:placeholder="*{aforo}"  >
                             </div>
                             <div class="col">
                             </div>
                         </div>
 
 
-                        <div class="row" th:hidden="${funcion.id != 0}">
+                        <div class="row" >
                             <div class="col">
                             </div>
                             <div class="col-8" >
                                 <h3>Actores</h3>
                                 <p th:if="${errorActor!=null}" style="color: #dc3545;font-size: .875em;"> Debe seleccionar al menos un actor</p>
                                 <div class="scrollit" style="height: 200px;">
-                                <table class="table" >
-                                    <thead class="thead-dark">
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col"> Apellido</th>
-                                        <th scope="col"> Seleccionar</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="actor: ${listaActores}" >
-                                            <td th:text="${actor.nombre}" ></td>
-                                            <td th:text="${actor.apellido}">Mark</td>
-                                            <td><input type="checkbox" th:name="actoresObra" th:value="${actor.id}" th:checked="${funcion.id != 0}" ></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <table class="table" >
+                                        <thead class="thead-dark">
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col"> Apellido</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="actor: ${listaActores}" >
+                                                <td th:text="${actor.nombre}" ></td>
+                                                <td th:text="${actor.apellido}">Mark</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div class="col">
@@ -163,7 +148,7 @@
 
                         </div>
 
-                        <div class="row" th:hidden="${funcion.id != 0}">
+                        <div class="row" >
                             <div class="col">
                             </div>
                             <div class="col-8">

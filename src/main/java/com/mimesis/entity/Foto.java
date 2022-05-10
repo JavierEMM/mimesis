@@ -1,8 +1,5 @@
 package com.mimesis.entity;
 
-import com.mimesis.entity.Funcion;
-import com.mimesis.entity.Sede;
-
 import javax.persistence.*;
 
 @Entity
