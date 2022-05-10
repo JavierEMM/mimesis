@@ -11,13 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/operador")
@@ -34,13 +34,15 @@ public class OperadorController {
     SalasRepository salasRepository;
     @Autowired
     FotoRepository fotoRepository;
-
+    @Autowired
+    ObrasRepository obrasRepository;
+    @Autowired
+    GeneroRepository generoRepository;
 
 
 
     @GetMapping(value = {"/",""})
     public String paginaPrincipal(Model model){
-        List<Funcion> lista = funcionRepository.findAll();
         model.addAttribute("listaFunciones",funcionRepository.findAll());
 
         return "operador/listafunciones";
@@ -59,19 +61,12 @@ public class OperadorController {
 
     @GetMapping("/crearfuncion")
     public String nuevaFuncion (@ModelAttribute("funcion") Funcion funcion, Model model){
+        model.addAttribute("listaObras",obrasRepository.findAll());
         model.addAttribute("listaActores",actorRepository.findAll());
         model.addAttribute("listaDirectores",directorRepository.findAll());
         model.addAttribute("listaSedes",sedesRepository.findAll());
         model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
-        ArrayList<String> listaGeneros = new ArrayList<>();
-        listaGeneros.add("Drama");
-        listaGeneros.add("Comedia");
-        listaGeneros.add("Ciencia ficcion");
-        listaGeneros.add("Aventura");
-        listaGeneros.add("Suspenso");
-        listaGeneros.add("Terror");
-        listaGeneros.add("Musical");
-        model.addAttribute("listaGeneros",listaGeneros);
+        model.addAttribute("listaGeneros",generoRepository.findAll());
 
         return "operador/funcionFrm";
     }
@@ -80,23 +75,16 @@ public class OperadorController {
 
     @GetMapping("/edit")
     public String editarOperador (@RequestParam("id") Integer id,@ModelAttribute("funcion") Funcion funcion,Model model){
-        Optional<Funcion> optionalFuncion= funcionRepository.findById(id);
+       Optional<Funcion> optionalFuncion = funcionRepository.findById(id);
         if(optionalFuncion.isPresent()){
             model.addAttribute("funcion",optionalFuncion.get());
-            model.addAttribute("listaActores",optionalFuncion.get().getActoresPorFuncion());
+            model.addAttribute("listaObras",obrasRepository.findAll());
+            model.addAttribute("listaActores",optionalFuncion.get().getActors());
             model.addAttribute("listaDirectores",directorRepository.findAll());
             model.addAttribute("listaSedes",sedesRepository.findAll());
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
-            ArrayList<String> listaGeneros = new ArrayList<>();
-            listaGeneros.add("Drama");
-            listaGeneros.add("Comedia");
-            listaGeneros.add("Ciencia ficcion");
-            listaGeneros.add("Aventura");
-            listaGeneros.add("Suspenso");
-            listaGeneros.add("Terror");
-            listaGeneros.add("Musical");
-            model.addAttribute("listaGeneros",listaGeneros);
-            return "operador/funcionFrm";
+            model.addAttribute("listaGeneros",generoRepository.findAll());
+            return "operador/editarFrm";
         }
 
         return "redirect:/operador";
@@ -114,41 +102,42 @@ public class OperadorController {
         return "redirect:/operador";
     }
 
-    @PostMapping("/save")
-    public String newFuncion (@ModelAttribute("funcion")@Valid Funcion funcion, BindingResult bindingResult, Model model, @RequestParam("actoresObra") Optional<List<Actor>> actoresObra,
-                               @RequestParam("foto") List<MultipartFile> file ){
-        double costoInvalid=0.0;
-        System.out.println("entro al controller");
-        System.out.println(bindingResult.getAllErrors());
-        if(bindingResult.hasErrors()|| funcion.getGenero().equalsIgnoreCase("no") || !actoresObra.isPresent()||
-                funcion.getIdsede().getId()!=funcion.getIdsala().getIdsede().getId()|| funcion.getHorainicio().compareTo(funcion.getHorafin())>0 ){
-            model.addAttribute("listaActores",actorRepository.findAll());
+    @PostMapping("/saveEdit")
+    public String guardarFuncionEditada(@ModelAttribute("funcion")@Valid Funcion funcion, BindingResult bindingResult,Model model){
+        if(bindingResult.hasErrors() || funcion.getHorainicio().compareTo(funcion.getHorafin())>0 ){
+            model.addAttribute("listaActores",funcion.getActors());
+            model.addAttribute("listaObras",obrasRepository.findAll());
             model.addAttribute("listaDirectores",directorRepository.findAll());
             model.addAttribute("listaSedes",sedesRepository.findAll());
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
-            ArrayList<String> listaGeneros = new ArrayList<>();
-            listaGeneros.add("Drama");
-            listaGeneros.add("Comedia");
-            listaGeneros.add("Ciencia ficcion");
-            listaGeneros.add("Aventura");
-            listaGeneros.add("Suspenso");
-            listaGeneros.add("Terror");
-            listaGeneros.add("Musical");
-            model.addAttribute("listaGeneros",listaGeneros);
-            System.out.println("entro al primer if");
-            if (funcion.getIdsede() != null) {
-                if (funcion.getIdsede().getId()!=funcion.getIdsala().getIdsede().getId()){
-                    model.addAttribute("errorMatching","La sala debe coincidir con la sede");
+            model.addAttribute("listaGeneros",generoRepository.findAll());
+            if(funcion.getHorainicio()!=null && funcion.getHorafin()!=null){
+                if(funcion.getHorainicio().compareTo(funcion.getHorafin())>0){
+                    model.addAttribute("errorTime","Ingrese un rango de horas válido");
                 }
             }
-            if(funcion.getCosto()==costoInvalid){
-                System.out.println("entra al error de costo");
-                model.addAttribute("errorCosto","Deber ingresar un valor mayor a 0");
-            }
-            if(funcion.getGenero().equalsIgnoreCase("no")) {
-                System.out.println("Error genero");
-                model.addAttribute("errorGenero", "Debe seleccionar un género");
-            }
+            return "operador/editarFrm";
+        }else{
+            funcionRepository.save(funcion);
+            return "redirect:/operador";
+        }
+
+    }
+
+
+    @PostMapping("/save")
+    public String newFuncion (@ModelAttribute("funcion")@Valid Funcion funcion, BindingResult bindingResult, Model model, @RequestParam("actoresObra") Optional<List<Actor>> actoresObra,
+                               @RequestParam("foto") List<MultipartFile> file ){
+        System.out.println("entro al controller");
+        System.out.println(bindingResult.getAllErrors());
+        if(bindingResult.hasErrors() || !actoresObra.isPresent()|| funcion.getHorainicio().compareTo(funcion.getHorafin())>0 ){
+            model.addAttribute("listaActores",actorRepository.findAll());
+            model.addAttribute("listaObras",obrasRepository.findAll());
+            model.addAttribute("listaDirectores",directorRepository.findAll());
+            model.addAttribute("listaSedes",sedesRepository.findAll());
+            model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
+            model.addAttribute("listaGeneros",generoRepository.findAll());
+            System.out.println("entro al primer if");
             if(!actoresObra.isPresent()){
                 System.out.println("Error actor");
                 model.addAttribute("errorActor", "Debe seleccionar un género");
@@ -159,11 +148,17 @@ public class OperadorController {
                 }
             }
 
-            return "operador/funcionFrm";
+            if(funcion.getId()==0){
+                return "operador/funcionFrm";
+            }else{
+                return "operador/editarFrm";
+            }
+
+
 
         }else{
             System.out.println("Entro al else");
-            funcion.setActoresPorFuncion(actoresObra.get());
+            funcion.setActors((Set<Actor>) actoresObra.get());
 
             funcionRepository.save(funcion);
             try{

@@ -44,7 +44,6 @@
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="text-align: center;" scope="col">#</th>
                         <th style="text-align: center;" scope="col">Nombre de la obra</th>
                         <th style="text-align: center;" scope="col">Fecha y Hora</th>
                         <th style="text-align: center;" scope="col">Sede</th>
@@ -58,15 +57,15 @@
                 </thead>
                 <tbody>
                     <tr th:each="funcion : ${listaFunciones}">
-                        <td style="text-align: center;" th:text="${funcion.id}">1</td>
-                        <td style="text-align: center;"th:text="${funcion.nombre}">Movidick</td>
+                        <td style="text-align: center;"th:text="${funcion.idobra.nombre}">Movidick</td>
                         <td style="text-align: center;" th:text="${funcion.fecha} + '  ' + ${funcion.horainicio}">Hoy xd</td>
-                        <td style="text-align: center;" th:text="${funcion.idsede.nombre}">San Miguel</td>
+                        <td style="text-align: center;" th:text="${funcion.idsala.idsede.nombre}">San Miguel</td>
                         <td style="text-align: center;" th:if="${funcion.valido==true}"><a class="btn btn-outline-danger" th:href="@{'/operador/edit' + '?id=' + ${funcion.id}}" th:hidden="${funcion.valido!=true}" ><i class="bi bi-pencil-square"></i></a></td>
                         <!--td style="text-align: center;"><a class="btn btn-outline-danger" th:href="@{'/operador/edit' + '?id=' + ${funcion.id}}" th:if="${funcion.valido==true}" disabled ><i class="bi bi-pencil-square"></i></a></td-->
                         <td style="text-align: center;"th:if="${funcion.valido!=true}"><a type="button" class="btn btn-secondary" disabled><i class="bi bi-pencil-square"></i></a></td>
                         <td style="text-align: center;" th:text="${funcion.valido == true ? 'Vigente' : 'No vigente'}">Vigente</td>
-                        <td style="text-align: center;" th:text="'+'+${funcion.restricciondeedad}">+18</td>
+                        <td style="text-align: center;" th:if="${funcion.idobra.restricciondeedad!=0}" th:text="'+'+${funcion.idobra.restricciondeedad}">+18</td>
+                        <td style="text-align: center;" th:if="${funcion.idobra.restricciondeedad==0}">Apto para todo público</td>
                         <td style="text-align: center;"><a class="btn btn-success"><i class="bi bi-download"></i></a></td>
                         <td style="text-align: center;"><a class="btn btn-danger" th:href="@{'/operador/delete?id='+${funcion.id}}"><i class="bi bi-trash"></i></a></td>
                     </tr>

@@ -14,6 +14,13 @@
   height:10em;
 }
 
+
+.scrollit {
+  overflow:scroll;
+  height:100px;
+  overflow-x: hidden;
+}
+
 :root{
   --black: black;
   --principal-title: 6rem;
