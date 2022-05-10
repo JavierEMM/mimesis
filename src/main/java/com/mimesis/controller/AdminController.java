@@ -264,9 +264,17 @@ public class AdminController {
 
     @PostMapping("/searchroles")
     public String buscarporRoles(Model model,@RequestParam(value = "rol", required = false) String rol){
-        System.out.println(rol);
-        model.addAttribute("listaActores", actorRepository.findAll());
-        model.addAttribute("listaDirectores", directorRepository.findAll());
+
+        if(rol.equalsIgnoreCase("Actores")){
+            model.addAttribute("rol",rol);
+            model.addAttribute("listaActores", actorRepository.findAll());
+        }else{
+            String rol1 ="Directores" ;
+            model.addAttribute("rol",rol1);
+            model.addAttribute("listaDirectores", directorRepository.findAll());
+        }
+
+
         return "admin/actoresydirectores";
     }
 
