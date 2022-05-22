@@ -14,7 +14,7 @@ public interface SalasRepository extends JpaRepository<Sala,Integer> {
     List<Integer> obtenerIdFuncion();
 
     @Query(value = "select idsede from sala;",nativeQuery = true)
-    List<Integer> obtenerIdsede();
+    List<Integer> sedesconsalas();
 
     @Query(value = "select nombre from sala;",nativeQuery = true)
     List<String> obtenernombre();

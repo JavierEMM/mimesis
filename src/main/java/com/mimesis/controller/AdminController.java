@@ -1,7 +1,9 @@
 package com.mimesis.controller;
 
+import com.mimesis.dto.DTOCompararID;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.*;
 
 @Controller
@@ -231,13 +234,39 @@ public class AdminController {
     }
 
     @GetMapping("/borrarsede")
-    public  String borrarsede(@RequestParam("id") Integer id){
+    public  String borrarsede(@RequestParam("id") Integer id, RedirectAttributes attr){
         Optional<Sede> optionalSede = sedesRepository.findById(id);
         if(optionalSede.isPresent()){
-            sedesRepository.deleteById(id);
+            List<Integer> listaSedes = salasRepository.sedesconsalas();
+            for(int i : listaSedes){
+                if(i==id){
+                    List<Integer> listaSalas1 = sedesRepository.compararIds(i);
+                    for( int k : listaSalas1){
+                        Optional<Sala> optionalSala = salasRepository.findById(k);
+                        if(optionalSala.isPresent()){
+                            List<Integer> listaSalas2 = salasRepository.obtenerIdFuncion();
+                            System.out.println(listaSalas2);
+                            for(int p: listaSalas2){
+                                if(p == k){
+                                    attr.addFlashAttribute("msg","La sede presenta salas con funciones pendientes");
+                                    attr.addFlashAttribute("opcion","alert-danger");
+                                    return "redirect:/admin/sedes";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Sede sedeModo = optionalSede.get();
+            sedeModo.setValido(false);
+            sedesRepository.save(sedeModo);
+            attr.addFlashAttribute("msg","Sede borrada exitosamente");
+            attr.addFlashAttribute("opcion","alert-danger");
         }
         return "redirect:/admin/sedes";
     }
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @GetMapping("/actoresydirectores")
