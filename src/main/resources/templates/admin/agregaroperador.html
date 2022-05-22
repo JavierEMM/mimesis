@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Salas</title>
+    <title>Agregar Operador</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
@@ -16,27 +16,35 @@
     <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
         <div style="max-width: 1000px; text-align: center">
             <h1 class="pb-2 mb-4 border-bottom">Agregar Operador</h1>
-            <form method="post">
-                <input type="hidden"/>
+            <form method="post" th:action="@{'/admin/saveoperador'}" th:object="${usuario}">
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{valido}"/>
                 <div class="mb-3">
                     <label class="form-label">Nombre</label>
-                    <input type="text" class="form-control" >
+                    <input type="text" class="form-control" th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}" />
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                         th:errors="*{nombre}"></div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">DNI</label>
-                    <input type="text" class="form-control" >
+                    <label class="form-label">Apellido</label>
+                    <input type="text" class="form-control" th:field="*{apellido}" th:classappend="${#fields.hasErrors('apellido')?'is-invalid':''}"/>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('apellido')}"
+                         th:errors="*{apellido}"></div>
                 </div>
-
-                <div class="col-sm mb-3">
-                    <label class="form-label">Sede</label>
-                    <select class="form-select text-left text-lg text-medium">
-                        <option>San Miki</option>
-                        <option>San Martin de Porres</option>
-                        <option>Lince</option>
-                        <option>Jesus Maria</option>
-                    </select>
+                <div class="mb-3">
+                    <label class="form-label">Correo</label>
+                    <input type="text" class="form-control" th:field="*{correo}" th:classappend="${#fields.hasErrors('correo')?'is-invalid':''}"/>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('correo')}"
+                         th:errors="*{correo}"></div>
                 </div>
-
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" th:field="*{contrasena}" th:classappend="${#fields.hasErrors('contrasena')?'is-invalid':''}"/>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('contrasena')}"
+                         th:errors="*{contrasena}"></div>
+                </div>
+                <input type="hidden" name="rol" id="rol" value="Operador"/>
+                <input type="hidden" name="emailconfirm" id="emailconfirm" value="0"/>
                 <a th:href="@{'/admin/operadores'}" class="btn btn-danger">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>

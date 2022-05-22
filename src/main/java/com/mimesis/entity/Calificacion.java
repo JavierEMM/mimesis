@@ -1,10 +1,5 @@
 package com.mimesis.entity;
 
-import com.mimesis.entity.Actor;
-import com.mimesis.entity.Director;
-import com.mimesis.entity.Funcion;
-import com.mimesis.entity.Usuario;
-
 import javax.persistence.*;
 
 @Entity

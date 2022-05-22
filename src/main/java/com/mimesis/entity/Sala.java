@@ -3,6 +3,7 @@ package com.mimesis.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "sala")
@@ -12,6 +13,11 @@ public class Sala {
     @Column(name = "idsala", nullable = false)
     private Integer id;
 
+    @NotNull
+    @Positive
+    @Digits(integer = 10, fraction=0)
+    @Max(value=32767)
+    @Min(value=0)
     @Column(name = "aforo", nullable = false)
     private Integer aforo;
 
@@ -20,6 +26,8 @@ public class Sala {
     private Sede idsede;
 
     @Column(name = "nombre", nullable = false, length = 45)
+    @NotBlank
+    @Size(max = 45, message = "El nombre de la sala no puede ser mayor a 45 caracteres")
     private String nombre;
 
     @Column(name = "valido", nullable = false)

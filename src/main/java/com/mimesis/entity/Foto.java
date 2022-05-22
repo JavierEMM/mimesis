@@ -1,8 +1,5 @@
 package com.mimesis.entity;
 
-import com.mimesis.entity.Funcion;
-import com.mimesis.entity.Sede;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +9,8 @@ public class Foto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idfotos", nullable = false)
     private Integer id;
+
+
 
     @Column(name = "foto", nullable = false)
     private byte[] foto;
@@ -23,6 +22,8 @@ public class Foto {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idsede")
     private Sede idsede;
+
+
 
     public Sede getIdsede() {
         return idsede;

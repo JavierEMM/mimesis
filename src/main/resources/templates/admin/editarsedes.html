@@ -1,33 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Editar Sedes</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-              crossorigin="anonymous">
-    </head>
-    <body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+        <head>
+            <head th:replace="includes/head.html :: head">MIMESIS</head>
+        </head>
+        <body>
+        <section>
+            <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
+        </section>
         <main>
             <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 400px; text-align: center">
                 <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
-
-                <h1 class="pb-2 mb-4 border-bottom">Editar Sedes</h1>
-                <form method="post" th:action="@{'/admin/savesedes'}" th:object="${sede}" >
-                    <input type="hidden" th:field="*{id}"  />
-                    <input type="hidden" th:field="*{nombre}"  />
-                    <div class="mb-3">
-                        <label class="form-label">Ubicación</label>
-                        <input type="text" class="form-control" th:field="*{ubicacion}">
-                    </div>
-                    <a th:href="@{'/admin/sedes'}" class="btn btn-danger">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </form>
+                    <h1 class="pb-2 mb-4 border-bottom">Editar Sedes</h1>
+                    <form method="post" th:action="@{'/admin/savesedesNoImagen'}" th:object="${sede}" enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{id}"/>
+                        <input type="hidden" th:field="*{nombre}"/>
+                        <div class="mb-3">
+                            <label class="form-label">Ubicación</label>
+                            <input type="text" class="form-control" th:field="*{ubicacion}" th:classappend="${#fields.hasErrors('ubicacion')?'is-invalid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('ubicacion')}"
+                                 th:errors="*{ubicacion}"></div>
+                        </div>
+                        <a th:href="@{'/admin/sedes'}" class="btn btn-danger">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
                 </section>
             </div>
         </main>
-
-
     </body>
 </html>

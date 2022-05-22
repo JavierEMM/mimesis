@@ -1,6 +1,8 @@
 package com.mimesis.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -12,16 +14,25 @@ public class Usuario {
     @Column(name = "idusuario", nullable = false)
     private Integer id;
 
-    @Column(name = "nombre", nullable = false, length = 45)
+
+    @Column(name = "nombre", nullable = false)
+    @NotBlank
+    @Size(max = 255, message = "El nombre del operador no puede ser mayor a 255 caracteres")
     private String nombre;
 
-    @Column(name = "apellido", nullable = false, length = 45)
+    @Column(name = "apellido", nullable = false)
+    @NotBlank
+    @Size(max = 255, message = "El apellido del operador no puede ser mayor a 255 caracteres")
     private String apellido;
 
-    @Column(name = "correo", nullable = false, length = 45)
+    @Column(name = "correo", nullable = false)
+    @NotBlank
+    @Size(max = 255, message = "El correo no puedo contener más de a 255 caracteres")
     private String correo;
 
-    @Column(name = "contrasena", nullable = false, length = 45)
+    @Column(name = "contrasena", nullable = false)
+    @NotBlank
+    @Size(max = 255, message = "La contraseña no puede contener más de 255 caracteres")
     private String contrasena;
 
     @Column(name = "numerotelefonico", length = 45)
@@ -41,11 +52,12 @@ public class Usuario {
 
     @Column(name = "rol", nullable = false, length = 45)
     private String rol;
+
     @Column(name = "valido", nullable = false)
     private Boolean valido = true;
 
-   //@Column(name = "emailconfirm", nullable = false)
-    //private Boolean emailconfirm = false;
+    @Column(name = "emailconfirm", nullable = false)
+    private Boolean emailconfirm = false;
 
     public String getRol() {
         return rol;
@@ -143,11 +155,11 @@ public class Usuario {
         this.valido = valido;
     }
 
-    //public Boolean getEmailconfirm() {
-      //  return emailconfirm;
-    //}
+    public Boolean getEmailconfirm() {
+      return emailconfirm;
+    }
 
-    //public void setEmailconfirm(Boolean emailconfirm) {
-        //this.emailconfirm = emailconfirm;
-    //}
+    public void setEmailconfirm(Boolean emailconfirm) {
+        this.emailconfirm = emailconfirm;
+    }
 }

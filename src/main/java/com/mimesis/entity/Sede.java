@@ -1,6 +1,10 @@
 package com.mimesis.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -11,10 +15,14 @@ public class Sede {
     @Column(name = "idsede", nullable = false)
     private Integer id;
 
-    @Column(name = "nombre", nullable = false, length = 45)
+    @Column(name = "nombre", nullable = false)
+    @NotBlank
+    @Size(max = 255, message = "El nombre de la Sede no puede ser mayor a 255 caracteres")
     private String nombre;
 
-    @Column(name = "ubicacion", nullable = false, length = 45)
+    @Column(name = "ubicacion", nullable = false)
+    @NotBlank
+    @Size(max = 255, message = "La dirección no puede ser contener mas 255 caracteres")
     private String ubicacion;
 
     @Column(name = "valido", nullable = false)

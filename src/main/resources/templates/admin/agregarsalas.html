@@ -8,31 +8,40 @@
             <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
         </section>
         <main>
-            <div class="container px-4 py-5">
-                <h1 class="pb-2 mb-4 border-bottom">Nueva Sala</h1>
-                <form method="post"  class="col-4" th:action="@{'/admin/savesalas'}" >
-                    <input type="hidden"  />
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre de la Sala</label>
-                        <input name="nombre" type="text" class="form-control" id="nombre">
+            <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 500px;">
+                <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
+                    <div style="max-width: 1000px; text-align: center">
+                        <h1 class="pb-2 mb-4 border-bottom">Nueva Sala</h1>
+                        <form method="post"  th:action="@{'/admin/savesalas'}"  th:object="${sala}">
+                            <input type="hidden" th:field="*{id}"/>
+                            <input type="hidden" th:field="*{valido}"/>
+                            <div class="mb-3">
+                                <label  class="form-label" >Nombre de la Sala</label>
+                                <input type="text" class="form-control" th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}"/>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                                th:errors="*{nombre}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" >Aforo</label>
+                                <input type="number" class="form-control" th:field="*{aforo}" th:classappend="${#fields.hasErrors('aforo')?'is-invalid':''}"/>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('aforo')}"
+                                     th:errors="*{aforo}"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="idsede" >Sede</label>
+                                <select id="idsede" name="idsede" class="form-select text-left text-lg text-medium">
+                                    <option th:each="sede:${sedeList}"
+                                    th:value="${sede.id}"
+                                    th:text="${sede.nombre}">
+                                    </option>
+                                </select>
+                            </div>
+                            <br>
+                            <a th:href="@{'/admin/salas'}" class="btn btn-danger">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label for="aforo" class="form-label">Aforo</label>
-                        <input name="aforo" type="text" class="form-control" id="aforo" >
-                    </div>
-                    <div class="col-sm bg-light text-start">
-                        <label for="idsede" >Sede</label>
-                        <select id="idsede" name="idsede" class="form-select text-left text-lg text-medium">
-                            <option th:each="sede:${sedeList}"
-                            th:value="${sede.id}"
-                            th:text="${sede.nombre}">
-                            </option>
-                        </select>
-                    </div>
-                    <br>
-                    <a th:href="@{'/admin/salas'}" class="btn btn-danger">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </form>
+                </section>
             </div>
         </main>
 
