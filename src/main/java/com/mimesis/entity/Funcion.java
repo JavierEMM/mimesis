@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,6 +61,17 @@ public class Funcion {
     @Column(name = "valido", nullable = false)
     private Boolean valido;
 
+    @OneToMany(mappedBy = "idfuncion")
+    private List<Foto> fotosporfuncion;
+
+    public List<Foto> getFotosporfuncion() {
+        return fotosporfuncion;
+    }
+
+    public void setFotosporfuncion(List<Foto> fotosporfuncion) {
+        this.fotosporfuncion = fotosporfuncion;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -78,19 +90,22 @@ public class Funcion {
     private Obra idobra;
 
 
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
+    }
+
     @ManyToMany
     @JoinTable(name = "funciontieneactor",
             joinColumns = @JoinColumn(name = "idfuncion"),
             inverseJoinColumns = @JoinColumn(name = "idactor"))
-    private Set<Actor> actors = new LinkedHashSet<>();
+    private List<Actor> actors = new ArrayList<>();
 
-    public Set<Actor> getActors() {
-        return actors;
-    }
 
-    public void setActors(Set<Actor> actors) {
-        this.actors = actors;
-    }
+
 
 
     public Boolean getValido() {

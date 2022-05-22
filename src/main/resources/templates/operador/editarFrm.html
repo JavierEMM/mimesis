@@ -152,8 +152,8 @@
                             <div class="col">
                             </div>
                             <div class="col-8">
-                                <label for="foto" class="form-label">Fotos</label>
-                                <input style="color: transparent;" type="file" accept="image/*" id="foto" name="foto" multiple>
+                                <label  class="form-label">Fotos</label>
+                                <img th:each="foto,i:${listaFotos}" height="200" width="200" th:src="@{|image/${funcion.id}/${i.index}|}">
                             </div>
                             <div class="col">
                             </div>
