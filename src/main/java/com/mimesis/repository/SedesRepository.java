@@ -21,5 +21,9 @@ public interface SedesRepository extends JpaRepository<Sede,Integer> {
     @Query(value = " select idsala from sala where idsede = ?1",nativeQuery = true)
     List<Integer> compararIds(Integer id);
 
+    @Query(value = "SELECT * FROM sede where valido =1",nativeQuery = true)
+    List<Sede> sedesvalidas();
+
+
 
 }

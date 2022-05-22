@@ -3,7 +3,6 @@ package com.mimesis.controller;
 import com.mimesis.dto.DTOCompararID;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.*;
 
 @Controller
@@ -173,6 +171,19 @@ public class AdminController {
                 return "admin/editarsedes";
             }
         }else {
+            List<Sede> listaSede =sedesRepository.sedesvalidas();
+            System.out.println(listaSede);
+            String result = sede.getNombre().replace(" ", "");
+            String resultUbicacion =sede.getUbicacion().replace(" ","").replace(".","");
+            for(Sede i: listaSede){
+                String result2 = i.getNombre().replace(" ", "");
+                String resultUbicacion2 =sede.getUbicacion().replace(" ","").replace(".","");
+                if (result.equalsIgnoreCase(result2) && resultUbicacion.equalsIgnoreCase(resultUbicacion2)) {
+                    attr.addFlashAttribute("msg","La sede ya ha sido creada previamente");
+                    attr.addFlashAttribute("opcion","alert-danger");
+                    return "redirect:/admin/sedes";
+                }
+            }
             sedesRepository.save(sede);
             Collections.reverse(file);
             try {

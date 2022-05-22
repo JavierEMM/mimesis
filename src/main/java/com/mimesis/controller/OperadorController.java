@@ -46,7 +46,6 @@ public class OperadorController {
     @GetMapping(value = {"/",""})
     public String paginaPrincipal(Model model){
         model.addAttribute("listaFunciones",funcionRepository.findAll());
-
         return "operador/listafunciones";
     }
 
