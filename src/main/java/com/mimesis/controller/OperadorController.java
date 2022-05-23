@@ -1,9 +1,6 @@
 package com.mimesis.controller;
 
-import com.mimesis.entity.Actor;
-import com.mimesis.entity.Foto;
-import com.mimesis.entity.Funcion;
-import com.mimesis.entity.Sede;
+import com.mimesis.entity.*;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -58,6 +55,12 @@ public class OperadorController {
         }
 
         return "operador/listafunciones";
+    }
+
+    @GetMapping("/crearobra")
+    public String nuevaObra(@ModelAttribute("obra") Obra obra, Model model){
+        model.addAttribute("listaGeneros",generoRepository.findAll());
+        return "operador/obraFrm";
     }
 
     @GetMapping("/crearfuncion")
@@ -143,6 +146,19 @@ public class OperadorController {
             funcionRepository.save(funcion);
             return "redirect:/operador";
         }
+
+    }
+    @PostMapping("saveobra")
+    public String newObra (@ModelAttribute("obra")@Valid Obra obra, BindingResult bindingResult,Model model){
+
+    if(bindingResult.hasErrors()){
+        model.addAttribute("listaGeneros",generoRepository.findAll());
+        return "operador/obraFrm";
+    }else {
+        obrasRepository.save(obra);
+        return "operador/listaFunciones";
+    }
+
 
     }
 
