@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="includes/head.html :: head">MIMESIS</head>
 <body>
-<header th:replace="/includes/navbar.html :: navbar(option='Operador')" id="header" class="d-flex align-items-center">
+<header th:replace="/includes/navbar.html :: navbar(option='Funciones')" id="header" class="d-flex align-items-center">
 </header>
 <div class="container">
     <div class="row" >
@@ -32,7 +32,6 @@
         <div class="row" style="text-align: center" >
             <div class="col-7"></div>
             <div class="col">
-                <a class="btn btn-success" th:href="@{/operador/crearobra}" style=" background-color: black !important;">Agregar Obra</a>
             </div>
             <div class="col" style="text-align: center">
                 <a class="btn btn-success" th:href="@{/operador/crearfuncion}" style=" background-color: black !important;">Agregar Funcion</a>

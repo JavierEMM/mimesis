@@ -27,8 +27,10 @@ public class Obra {
     @Min(value = 0,message = "Debe escoger una restricción de edad")
     private Integer restricciondeedad;
 
+
     @Column(name = "valido", nullable = false)
-    private Integer valido;
+    private Boolean valido;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "genero_idgenero", nullable = false)
@@ -43,13 +45,8 @@ public class Obra {
         this.generoIdgenero = generoIdgenero;
     }
 
-    public Integer getValido() {
-        return valido;
-    }
-
-    public void setValido(Integer valido) {
-        this.valido = valido;
-    }
+    public Boolean getValido() {return valido;}
+    public void setValido(Boolean valido) {this.valido = valido;}
 
     public Integer getRestricciondeedad() {
         return restricciondeedad;

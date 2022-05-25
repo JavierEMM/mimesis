@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="includes/head.html :: head">MIMESIS</head>
+  <body>
+    <header th:replace="/includes/navbar.html :: navbar(option= 'Obras')" id="header" class="d-flex align-items-center">
+    </header>
+    <div class="container">
+      <div class="row" >
+        <div class="col-xl">
+          <p class="title">Lista de Obras</p>
+        </div>
+      </div>
+      <div class="row">
+        <form class="form-group mb-3" method="post" th:action="@{/operador/searchObra}">
+          <div class="row">
+            <div class="col-8">
+              <input class="form-control" placeholder="Texto a buscar" name="busqueda" >
+            </div>
+            <div class="col-2">
+              <select class="form-select" name="categoria" >
+                <option value="Nombre">Nombre</option>
+                <option value="Género">Género</option>
+              </select>
+            </div>
+            <div class="col">
+              <button class="btn btn-outline-primary" type="submit">Buscar</button>
+              <a class="btn btn-outline-danger ml-2" th:href="@{/operador}">Limpiar</a>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row" style="text-align: center" >
+        <div class="col-7"></div>
+        <div class="col">
+
+        </div>
+        <div class="col" style="text-align: center">
+
+        </div>
+        <div class="col" style="text-align: center">
+          <a class="btn btn-success" th:href="@{/operador/crearobra}" style=" background-color: black !important;">Agregar Obra</a>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="col">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th style="text-align: center;" scope="col">Nombre de la obra</th>
+                <th style="text-align: center;" scope="col">Género</th>
+                <!--th style="text-align: center;" scope="col">Editar</th-->
+                <th style="text-align: center;" scope="col">Estado</th>
+                <th style="text-align: center;" scope="col">Restricion de edad</th>
+                <th style="text-align: center;" scope="col">Borrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="obra : ${listaObras}">
+                <td style="text-align: center;"th:text="${obra.nombre}">Movidick</td>
+                <td style="text-align: center;"th:text="${obra.generoIdgenero.nombre}">Movidick</td>
+                <!--td style="text-align: center;" th:if="${obra.valido==true}"><a class="btn btn-outline-danger" th:href="@{'/operador/edit' + '?id=' + ${obra.id}}" th:hidden="${obra.valido!=true}" ><i class="bi bi-pencil-square"></i></a></td>
+                <td style="text-align: center;"th:if="${obra.valido!=true}"><a type="button" class="btn btn-secondary" disabled><i class="bi bi-pencil-square"></i></a></td-->
+                <td style="text-align: center;" th:text="${obra.valido == true ? 'Vigente' : 'No vigente'}">Vigente</td>
+                <td style="text-align: center;" th:if="${obra.restricciondeedad!=0}" th:text="'+'+${obra.restricciondeedad}">+18</td>
+                <td style="text-align: center;" th:if="${obra.restricciondeedad==0}">Apto para todo público</td>
+                <td style="text-align: center;"><a class="btn btn-danger" th:href="@{'/operador/deleteObra?id='+${obra.id}}"><i class="bi bi-trash"></i></a></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col d-flex justify-content-center" >
+          <nav aria-label="...">
+            <ul class="pagination">
+              <li class="page-item disabled">
+                <span class="page-link"  >Previous</span>
+              </li>
+              <li class="page-item"><a class="page-link" >1</a></li>
+              <li class="page-item active" aria-current="page">
+                <span class="page-link" >2</span>
+              </li>
+              <li class="page-item"><a class="page-link" >3</a></li>
+              <li class="page-item">
+                <a class="page-link" >Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+    </div>
+
+    <footer th:replace="/includes/footer.html :: footer"></footer>
+  </body>
+</html>
