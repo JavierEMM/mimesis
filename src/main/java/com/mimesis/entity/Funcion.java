@@ -22,11 +22,6 @@ public class Funcion {
     @Column(name = "idfuncion", nullable = false)
     private int id;
 
-    @Column(name = "fecha", nullable = false)
-    @NotNull(message = "Debe ingresar una fecha válida")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fecha;
-
     @Column(name = "aforo", nullable = false)
     @NotNull(message = "Debe ingresar un valor")
     private Integer aforo;
@@ -38,7 +33,6 @@ public class Funcion {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "iddirector", nullable = false)
-
     @NotNull(message = "Debe escoger un director")
     private Director iddirector;
 
@@ -64,6 +58,11 @@ public class Funcion {
     @OneToMany(mappedBy = "idfuncion")
     private List<Foto> fotosporfuncion;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "obras_idobras", nullable = false)
+    @NotNull(message = "Debe seleccionar una obra")
+    private Obra idobra;
+
     public List<Foto> getFotosporfuncion() {
         return fotosporfuncion;
     }
@@ -84,12 +83,6 @@ public class Funcion {
         this.idobra = idobra;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idobras", nullable = false)
-    @NotNull(message = "Debe seleccionar una obra")
-    private Obra idobra;
-
-
     public List<Actor> getActors() {
         return actors;
     }
@@ -103,10 +96,6 @@ public class Funcion {
             joinColumns = @JoinColumn(name = "idfuncion"),
             inverseJoinColumns = @JoinColumn(name = "idactor"))
     private List<Actor> actors = new ArrayList<>();
-
-
-
-
 
     public Boolean getValido() {
         return valido;
@@ -162,14 +151,6 @@ public class Funcion {
 
     public void setAforo(Integer aforo) {
         this.aforo = aforo;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
     }
 
     public Integer getId() {

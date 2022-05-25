@@ -1,10 +1,13 @@
 package com.mimesis.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "usuario")
@@ -31,7 +34,6 @@ public class Usuario {
     private String correo;
 
     @Column(name = "contrasena", nullable = false)
-    @NotBlank
     @Size(max = 255, message = "La contraseña no puede contener más de 255 caracteres")
     private String contrasena;
 
@@ -39,7 +41,8 @@ public class Usuario {
     private String numerotelefonico;
 
     @Column(name = "fechanacimiento")
-    private Date fechanacimiento;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechanacimiento;
 
     @Column(name = "direccion", length = 45)
     private String direccion;
@@ -58,6 +61,32 @@ public class Usuario {
 
     @Column(name = "emailconfirm", nullable = false)
     private Boolean emailconfirm = false;
+
+    @Column(name="authprovider")
+    private String authprovider = "mimesis";
+
+    @Column(name = "token",nullable = true)
+    private String token  = UUID.randomUUID().toString();
+
+    public Usuario() {
+    }
+
+    public Usuario(String nombre, String apellido, String correo, String rol, Boolean emailconfirm, String authprovider) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.rol = rol;
+        this.emailconfirm = emailconfirm;
+        this.authprovider = authprovider;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getRol() {
         return rol;
@@ -91,11 +120,11 @@ public class Usuario {
         this.direccion = direccion;
     }
 
-    public Date getFechanacimiento() {
+    public LocalDate getFechanacimiento() {
         return fechanacimiento;
     }
 
-    public void setFechanacimiento(Date fechanacimiento) {
+    public void setFechanacimiento(LocalDate fechanacimiento) {
         this.fechanacimiento = fechanacimiento;
     }
 
@@ -161,5 +190,13 @@ public class Usuario {
 
     public void setEmailconfirm(Boolean emailconfirm) {
         this.emailconfirm = emailconfirm;
+    }
+
+    public String getAuthprovider() {
+        return authprovider;
+    }
+
+    public void setAuthprovider(String authprovider) {
+        this.authprovider = authprovider;
     }
 }
