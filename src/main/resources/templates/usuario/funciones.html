@@ -23,8 +23,8 @@
                         <div class="card shadow-sm">
                             <img th:src="@{img/mobi_dick.jpg}">
                             <div class="card-body">
-                                <h2 class="card-text" th:text="${funcion.nombre}"></h2>
-                                <p class="card-text" th:text="${funcion.genero} + ', ' +${funcion.horafin} + ', +' +${funcion.restricciondeedad}"></p>
+                                <h2 class="card-text" th:text="${funcion}"></h2>
+                                <p class="card-text" th:text="${funcion} + ', ' +${funcion.horafin} + ', +' +${funcion}"></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a type="button"  th:href="@{/detalles}" class="btn btn-sm btn-outline-secondary">Ver Detalles</a>

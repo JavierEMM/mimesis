@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -40,13 +41,6 @@ public class UsuarioController {
 
         usuario.setDireccion(direccion);
         usuario.setNumerotelefonico(numerotelefonico);
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            usuario.setFechanacimiento(formatter.parse(fecha));
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
         usuarioRepository.save(usuario);
         return "redirect:/perfil";
     }
@@ -62,5 +56,9 @@ public class UsuarioController {
         return "usuario/calificacion";
     }
 
+    @GetMapping("/detalles")
+    public String detallesFunciones(Model model){
+        return "usuario/detallesFuncion";
+    }
 
 }

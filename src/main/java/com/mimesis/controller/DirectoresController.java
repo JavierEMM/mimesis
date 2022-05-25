@@ -16,7 +16,7 @@ public class DirectoresController {
     @Autowired
     DirectorRepository directorRepository;
     @GetMapping("")
-    public String actores(Model model,@RequestParam(value = "search",required = false) String search){
+    public String directores(Model model,@RequestParam(value = "search",required = false) String search){
         if(search!=null){
             model.addAttribute("listaDirectores",directorRepository.busquedaDirector(search));
         }else {

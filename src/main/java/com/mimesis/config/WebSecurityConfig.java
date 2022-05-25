@@ -1,5 +1,7 @@
 package com.mimesis.config;
 
+import com.mimesis.google.CustomOAuth2UserService;
+import com.mimesis.google.OAuth2LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,13 +18,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataSource dataSource;
+
+    @Autowired
+    private CustomOAuth2UserService oAuth2UserService;
+
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+
     @Override
     public void configure(HttpSecurity http) throws Exception{
 
         http.formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/processLogin")
-                .defaultSuccessUrl("/redirectByRole");
+                .defaultSuccessUrl("/redirectByRole")
+                .and().oauth2Login().loginPage("/login")
+                .userInfoEndpoint().userService(oAuth2UserService).and().successHandler(oAuth2LoginSuccessHandler).defaultSuccessUrl("/redirectByRole");
+
+
 
         http.logout().logoutSuccessUrl("/");
         http.authorizeRequests()

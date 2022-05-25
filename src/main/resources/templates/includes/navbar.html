@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
     <header th:fragment="navbar(option)" style="background-color: black;" id="header" class="d-flex align-items-center ">
         <div class="container-fluid container-xxl d-flex align-items-center">
             <div class="me-auto" id="logo">
                 <a sec:authorize="hasAnyAuthority('Operador')" th:href="@{/operador}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
-                <a sec:authorize="hasAnyAuthority('Cliente')"  th:href="@{/}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
+                <a sec:authorize="hasAnyAuthority('Cliente','ROLE_USER')"  th:href="@{/}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
                 <a sec:authorize="isAnonymous()"  th:href="@{/}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
                 <a sec:authorize="hasAnyAuthority('Admin')"  th:href="@{/admin}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
             </div>
@@ -21,10 +22,8 @@
                         <li th:if="${option!='Actores'}"><a  class="nav-link scrollto" th:href="@{/actores}">Actores</a></li>
                         <li th:if="${option=='Directores'}" ><a  class="nav-link scrollto active" th:href="@{/directores}">Directores</a></li>
                         <li th:if="${option!='Directores'}" ><a class="nav-link scrollto " th:href="@{/directores}">Directores</a></li>
-                        <li th:if="${option=='Historial'}" ><a class="nav-link scrollto active" th:href="@{/historial}">Historial</a></li>
-                        <li th:if="${option!='Historial'}" ><a class="nav-link scrollto" th:href="@{/historial}">Historial</a></li>
                     </ul>
-                    <ul sec:authorize="hasAnyAuthority('Cliente')" class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul sec:authorize="hasAnyAuthority('Cliente','ROLE_USER')" class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li th:if="${option=='Principal'}"><a   class="nav-link scrollto active" th:href="@{/}">Página Principal</a></li>
                         <li th:if="${option!='Principal'}"><a   class="nav-link scrollto " th:href="@{/}">Página Principal</a></li>
                         <li th:if="${option=='Teatros'}" ><a  class="nav-link scrollto active"  th:href="@{/teatros}">Teatros</a></li>
@@ -40,7 +39,7 @@
                     </ul>
                 </div>
             </nav>
-            <div class="dropdown" sec:authorize="hasAnyAuthority('Cliente')">
+            <div class="dropdown" sec:authorize="hasAnyAuthority('Cliente','ROLE_USER')">
                 <a class="btn btn-outline-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class='bi bi-person-circle'></i>
                     Usuario
@@ -54,7 +53,7 @@
                     </li>
                 </ul>
             </div>
-            <a class="buy-tickets scrollto" sec:authorize="hasAnyAuthority('Cliente')" th:href="@{/carrito}"><i class="bi-cart-fill me-1"></i>Carrito</a>
+            <a class="buy-tickets scrollto" sec:authorize="hasAnyAuthority('Cliente','ROLE_USER')" th:href="@{/carrito}"><i class="bi-cart-fill me-1"></i>Carrito</a>
             <a class="buy-tickets scrollto" sec:authorize="isAnonymous()" th:href="@{/login}">Iniciar Sesion</a>
             <a class="buy-tickets scrollto" sec:authorize="isAnonymous()" th:href="@{/registro}">Registrarse</a>
             <form sec:authorize="hasAnyAuthority('Operador','Admin')" th:action="@{/logout}" method="post">
