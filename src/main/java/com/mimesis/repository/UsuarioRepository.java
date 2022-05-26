@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
-    Optional<Usuario> findByToken(String token);
+    Usuario findByToken(String token);
 
     List<Usuario> findByRol(String rol);
 
@@ -25,6 +25,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "inner join sede se on (se.idsede = sa.idsede)\n" +
             "where u.rol = \"Cliente\" and se.idsede = 11;", nativeQuery = true)
     List<ClientesporSedeDTO> obtenerClientesporSede();
+
+
 
 
 

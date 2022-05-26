@@ -1,10 +1,10 @@
 package com.mimesis.entity;
 
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
@@ -19,38 +19,48 @@ public class Usuario {
 
 
     @Column(name = "nombre", nullable = false)
-    @NotBlank
-    @Size(max = 255, message = "El nombre del operador no puede ser mayor a 255 caracteres")
+    @NotBlank(message = "Ingrese su nombre")
+    @Size(max = 255, message = "El nombre no puede ser mayor a 255 caracteres")
     private String nombre;
 
     @Column(name = "apellido", nullable = false)
-    @NotBlank
-    @Size(max = 255, message = "El apellido del operador no puede ser mayor a 255 caracteres")
+    @NotBlank(message = "Ingrese su apellido")
+    @Size(max = 255, message = "El apellido no puede ser mayor a 255 caracteres")
     private String apellido;
 
-    @Column(name = "correo", nullable = false)
-    @NotBlank
+    @Column(name = "correo", nullable = false,unique = true)
+    @Email(message = "Debe ser un correo valido")
+    @NotBlank(message = "Ingrese su correo")
     @Size(max = 255, message = "El correo no puedo contener más de a 255 caracteres")
     private String correo;
 
     @Column(name = "contrasena", nullable = false)
+    @NotBlank(message = "No deje el parametro en blanco")
     @Size(max = 255, message = "La contraseña no puede contener más de 255 caracteres")
     private String contrasena;
 
     @Column(name = "numerotelefonico", length = 45)
+    @NotBlank(message = "Debe agregar un numero de contacto")
     private String numerotelefonico;
 
     @Column(name = "fechanacimiento")
+    @Past(message = "La fecha de nacimiento debe ser menor a la actual")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "No deje el parametro en blanco")
     private LocalDate fechanacimiento;
 
-    @Column(name = "direccion", length = 45)
+    @Column(name = "direccion")
+    @Size(max = 45,message = "La direccion no puede pasar de 45 caracteres")
+    @NotBlank(message = "No deje el parametro en blanco")
     private String direccion;
 
     @Column(name = "fotoperfil")
     private byte[] fotoperfil;
 
     @Column(name = "dni")
+    @Positive(message = "Debe ser un numero positivo de 8 digitos")
+    @NotNull(message = "Ingrese su DNI")
+    @Digits(integer = 8,fraction = 0,message = "Debe ser un numero de 8 digitos")
     private Integer dni;
 
     @Column(name = "rol", nullable = false, length = 45)
