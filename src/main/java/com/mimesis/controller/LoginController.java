@@ -75,7 +75,12 @@ public class LoginController {
             }
         }catch (Exception exception){
             usuario = usuarioRepository.findByCorreo(auth.getName());
-            System.out.println("ROL: "+usuario.getRol());
+            if(usuario.getEmailconfirm() == false){
+                auth.setAuthenticated(false);
+                session.invalidate();
+                model.addAttribute("mensaje","Valide su cuenta antes de ingresar");
+                return "login/login";
+            }
         }
 
         session.setAttribute("usuario",usuario);
