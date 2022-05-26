@@ -63,6 +63,11 @@ public class Funcion {
     @NotNull(message = "Debe seleccionar una obra")
     private Obra idobra;
 
+    @Column(name = "fecha", nullable = false)
+    @NotNull(message = "Debe ingresar una fecha válida")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fecha;
+
     public List<Foto> getFotosporfuncion() {
         return fotosporfuncion;
     }
@@ -96,6 +101,14 @@ public class Funcion {
             joinColumns = @JoinColumn(name = "idfuncion"),
             inverseJoinColumns = @JoinColumn(name = "idactor"))
     private List<Actor> actors = new ArrayList<>();
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
 
     public Boolean getValido() {
         return valido;

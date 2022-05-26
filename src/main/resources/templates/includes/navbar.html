@@ -37,6 +37,15 @@
                         <li th:if="${option=='Historial'}" ><a class="nav-link scrollto active" th:href="@{/historial}">Historial</a></li>
                         <li th:if="${option!='Historial'}" ><a class="nav-link scrollto" th:href="@{/historial}">Historial</a></li>
                     </ul>
+
+                    <ul sec:authorize="hasAnyAuthority('Operador')" class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li th:if="${option=='Funciones'}"><a  class="nav-link scrollto active" th:href="@{/operador}">Funciones</a></li>
+                        <li th:if="${option!='Funciones'}" ><a class="nav-link scrollto" th:href="@{/operador}">Funciones</a></li>
+                        <li th:if="${option=='Obras'}"><a  class="nav-link scrollto active" th:href="@{/operador/obras}">Obras</a></li>
+                        <li th:if="${option!='Obras'}"><a  class="nav-link scrollto" th:href="@{/operador/obras}">Obras</a></li>
+                    </ul>
+
+
                 </div>
             </nav>
             <div class="dropdown" sec:authorize="hasAnyAuthority('Cliente','ROLE_USER')">
