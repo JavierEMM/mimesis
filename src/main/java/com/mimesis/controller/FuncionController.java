@@ -30,9 +30,4 @@ public class FuncionController {
         return "redirect:/funciones?search="+search;
     }
 
-    @GetMapping("/detalles")
-    public String detallesFunciones(Model model){
-        return "usuario/detallesFuncion";
-    }
-
 }

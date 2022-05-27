@@ -7,9 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
+    Usuario findByToken(String token);
+
+    Usuario findByResetpwdtoken(String resetpwdtoken);
 
     List<Usuario> findByRol(String rol);
 
@@ -23,6 +27,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "inner join sede se on (se.idsede = sa.idsede)\n" +
             "where u.rol = \"Cliente\" and se.idsede = 11;", nativeQuery = true)
     List<ClientesporSedeDTO> obtenerClientesporSede();
+
+
 
 
 

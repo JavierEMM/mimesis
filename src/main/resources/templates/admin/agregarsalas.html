@@ -30,7 +30,7 @@
                             <div class="mb-3">
                                 <label for="idsede" >Sede</label>
                                 <select id="idsede" name="idsede" class="form-select text-left text-lg text-medium">
-                                    <option th:each="sede:${sedeList}"
+                                    <option th:each="sede:${sedeList}" th:if="${sede.valido==true}"
                                     th:value="${sede.id}"
                                     th:text="${sede.nombre}">
                                     </option>

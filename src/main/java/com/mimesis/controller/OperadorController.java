@@ -1,9 +1,6 @@
 package com.mimesis.controller;
 
-import com.mimesis.entity.Actor;
-import com.mimesis.entity.Foto;
-import com.mimesis.entity.Funcion;
-import com.mimesis.entity.Sede;
+import com.mimesis.entity.*;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -46,7 +43,6 @@ public class OperadorController {
     @GetMapping(value = {"/",""})
     public String paginaPrincipal(Model model){
         model.addAttribute("listaFunciones",funcionRepository.findAll());
-
         return "operador/listafunciones";
     }
 
@@ -60,6 +56,55 @@ public class OperadorController {
 
         return "operador/listafunciones";
     }
+
+    @GetMapping(value = {"/obras"})
+    public String paginaPrincipalObras(Model model){
+        model.addAttribute("listaObras",obrasRepository.findAll());
+        return "operador/listaobras";
+    }
+
+    @PostMapping("/searchObra")
+    public String buscarObra(Model model,@RequestParam("busqueda") String busqueda,@RequestParam("categoria") String categoria){
+        if(categoria.equalsIgnoreCase("Nombre")){
+            model.addAttribute("listaObras",obrasRepository.listaBuscarObrasNombre(busqueda));
+        }else{
+            model.addAttribute("listaObras",obrasRepository.listaBuscarObrasGenero(busqueda));
+        }
+        return "operador/listaobras";
+    }
+
+    @GetMapping("/crearobra")
+    public String nuevaObra(@ModelAttribute("obra") Obra obra, Model model){
+        model.addAttribute("listaGeneros",generoRepository.findAll());
+        return "operador/obraFrm";
+    }
+
+    @PostMapping("saveobra")
+    public String newObra (@ModelAttribute("obra")@Valid Obra obra, BindingResult bindingResult,Model model){
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("listaGeneros",generoRepository.findAll());
+            return "operador/obraFrm";
+        }else {
+            obrasRepository.save(obra);
+            return "redirect:/operador/obras";
+        }
+
+
+    }
+    @GetMapping("/deleteObra")
+    public String deleteObra(@RequestParam("id") Integer id){
+        Optional<Obra> optionalObra = obrasRepository.findById(id);
+
+        if(optionalObra.isPresent()){
+            Obra obraMod= optionalObra.get();
+            obraMod.setValido(false);
+            obrasRepository.save(obraMod);
+        }
+        return "redirect:/operador/obras";
+    }
+
+
 
     @GetMapping("/crearfuncion")
     public String nuevaFuncion (@ModelAttribute("funcion") Funcion funcion, Model model){
@@ -146,6 +191,7 @@ public class OperadorController {
         }
 
     }
+
 
 
     @PostMapping("/save")

@@ -28,11 +28,11 @@
   --font-family-primary: 'Krub', sans-serif;
 }
 
-.icon{
+/*.icon{
   display: inline-block;
   font-size: 44px;
   animation: float 5s ease-in-out infinite;
-}
+}*/
 @keyframes float {
   0%{
     transform: translateY(0);
@@ -1484,4 +1484,11 @@ div > .btn-success{
   padding: 1rem;
   border: medium solid black;
   border-radius: 0.5rem;
+}
+.google{
+  color: white;
+  text-decoration: none;
+}
+.login-subtitle{
+  color:white;
 }

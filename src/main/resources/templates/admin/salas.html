@@ -41,7 +41,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
-        <table class="table table-striped" id="salas">
+        <table class="table table-striped" id="salas1">
             <thead class="thead-dark">
                 <tr>
                     <th class="text-center">Nombre de la sala</th>
@@ -86,7 +86,7 @@
         </script>
         <script>
             $(document).ready( function () {
-                $('#salas').DataTable({
+                $('#salas1').DataTable({
                     language: {
                         processing: "Tratamiento en curso...",
                         infoEmpty: "No existen datos.",
@@ -115,11 +115,7 @@
                     "ordering": false,
                 });
             } );
-
         </script>
-
-
-
         <footer th:replace="includes/footer.html :: footer"></footer>
     </body>
 </html>

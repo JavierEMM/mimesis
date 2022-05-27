@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface FuncionRepository extends JpaRepository<Funcion,Integer> {
-    @Query(value="SELECT  * FROM funcion where nombre like %?1%",nativeQuery = true)
+    @Query(value="SELECT f.* FROM funcion f inner join obras o on f.obras_idobras = o.idobras where o.nombre like %?1% ;",nativeQuery = true)
     List<Funcion> listaBuscarFuncionesNombre(String busqueda);
 
-    @Query(value="SELECT  * FROM funcion where genero like %?1%",nativeQuery = true)
+    @Query(value="SELECT f.* FROM funcion f inner join obras o on f.obras_idobras = o.idobras inner join genero  g on o.genero_idgenero = g.idgenero where g.nombre like %?1% ;",nativeQuery = true)
     List<Funcion> listaBuscarFuncionesGenero(String busqueda);
 }

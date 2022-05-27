@@ -1,5 +1,6 @@
 package com.mimesis.controller;
 
+import com.mimesis.dto.DTOCompararID;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,6 +171,19 @@ public class AdminController {
                 return "admin/editarsedes";
             }
         }else {
+            List<Sede> listaSede =sedesRepository.sedesvalidas();
+            System.out.println(listaSede);
+            String result = sede.getNombre().replace(" ", "");
+            String resultUbicacion =sede.getUbicacion().replace(" ","").replace(".","");
+            for(Sede i: listaSede){
+                String result2 = i.getNombre().replace(" ", "");
+                String resultUbicacion2 =sede.getUbicacion().replace(" ","").replace(".","");
+                if (result.equalsIgnoreCase(result2) && resultUbicacion.equalsIgnoreCase(resultUbicacion2)) {
+                    attr.addFlashAttribute("msg","La sede ya ha sido creada previamente");
+                    attr.addFlashAttribute("opcion","alert-danger");
+                    return "redirect:/admin/sedes";
+                }
+            }
             sedesRepository.save(sede);
             Collections.reverse(file);
             try {
@@ -231,13 +245,39 @@ public class AdminController {
     }
 
     @GetMapping("/borrarsede")
-    public  String borrarsede(@RequestParam("id") Integer id){
+    public  String borrarsede(@RequestParam("id") Integer id, RedirectAttributes attr){
         Optional<Sede> optionalSede = sedesRepository.findById(id);
         if(optionalSede.isPresent()){
-            sedesRepository.deleteById(id);
+            List<Integer> listaSedes = salasRepository.sedesconsalas();
+            for(int i : listaSedes){
+                if(i==id){
+                    List<Integer> listaSalas1 = sedesRepository.compararIds(i);
+                    for( int k : listaSalas1){
+                        Optional<Sala> optionalSala = salasRepository.findById(k);
+                        if(optionalSala.isPresent()){
+                            List<Integer> listaSalas2 = salasRepository.obtenerIdFuncion();
+                            System.out.println(listaSalas2);
+                            for(int p: listaSalas2){
+                                if(p == k){
+                                    attr.addFlashAttribute("msg","La sede presenta salas con funciones pendientes");
+                                    attr.addFlashAttribute("opcion","alert-danger");
+                                    return "redirect:/admin/sedes";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Sede sedeModo = optionalSede.get();
+            sedeModo.setValido(false);
+            sedesRepository.save(sedeModo);
+            attr.addFlashAttribute("msg","Sede borrada exitosamente");
+            attr.addFlashAttribute("opcion","alert-danger");
         }
         return "redirect:/admin/sedes";
     }
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @GetMapping("/actoresydirectores")

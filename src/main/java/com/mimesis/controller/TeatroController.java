@@ -16,7 +16,7 @@ public class TeatroController {
     SedesRepository sedesRepository;
 
     @GetMapping("")
-    public String actores(Model model,@RequestParam(value = "search",required = false) String search){
+    public String teatros(Model model,@RequestParam(value = "search",required = false) String search){
         if(search!=null){
             model.addAttribute("listaTeatros",sedesRepository.busquedaTeatro(search));
         }else {
