@@ -301,7 +301,7 @@ public class AdminController {
     public String buscarcliente(Model model,@RequestParam("sedes") Sede sedes){
         model.addAttribute("listasedes",sedesRepository.findAll());
         model.addAttribute("salaList",sedes.getListasalas());
-        return "admin/salas";
+        return "admin/clientes";
     }
     /////////////////////////////////////////////////////////////////////////////////////////
 
