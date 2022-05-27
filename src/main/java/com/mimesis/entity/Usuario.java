@@ -30,12 +30,10 @@ public class Usuario {
 
     @Column(name = "correo", nullable = false,unique = true)
     @Email(message = "Debe ser un correo valido")
-    @NotBlank(message = "Ingrese su correo")
     @Size(max = 255, message = "El correo no puedo contener más de a 255 caracteres")
     private String correo;
 
     @Column(name = "contrasena", nullable = false)
-    @NotBlank(message = "No deje el parametro en blanco")
     @Size(max = 255, message = "La contraseña no puede contener más de 255 caracteres")
     private String contrasena;
 
@@ -51,7 +49,6 @@ public class Usuario {
 
     @Column(name = "direccion")
     @Size(max = 45,message = "La direccion no puede pasar de 45 caracteres")
-    @NotBlank(message = "No deje el parametro en blanco")
     private String direccion;
 
     @Column(name = "fotoperfil")
@@ -77,6 +74,9 @@ public class Usuario {
 
     @Column(name = "token",nullable = true)
     private String token  = UUID.randomUUID().toString();
+
+    @Column(name = "resetpwdtoken")
+    private String resetpwdtoken;
 
     public Usuario() {
     }
@@ -208,5 +208,13 @@ public class Usuario {
 
     public void setAuthprovider(String authprovider) {
         this.authprovider = authprovider;
+    }
+
+    public String getResetpwdtoken() {
+        return resetpwdtoken;
+    }
+
+    public void setResetpwdtoken(String resetpwdtoken) {
+        this.resetpwdtoken = resetpwdtoken;
     }
 }

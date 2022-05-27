@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 
 @Component
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -23,6 +24,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        System.out.println("Hola");
         CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
         Usuario usuario = usuarioRepository.findByCorreo(customOAuth2User.getEmail());
         String email= customOAuth2User.getEmail();
@@ -35,11 +37,18 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         System.out.println("verified: "+verified);
         if(usuario == null){
             usuario =  new Usuario(nombre,apellido,email,"Cliente",verified,"GOOGLE");
+            usuario.setToken(null);
+            usuario.setNumerotelefonico("1");
+            usuario.setDireccion("1");
+            usuario.setDni(1);
+            usuario.setFechanacimiento(LocalDate.now().minusDays(1));
             System.out.println("valido: "+ usuario.getValido());
             usuarioRepository.save(usuario);
         }else{
+            System.out.println("HOLA CAUSA");
             //update user
             System.out.println("Updatea customer");
+            usuario.setToken(null);
             usuario.setNombre(nombre);
             usuario.setAuthprovider("GOOGLE");
             usuario.setApellido(apellido);

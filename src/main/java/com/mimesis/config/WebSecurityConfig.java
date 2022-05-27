@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/processLogin")
                 .defaultSuccessUrl("/redirectByRole")
                 .and().oauth2Login().loginPage("/login")
-                .userInfoEndpoint().userService(oAuth2UserService).and().successHandler(oAuth2LoginSuccessHandler).defaultSuccessUrl("/redirectByRole");
+                .userInfoEndpoint().userService(oAuth2UserService).and().defaultSuccessUrl("/redirectByRole").successHandler(oAuth2LoginSuccessHandler);
 
 
 

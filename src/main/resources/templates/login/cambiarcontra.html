@@ -6,23 +6,24 @@
 <div class="main">
     <section class="sign-in">
         <div class="container">
+            <div class="alert" th:classappend="${alerta}" th:if="${registro != null}" th:text="${registro}"></div>
             <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 500px; text-align: center">
                 <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; color: white;box-shadow: 7px 13px 37px #000;">
                     <h1 class="border-bottom" style="color:crimson">Nueva Contraseña</h1>
                     <br>
                     <h6>Por favor ingrese una nueva contraseña</h6>
                     <br>
-
-                    <form method="POST">
+                    <form method="POST" th:action="@{/guardarcontra}">
+                        <input th:value="${usuario.resetpwdtoken}" name="token" type="hidden" class="form-control"/>
                         <div class="mb-3">
                             <label class="form-label">Nueva contraseña</label>
-                            <input type="correo" class="form-control"/>
+                            <input name="contra_1" type="password" class="form-control"/>
                         </div>
                         <br>
 
                         <div class="mb-3">
                             <label class="form-label">Repita nueva contraseña</label>
-                            <input type="correo" class="form-control"/>
+                            <input name="contra_2" type="password" class="form-control"/>
                         </div>
                         <br>
 

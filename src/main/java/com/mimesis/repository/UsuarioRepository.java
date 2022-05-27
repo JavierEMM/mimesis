@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
     Usuario findByToken(String token);
 
+    Usuario findByResetpwdtoken(String resetpwdtoken);
+
     List<Usuario> findByRol(String rol);
 
     Usuario findByCorreo(String correo);
