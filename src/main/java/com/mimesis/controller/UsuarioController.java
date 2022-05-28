@@ -56,9 +56,5 @@ public class UsuarioController {
         return "usuario/calificacion";
     }
 
-    @GetMapping("/detalles")
-    public String detallesFunciones(Model model){
-        return "usuario/detallesFuncion";
-    }
 
 }

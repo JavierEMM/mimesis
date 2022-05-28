@@ -19,16 +19,16 @@
                     </div>
                 </form>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <div class="col" th:each="funcion : ${listaFunciones}">
+                    <div class="col" th:each="obra : ${listaObras}">
                         <div class="card shadow-sm">
                             <img th:src="@{img/mobi_dick.jpg}">
                             <div class="card-body">
-                                <h2 class="card-text" th:text="${funcion}"></h2>
-                                <p class="card-text" th:text="${funcion} + ', ' +${funcion.horafin} + ', +' +${funcion}"></p>
+                                <h2 class="card-text" th:text="${obra.nombre}"></h2>
+                                <p class="card-text" th:text="${'+' + obra.restricciondeedad} + ', ' +${obra.getGeneroIdgenero().nombre}"></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a type="button"  th:href="@{/detalles}" class="btn btn-sm btn-outline-secondary">Ver Detalles</a>
-                                        <a  th:href="@{/detalles}" type="button" class="btn btn-sm btn-outline-secondary">Reservar</a>
+                                        <a type="button"  th:href="@{${'/funciones/detalles?obra='+ obra.nombre}}" class="btn btn-sm btn-outline-secondary">Ver Detalles</a>
+                                        <a  th:href="@{${'/funciones/detalles?obra='+ obra.nombre}}" type="button" class="btn btn-sm btn-outline-secondary">Reservar</a>
                                     </div>
                                 </div>
                             </div>
