@@ -1,5 +1,4 @@
 package com.mimesis.controller;
-
 import com.mimesis.entity.Usuario;
 import com.mimesis.google.CustomOAuth2User;
 import com.mimesis.repository.UsuarioRepository;

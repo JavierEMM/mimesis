@@ -1,6 +1,4 @@
 package com.mimesis.controller;
-
-import com.mimesis.dto.DTOCompararID;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
