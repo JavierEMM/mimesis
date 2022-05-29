@@ -6,6 +6,7 @@ import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -90,7 +91,6 @@ public class AdminController {
 
                 }
             }
-
             String msg ="sala " + (sala.getId()== null ? "creada " : "actualizada ") + "exitosamente";
             attr.addFlashAttribute("msg", msg);
             attr.addFlashAttribute("opcion","alert-success");
@@ -176,6 +176,7 @@ public class AdminController {
             }
         }else {
             List<Sede> listaSede =sedesRepository.sedesvalidas();
+            System.out.println(listaSede);
             String result = sede.getNombre().replace(" ", "");
             String resultUbicacion =sede.getUbicacion().replace(" ","").replace(".","");
             for(Sede i: listaSede){
@@ -315,6 +316,7 @@ public class AdminController {
                 for (MultipartFile file1 : file) {
                     Foto foto = new Foto();
                     foto.setFoto(file1.getBytes());
+                    //foto.setIdsede(sede);
                     String msg = "sede " + (foto.getId() == null ? "creada " : "actualizada  ") + "exitosamente";
                     attr.addFlashAttribute("msg", msg);
                     attr.addFlashAttribute("opcion", "alert-success");
@@ -402,8 +404,11 @@ public class AdminController {
     @PostMapping("/saveoperador")
     public String savesedes(@ModelAttribute("usuario") @Valid Usuario usuario,BindingResult bindingResult, RedirectAttributes attr){
         if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
             return "admin/agregaroperador";
         }
+        String contra = usuario.getContrasena();
+        usuario.setContrasena(new BCryptPasswordEncoder().encode(contra));
         usuarioRepository.save(usuario);
         attr.addFlashAttribute("msg","Operador creado exitosamente");
         attr.addFlashAttribute("opcion","alert-success");

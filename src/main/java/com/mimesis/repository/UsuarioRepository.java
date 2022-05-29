@@ -28,7 +28,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "where u.rol = \"Cliente\" and se.idsede = 11;", nativeQuery = true)
     List<ClientesporSedeDTO> obtenerClientesporSede();
 
-
+    @Query(value="INSERT INTO usuario (nombre, apellido, correo, contrasena, rol, valido, emailconfirm)\n" +
+            "VALUES (?1,?2,?3,?4,?5,1,1);",nativeQuery = true)
+    void agregarOperadores(String nombre,String apellido, String correo, String contrasena, String rol);
 
 
 

@@ -29,11 +29,13 @@ public class Usuario {
     private String apellido;
 
     @Column(name = "correo", nullable = false,unique = true)
+    @NotBlank(message = "Ingrese su correo")
     @Email(message = "Debe ser un correo valido")
     @Size(max = 255, message = "El correo no puedo contener más de a 255 caracteres")
     private String correo;
 
     @Column(name = "contrasena", nullable = false)
+    @NotBlank(message = "Ingrese su contraseña")
     @Size(max = 255, message = "La contraseña no puede contener más de 255 caracteres")
     private String contrasena;
 
