@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="includes/head.html :: head">MIMESIS</head>
+    <body>
+        <header th:replace="/includes/navbar.html :: navbar(option='Historial')" id="header" class="d-flex align-items-center">
+        </header>
+        <div class="container">
+            <div class="row" >
+                <div class="col-xl">
+                    <p class="title" th:text="${sede.nombre}"></p>
+                    <p class="title" th:text="${obra.nombre}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="text-align: center;" scope="col">#</th>
+                                <th style="text-align: center;" scope="col">Fecha</th>
+                                <th style="text-align: center;" scope="col">Hora inicio</th>
+                                <th style="text-align: center;" scope="col">Hora Fin</th>
+                                <th style="text-align: center;" scope="col">Costo</th>
+                                <th style="text-align: center;" scope="col">Boletos disponibles</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="funcion,i : ${listaFunciones}">
+                                <th style="text-align:center;" th:text="${i.index + 1}" ></th>
+                                <td style="text-align: center;" th:text="${funcion.fecha}"></td>
+                                <td style="text-align: center;" th:text="${funcion.horainicio}"></td>
+                                <td style="text-align: center;" th:text="${funcion.horafin}"></td>
+                                <td style="text-align: center;" th:text="${funcion.costo}"></td>
+                                <th style="text-align: center;" th:text="${funcion.aforo}"></th>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="/includes/footer.html :: footer"></footer>
+    </body>
+</html>
