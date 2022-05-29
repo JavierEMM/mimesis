@@ -9,7 +9,7 @@
         </section>
         <main>
             <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 500px;">
-                <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
+                <section style="max-width:100%; background: white; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
                     <div style="max-width: 1000px; text-align: center">
                         <h1 class="pb-2 mb-4 border-bottom">Nueva Sede</h1>
                         <form method="post" th:action="@{'/admin/savesedes'}" th:object="${sede}" enctype="multipart/form-data">
@@ -30,8 +30,12 @@
                             <div class="mb-3">
                                 <label class="form-label">Fotos</label>
                                 <p th:if="${errorFoto!=null}" style="color: #dc3545;font-size: .875em;"> Debe ingresar al menos una foto<p>
-                                <br>
-                                <input class="btn" style="color: transparent; width: 146px; height: 40px;" type="file" accept="image/*" id="archivo" name="archivo" multiple>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-12" id="add-photo-container" >
+                                    <div class="add-new-photo first" id="add-photo">
+                                        <span><i class="icon-camera"></i></span>
+                                    </div>
+                                    <input type="file" accept="image/*" id="archivo" name="archivo" multiple>
+                                </div>
                             </div>
                             <a th:href="@{'/admin/sedes'}" class="btn btn-danger">Cancelar</a>
                             <button type="submit" class="btn btn-primary">Guardar</button>
