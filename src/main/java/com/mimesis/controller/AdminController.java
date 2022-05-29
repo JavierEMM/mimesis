@@ -1,5 +1,6 @@
 package com.mimesis.controller;
 
+import com.mimesis.dto.DTOCompararID;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -300,6 +301,11 @@ public class AdminController {
             /List<Sede> listaSede =actorRepository.sedesvalidas();
             System.out.println(listaSede);
 
+        //Lista
+        //ArrayList<String> listaRoles = new ArrayList<>();
+        //listaRoles.add("Actores");
+        //listaRoles.add("Directores");
+        //model.addAttribute("listaRoles",listaRoles);
 
             actorRepository.save(actor);
             Collections.reverse(file);
@@ -335,7 +341,8 @@ public class AdminController {
             model.addAttribute("listaDirectores", directorRepository.findAll());
         }
 
-        return "actores";
+
+        return "admin/actoresydirectores";
     }
 
     @GetMapping("/agregaractor")
@@ -371,7 +378,7 @@ public class AdminController {
     public String buscarcliente(Model model,@RequestParam("sedes") Sede sedes){
         model.addAttribute("listasedes",sedesRepository.findAll());
         model.addAttribute("salaList",sedes.getListasalas());
-        return "admin/clientes";
+        return "admin/salas";
     }
     /////////////////////////////////////////////////////////////////////////////////////////
 

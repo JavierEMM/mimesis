@@ -75,7 +75,12 @@ td, th{
   margin-bottom: 20px;
 }
 
-
+.mayus{
+  text-transform: uppercase;
+  color: #000;
+  font-weight: bold;
+  padding: 10px;
+}
 
 
 body {
@@ -1478,6 +1483,12 @@ div > .btn-success{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.vertical-align{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .fondo{

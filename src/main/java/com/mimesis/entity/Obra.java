@@ -13,7 +13,7 @@ public class Obra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idobras", nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(name = "nombre", nullable = false)
     @NotBlank(message="Debe ingresar un nombre")
