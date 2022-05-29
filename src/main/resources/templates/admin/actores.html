@@ -14,13 +14,14 @@
 
     <div class="container">
         <div class="row">
-            <form class="form-group mb-3" method="post" th:action="@{/admin/searchroles}">
+            <form class="form-group mb-3" method="post" th:action="@{/admin/searchactores}">
                 <div class="row" >
                     <div class="col-8">
-                        <input class="form-control" placeholder="Buscar por nombre " name="search" >
+                        <input class="form-control" placeholder="Buscar nombre del actor" name="search" >
                     </div>
                     <div class="col-2">
                         <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                        <a class="btn btn-outline-danger ml-2" th:href="@{/admin/actores}">Limpiar</a>
                     </div>
                     <div class="col-2">
                         <a class="btn btn-secondary" th:href="@{'/admin/agregaractor'}">Agregar actor</a>
@@ -37,6 +38,8 @@
                             <th class="text-center">#</th>
                             <th class="text-center">Nombre</th>
                             <th class="text-center">Apellido</th>
+                            <th class="text-center">Correo</th>
+                            <th class="text-center">Telefono</th>
                             <th class="text-center">Foto</th>
                             <th class="text-center">Editar</th>
                             <th class="text-center">Eliminar</th>
@@ -48,7 +51,9 @@
                             <td th:text="${i.index + 1}"></td>
                             <td th:text="${actor.nombre}"></td>
                             <td th:text="${actor.apellido}"></td>
-                            <td><img th:if="${actor.foto !=null}" th:src="@{actor.foto}" width="50" height="50" ></td>
+                            <td th:text="${actor.correo}"></td>
+                            <td th:text="${actor.telefono}"></td>
+                            <td><img th:if="${actor.foto !=null}" th:src="@{|imageactores/${actor.id}|}" width="50" height="50"></td>
                             <td class="text-center text-lg text-medium">
                                 <a class="btn btn-primary" th:href="@{'/admin/editaractor'}"><i class="bi bi-pencil-square"></i></a>
                             </td>

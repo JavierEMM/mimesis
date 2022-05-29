@@ -12,9 +12,9 @@
                 <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
                     <div style="max-width: 1000px; text-align: center">
                         <h1 class="pb-2 mb-4 border-bottom">Agregar Actor</h1>
-                        <form method="post" th:action="@{'/admin/saveactor'}" th:object="${actor}">
+                        <form method="post" th:action="@{'/admin/saveactor'}" th:object="${actor}" enctype="multipart/form-data">
                             <input type="hidden" th:field="*{id}"/>
-                            <input type="hidden" th:field="*{valido}"/>
+                            <input type="hidden" th:field="*{valido}" th:value="1"/>
                             <div class="mb-3">
                                 <label class="form-label">Nombre del Actor</label>
                                 <input type="text" class="form-control" th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}"/>
@@ -34,16 +34,14 @@
                                      th:errors="*{correo}"></div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Apellido de Actor</label>
-                                <input type="text" class="form-control" th:field="*{telefono}" th:classappend="${#fields.hasErrors('apellido')?'is-invalid':''}"/>
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('apellido')}"
+                                <label class="form-label">Telefono del Actor</label>
+                                <input type="text" class="form-control" th:field="*{telefono}" th:classappend="${#fields.hasErrors('telefono')?'is-invalid':''}"/>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('telefono')}"
                                      th:errors="*{telefono}"></div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Fotos</label>
-                                <p th:if="${errorFoto!=null}" style="color: #dc3545;font-size: .875em;"> Debe ingresar al menos una foto<p>
-                                <br>
-                                <input class="btn" style="color: transparent; width: 146px; height: 40px;" type="file" accept="image/*" id="archivo" name="archivo" multiple>
+                                <label class="form-label">Foto del Actor</label>
+                                <input type="file" class="form-control" id="archivo" name="archivo">
                             </div>
                             <a th:href="@{'/admin/actores'}" class="btn btn-danger">Cancelar</a>
                             <button type="submit" class="btn btn-primary">Guardar</button>

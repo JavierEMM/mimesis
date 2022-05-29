@@ -3,7 +3,9 @@ package com.mimesis.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.sql.Blob;
 
 @Entity
 @Table(name = "actor")
@@ -25,11 +27,12 @@ public class Actor {
 
     @Column(name = "correo", nullable = false, length = 45)
     @Email(message = "Debe ser un correo valido")
+    @NotBlank(message = "Ingrese su correo")
     @Size(max = 255, message = "El correo no puedo contener más de a 255 caracteres")
     private String correo;
 
     @Column(name = "telefono", nullable = false, length = 45)
-    @NotBlank(message = "Debe agregar un numero de contacto")
+    @NotNull(message = "Debe agregar un numero de contacto")
     private Integer telefono;
 
     @Column(name = "valido", nullable = false)
