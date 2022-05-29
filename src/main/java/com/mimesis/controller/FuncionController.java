@@ -1,11 +1,13 @@
 package com.mimesis.controller;
 
+import com.mimesis.entity.Funcion;
 import com.mimesis.entity.Obra;
 import com.mimesis.entity.Sede;
 import com.mimesis.repository.FuncionRepository;
 import com.mimesis.repository.ObrasRepository;
 import com.mimesis.repository.SedesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
@@ -23,6 +28,8 @@ public class FuncionController {
     SedesRepository sedesRepository;
     @Autowired
     ObrasRepository obrasRepository;
+    @Autowired
+    FuncionRepository funcionRepository;
 
     @GetMapping("")
     public String paginaFunciones(@RequestParam(value = "search",required = false) String search,Model model){
@@ -36,13 +43,14 @@ public class FuncionController {
     }
 
     @PostMapping("/buscar")
-    public String funcionesBuscar(@RequestParam(value = "search",required = false) String search){
-        return "redirect:/funciones?search="+search;
+    public String funcionesBuscar(@RequestParam(value = "search",required = false) String search) throws UnsupportedEncodingException {
+        return "redirect:/funciones?search="+ URLEncoder.encode(search,"UTF-8");
     }
 
-    @GetMapping("/detalles")
-    public String detallesFunciones(Model model,@RequestParam("obra") String obra) {
-        System.out.println("LA OBRA ES: "+obra);
+    @GetMapping(value = "/detalles")
+    public String detallesFunciones(Model model,@RequestParam("obra") String obra) throws UnsupportedEncodingException {
+
+        System.out.println("LA OBRA ES: "+ URLDecoder.decode(obra,"UTF-8"));
         Obra obra1= obrasRepository.findByNombre(obra);
         System.out.println("la id de la obra es: "+obra1.getId());
         List<Sede> sedes = sedesRepository.teatrosPorFuncion(obra1.getId());

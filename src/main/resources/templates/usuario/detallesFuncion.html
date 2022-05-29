@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
 <head th:replace="includes/head.html :: head">MIMESIS</head>
 <body>
 
@@ -12,6 +12,7 @@
     <div class="col">
       <main id="main" class="main-page">
         <div class="container">
+          <div class="alert" th:classappend="${alerta}" th:if="${reserva != null}" th:text="${reserva}"></div>
           <div class="row">
             <div class="col-md-6 display-col">
               <img th:src="@{/img/moby_dick.jpg}" alt="moby_dick" class="img-fluid">
@@ -30,15 +31,15 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <form method="post" th:action="@{/carrito/reserva}">
+                  <form method="post" th:action="@{${'/carrito/reservar?obra='+obra.nombre}}">
                     <h3 class="text-center">Reserva Aquí</h3>
-                    <select class="form-select select-center">
+                    <select class="form-select select-center" name="teatro">
                       <option SELECTED>Selecciona el teatro</option>
                       <option th:each="teatro : ${listaTeatros}" th:value="${teatro.id}" th:text="${teatro.nombre +'| '+ teatro.ubicacion}"></option>
                     </select>
                     <div class="btn-center">
-                      <button type="submit" class="btn-success"> Reservar </button>
-                      <button type="submit" class="btn-secondary"> Comprar ahora </button>
+                      <input type="submit" class="btn btn-success" name="reservar" value="Reservar">
+                      <input type="submit" class="btn btn-secondary" name="comprar" value="Comprar">
                     </div>
                   </form>
                 </div>
