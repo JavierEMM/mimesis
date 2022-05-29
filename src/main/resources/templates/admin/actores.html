@@ -13,17 +13,16 @@
         </div>
 
     <div class="container">
-        <label>Buscador</label>
         <div class="row">
             <form class="form-group mb-3" method="post" th:action="@{/admin/searchroles}">
                 <div class="row" >
-                    <div class="col-3">
-
+                    <div class="col-8">
+                        <input class="form-control" placeholder="Buscar por nombre " name="search" >
                     </div>
-                    <div class="col-6">
+                    <div class="col-2">
                         <button class="btn btn-outline-primary" type="submit">Buscar</button>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <a class="btn btn-secondary" th:href="@{'/admin/agregaractor'}">Agregar actor</a>
                     </div>
                 </div>

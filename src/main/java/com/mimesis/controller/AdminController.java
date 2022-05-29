@@ -82,11 +82,15 @@ public class AdminController {
             for(Sala i : listaSala) {
                 String result2 = i.getNombre().replace(" ", "");
                 if (result.equalsIgnoreCase(result2) && sala.getIdsede() == i.getIdsede()) {
-                    attr.addFlashAttribute("msg","La sala ya ha sido creada previamente");
-                    attr.addFlashAttribute("opcion","alert-danger");
-                    return "redirect:/admin/salas";
+                    if(i.getValido()){
+                        attr.addFlashAttribute("msg","La sala ya ha sido creada previamente");
+                        attr.addFlashAttribute("opcion","alert-danger");
+                        return "redirect:/admin/salas";
+                    }
+
                 }
             }
+
             String msg ="sala " + (sala.getId()== null ? "creada " : "actualizada ") + "exitosamente";
             attr.addFlashAttribute("msg", msg);
             attr.addFlashAttribute("opcion","alert-success");
@@ -172,16 +176,21 @@ public class AdminController {
             }
         }else {
             List<Sede> listaSede =sedesRepository.sedesvalidas();
-            System.out.println(listaSede);
             String result = sede.getNombre().replace(" ", "");
             String resultUbicacion =sede.getUbicacion().replace(" ","").replace(".","");
             for(Sede i: listaSede){
                 String result2 = i.getNombre().replace(" ", "");
-                String resultUbicacion2 =sede.getUbicacion().replace(" ","").replace(".","");
+                String resultUbicacion2 =i.getUbicacion().replace(" ","").replace(".","");
                 if (result.equalsIgnoreCase(result2) && resultUbicacion.equalsIgnoreCase(resultUbicacion2)) {
-                    attr.addFlashAttribute("msg","La sede ya ha sido creada previamente");
-                    attr.addFlashAttribute("opcion","alert-danger");
-                    return "redirect:/admin/sedes";
+                    System.out.println("Leo");
+                    System.out.println(i.getValido());
+                    System.out.println("Jose");
+                    if(i.getValido()){
+                        attr.addFlashAttribute("msg","La sede ya ha sido creada previamente");
+                        attr.addFlashAttribute("opcion","alert-danger");
+                        return "redirect:/admin/sedes";
+                    }
+
                 }
             }
             sedesRepository.save(sede);
@@ -298,14 +307,7 @@ public class AdminController {
                 return "admin/editaractor";
             }
         }else {
-            /List<Sede> listaSede =actorRepository.sedesvalidas();
-            System.out.println(listaSede);
 
-        //Lista
-        //ArrayList<String> listaRoles = new ArrayList<>();
-        //listaRoles.add("Actores");
-        //listaRoles.add("Directores");
-        //model.addAttribute("listaRoles",listaRoles);
 
             actorRepository.save(actor);
             Collections.reverse(file);
@@ -313,7 +315,6 @@ public class AdminController {
                 for (MultipartFile file1 : file) {
                     Foto foto = new Foto();
                     foto.setFoto(file1.getBytes());
-                    foto.setIdsede(sede);
                     String msg = "sede " + (foto.getId() == null ? "creada " : "actualizada  ") + "exitosamente";
                     attr.addFlashAttribute("msg", msg);
                     attr.addFlashAttribute("opcion", "alert-success");
@@ -324,7 +325,6 @@ public class AdminController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return "admin/agregarsedes";
         }
         return "admin/actores";
     }
