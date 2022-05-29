@@ -26,6 +26,17 @@ public class Director {
     @Column(name = "valido", nullable = false)
     private Boolean valido = true;
 
+    @Column(name = "foto", nullable = false)
+    private byte[] foto;
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
     public Boolean getValido() {
         return valido;
     }

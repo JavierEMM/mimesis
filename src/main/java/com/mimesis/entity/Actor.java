@@ -1,6 +1,9 @@
 package com.mimesis.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "actor")
@@ -11,19 +14,37 @@ public class Actor {
     private Integer id;
 
     @Column(name = "nombre", nullable = false, length = 45)
+    @NotBlank(message = "Ingrese su nombre")
+    @Size(max = 255, message = "El nombre del Actor no puede ser mayor a 255 caracteres")
     private String nombre;
 
     @Column(name = "apellido", nullable = false, length = 45)
+    @NotBlank(message = "Ingrese su apellido")
+    @Size(max = 255, message = "El apellido del Actor no puede ser mayor a 255 caracteres")
     private String apellido;
 
     @Column(name = "correo", nullable = false, length = 45)
+    @Email(message = "Debe ser un correo valido")
+    @Size(max = 255, message = "El correo no puedo contener más de a 255 caracteres")
     private String correo;
 
     @Column(name = "telefono", nullable = false, length = 45)
+    @NotBlank(message = "Debe agregar un numero de contacto")
     private Integer telefono;
 
     @Column(name = "valido", nullable = false)
     private Boolean valido = true;
+
+    @Column(name = "foto", nullable = false)
+    private byte[] foto;
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
 
     public Boolean getValido() {
         return valido;

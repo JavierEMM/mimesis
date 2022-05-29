@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="includes/head.html :: head">MIMESIS</head>
+<body style="background-color: white;">
+<section>
+    <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
+</section>
+<div class="container mt-3"></div>
+<div class="container mt-3">
+    <div class="col-md-4 offset-md-4">
+        <h2 class="pb-2 border-bottom">Gestión de Directores</h2>
+    </div>
+</div>
+
+<div class="container">
+    <label>Buscador</label>
+    <div class="row">
+        <form class="form-group mb-3" method="post" th:action="@{/admin/searchroles}">
+            <div class="row" >
+                <div class="col-3">
+
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                </div>
+                <div class="col-3">
+                    <a class="btn btn-secondary" th:href="@{'/admin/agregardirector'}">Agregar director</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        <h1 style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">Lista de Directores</h1>
+        <div style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Apellido</th>
+                    <th class="text-center">Foto</th>
+                    <th class="text-center">Editar</th>
+                    <th class="text-center">Eliminar</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="director,i : ${listaDirectores}">
+                    <td th:text="${i.index + 1}"></td>
+                    <td th:text="${director.nombre}"></td>
+                    <td th:text="${director.apellido}"></td>
+                    <td><img th:if="${director.foto !=null}" th:src="@{director.foto}" width="50" height="50" ></td>
+                    <td class="text-center text-lg text-medium">
+                        <a class="btn btn-primary" th:href="@{'/admin/editardirector'}"><i class="bi bi-pencil-square"></i></a>
+                    </td>
+                    <td class="text-center">
+                        <form id="1" method="post" action="">
+                            <input name="test" value="1" type="hidden"/>
+                            <button onclick="return confirm('¿Esta seguro que desea eliminar al director?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+
+        crossorigin="anonymous">
+</script>
+
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"
+        crossorigin="anonymous">
+</script>
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"
+        crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready( function () {
+        $('#actores').DataTable({
+            language: {
+                processing: "Tratamiento en curso...",
+                infoEmpty: "No existen datos.",
+                loadingRecords: "Cargando...",
+                zeroRecords: "No se encontraron datos con tu busqueda",
+                emptyTable: "No hay datos disponibles en la tabla.",
+                lengthMenu: "",
+                info: "",
+                infoEmpty: "No existen datos.",
+                infoFiltered: "(filtrado de _MAX_ elementos en total)",
+                infoPostFix: "",
+                paginate: {
+                    first: "Primero",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Ultimo"
+                },
+                aria: {
+                    sortAscending: ": active para ordenar la columna en orden ascendente",
+                    sortDescending: ": active para ordenar la columna en orden descendente"
+                }
+            },
+            scrollY: 300,
+            lengthMenu: [ [5, 10, -1], [5, 10, "All"] ],
+            "searching": false,
+            "ordering": false,
+        });
+    } );
+
+</script>
+<footer th:replace="includes/footer.html :: footer"></footer>
+</body>
+</html>

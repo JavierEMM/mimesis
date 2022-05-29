@@ -1,6 +1,5 @@
 package com.mimesis.controller;
 
-import com.mimesis.dto.DTOCompararID;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -280,26 +279,48 @@ public class AdminController {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @GetMapping("/actoresydirectores")
-    public String paginaActoresydirectores(Model model) {
-        String rol ="Actores" ;
-        model.addAttribute("rol",rol);
+    @GetMapping("/actores")
+    public String paginaActores(Model model) {
         model.addAttribute("listaActores", actorRepository.findAll());
-        model.addAttribute("listaDirectores", directorRepository.findAll());
+        return "admin/actores";
+    }
 
-        //Diccionario
-        //Dictionary<Integer, String> obj = new Hashtable<Integer,String>();
-        //obj.put(0,"Actores");
-        //obj.put(1,"Directores");
-        //model.addAttribute("obj",obj);
+    @PostMapping("/saveactor")
+    public String saveactor(@ModelAttribute("actor") @Valid Actor actor,BindingResult bindingResult, @RequestParam("archivo") List<MultipartFile> file,Model model, RedirectAttributes attr) throws IOException{
+        if (bindingResult.hasErrors() || file.get(0).getBytes().length == 0){
+            if (file.get(0).getBytes().length == 0) {
+                model.addAttribute("errorFoto", "Debe adjuntar al menos una foto");
+            }
+            if (actor.getId() == null) {
+                return "admin/agregaractor";
+            } else {
+                return "admin/editaractor";
+            }
+        }else {
+            /List<Sede> listaSede =actorRepository.sedesvalidas();
+            System.out.println(listaSede);
 
-        //Lista
-        //ArrayList<String> listaRoles = new ArrayList<>();
-        //listaRoles.add("Actores");
-        //listaRoles.add("Directores");
-        //model.addAttribute("listaRoles",listaRoles);
 
-        return "admin/actoresydirectores";
+            actorRepository.save(actor);
+            Collections.reverse(file);
+            try {
+                for (MultipartFile file1 : file) {
+                    Foto foto = new Foto();
+                    foto.setFoto(file1.getBytes());
+                    foto.setIdsede(sede);
+                    String msg = "sede " + (foto.getId() == null ? "creada " : "actualizada  ") + "exitosamente";
+                    attr.addFlashAttribute("msg", msg);
+                    attr.addFlashAttribute("opcion", "alert-success");
+                    fotoRepository.save(foto);
+                    return "redirect:/admin/sedes";
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "admin/agregarsedes";
+        }
+        return "admin/actores";
     }
 
     @PostMapping("/searchroles")
@@ -314,23 +335,32 @@ public class AdminController {
             model.addAttribute("listaDirectores", directorRepository.findAll());
         }
 
-
-        return "admin/actoresydirectores";
+        return "actores";
     }
 
-    @RequestMapping("agregaractoresydirectores")
-    public String paginaAgregaractoresydirectores(){
-        return "admin/agregaractoresydirectores";
+    @GetMapping("/agregaractor")
+    public String paginaAgregaractor(@ModelAttribute("actor") Sede sede,@ModelAttribute("foto") Foto foto,Model model){
+        List<Actor> actorList = actorRepository.findAll();
+        model.addAttribute("actorList",actorList);
+        List<Foto> fotoList = fotoRepository.findAll();
+        model.addAttribute("fotoList",fotoList);
+        return "admin/agregaractor";
     }
 
-    @RequestMapping("editaractoresydirectores")
+    @RequestMapping("/editaractoresydirectores")
     public String paginaEditaractoresydirectores(){
         return "admin/editaractoresydirectores";
     }
 
+    @GetMapping("/directores")
+    public String paginaDirectores(Model model) {
+        model.addAttribute("listaDirectores", directorRepository.findAll());
+        return "admin/directores";
+    }
+
 
     //////////////////////////////////////////////////////////////////////////////////////////
-    @RequestMapping("clientes")
+    @GetMapping("/clientes")
     public String clientes(Model model){
         model.addAttribute("listaClientes",usuarioRepository.findByRol("Cliente"));
         model.addAttribute("listasedes",sedesRepository.findAll());

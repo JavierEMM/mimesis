@@ -10,8 +10,6 @@ public class Foto {
     @Column(name = "idfotos", nullable = false)
     private Integer id;
 
-
-
     @Column(name = "foto", nullable = false)
     private byte[] foto;
 
