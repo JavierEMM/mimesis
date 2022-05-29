@@ -291,80 +291,133 @@ public class AdminController {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @GetMapping("/actores")
-    public String paginaActores(Model model) {
-        model.addAttribute("listaActores", actorRepository.findAll());
+    public String paginaActores(Model model,@RequestParam(value="search",required = false) String search) {
+        if(search!=null){
+            model.addAttribute("listaActores",actorRepository.busquedaActorporNombre(search));
+        }else{
+            model.addAttribute("listaActores", actorRepository.findAll());
+        }
         return "admin/actores";
     }
 
     @PostMapping("/saveactor")
-    public String saveactor(@ModelAttribute("actor") @Valid Actor actor,BindingResult bindingResult, @RequestParam("archivo") List<MultipartFile> file,Model model, RedirectAttributes attr) throws IOException{
-        if (bindingResult.hasErrors() || file.get(0).getBytes().length == 0){
-            if (file.get(0).getBytes().length == 0) {
-                model.addAttribute("errorFoto", "Debe adjuntar al menos una foto");
-            }
+    public String saveactor(@ModelAttribute("actor") @Valid Actor actor,BindingResult bindingResult,@RequestParam("archivo") MultipartFile file,Model model, RedirectAttributes attr) throws IOException {
+        if (bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
             if (actor.getId() == null) {
                 return "admin/agregaractor";
             } else {
                 return "admin/editaractor";
             }
         }else {
-
-
-            actorRepository.save(actor);
-            Collections.reverse(file);
-            try {
-                for (MultipartFile file1 : file) {
-                    Foto foto = new Foto();
-                    foto.setFoto(file1.getBytes());
-                    //foto.setIdsede(sede);
-                    String msg = "sede " + (foto.getId() == null ? "creada " : "actualizada  ") + "exitosamente";
+            if(file.isEmpty()){
+                model.addAttribute("msg","Debe subir un archivo");
+                return "admin/agregaractor";
+            }
+            else{
+                    actor.setFoto(file.getBytes());
+                    String msg = "actor " + (actor.getId() == null ? "creado " : "actualizado  ") + "exitosamente";
                     attr.addFlashAttribute("msg", msg);
                     attr.addFlashAttribute("opcion", "alert-success");
-                    fotoRepository.save(foto);
-                    return "redirect:/admin/sedes";
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
+                    actorRepository.save(actor);
+                    return "redirect:/admin/actores";
             }
         }
-        return "admin/actores";
     }
 
-    @PostMapping("/searchroles")
-    public String buscarporRoles(Model model,@RequestParam(value = "rol", required = false) String rol){
-
-        if(rol.equalsIgnoreCase("Actores")){
-            model.addAttribute("rol",rol);
-            model.addAttribute("listaActores", actorRepository.findAll());
+    @GetMapping("/imageactores/{id}")
+    public ResponseEntity<byte[]> mostrarimagenactor(@PathVariable("id") int id){
+        Optional<Actor> opt = actorRepository.findById(id);
+        if (opt.isPresent()) {
+            Actor actor = opt.get();
+            byte[] imagenComoBytes = actor.getFoto();
+            return new ResponseEntity<>(
+                    imagenComoBytes,
+                    HttpStatus.OK);
         }else{
-            String rol1 ="Directores" ;
-            model.addAttribute("rol",rol1);
-            model.addAttribute("listaDirectores", directorRepository.findAll());
+            return null;
         }
+    }
 
-
-        return "admin/actoresydirectores";
+    @PostMapping("/searchactores")
+    public String actoresBuscar(Model model,@RequestParam(value = "search",required = false) String search){
+        return "redirect:/admin/actores?search="+search;
     }
 
     @GetMapping("/agregaractor")
-    public String paginaAgregaractor(@ModelAttribute("actor") Sede sede,@ModelAttribute("foto") Foto foto,Model model){
-        List<Actor> actorList = actorRepository.findAll();
-        model.addAttribute("actorList",actorList);
-        List<Foto> fotoList = fotoRepository.findAll();
-        model.addAttribute("fotoList",fotoList);
+    public String paginaAgregaractor(@ModelAttribute("actor") Actor actor,Model model){
+
         return "admin/agregaractor";
     }
 
-    @RequestMapping("/editaractoresydirectores")
-    public String paginaEditaractoresydirectores(){
-        return "admin/editaractoresydirectores";
+    @RequestMapping("/editaractor")
+    public String paginaEditaractor(){
+        return "admin/agregaractor";
     }
 
     @GetMapping("/directores")
-    public String paginaDirectores(Model model) {
-        model.addAttribute("listaDirectores", directorRepository.findAll());
+    public String paginaDirectores(Model model,@RequestParam(value="search",required = false) String search) {
+        if(search!=null){
+            model.addAttribute("listaDirectores",directorRepository.busquedaDirectorporNombre(search));
+        }else{
+            model.addAttribute("listaDirectores", directorRepository.findAll());
+        }
         return "admin/directores";
+    }
+
+    @GetMapping("/agregardirector")
+    public String paginaAgregardirector(@ModelAttribute("director") Director director,Model model){
+
+        return "admin/agregardirector";
+    }
+
+    @PostMapping("/savedirector")
+    public String savedirector(@ModelAttribute("director") @Valid Director director,BindingResult bindingResult,@RequestParam("archivo") MultipartFile file,Model model, RedirectAttributes attr) throws IOException {
+        if (bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
+            if (director.getId() == null) {
+                return "admin/agregardirector";
+            } else {
+                return "admin/editardirector";
+            }
+        }else {
+            if(file.isEmpty()){
+                model.addAttribute("msg","Debe subir un archivo");
+                return "admin/agregaractor";
+            }
+            else{
+                director.setFoto(file.getBytes());
+                String msg = "actor " + (director.getId() == null ? "creado " : "actualizado  ") + "exitosamente";
+                attr.addFlashAttribute("msg", msg);
+                attr.addFlashAttribute("opcion", "alert-success");
+                directorRepository.save(director);
+                return "redirect:/admin/directores";
+            }
+        }
+    }
+
+    @GetMapping("/imagedirectores/{id}")
+    public ResponseEntity<byte[]> mostrarimagendirector(@PathVariable("id") int id){
+        Optional<Director> opt = directorRepository.findById(id);
+        if (opt.isPresent()) {
+            Director director = opt.get();
+            byte[] imagenComoBytes = director.getFoto();
+            return new ResponseEntity<>(
+                    imagenComoBytes,
+                    HttpStatus.OK);
+        }else{
+            return null;
+        }
+    }
+
+    @PostMapping("/searchdirectores")
+    public String directoresBuscar(Model model,@RequestParam(value = "search",required = false) String search){
+        return "redirect:/admin/directores?search="+search;
+    }
+
+    @RequestMapping("/editardirector")
+    public String paginaEditardirector(){
+        return "admin/agregardirector";
     }
 
 
