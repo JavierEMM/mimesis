@@ -1,5 +1,6 @@
 package com.mimesis.controller;
 
+import com.mimesis.dto.DTOcarrito;
 import com.mimesis.entity.Funcion;
 import com.mimesis.entity.Usuario;
 import com.mimesis.google.CustomOAuth2User;
@@ -90,7 +91,7 @@ public class LoginController {
 
         session.setAttribute("usuario",usuario);
         if (usuario.getRol().equals("Cliente")) {
-            ArrayList<Funcion> carrito = new ArrayList<>();
+            ArrayList<DTOcarrito> carrito = new ArrayList<>();
             session.setAttribute("carrito",carrito);
             session.setAttribute("ncarrito",carrito.size());
             return "redirect:/";

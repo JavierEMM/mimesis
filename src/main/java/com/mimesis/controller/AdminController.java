@@ -163,7 +163,7 @@ public class AdminController {
     }
 
     @PostMapping("/savesedes")
-    public String savesedes(@ModelAttribute("sede") @Valid Sede sede,BindingResult bindingResult, @RequestParam("archivo") List<MultipartFile> file,Model model, RedirectAttributes attr) throws IOException {
+    public String savesedes(@ModelAttribute("sede") @Valid Sede sede,BindingResult bindingResult, @RequestParam("files") List<MultipartFile> file,Model model, RedirectAttributes attr) throws IOException {
 
         if (bindingResult.hasErrors() || file.get(0).getBytes().length == 0){
             if (file.get(0).getBytes().length == 0) {
@@ -177,16 +177,12 @@ public class AdminController {
             }
         }else {
             List<Sede> listaSede =sedesRepository.sedesvalidas();
-            System.out.println(listaSede);
             String result = sede.getNombre().replace(" ", "");
             String resultUbicacion =sede.getUbicacion().replace(" ","").replace(".","");
             for(Sede i: listaSede){
                 String result2 = i.getNombre().replace(" ", "");
                 String resultUbicacion2 =i.getUbicacion().replace(" ","").replace(".","");
                 if (result.equalsIgnoreCase(result2) && resultUbicacion.equalsIgnoreCase(resultUbicacion2)) {
-                    System.out.println("Leo");
-                    System.out.println(i.getValido());
-                    System.out.println("Jose");
                     if(i.getValido()){
                         attr.addFlashAttribute("msg","La sede ya ha sido creada previamente");
                         attr.addFlashAttribute("opcion","alert-danger");
@@ -491,7 +487,6 @@ public class AdminController {
     @PostMapping("/saveoperador")
     public String savesedes(@ModelAttribute("usuario") @Valid Usuario usuario,BindingResult bindingResult, RedirectAttributes attr){
         if(bindingResult.hasErrors()){
-            System.out.println(bindingResult.getAllErrors());
             return "admin/agregaroperador";
         }
         String contra = usuario.getContrasena();
