@@ -29,13 +29,11 @@ public class Usuario {
     private String apellido;
 
     @Column(name = "correo", nullable = false,unique = true)
-    @NotBlank(message = "Ingrese su correo")
     @Email(message = "Debe ser un correo valido")
     @Size(max = 255, message = "El correo no puedo contener más de a 255 caracteres")
     private String correo;
 
     @Column(name = "contrasena", nullable = false)
-    @NotBlank(message = "Ingrese su contraseña")
     @Size(max = 255, message = "La contraseña no puede contener más de 255 caracteres")
     private String contrasena;
 
@@ -55,7 +53,6 @@ public class Usuario {
 
     @Column(name = "fotoperfil")
     private byte[] fotoperfil;
-
     @Column(name = "dni")
     @Positive(message = "Debe ser un numero positivo de 8 digitos")
     @NotNull(message = "Ingrese su DNI")
@@ -197,7 +194,7 @@ public class Usuario {
     }
 
     public Boolean getEmailconfirm() {
-      return emailconfirm;
+        return emailconfirm;
     }
 
     public void setEmailconfirm(Boolean emailconfirm) {

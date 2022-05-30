@@ -11,25 +11,23 @@
                 <h1 class="title">Mi perfil</h1>
                 <div id="contenedor2" class="row header-display fondo">
                     <div class="col-md-4">
-                        <img title="" class="img-circle img-thumbnail isTooltip" th:src="@{/img/cachin.png}" data-original-title="Usuario">
-                        <div style="display:flex; align-items:center; justify-content:center;"class="column">
-                            <a><label  style="margin-top:10px;"for="files" class="btn btn-primary">Subir imagen</label>
-                                <input formenctype="multipart/form-data"  onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" id="files" style="visibility:hidden; position:absolute" name="file" type="file" accept="image/*"></a>
-                        </div>
+
+                        <img height="400" width="250"
+                             th:if="${session.usuario.id !=null}"
+                             th:src="@{|image/${session.usuario.id}|}">
                     </div>
                     <div class="col-md-6">
                         <div class="table-responsive" sec:authorize="isAuthenticated()">
                             <table class="table table-user-information">
 
                                 <tbody>
-                                    <tr >
+                                    <tr>
                                         <td>
                                             <strong>
                                                 <span class="glyphicon glyphicon-asterisk text-primary"></span>
                                                 DNI
                                             </strong>
                                         </td>
-
                                         <td class="text-primary" th:text="${session.usuario.dni}">
                                         </td>
                                     </tr>
@@ -48,19 +46,6 @@
                                         <td class="text-primary" th:text="${session.usuario.apellido}"></td>
                                     </tr>
 
-
-
-                                    <!--    <tr>
-                                            <td>
-                                                <strong>
-                                                    <span class="glyphicon glyphicon-eye-open text-primary"></span>
-                                                    Distrito
-                                                </strong>
-                                            </td>
-                                            <td class="text-primary">
-                                                San Miguel
-                                            </td>
-                                        </tr> -->
 
                                         <tr>
                                             <td>
@@ -89,7 +74,7 @@
                                                     Fecha de nacimiento
                                                 </strong>
                                             </td>
-                                            <td class="text-primary" th:text="${#dates.format(session.usuario.fechanacimiento, 'yyyy-MM-dd')}"></td>
+                                            <td class="text-primary" th:text="${session.usuario.fechanacimiento}"></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -98,60 +83,12 @@
                                                     Direccion
                                                 </strong>
                                             </td>
-                                            <td class="text-primary" th:text="${session.usuario.direccion}">
-                                            </td>
+                                            <td class="text-primary" th:text="${session.usuario.direccion}"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div class="header-display">
-                                    <button id="botoneditar" type="button" class="btn btn-primary"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                            data-bs-whatever="@getbootstrap">Editar Perfil</button>
-
-
-
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Editar datos</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-
-                                                <div class="modal-body">
-                                                    <form method="post" th:action="@{'/perfil/save'}">
-                                                        <div class="mb-3">
-                                                            <label for="recipient-name" class="col-form-label">Numero de Telefono</label>
-                                                            <input name="numerotelefonico" th:value="${session.usuario.numerotelefonico}"type="text" class="form-control" id="recipient-name">
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="recipient-name2" class="col-form-label">Fecha de nacimiento</label>
-                                                            <input th:value="${#dates.format(session.usuario.fechanacimiento, 'yyyy-MM-dd')}"
-                                                                    type="text" placeholder="AAAA-MM-DD" class="form-control form-control" name="dateStr" id="recipient-name2">
-
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="recipient-name4" class="col-form-label">Direccion</label>
-                                                            <input name="direccion" th:value="${session.usuario.direccion}" type="text" class="form-control" id="recipient-name4">
-                                                        </div>
-                                                     <!--  <div class="mb-3">
-                                                            <div class="form-group">
-                                                                <label for="recipient-name3" class="col-form-label">Distrito:</label>
-                                                                <select id="recipient-name3" class="form-control form-select-sm" name="Distrito">
-                                                                    <option value="Ancón">Ancón</option>
-                                                                </select>
-                                                            </div>
-                                                    </div>-->
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                        <button type="submit"
-                                                                class="btn btn-primary">Aceptar</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <a class="btn btn-primary" th:href="@{'/perfil/editar' + '?id=' + ${session.usuario.id}}">Editar Perfil</a>
                                 </div>
                             </div>
                         </div>

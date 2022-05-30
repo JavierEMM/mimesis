@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="includes/head.html :: head">MIMESIS</head>
+</head>
+<body>
+<header th:replace="includes/navbar.html :: navbar(option = 'Principal')">
+</header>
+<div class="container bootstrap snippets bootdey">
+    <div class="panel-body inf-content">
+        <h1 class="title">Editar perfil</h1>
+        <div id="contenedor2" class="row header-display fondo">
+            <div class="col-md-6">
+                <form method="POST"  th:action="@{'/perfil/save'}" enctype="multipart/form-data" th:object="${usuario}">
+
+                    <div class="mb-3">
+
+                        <input type="hidden" class="form-control"
+                               name="rol" id="recipient-name8" th:field="*{rol}">
+                        <input type="hidden" class="form-control"
+                               name="id" id="recipient-name9" th:field="*{id}">
+                        <input type="hidden" class="form-control"
+                               name="authprovider" th:field="*{authprovider}">
+                        <input type="hidden" class="form-control"
+                               name="emailconfirm" th:field="*{emailconfirm}">
+                        <input type="hidden" class="form-control"
+                               name="valido" th:field="*{valido}">
+                        <input type="hidden" class="form-control"
+                               name="nombre" id="nombre" th:field="*{nombre}">
+                        <input type="hidden" class="form-control"
+                               name="apellido" id="apellido" th:field="*{apellido}">
+                        <input type="hidden" class="form-control"
+                               name="correo" id="correo" th:field="*{correo}">
+                        <input type="hidden" class="form-control"
+                               name="contrasena" id="contrasena" th:field="*{contrasena}">
+
+
+                        <input type="hidden" class="form-control"
+                               name="dni" id="recipient-name2" th:field="*{dni}">
+
+
+                        <div class="mb-3">
+                            <label for="numerotelefonico" class="col-form-label">Numero Telefonico</label>
+                            <input type="text" class="form-control"
+                                   name="numerotelefonico" id="numerotelefonico" th:field="*{numerotelefonico}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fechanacimiento" class="col-form-label">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control"
+                                   name="fechanacimiento" id="fechanacimiento" th:field="*{fechanacimiento}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="direccion" class="col-form-label">Direccion</label>
+                            <input name="direccion"  type="text" class="form-control"
+                                     id="direccion" th:field="*{direccion}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="recipient-name3" class="col-form-label">Foto de perfil</label>
+                            <input type="file" class="form-control"
+                                 name="archivo" id="recipient-name3">
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="header-display form-group">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a th:href="@{/perfil}" class="btn btn-light">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<br>
+<br>
+<footer th:replace="includes/footer.html :: footer"></footer>
+</body>
+</html>
