@@ -2,6 +2,10 @@ package com.mimesis.entity;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "director")
@@ -12,15 +16,23 @@ public class Director {
     private Integer id;
 
     @Column(name = "nombre", nullable = false, length = 45)
+    @NotBlank(message = "Ingrese su nombre")
+    @Size(max = 255, message = "El nombre del Director no puede ser mayor a 255 caracteres")
     private String nombre;
 
     @Column(name = "apellido", nullable = false, length = 45)
+    @NotBlank(message = "Ingrese su apellido")
+    @Size(max = 255, message = "El apellido del Director no puede ser mayor a 255 caracteres")
     private String apellido;
 
-
     @Column(name = "correo", nullable = false, length = 45)
+    @Email(message = "Debe ser un correo valido")
+    @NotBlank(message = "Ingrese su correo")
+    @Size(max = 255, message = "El correo no puedo contener más de a 255 caracteres")
     private String correo;
+
     @Column(name = "telefono", nullable = false, length = 45)
+    @NotNull(message = "Debe agregar un numero de contacto")
     private Integer telefono;
 
     @Column(name = "valido", nullable = false)

@@ -1,7 +1,11 @@
 package com.mimesis.controller;
 
+import com.mimesis.dto.DTOBoletosPorFuncion;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.IndexedColorMap;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +18,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -38,7 +46,67 @@ public class OperadorController {
     @Autowired
     GeneroRepository generoRepository;
 
+    @Autowired
+    BoletoRepository boletoRepository;
 
+    @GetMapping("/reporte")
+    public String generarReporte(Model model, HttpServletResponse response){
+        response.setContentType("aplication/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachement;filename=Reporte.xlsx";
+        List<DTOBoletosPorFuncion> boletosPorFuncion = boletoRepository.boletosporFuncion();
+        List<Integer> ids = new ArrayList<>();
+        for (DTOBoletosPorFuncion boleto : boletosPorFuncion){
+            System.out.println(boleto.getidsalaBoleto());
+            System.out.println(boleto.getSumaBoletos());
+            ids.add(boleto.getidsalaBoleto());
+        }
+        List<Funcion> listaFuncionesReporte = funcionRepository.findAllById(ids);
+        String [] titulos = {"Id","Nombre","Dinero recaudado"};
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Reporte");
+        Font headerFont = workbook.createFont();
+        headerFont.setFontHeightInPoints((short)17);
+        headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+
+        Row headerRow = sheet.createRow(0);
+
+        for (int i = 0;i< titulos.length;i++){
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(titulos[i]);
+            cell.setCellStyle(headerCellStyle);
+        }
+
+        int rowNum=1;
+
+        for (int j=0; j< boletosPorFuncion.size();j++ ) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(boletosPorFuncion.get(j).getidsalaBoleto());
+            row.createCell(1).setCellValue(listaFuncionesReporte.get(j).getIdobra().getNombre());
+            row.createCell(2).setCellValue(boletosPorFuncion.get(j).getSumaBoletos());
+
+        }
+
+        for (int i = 0;i< titulos.length;i++){
+            sheet.autoSizeColumn(i);
+        }
+        response.setHeader(headerKey,headerValue);
+        try {
+            ServletOutputStream outputStream = response.getOutputStream();
+            workbook.write(outputStream);
+            workbook.close();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        model.addAttribute("listaFunciones",funcionRepository.findAll());
+        return "operador/listafunciones";
+    }
 
     @GetMapping(value = {"/",""})
     public String paginaPrincipal(Model model){
@@ -118,7 +186,11 @@ public class OperadorController {
         return "operador/funcionFrm";
     }
     @GetMapping("/estadisticas")
-    public String estadisticas (){ return "operador/estadisticas";}
+    public String estadisticas (){
+
+
+
+        return "operador/estadisticas";}
 
     @GetMapping("/edit")
     public String editarOperador (@RequestParam("id") Integer id,@ModelAttribute("funcion") Funcion funcion,Model model){
@@ -178,7 +250,6 @@ public class OperadorController {
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
             model.addAttribute("listaGeneros",generoRepository.findAll());
             model.addAttribute("listaFotos",funcion.getFotosporfuncion());
-
             if(funcion.getHorainicio()!=null && funcion.getHorafin()!=null){
                 if(funcion.getHorainicio().compareTo(funcion.getHorafin())>0){
                     model.addAttribute("errorTime","Ingrese un rango de horas válido");
@@ -191,6 +262,9 @@ public class OperadorController {
         }
 
     }
+
+
+
 
 
 
@@ -246,5 +320,8 @@ public class OperadorController {
         }
 
     }
+
+
+
 
 }

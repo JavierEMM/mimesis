@@ -12,4 +12,10 @@ import java.util.List;
 public interface DirectorRepository extends JpaRepository<Director,Integer> {
     @Query(nativeQuery = true, value = "SELECT  * FROM director WHERE concat(nombre,' ',apellido) like %?1%")
     List<Director> busquedaDirector(String nombre);
+
+    @Query(nativeQuery = true, value = "SELECT  * FROM director WHERE nombre like %?1%")
+    List<Director> busquedaDirectorporNombre(String nombre);
+
+    @Query(value = "select iddirector from calificaciones;",nativeQuery = true)
+    List<Integer> obtenerIdCalificacion();
 }
