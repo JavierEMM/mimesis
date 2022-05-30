@@ -30,10 +30,10 @@
                     <div class="mb-3">
                         <label class="form-label">Fotos</label>
                         <p th:if="${errorFoto!=null}" style="color: #dc3545;font-size: .875em;"> Debe ingresar al menos una foto<p>
-                        <input class="btn" style="color: transparent; width: 146px; height: 40px;" type="file" accept="image/*" id="files" name="files[]" multiple>
+                        <input class="form-control" style="color: transparent; width: 146px;  height: 40px;" type="file" accept="image/*" id="files" name="files[]" multiple>
                         <br>
                         <br>
-                        <output id="list"></output>
+                        <span><i id="list"></i></span>
                     </div>
                     <a th:href="@{'/admin/sedes'}" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -43,51 +43,33 @@
     </div>
 </main>
 <script>
-    (function () {
+    $(document).ready(function() {
+        if (window.File && window.FileList && window.FileReader) {
+            $("#files").on("change", function(e) {
+                var files = e.target.files,
+                    filesLength = files.length;
+                for (var i = 0; i < filesLength; i++) {
+                    var f = files[i]
+                    var fileReader = new FileReader();
+                    fileReader.onload = (function(e) {
+                        var file = e.target;
+                        $("<div class=\"img-thumb-wrapper card shadow\">" +
+                            "<img class=\"img-thumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                            "<br/><span class=\"remove\">Remove</span>" +
+                            "</div>").insertAfter("#files");
+                        $(".remove").click(function(){
+                            $(this).parent(".img-thumb-wrapper").remove();
+                        });
 
-        'use strict'
-
-        var file = document.getElementById('files');
-        var formData = new FormData();
-
-        file.addEventListener('change', function (e) {
-
-            for ( var i = 0; i < file.files.length; i++ ) {
-                var thumbnail_id = Math.floor( Math.random() * 30000 ) + '_' + Date.now();
-                createThumbnail(file, i, thumbnail_id);
-                formData.append(thumbnail_id, file.files[i]);
-            }
-
-            e.target.value = '';
-
-        });
-
-
-        var createThumbnail = function (file, iterator, thumbnail_id) {
-            var thumbnail = document.createElement('div');
-            thumbnail.classList.add('thumbnail', thumbnail_id);
-            thumbnail.dataset.id = thumbnail_id;
-
-            thumbnail.setAttribute('style', `background-image: url(${ URL.createObjectURL( file.files[iterator] ) })`);
-            document.getElementById('list').appendChild(thumbnail);
-            createCloseButton(thumbnail_id);
+                    });
+                    fileReader.readAsDataURL(f);
+                }
+                console.log(files);
+            });
+        } else {
+            alert("Your browser doesn't support to File API")
         }
-
-        var createCloseButton = function (thumbnail_id) {
-            var closeButton = document.createElement('div');
-            closeButton.classList.add('close-button');
-            closeButton.innerText = 'x';
-            document.getElementsByClassName(thumbnail_id)[0].appendChild(closeButton);
-        }
-
-        document.body.addEventListener('click', function (e) {
-            if ( e.target.classList.contains('close-button') ) {
-                e.target.parentNode.remove();
-                formData.delete(e.target.parentNode.dataset.id);
-            }
-        });
-
-    })();
+    });
 </script>
 </body>
 </html>

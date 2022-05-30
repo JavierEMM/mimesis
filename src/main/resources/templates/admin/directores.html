@@ -60,13 +60,13 @@
                     <td th:text="${director.telefono}"></td>
                     <td><img th:if="${director.foto !=null}" th:src="@{|imagedirectores/${director.id}|}" width="50" height="50" ></td>
                     <td th:text="${director.valido == true ? 'Vigente' : 'No vigente'}"></td>
-                    <td th:if="${director.valido==true}" class="text-center text-lg text-medium">
-                        <a class="btn btn-primary" th:href="@{'/admin/editardirector?id='+${director.id}}"><i class="bi bi-pencil-square"></i></a>
+                    <td class="text-center text-lg text-medium">
+                        <a  th:if="${director.valido==true}" class="btn btn-primary" th:href="@{'/admin/editardirector?id='+${director.id}}"><i class="bi bi-pencil-square" ></i></a>
                     </td>
-                    <td th:if="${director.valido==true}" class="text-center">
+                    <td  class="text-center">
                         <form id="1" method="post" th:action="@{'/admin/borrardirector?id='+${director.id}}">
                             <input name="test" value="1" type="hidden"/>
-                            <button onclick="return confirm('¿Esta seguro que desea eliminar al director?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
+                            <button th:if="${director.valido==true}" onclick="return confirm('¿Esta seguro que desea eliminar al director?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>

@@ -163,7 +163,9 @@ public class AdminController {
     }
 
     @PostMapping("/savesedes")
-    public String savesedes(@ModelAttribute("sede") @Valid Sede sede,BindingResult bindingResult, @RequestParam("files") List<MultipartFile> file,Model model, RedirectAttributes attr) throws IOException {
+    public String savesedes(@ModelAttribute("sede") @Valid Sede sede,BindingResult bindingResult, @RequestParam("files[]") List<MultipartFile> file,Model model, RedirectAttributes attr) throws IOException {
+
+        System.out.println(bindingResult.getAllErrors());
 
         if (bindingResult.hasErrors() || file.get(0).getBytes().length == 0){
             if (file.get(0).getBytes().length == 0) {
@@ -191,10 +193,11 @@ public class AdminController {
 
                 }
             }
+
             sedesRepository.save(sede);
-            Collections.reverse(file);
             try {
                 for (MultipartFile file1 : file) {
+                    System.out.println(file1);
                     Foto foto = new Foto();
                     foto.setFoto(file1.getBytes());
                     foto.setIdsede(sede);
@@ -202,8 +205,8 @@ public class AdminController {
                     attr.addFlashAttribute("msg", msg);
                     attr.addFlashAttribute("opcion", "alert-success");
                     fotoRepository.save(foto);
-                    return "redirect:/admin/sedes";
                 }
+                return "redirect:/admin/sedes";
 
             } catch (IOException e) {
                 e.printStackTrace();

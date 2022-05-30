@@ -31,7 +31,9 @@
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
-            <a class="buy-tickets scrollto" th:href="@{/}"><i style="margin-right: 4px; " class="bi bi-person-fill"></i> Cerrar Sesion </a>
+            <form th:action="@{/logout}" method="post">
+                <button style="margin-left: 10px" type="submit" class="btn btn-outline-dark" >Cerrar sesión</button>
+            </form>
         </div>
     </header>
 

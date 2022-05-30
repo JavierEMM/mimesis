@@ -53,12 +53,12 @@
                         <td th:text="${sede.ubicacion}"></td>
                         <td><img th:if="${sede.fotosporsede !=null}" th:src="@{|imagesedes/${sede.id}|}" width="50" height="50" ></td>
                         <td th:text="${sede.valido == true ? 'Vigente' : 'No vigente'}"></td>
-                        <td class="text-center" th:if="${sede.valido == true}"><a class="btn btn-primary" th:href="@{'/admin/editarsedes?id=' + ${sede.id}}" disabled><i class="bi bi-pencil-square"></i></a>
+                        <td class="text-center" ><a th:if="${sede.valido == true}" class="btn btn-primary" th:href="@{'/admin/editarsedes?id=' + ${sede.id}}"><i class="bi bi-pencil-square"></i></a>
                         </td>
-                        <td class="text-center" th:if="${sede.valido==true}">
-                            <form id="id" method="get" th:action="@{'/admin/borrarsede?id=' + ${sede.id}}" disabled>
+                        <td class="text-center" >
+                            <form id="id" method="get" th:action="@{'/admin/borrarsede?id=' + ${sede.id}}">
                                 <input name="id" th:value="${sede.id}" type="hidden"/>
-                                <button onclick="return confirm('¿Esta seguro que desea eliminar la sede?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
+                                <button th:if="${sede.valido==true}" onclick="return confirm('¿Esta seguro que desea eliminar la sede?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
@@ -83,7 +83,7 @@
         </script>
         <script>
             $(document).ready( function () {
-                $('#salas1').DataTable({
+                $('#sedes1').DataTable({
                     language: {
                         processing: "Tratamiento en curso...",
                         infoEmpty: "No existen datos.",

@@ -61,13 +61,13 @@
                             <td th:text="${actor.telefono}"></td>
                             <td><img th:if="${actor.foto !=null}" th:src="@{|imageactores/${actor.id}|}" width="50" height="50"></td>
                             <td th:text="${actor.valido == true ? 'Vigente' : 'No vigente'}"></td>
-                            <td th:if="${actor.valido==true}" class="text-center text-lg text-medium">
-                                <a class="btn btn-primary" th:href="@{'/admin/editaractor?id='+${actor.id}}"><i class="bi bi-pencil-square"></i></a>
+                            <td  class="text-center text-lg text-medium">
+                                <a th:if="${actor.valido==true}" class="btn btn-primary" th:href="@{'/admin/editaractor?id='+${actor.id}}"><i class="bi bi-pencil-square"></i></a>
                             </td>
-                            <td th:if="${actor.valido==true}" class="text-center">
+                            <td  class="text-center">
                                 <form id="1" method="post" th:action="@{'/admin/borraractor?id='+${actor.id}}">
                                     <input name="test" value="1" type="hidden"/>
-                                    <button onclick="return confirm('¿Esta seguro que desea eliminar al actor?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
+                                    <button th:if="${actor.valido==true}" onclick="return confirm('¿Esta seguro que desea eliminar al actor?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>

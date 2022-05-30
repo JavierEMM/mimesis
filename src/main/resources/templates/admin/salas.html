@@ -54,11 +54,11 @@
                         <td th:text="${sala.idsede.getNombre()}"></td>
                         <td th:text="${sala.aforo}"></td>
                         <td th:text="${sala.valido == true ? 'Vigente' : 'No vigente'}"></td>
-                        <td th:if="${sala.valido==true}"><a class="btn btn-primary" th:href="@{'/admin/editarsalas?id=' + ${sala.id}}" disabled><i class="bi bi-pencil-square"></i></a></td>
-                        <td class="text-center" th:if="${sala.valido==true}">
+                        <td><a th:if="${sala.valido==true}" class="btn btn-primary" th:href="@{'/admin/editarsalas?id=' + ${sala.id}}" disabled><i class="bi bi-pencil-square"></i></a></td>
+                        <td class="text-center" >
                             <form id="id" method="get" th:action="@{'/admin/borrar?id=' + ${sala.id}}" disabled>
                                 <input name="id" th:value="${sala.id}" type="hidden"/>
-                                <button onclick="return confirm('¿Esta seguro que desea eliminar la sala?')"  class="btn btn-outline-danger flex-shrink-0" type="submit" >
+                                <button th:if="${sala.valido==true}" onclick="return confirm('¿Esta seguro que desea eliminar la sala?')"  class="btn btn-outline-danger flex-shrink-0" type="submit" >
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
