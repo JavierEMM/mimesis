@@ -4,6 +4,7 @@ import com.mimesis.dto.DTOCompararID;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -350,10 +351,28 @@ public class AdminController {
         return "admin/agregaractor";
     }
 
-    @RequestMapping("/editaractor")
-    public String paginaEditaractor(){
-        return "admin/agregaractor";
+    @GetMapping("/editaractor")
+    public String paginaEditaractor(@RequestParam("id") Integer id,@ModelAttribute("actor") Actor actor,Model model){
+        Optional<Actor> optionalActor = actorRepository.findById(id);
+        if(optionalActor.isPresent()){
+            model.addAttribute("actor",optionalActor.get());
+            return "admin/editaractor";
+        }
+        return "redirect:/admin/editaractor";
     }
+
+    @PostMapping("/editactor")
+    public String editactor(@ModelAttribute("actor") @Valid Actor actor, BindingResult bindingResult,Model model){
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
+            return "admin/editaractor";
+        }else{
+            actorRepository.save(actor);
+            return "redirect:/admin/actores";
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
 
     @GetMapping("/directores")
     public String paginaDirectores(Model model,@RequestParam(value="search",required = false) String search) {
@@ -415,11 +434,26 @@ public class AdminController {
         return "redirect:/admin/directores?search="+search;
     }
 
-    @RequestMapping("/editardirector")
-    public String paginaEditardirector(){
-        return "admin/agregardirector";
+    @GetMapping("/editardirector")
+    public String paginaEditardirector(@RequestParam("id") Integer id,@ModelAttribute("director") Director director,Model model){
+        Optional<Director> optionalDirector = directorRepository.findById(id);
+        if(optionalDirector.isPresent()){
+            model.addAttribute("director",optionalDirector.get());
+            return "admin/editardirector";
+        }
+        return "redirect:/admin/editardirector";
     }
 
+    @PostMapping("/editdirector")
+    public String editdirector(@ModelAttribute("director") @Valid Director director, BindingResult bindingResult,Model model){
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
+            return "admin/editardirector";
+        }else{
+            directorRepository.save(director);
+            return "redirect:/admin/directores";
+        }
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/clientes")

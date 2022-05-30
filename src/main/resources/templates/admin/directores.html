@@ -54,7 +54,7 @@
                     <td th:text="${director.telefono}"></td>
                     <td><img th:if="${director.foto !=null}" th:src="@{|imagedirectores/${director.id}|}" width="50" height="50" ></td>
                     <td class="text-center text-lg text-medium">
-                        <a class="btn btn-primary" th:href="@{'/admin/editardirector'}"><i class="bi bi-pencil-square"></i></a>
+                        <a class="btn btn-primary" th:href="@{'/admin/editardirector?id='+${director.id}}"><i class="bi bi-pencil-square"></i></a>
                     </td>
                     <td class="text-center">
                         <form id="1" method="post" action="">
