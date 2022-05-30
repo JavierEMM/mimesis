@@ -313,7 +313,7 @@ public class AdminController {
             }
             else{
                     actor.setFoto(file.getBytes());
-                    String msg = "actor " + (actor.getId() == null ? "creado " : "actualizado  ") + "exitosamente";
+                    String msg = "Actor " + "creado " + "exitosamente";
                     attr.addFlashAttribute("msg", msg);
                     attr.addFlashAttribute("opcion", "alert-success");
                     actorRepository.save(actor);
@@ -358,14 +358,38 @@ public class AdminController {
     }
 
     @PostMapping("/editactor")
-    public String editactor(@ModelAttribute("actor") @Valid Actor actor, BindingResult bindingResult,Model model){
+    public String editactor(@ModelAttribute("actor") @Valid Actor actor, BindingResult bindingResult,Model model,RedirectAttributes attr){
         if(bindingResult.hasErrors()){
             System.out.println(bindingResult.getAllErrors());
             return "admin/editaractor";
         }else{
             actorRepository.save(actor);
+            String msg = "Actor " +  "actualizado " + "exitosamente";
+            attr.addFlashAttribute("msg", msg);
+            attr.addFlashAttribute("opcion", "alert-success");
             return "redirect:/admin/actores";
         }
+    }
+
+    @PostMapping("/borraractor")
+    public String borraractor(@RequestParam("id") Integer id, RedirectAttributes attr){
+        Optional<Actor> optionalActor = actorRepository.findById(id);
+        if(optionalActor.isPresent()){
+            List<Integer> listaCalificaciones = actorRepository.obtenerIdCalificacion();
+            for(int i: listaCalificaciones){
+                if(i == id){
+                    attr.addFlashAttribute("msg","El actor presenta calificaciones");
+                    attr.addFlashAttribute("opcion","alert-danger");
+                    return "redirect:/admin/actores";
+                }
+            }
+            Actor actor = optionalActor.get();
+            actor.setValido(false);
+            actorRepository.save(actor);
+            attr.addFlashAttribute("msg","Actor borrado exitosamente");
+            attr.addFlashAttribute("opcion","alert-danger");
+        }
+        return "redirect:/admin/actores";
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -398,11 +422,11 @@ public class AdminController {
         }else {
             if(file.isEmpty()){
                 model.addAttribute("msg","Debe subir un archivo");
-                return "admin/agregaractor";
+                return "admin/agregardirector";
             }
             else{
                 director.setFoto(file.getBytes());
-                String msg = "actor " + (director.getId() == null ? "creado " : "actualizado  ") + "exitosamente";
+                String msg = "Director " + "creado " + "exitosamente";
                 attr.addFlashAttribute("msg", msg);
                 attr.addFlashAttribute("opcion", "alert-success");
                 directorRepository.save(director);
@@ -441,14 +465,38 @@ public class AdminController {
     }
 
     @PostMapping("/editdirector")
-    public String editdirector(@ModelAttribute("director") @Valid Director director, BindingResult bindingResult,Model model){
+    public String editdirector(@ModelAttribute("director") @Valid Director director, BindingResult bindingResult,Model model,RedirectAttributes attr){
         if(bindingResult.hasErrors()){
             System.out.println(bindingResult.getAllErrors());
             return "admin/editardirector";
         }else{
             directorRepository.save(director);
+            String msg = "Director " +  "actualizado " + "exitosamente";
+            attr.addFlashAttribute("msg", msg);
+            attr.addFlashAttribute("opcion", "alert-success");
             return "redirect:/admin/directores";
         }
+    }
+
+    @PostMapping("/borrardirector")
+    public String borrardirector(@RequestParam("id") Integer id, RedirectAttributes attr){
+        Optional<Director> optionalDirector = directorRepository.findById(id);
+        if(optionalDirector.isPresent()){
+            List<Integer> listaCalificaciones = directorRepository.obtenerIdCalificacion();
+            for(int i: listaCalificaciones){
+                if(i == id){
+                    attr.addFlashAttribute("msg","El director presenta calificaciones");
+                    attr.addFlashAttribute("opcion","alert-danger");
+                    return "redirect:/admin/directores";
+                }
+            }
+            Director director = optionalDirector.get();
+            director.setValido(false);
+            directorRepository.save(director);
+            attr.addFlashAttribute("msg","Director borrado exitosamente");
+            attr.addFlashAttribute("opcion","alert-danger");
+        }
+        return "redirect:/admin/directores";
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////

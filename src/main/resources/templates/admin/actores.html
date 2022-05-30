@@ -29,6 +29,11 @@
                 </div>
             </form>
         </div>
+        <div th:if="${msg != null}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <span th:text="${msg}">Registro Exitoso</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         <div>
             <h1 style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">Lista de Actores</h1>
             <div style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">
@@ -41,6 +46,7 @@
                             <th class="text-center">Correo</th>
                             <th class="text-center">Telefono</th>
                             <th class="text-center">Foto</th>
+                            <th class="text-center">Estado</th>
                             <th class="text-center">Editar</th>
                             <th class="text-center">Eliminar</th>
                         </tr>
@@ -54,11 +60,12 @@
                             <td th:text="${actor.correo}"></td>
                             <td th:text="${actor.telefono}"></td>
                             <td><img th:if="${actor.foto !=null}" th:src="@{|imageactores/${actor.id}|}" width="50" height="50"></td>
-                            <td class="text-center text-lg text-medium">
+                            <td th:text="${actor.valido == true ? 'Vigente' : 'No vigente'}"></td>
+                            <td th:if="${actor.valido==true}" class="text-center text-lg text-medium">
                                 <a class="btn btn-primary" th:href="@{'/admin/editaractor?id='+${actor.id}}"><i class="bi bi-pencil-square"></i></a>
                             </td>
-                            <td class="text-center">
-                                <form id="1" method="post" action="">
+                            <td th:if="${actor.valido==true}" class="text-center">
+                                <form id="1" method="post" th:action="@{'/admin/borraractor?id='+${actor.id}}">
                                     <input name="test" value="1" type="hidden"/>
                                     <button onclick="return confirm('¿Esta seguro que desea eliminar al actor?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                                         <i class="bi bi-trash"></i>
