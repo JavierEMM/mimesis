@@ -20,17 +20,16 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr>
+                            <tr th:each="funcion,i : ${carrito}">
                                 <td><img th:src="@{/img/moby_dick.jpg}" width="30rem" height="30rem">
                                 </td>
-                                <td class="text-center text-lg text-medium">Mobydick</td>
-                                <td class="text-center text-lg text-medium">20/10/2022</td>
-                                <td class="text-center text-lg text-medium"><input type="number" class="form-control"></td>
-                                <td class="text-center text-lg text-medium">San Miguel</td>
-                                <td class="text-center text-lg text-medium">S/ 20</td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.funcion.idobra.nombre}"></td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.funcion.fecha}"></td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.cantidad}"></td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.sede.nombre}"></td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.costoTotal}"></td>
                                 <td class="text-center">
-                                    <a class="btn btn-outline-danger flex-shrink-0" type="submit">
+                                    <a th:href="@{${'/carrito/borrar?num='+i.index}}" class="btn btn-outline-danger flex-shrink-0">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                 </td>

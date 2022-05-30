@@ -68,7 +68,7 @@
             </table>
         </div>
 
-
+        <!-- JavaScript Bundle with Popper -->
         <script src="https://code.jquery.com/jquery-3.5.1.js"
 
                 crossorigin="anonymous">
@@ -83,7 +83,7 @@
         </script>
         <script>
             $(document).ready( function () {
-                $('#sedes1').DataTable({
+                $('#salas1').DataTable({
                     language: {
                         processing: "Tratamiento en curso...",
                         infoEmpty: "No existen datos.",
@@ -112,12 +112,7 @@
                     "ordering": false,
                 });
             } );
-
         </script>
-
-
-
-
         <footer th:replace="includes/footer.html :: footer"></footer>
 
     </body>

@@ -6,6 +6,7 @@ import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -162,7 +163,7 @@ public class AdminController {
     }
 
     @PostMapping("/savesedes")
-    public String savesedes(@ModelAttribute("sede") @Valid Sede sede,BindingResult bindingResult, @RequestParam("archivo") List<MultipartFile> file,Model model, RedirectAttributes attr) throws IOException {
+    public String savesedes(@ModelAttribute("sede") @Valid Sede sede,BindingResult bindingResult, @RequestParam("file[]") List<MultipartFile> file,Model model, RedirectAttributes attr) throws IOException {
 
         if (bindingResult.hasErrors() || file.get(0).getBytes().length == 0){
             if (file.get(0).getBytes().length == 0) {
@@ -182,9 +183,6 @@ public class AdminController {
                 String result2 = i.getNombre().replace(" ", "");
                 String resultUbicacion2 =i.getUbicacion().replace(" ","").replace(".","");
                 if (result.equalsIgnoreCase(result2) && resultUbicacion.equalsIgnoreCase(resultUbicacion2)) {
-                    System.out.println("Leo");
-                    System.out.println(i.getValido());
-                    System.out.println("Jose");
                     if(i.getValido()){
                         attr.addFlashAttribute("msg","La sede ya ha sido creada previamente");
                         attr.addFlashAttribute("opcion","alert-danger");

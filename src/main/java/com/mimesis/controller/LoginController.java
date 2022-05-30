@@ -1,4 +1,7 @@
 package com.mimesis.controller;
+
+import com.mimesis.dto.DTOcarrito;
+import com.mimesis.entity.Funcion;
 import com.mimesis.entity.Usuario;
 import com.mimesis.google.CustomOAuth2User;
 import com.mimesis.repository.UsuarioRepository;
@@ -24,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 @Controller
 public class LoginController {
@@ -87,6 +91,9 @@ public class LoginController {
 
         session.setAttribute("usuario",usuario);
         if (usuario.getRol().equals("Cliente")) {
+            ArrayList<DTOcarrito> carrito = new ArrayList<>();
+            session.setAttribute("carrito",carrito);
+            session.setAttribute("ncarrito",carrito.size());
             return "redirect:/";
         } else if(usuario.getRol().equals("Operador")) {
             return "redirect:/operador";
