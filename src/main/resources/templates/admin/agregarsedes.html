@@ -8,8 +8,8 @@
     <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
 </section>
 <main>
-    <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 800px;">
-        <section style="max-width:100%; background: black; padding:100px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 14px 26px 74px #000;">
+    <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 500px;">
+        <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
             <div style="max-width: 1000px; text-align: center">
                 <h1 class="pb-2 mb-4 border-bottom">Nueva Sede</h1>
                 <form method="post" th:action="@{'/admin/savesedes'}" th:object="${sede}" enctype="multipart/form-data">
@@ -27,21 +27,13 @@
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('ubicacion')}"
                              th:errors="*{ubicacion}"></div>
                     </div>
-                    <div class="mb-3" id="wrapper">
+                    <div class="mb-3">
                         <label class="form-label">Fotos</label>
-                        <div id="container-input">
-                            <div class="wrap-file">
-                                <p th:if="${errorFoto!=null}" style="color: #dc3545;font-size: .875em;"> Debe ingresar al menos una foto<p>
-                                <div class="content-icon-camera">
-                                    <input type="file" accept="image/*" id="file" name="file[]" multiple>
-                                    <div class="icon-camera"></div>
-                                </div>
-                                <div id="preview-images">
-
-
-                                </div>
-                            </div>
-                        </div>
+                        <p th:if="${errorFoto!=null}" style="color: #dc3545;font-size: .875em;"> Debe ingresar al menos una foto<p>
+                        <input class="btn" style="color: transparent; width: 146px; height: 40px;" type="file" accept="image/*" id="files" name="files[]" multiple>
+                        <br>
+                        <br>
+                        <output id="list"></output>
                     </div>
                     <a th:href="@{'/admin/sedes'}" class="btn btn-danger">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -50,6 +42,52 @@
         </section>
     </div>
 </main>
-<script src="static/main.js"></script>
+<script>
+    (function () {
+
+        'use strict'
+
+        var file = document.getElementById('files');
+        var formData = new FormData();
+
+        file.addEventListener('change', function (e) {
+
+            for ( var i = 0; i < file.files.length; i++ ) {
+                var thumbnail_id = Math.floor( Math.random() * 30000 ) + '_' + Date.now();
+                createThumbnail(file, i, thumbnail_id);
+                formData.append(thumbnail_id, file.files[i]);
+            }
+
+            e.target.value = '';
+
+        });
+
+
+        var createThumbnail = function (file, iterator, thumbnail_id) {
+            var thumbnail = document.createElement('div');
+            thumbnail.classList.add('thumbnail', thumbnail_id);
+            thumbnail.dataset.id = thumbnail_id;
+
+            thumbnail.setAttribute('style', `background-image: url(${ URL.createObjectURL( file.files[iterator] ) })`);
+            document.getElementById('list').appendChild(thumbnail);
+            createCloseButton(thumbnail_id);
+        }
+
+        var createCloseButton = function (thumbnail_id) {
+            var closeButton = document.createElement('div');
+            closeButton.classList.add('close-button');
+            closeButton.innerText = 'x';
+            document.getElementsByClassName(thumbnail_id)[0].appendChild(closeButton);
+        }
+
+        document.body.addEventListener('click', function (e) {
+            if ( e.target.classList.contains('close-button') ) {
+                e.target.parentNode.remove();
+                formData.delete(e.target.parentNode.dataset.id);
+            }
+        });
+
+    })();
+</script>
 </body>
 </html>

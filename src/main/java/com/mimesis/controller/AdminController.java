@@ -163,7 +163,7 @@ public class AdminController {
     }
 
     @PostMapping("/savesedes")
-    public String savesedes(@ModelAttribute("sede") @Valid Sede sede,BindingResult bindingResult, @RequestParam("file[]") List<MultipartFile> file,Model model, RedirectAttributes attr) throws IOException {
+    public String savesedes(@ModelAttribute("sede") @Valid Sede sede,BindingResult bindingResult, @RequestParam("files") List<MultipartFile> file,Model model, RedirectAttributes attr) throws IOException {
 
         if (bindingResult.hasErrors() || file.get(0).getBytes().length == 0){
             if (file.get(0).getBytes().length == 0) {
