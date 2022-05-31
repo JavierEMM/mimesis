@@ -1,8 +1,8 @@
 package com.mimesis.repository;
 
+import com.mimesis.dto.DTOBoletosPorFuncion;
+import com.mimesis.dto.DTOTotalBoletosPorFuncion;
 import com.mimesis.entity.Funcion;
-import com.mimesis.entity.Obra;
-import com.mimesis.entity.Sede;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,4 +20,8 @@ public interface FuncionRepository extends JpaRepository<Funcion,Integer> {
 
     @Query(nativeQuery = true, value = "SELECT f.* FROM obras o inner join funcion f on f.obras_idobras = o.idobras inner join sala s on s.idsala = f.idsala inner join sede se on se.idsede = s.idsede WHERE se.idsede = ?1 and o.idobras = ?2 and cast(now() AS datetime) < cast(concat(f.fecha,' ',f.horafin) AS datetime)")
     List<Funcion> funcionesPorTeatro(Integer idteatro, Integer idObra);
+
+    @Query(nativeQuery = true, value = "SELECT idfuncion as IdsalaTotal, count(*) as Cantidadboletostotal, sum(estado) as Cantidadasistentes from boleto group by idfuncion;")
+    List<DTOTotalBoletosPorFuncion> boletosTotal();
+
 }

@@ -102,6 +102,23 @@
                             </div>
                         </div>
 
+                        <div class="row"th:hidden="${funcion.id != 0}" >
+                            <div class="col">
+                            </div>
+                            <div class="form-group col-8" >
+                                <label>Aforo</label>
+                                <br>
+                                <input  class="form-control" type="number" th:field="*{aforo}" th:classappend="${#fields.hasErrors('aforo')|| errorAforo !=null?'is-invalid':''}" >
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('aforo')}"
+                                     th:errors="*{aforo}"></div>
+                                <div class="invalid-feedback" th:if="${errorAforo!=null}"
+                                     th:text="${errorAforo}"></div>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+
+
                         <div class="row" th:hidden="${funcion.id != 0}">
                             <div class="col">
                             </div>
@@ -120,19 +137,7 @@
                             <div class="col">
                             </div>
                         </div>
-                        <div class="row"th:hidden="${funcion.id != 0}" >
-                            <div class="col">
-                            </div>
-                            <div class="form-group col-8" >
-                                <label>Aforo</label>
-                                <br>
-                                <input  class="form-control" type="number" th:field="*{aforo}" th:classappend="${#fields.hasErrors('aforo')?'is-invalid':''}" >
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('aforo')}"
-                                     th:errors="*{aforo}"></div>
-                            </div>
-                            <div class="col">
-                            </div>
-                        </div>
+
 
 
                         <div class="row" th:hidden="${funcion.id != 0}">
@@ -163,12 +168,16 @@
 
                         </div>
 
-                        <div class="row" th:hidden="${funcion.id != 0}">
+                        <div class="row">
                             <div class="col">
                             </div>
                             <div class="col-8">
-                                <label for="foto" class="form-label">Fotos</label>
-                                <input style="color: transparent;" type="file" accept="image/*" id="foto" name="foto" multiple>
+                            <label class="form-label">Fotos</label>
+                            <p th:if="${errorFoto!=null}" style="color: #dc3545;font-size: .875em;"> Debe ingresar al menos una foto<p>
+                            <input class="btn" style="color: transparent; width: 146px; height: 40px;" type="file" accept="image/*" id="files" name="files[]" multiple>
+                            <br>
+                            <br>
+                            <output id="list"></output>
                             </div>
                             <div class="col">
                             </div>
@@ -189,6 +198,34 @@
                 </div>
             </main>
         </div>
+        <script>
+            $(document).ready(function() {
+                if (window.File && window.FileList && window.FileReader) {
+                    $("#files").on("change", function(e) {
+                        var files = e.target.files,
+                            filesLength = files.length;
+                        for (var i = 0; i < filesLength; i++) {
+                            var f = files[i]
+                            var fileReader = new FileReader();
+                            fileReader.onload = (function(e) {
+                                var file = e.target;
+                                $("<div class=\"img-thumb-wrapper card shadow\">" +
+                                    "<img class=\"img-thumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                                    "<br/><span class=\"remove\">Remove</span>" +
+                                    "</div>").insertAfter("#files");
+                                $(".remove").click(function(){
+                                    $(this).parent(".img-thumb-wrapper").remove();
+                                });
 
+                            });
+                            fileReader.readAsDataURL(f);
+                        }
+                        console.log(files);
+                    });
+                } else {
+                    alert("Your browser doesn't support to File API")
+                }
+            });
+        </script>
     </body>
 </html>

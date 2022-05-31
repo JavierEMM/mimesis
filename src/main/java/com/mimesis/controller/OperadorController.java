@@ -62,7 +62,7 @@ public class OperadorController {
             ids.add(boleto.getidsalaBoleto());
         }
         List<Funcion> listaFuncionesReporte = funcionRepository.findAllById(ids);
-        String [] titulos = {"Id","Nombre","Dinero recaudado"};
+        String [] titulos = {"Id de Funcion","Nombre","Sede","Dinero recaudado"};
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Reporte");
         Font headerFont = workbook.createFont();
@@ -86,7 +86,8 @@ public class OperadorController {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(boletosPorFuncion.get(j).getidsalaBoleto());
             row.createCell(1).setCellValue(listaFuncionesReporte.get(j).getIdobra().getNombre());
-            row.createCell(2).setCellValue(boletosPorFuncion.get(j).getSumaBoletos());
+            row.createCell(2).setCellValue(listaFuncionesReporte.get(j).getIdsala().getIdsede().getNombre());
+            row.createCell(3).setCellValue(boletosPorFuncion.get(j).getSumaBoletos()*listaFuncionesReporte.get(j).getCosto());
 
         }
 
@@ -107,6 +108,9 @@ public class OperadorController {
         model.addAttribute("listaFunciones",funcionRepository.findAll());
         return "operador/listafunciones";
     }
+
+
+
 
     @GetMapping(value = {"/",""})
     public String paginaPrincipal(Model model){
@@ -186,9 +190,8 @@ public class OperadorController {
         return "operador/funcionFrm";
     }
     @GetMapping("/estadisticas")
-    public String estadisticas (){
-
-
+    public String estadisticas (Model model){
+        model.addAttribute("listaAsistentes",funcionRepository.boletosTotal());
 
         return "operador/estadisticas";}
 
@@ -270,10 +273,10 @@ public class OperadorController {
 
     @PostMapping("/save")
     public String newFuncion (@ModelAttribute("funcion")@Valid Funcion funcion, BindingResult bindingResult, Model model, @RequestParam("actoresObra") Optional<List<Actor>> actoresObra,
-                               @RequestParam("foto") List<MultipartFile> file ){
+                               @RequestParam("files[]") List<MultipartFile> file ) throws IOException {
         System.out.println("entro al controller");
         System.out.println(bindingResult.getAllErrors());
-        if(bindingResult.hasErrors() || !actoresObra.isPresent()|| funcion.getHorainicio().compareTo(funcion.getHorafin())>0 ){
+        if(bindingResult.hasErrors() || !actoresObra.isPresent()|| funcion.getHorainicio().compareTo(funcion.getHorafin())>0 || file.get(0).getBytes().length == 0){
             model.addAttribute("listaActores",actorRepository.findAll());
             model.addAttribute("listaObras",obrasRepository.findAll());
             model.addAttribute("listaDirectores",directorRepository.findAll());
@@ -281,6 +284,9 @@ public class OperadorController {
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
             model.addAttribute("listaGeneros",generoRepository.findAll());
             System.out.println("entro al primer if");
+            if (file.get(0).getBytes().length == 0) {
+                model.addAttribute("errorFoto", "Debe adjuntar al menos una foto");
+            }
             if(!actoresObra.isPresent()){
                 System.out.println("Error actor");
                 model.addAttribute("errorActor", "Debe seleccionar un género");
@@ -290,6 +296,13 @@ public class OperadorController {
                     model.addAttribute("errorTime","Ingrese un rango de horas válido");
                 }
             }
+            if(funcion.getAforo()!=null && funcion.getIdsala()!=null){
+                if(funcion.getAforo()>funcion.getIdsala().getAforo()){
+                    System.out.println("Error aforo");
+                    model.addAttribute("errorAforo","Debe elegir un aforo menor o igual al de la sala seleccionada: "+funcion.getIdsala().getAforo());
+                }
+            }
+
 
             if(funcion.getId()==0){
                 return "operador/funcionFrm";
@@ -300,6 +313,11 @@ public class OperadorController {
 
 
         }else{
+            if(funcion.getAforo()>funcion.getIdsala().getAforo()){
+                System.out.println("Error aforo");
+                model.addAttribute("errorAforo","Debe elegir un aforo menor o igual al de la sala seleccionada: "+funcion.getIdsala().getAforo());
+                return "operador/funcionFrm";
+            }
             System.out.println("Entro al else");
             funcion.setActors(actoresObra.get());
             Collections.reverse(file);

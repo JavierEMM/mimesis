@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface BoletoRepository extends JpaRepository<Boleto,Integer> {
-    @Query(nativeQuery = true, value = "SELECT idfuncion as idsalaBoleto, count(*) as SumaBoletos from boleto group by idfuncion;")
+    @Query(nativeQuery = true, value = "SELECT idfuncion as idsalaBoleto, count(*) as SumaBoletos from boleto where estado = 1 group by idfuncion;")
     List<DTOBoletosPorFuncion> boletosporFuncion();
     @Query(nativeQuery = true, value = "SELECT costo from funcion order by idfuncion;")
     List<Double> costoPorFuncion();
