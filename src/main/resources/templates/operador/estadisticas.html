@@ -2,6 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <header th:replace="/includes/navbar.html :: navbar(option='Operador')" id="header" class="d-flex align-items-center">
         </header>
         <div class='container'>
@@ -10,42 +13,47 @@
                     <p class="title">ESTADISTICAS</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <table class="table" id="myTable">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">id</th>
-                                <th scope="col">Asistentes</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each=" funciones:${listaAsistentes}">
-                                <td th:text="${funciones.getIdsalaTotal()}"></td>
-                                <td th:text="${funciones.getCantidadasistentes()}"></td>
-                                <td th:text="${funciones.getCantidadboletostotal()}"></td>
 
-                            </tr>
-                        </tbody>
-                    </table>
-                    <script>
-                        function savedata1() {
+            <div id="container" style="height: 400px"></div>
+            <script th:inline="javascript">
+                Highcharts.chart('container', {
+                    chart : {
+                        type : 'pie',
+                        options3d : {
+                            enabled : true,
+                            alpha : 50,
+                            beta : 0
+                        }
+                    },
+                    title : {
+                        text : [[${nombre}]]
+                    },
+                    tooltip : {
+                        pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions : {
+                        pie : {
+                            allowPointSelect : true,
+                            cursor : 'pointer',
+                            depth : 35,
+                            dataLabels : {
+                                enabled : true,
+                                format : '{point.name}'
+                            }
+                        }
+                    },
+                    series : [ {
+                        type : 'pie',
+                        name : 'Ratio',
+                        data : [ [ 'asistentes', [[${asistentes}]] ], [ 'noAsistentes', [[${noAsistentes}]] ]  ]
+                    } ]
+                });
+            </script>
 
-                            var obj = $('#myTable tbody tr').map(function() {
-                                var $row = $(this);
-                                var t1 = $row.find(':nth-child(1)').text();
-                                var t2 = $row.find(':nth-child(2)').text();
-                                var t3 = $row.find(':nth-child(3)').text();
-                                return {
-                                    td_1: $row.find(':nth-child(1)').text(),
-                                    td_2: $row.find(':nth-child(2)').text(),
-                                    td_3: $row.find(':nth-child(3)').text()
-                                };
-                            }).get();}
-                    </script>
-                </div>
-            </div>
+
+
+
+
             <div class="row">
                 <div class="form-group col-xl-4">
                     <label for="fechainicio" class="letter">Fecha Inicio</label>

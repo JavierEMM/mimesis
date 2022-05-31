@@ -1,6 +1,7 @@
 package com.mimesis.controller;
 
 import com.mimesis.dto.DTOBoletosPorFuncion;
+import com.mimesis.dto.DTOTotalBoletosPorFuncion;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
 import org.apache.poi.ss.usermodel.*;
@@ -191,8 +192,14 @@ public class OperadorController {
     }
     @GetMapping("/estadisticas")
     public String estadisticas (Model model){
-        model.addAttribute("listaAsistentes",funcionRepository.boletosTotal());
-
+        DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(2);
+        System.out.println(info.getCantidadasistentes());
+        System.out.println(info.getCantidadboletostotal());
+        System.out.println(info.getCantidadboletostotal()- info.getCantidadasistentes());
+        System.out.println(info.getIdFuncionTotal());
+        model.addAttribute("noAsistentes",info.getCantidadboletostotal()- info.getCantidadasistentes());
+        model.addAttribute("asistentes",info.getCantidadasistentes());
+        model.addAttribute("nombre",funcionRepository.findById(info.getIdFuncionTotal()).get().getIdobra().getNombre());
         return "operador/estadisticas";}
 
     @GetMapping("/edit")
