@@ -4,9 +4,11 @@
 <body>
     <header th:replace="includes/navbar.html :: navbar(option='Actores')"></header>
     <main>
-        <h1 class="title">Actores</h1>
-
-        <div class="album py-5">
+        <br>
+        <div class="page-header text-center">
+            <h1>Actores</h1>
+        </div>
+        <br>
             <div class="container">
                 <form class="form-group mb-3" method="post" th:action="@{/actores/buscar}">
                     <div class="row">
@@ -19,26 +21,72 @@
                         </div>
                     </div>
                 </form>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <div class="col" th:each="actor : ${listaActores}">
-                        <div class="card shadow-sm">
-                            <div class="text-center">
-                                <h2 th:text="${actor.nombre}"></h2>
-                            </div>
-                            <img th:src="@{img/actor.png}">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <p class="card-text" th:text="|Correo: ${actor.correo}|"></p>
-                                    <p class="card-text" th:text="|Telefono: ${actor.telefono}|"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                <table class="table table-striped" id="actores">
+                  <thead>
+                    <tr>
+                        <th></th>
+                        <th style="width: 18%">Nombre</th>
+                        <th style="width: 32%">Correo</th>
+                        <th style="width: 32%">Telefono</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                     <tr th:each="actor : ${listaActores}">
+                        <td><img th:src="${actor.foto}" style="height: 100px ;width: 70px"></td>
+                        <td th:text="${actor.nombre}"></td>
+                        <td th:text="${actor.correo}"></td>
+                        <td th:text="${actor.telefono}"></td>
+                     </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
     </main>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+
+            crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"
+            crossorigin="anonymous">
+    </script>
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"
+            crossorigin="anonymous">
+    </script>
+    <script>
+        $(document).ready( function () {
+            $('#actores').DataTable({
+                language: {
+                    processing: "Tratamiento en curso...",
+                    infoEmpty: "No existen datos.",
+                    loadingRecords: "Cargando...",
+                    zeroRecords: "No se encontraron datos con tu busqueda",
+                    emptyTable: "No hay datos disponibles en la tabla.",
+                    lengthMenu: "",
+                    info: "",
+                    infoEmpty: "",
+                    infoFiltered: "(filtrado de _MAX_ elementos en total)",
+                    infoPostFix: "",
+                    paginate: {
+                        first: "Primero",
+                        previous: "Anterior",
+                        next: "Siguiente",
+                        last: "Ultimo"
+                    },
+                    aria: {
+                        sortAscending: ": active para ordenar la columna en orden ascendente",
+                        sortDescending: ": active para ordenar la columna en orden descendente"
+                    }
+                },
+                scrollY: 350,
+                lengthMenu: [ [5, 10, -1], [5, 10, "All"] ],
+                "searching": false,
+                "ordering": false,
+            });
+        } );
+    </script>
 
 <footer th:replace="includes/footer.html :: footer"></footer>
 </body>
