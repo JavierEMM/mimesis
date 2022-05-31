@@ -1,5 +1,6 @@
 package com.mimesis.controller;
 
+import com.mimesis.dto.DTOActoresMejoresCalificados;
 import com.mimesis.dto.DTOBoletosPorFuncion;
 import com.mimesis.dto.DTOTotalBoletosPorFuncion;
 import com.mimesis.entity.*;
@@ -212,6 +213,10 @@ public class OperadorController {
         model.addAttribute("listaObras",obrasRepository.findAll());
         model.addAttribute("listaActoresMejoresCalificados",actorRepository.obtenerActoresMejoresCalificados());
         model.addAttribute("listaDirectoresMejoresCalificados",directorRepository.obtenerDirectoresMejoresCalificados());
+        List<DTOActoresMejoresCalificados> listaActoresMejoresCalificados = actorRepository.obtenerActoresMejoresCalificados();
+        for(DTOActoresMejoresCalificados actor:listaActoresMejoresCalificados){
+            System.out.println(actor.getNombre_actor());
+        }
         return "operador/estadisticas";
     }
     @PostMapping("/estadisticaFuncion")
@@ -245,6 +250,15 @@ public class OperadorController {
         model.addAttribute("asistentes",info.getCantidadasistentes());
         model.addAttribute("nombre",funcionRepository.findById(info.getIdFuncionTotal()).get().getIdobra().getNombre());
         model.addAttribute("listaFunciones",funcionRepository.findAllById(idFunciones));
+        model.addAttribute("listaActores",actorRepository.findAll());
+        model.addAttribute("listaDirectores",directorRepository.findAll());
+        model.addAttribute("listaObras",obrasRepository.findAll());
+        model.addAttribute("listaActoresMejoresCalificados",actorRepository.obtenerActoresMejoresCalificados());
+        model.addAttribute("listaDirectoresMejoresCalificados",directorRepository.obtenerDirectoresMejoresCalificados());
+        List<DTOActoresMejoresCalificados> listaActoresMejoresCalificados = actorRepository.obtenerActoresMejoresCalificados();
+        for(DTOActoresMejoresCalificados actor:listaActoresMejoresCalificados){
+            System.out.println(actor.getNombre_actor());
+        }
         return "operador/estadisticas";
     }
 
