@@ -64,18 +64,18 @@
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
-                                <th scope="col">Nombre de la Obra</th>
-                                <th scope="col">Fecha y Hora</th>
-                                <th scope="col">Sede</th>
-                                <th scope="col">Cantidad de Espectadores</th>
+                                <th style="text-align: center;" scope="col">Nombre de la Obra</th>
+                                <th style="text-align: center;" scope="col">Fecha y Hora</th>
+                                <th style="text-align: center;" scope="col">Sede</th>
+                                <th style="text-align: center;" scope="col">Cantidad de Espectadores</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Hamlet</td>
-                                <td>Martes 29 de Marzo del 2022 <br> 4:00pm-6:00pm</td>
-                                <td>San Borja</td>
-                                <td>148</td>
+                            <tr th:each="funciones : ${listaFunciones}">
+                                <td style="text-align: center;"th:text="${funciones.idobra.nombre}">Hamlet</td>
+                                <td style="text-align: center;" th:text="${funciones.fecha} + ' ' + ${funciones.horainicio}">Martes 29 de Marzo del 2022 <br> 4:00pm-6:00pm</td>
+                                <td style="text-align: center;" th:text="${funciones.idsala.idsede.nombre}">San Borja</td>
+                                <td style="text-align: center;" th:text="${funciones.idsala.aforo}">148</td>
                             </tr>
                         </tbody>
                     </table>
@@ -94,16 +94,16 @@
                             <table class="table">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Nombre de la obra</th>
-                                        <th scope="col">Puntuación</th>
+                                        <th style="text-align: center;" scope="col">Nombre</th>
+                                        <th style="text-align: center;" scope="col">Nombre de la obra</th>
+                                        <th style="text-align: center;" scope="col">Puntuación</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Mark</td>
-                                        <td>Movidick</td>
-                                        <td>:o</td>
+                                    <tr th:each="actor : ${listaActoresMejoresCalificados}">
+                                        <td style="text-align: center;"th:text="${actor.nombre_actor}">Mark</td>
+                                        <td style="text-align: center;"th:text="${actor.nombre_obra}">Movidick</td>
+                                        <td style="text-align: center;"th:text="${actor.calificacion}">:o</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -120,16 +120,16 @@
                             <table class="table">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Nombre de la obra</th>
-                                        <th scope="col">Puntuación</th>
+                                        <th style="text-align: center;" scope="col">Nombre</th>
+                                        <th style="text-align: center;" scope="col">Nombre de la obra</th>
+                                        <th style="text-align: center;" scope="col">Puntuación</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Mark2</td>
-                                        <td>Movidick</td>
-                                        <td>:o</td>
+                                    <tr th:each="directores : ${listaDirectoresMejoresCalificados}">
+                                        <td style="text-align: center;"th:text="${directores.nombre_director}">Mark2</td>
+                                        <td style="text-align: center;"th:text="${directores.nombre_obra}">Movidick</td>
+                                        <td style="text-align: center;"th:text="${directores.calificacion}">:o</td>
                                     </tr>
                                 </tbody>
                             </table>

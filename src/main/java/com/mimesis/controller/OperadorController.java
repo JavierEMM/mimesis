@@ -207,6 +207,11 @@ public class OperadorController {
         model.addAttribute("asistentes",info.getCantidadasistentes());
         model.addAttribute("nombre",funcionRepository.findById(info.getIdFuncionTotal()).get().getIdobra().getNombre());
         model.addAttribute("listaFunciones",funcionRepository.findAllById(idFunciones));
+        model.addAttribute("listaActores",actorRepository.findAll());
+        model.addAttribute("listaDirectores",directorRepository.findAll());
+        model.addAttribute("listaObras",obrasRepository.findAll());
+        model.addAttribute("listaActoresMejoresCalificados",actorRepository.obtenerActoresMejoresCalificados());
+        model.addAttribute("listaDirectoresMejoresCalificados",directorRepository.obtenerDirectoresMejoresCalificados());
         return "operador/estadisticas";
     }
     @PostMapping("/estadisticaFuncion")
