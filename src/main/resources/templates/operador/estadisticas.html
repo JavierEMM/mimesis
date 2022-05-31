@@ -7,51 +7,21 @@
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <header th:replace="/includes/navbar.html :: navbar(option='Operador')" id="header" class="d-flex align-items-center">
         </header>
+
+
         <div class='container'>
+            <div class="row">
+                <div class="col-10"></div>
+                <div class="col">
+                    <br>
+                    <a th:href="@{/operador}" style="float: right;" type="button" class="btn btn-outline-danger">Lista Funciones</a>
+                </div>
+            </div>
             <div class="row" >
                 <div class="col-xl">
                     <p class="title">ESTADISTICAS</p>
                 </div>
             </div>
-
-            <div id="container" style="height: 400px"></div>
-            <script th:inline="javascript">
-                Highcharts.chart('container', {
-                    chart : {
-                        type : 'pie',
-                        options3d : {
-                            enabled : true,
-                            alpha : 50,
-                            beta : 0
-                        }
-                    },
-                    title : {
-                        text : [[${nombre}]]
-                    },
-                    tooltip : {
-                        pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
-                    },
-                    plotOptions : {
-                        pie : {
-                            allowPointSelect : true,
-                            cursor : 'pointer',
-                            depth : 35,
-                            dataLabels : {
-                                enabled : true,
-                                format : '{point.name}'
-                            }
-                        }
-                    },
-                    series : [ {
-                        type : 'pie',
-                        name : 'Ratio',
-                        data : [ [ 'asistentes', [[${asistentes}]] ], [ 'noAsistentes', [[${noAsistentes}]] ]  ]
-                    } ]
-                });
-            </script>
-
-
-
 
 
             <div class="row">
@@ -63,10 +33,7 @@
                     <label for="fechafin" class="letter">Fecha Fin</label>
                     <input id="fechafin" class="form-control" type="date" name="FechaNacimiento"/>
                 </div>
-                <div class="col-xl-4">
-                    <br>
-                    <a th:href="@{/operador}" style="float: right;" type="button" class="btn btn-outline-danger">Lista Funciones</a>
-                </div>
+
             </div>
             <div class="row">
                 <div class="col-xl">
@@ -169,15 +136,58 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <form  method="POST" class="row g-3" th:action="@{/operador/estadisticaFuncion}" >
                     <h4 class="letter">Porcentaje de asistencia:</h4>
-                    <select class="form-select" aria-label="Default select example" style="margin-bottom: 10px">
-                        <option selected>Funcion</option>
-                        <option>Hamlet - SB - 20/03/22 -  4pm</option>
-                    </select>
-                    <img class="img-fluid" th:src="@{/img/grafico.png}">
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-select" aria-label="Default select example" style="margin-bottom: 10px" name="opcion">
+                                <option th:each="funcion : ${listaFunciones}" th:text="${funcion.idobra.nombre}" th:value="${funcion.id}"></option>
+                            </select>
+                        </div>
+                        <div class="col-2" style="text-align: center">
+                            <button type="submit" class="btn btn-primary" >Actualizar</button>
+                        </div>
+                    </div>
+
+                    <div id="container" style="height: 380px"></div>
                 </div>
             </div>
         </div>
         <footer th:replace="/includes/footer.html :: footer"></footer>
+        <script th:inline="javascript">
+            Highcharts.chart('container', {
+                chart : {
+                    type : 'pie',
+                    options3d : {
+                        enabled : true,
+                        alpha : 50,
+                        beta : 0
+                    }
+                },
+                title : {
+                    text : [[${nombre}]]
+                },
+                tooltip : {
+                    pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions : {
+                    pie : {
+                        allowPointSelect : true,
+                        cursor : 'pointer',
+                        depth : 35,
+                        dataLabels : {
+                            enabled : true,
+                            format : '{point.name}'
+                        }
+                    }
+                },
+                series : [ {
+                    type : 'pie',
+                    name : 'Ratio',
+                    data : [ [ 'Asistentes', [[${asistentes}]] ], [ 'No Asistentes', [[${noAsistentes}]] ]  ]
+                } ]
+            });
+        </script>
+
     </body>
 </html>

@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
@@ -192,15 +193,40 @@ public class OperadorController {
     }
     @GetMapping("/estadisticas")
     public String estadisticas (Model model){
-        DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(2);
-        System.out.println(info.getCantidadasistentes());
-        System.out.println(info.getCantidadboletostotal());
-        System.out.println(info.getCantidadboletostotal()- info.getCantidadasistentes());
-        System.out.println(info.getIdFuncionTotal());
+
+        DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(1);
+        List<DTOTotalBoletosPorFuncion> listaDto = funcionRepository.boletosTotal();
+        List <Integer> idFunciones = new ArrayList<>();
+        for (DTOTotalBoletosPorFuncion a : listaDto){
+            idFunciones.add(a.getIdFuncionTotal());
+            System.out.println(a.getIdFuncionTotal());
+        }
+
         model.addAttribute("noAsistentes",info.getCantidadboletostotal()- info.getCantidadasistentes());
         model.addAttribute("asistentes",info.getCantidadasistentes());
         model.addAttribute("nombre",funcionRepository.findById(info.getIdFuncionTotal()).get().getIdobra().getNombre());
-        return "operador/estadisticas";}
+        model.addAttribute("listaFunciones",funcionRepository.findAllById(idFunciones));
+        return "operador/estadisticas";
+    }
+    @PostMapping("/estadisticaFuncion")
+    public String estadisticaPorFuncion(Model model,@RequestParam("opcion") Integer busqueda){
+        int id = busqueda;
+        DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(id);
+
+        List<DTOTotalBoletosPorFuncion> listaDto = funcionRepository.boletosTotal();
+        List <Integer> idFunciones = new ArrayList<>();
+        for (DTOTotalBoletosPorFuncion a : listaDto){
+            idFunciones.add(a.getIdFuncionTotal());
+            System.out.println(a.getIdFuncionTotal());
+        }
+
+        model.addAttribute("noAsistentes",info.getCantidadboletostotal()- info.getCantidadasistentes());
+        model.addAttribute("asistentes",info.getCantidadasistentes());
+        model.addAttribute("nombre",funcionRepository.findById(info.getIdFuncionTotal()).get().getIdobra().getNombre());
+        model.addAttribute("listaFunciones",funcionRepository.findAllById(idFunciones));
+        return "operador/estadisticas";
+    }
+
 
     @GetMapping("/edit")
     public String editarOperador (@RequestParam("id") Integer id,@ModelAttribute("funcion") Funcion funcion,Model model){
