@@ -30,7 +30,7 @@
                     <th style="width: 18%">Nombre</th>
                         <th style="width: 32%">Restriccion de edad</th>
                         <th class="text-center"></th>
-                        <th class="text-center"></th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -38,9 +38,9 @@
                         <th></th>
                     <!--    <td><img th:src="${""}" style="height: 100px ;width: 70px"></td> -->
                         <td th:text="${funcion.nombre}"></td>
-                        <td></td>
-                        <td><a class="btn btn-primary">Detalles</a></td>
-                        <td><a class="btn btn-danger">Reservar</a></td>
+                        <td th:text="${'+' + funcion.restricciondeedad}"></td>
+                        <td><a class="btn btn-primary" th:href="@{'/funciones/detalles'+ '?obra=' + ${funcion.nombre}}">Detalles</a></td>
+
                     </tr>
                     </tbody>
                 </table>
