@@ -23,15 +23,15 @@
                 </div>
             </div>
 
-
+            <form class="form-inline" method="POST"th:action="@{/operador/estadisticaFuncion}">
             <div class="row">
                 <div class="form-group col-xl-4">
                     <label for="fechainicio" class="letter">Fecha Inicio</label>
-                    <input id="fechainicio" class="form-control" type="date" name="FechaNacimiento"/>
+                    <input id="fechainicio" class="form-control" type="date" name="FechaInicio"/>
                 </div>
                 <div class="form-group col-xl-4">
                     <label for="fechafin" class="letter">Fecha Fin</label>
-                    <input id="fechafin" class="form-control" type="date" name="FechaNacimiento"/>
+                    <input id="fechafin" class="form-control" type="date" name="FechaFin"/>
                 </div>
 
             </div>
@@ -44,7 +44,7 @@
                     </select>
                 </div>
                 <div class="col-xl">
-                    <form class="form-inline">
+
                         <div class="row">
                             <div class="col-10">
                                 <label for="buscador" class="letter">Buscar</label>
@@ -148,8 +148,9 @@
                             <button type="submit" class="btn btn-primary" >Actualizar</button>
                         </div>
                     </div>
-
+                    </form>
                     <div id="container" style="height: 380px"></div>
+
                 </div>
             </div>
         </div>
@@ -184,7 +185,7 @@
                 series : [ {
                     type : 'pie',
                     name : 'Ratio',
-                    data : [ [ 'Asistentes', [[${asistentes}]] ], [ 'No Asistentes', [[${noAsistentes}]] ]  ]
+                    data : [ [ 'Asistentes' +[[${asistentes}]]+ ' personas' , [[${asistentes}]] ], [ 'No Asistentes ' +[[${noAsistentes}]]+ ' personas' , [[${noAsistentes}]] ]  ]
                 } ]
             });
         </script>
