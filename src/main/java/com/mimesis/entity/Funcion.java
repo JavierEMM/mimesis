@@ -55,8 +55,7 @@ public class Funcion {
     @Column(name = "valido", nullable = false)
     private Boolean valido;
 
-    @OneToMany(mappedBy = "idfuncion")
-    private List<Foto> fotosporfuncion;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "obras_idobras", nullable = false)
@@ -68,13 +67,6 @@ public class Funcion {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
-    public List<Foto> getFotosporfuncion() {
-        return fotosporfuncion;
-    }
-
-    public void setFotosporfuncion(List<Foto> fotosporfuncion) {
-        this.fotosporfuncion = fotosporfuncion;
-    }
 
     public void setId(int id) {
         this.id = id;

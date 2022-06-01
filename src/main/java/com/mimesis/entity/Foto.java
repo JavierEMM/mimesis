@@ -13,14 +13,23 @@ public class Foto {
     @Column(name = "foto", nullable = false)
     private byte[] foto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idfuncion")
-    private Funcion idfuncion;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idsede")
     private Sede idsede;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "idobras", nullable = false)
+    private Obra idobras;
+
+    public Obra getIdobras() {
+        return idobras;
+    }
+
+    public void setIdobras(Obra idobras) {
+        this.idobras = idobras;
+    }
 
 
     public Sede getIdsede() {
@@ -31,13 +40,7 @@ public class Foto {
         this.idsede = idsede;
     }
 
-    public Funcion getIdfuncion() {
-        return idfuncion;
-    }
 
-    public void setIdfuncion(Funcion idfuncion) {
-        this.idfuncion = idfuncion;
-    }
 
     public byte[] getFoto() {
         return foto;

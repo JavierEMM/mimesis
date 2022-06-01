@@ -156,13 +156,30 @@ public class OperadorController {
     }
 
     @PostMapping("saveobra")
-    public String newObra (@ModelAttribute("obra")@Valid Obra obra, BindingResult bindingResult,Model model){
+    public String newObra (@ModelAttribute("obra")@Valid Obra obra, BindingResult bindingResult,Model model,  @RequestParam("files[]") List<MultipartFile> file ) throws IOException {
 
-        if(bindingResult.hasErrors()){
+        if(bindingResult.hasErrors()|| file.get(0).getBytes().length == 0){
+            if (file.get(0).getBytes().length == 0) {
+                model.addAttribute("errorFoto", "Debe adjuntar al menos una foto");
+            }
             model.addAttribute("listaGeneros",generoRepository.findAll());
             return "operador/obraFrm";
         }else {
             obrasRepository.save(obra);
+            Collections.reverse(file);
+            try{
+                System.out.println("entro al try");
+                for (MultipartFile file1: file ) {
+                    Foto foto= new Foto();
+                    foto.setFoto(file1.getBytes());
+                    foto.setIdobras(obra);
+                    fotoRepository.save(foto);
+                }
+
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
             return "redirect:/operador/obras";
         }
 
@@ -274,9 +291,7 @@ public class OperadorController {
             model.addAttribute("listaSedes",sedesRepository.findAll());
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
             model.addAttribute("listaGeneros",generoRepository.findAll());
-            model.addAttribute("listaFotos",optionalFuncion.get().getFotosporfuncion());
-            System.out.println("id funcion" + funcion.getId());
-            System.out.println("Tamaño de lista de fotos" + optionalFuncion.get().getFotosporfuncion().size());
+            model.addAttribute("listaFotos",optionalFuncion.get().getIdobra().getFotosporobra());
             return "operador/editarFrm";
         }
 
@@ -301,7 +316,7 @@ public class OperadorController {
         Optional<Funcion> opt = funcionRepository.findById(id);
         if (opt.isPresent()) {
             Funcion funcion = opt.get();
-            byte[] imagenComoBytes = funcion.getFotosporfuncion().get(index).getFoto();
+            byte[] imagenComoBytes = funcion.getIdobra().getFotosporobra().get(index).getFoto();
             return new ResponseEntity<>(
                     imagenComoBytes,
                     HttpStatus.OK);
@@ -320,7 +335,7 @@ public class OperadorController {
             model.addAttribute("listaSedes",sedesRepository.findAll());
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
             model.addAttribute("listaGeneros",generoRepository.findAll());
-            model.addAttribute("listaFotos",funcion.getFotosporfuncion());
+            model.addAttribute("listaFotos",funcion.getIdobra().getFotosporobra());
             if(funcion.getHorainicio()!=null && funcion.getHorafin()!=null){
                 if(funcion.getHorainicio().compareTo(funcion.getHorafin())>0){
                     model.addAttribute("errorTime","Ingrese un rango de horas válido");
@@ -340,11 +355,10 @@ public class OperadorController {
 
 
     @PostMapping("/save")
-    public String newFuncion (@ModelAttribute("funcion")@Valid Funcion funcion, BindingResult bindingResult, Model model, @RequestParam("actoresObra") Optional<List<Actor>> actoresObra,
-                               @RequestParam("files[]") List<MultipartFile> file ) throws IOException {
+    public String newFuncion (@ModelAttribute("funcion")@Valid Funcion funcion, BindingResult bindingResult, Model model, @RequestParam("actoresObra") Optional<List<Actor>> actoresObra) throws IOException {
         System.out.println("entro al controller");
         System.out.println(bindingResult.getAllErrors());
-        if(bindingResult.hasErrors() || !actoresObra.isPresent()|| funcion.getHorainicio().compareTo(funcion.getHorafin())>0 || file.get(0).getBytes().length == 0){
+        if(bindingResult.hasErrors() || !actoresObra.isPresent()|| funcion.getHorainicio().compareTo(funcion.getHorafin())>0 ){
             model.addAttribute("listaActores",actorRepository.findAll());
             model.addAttribute("listaObras",obrasRepository.findAll());
             model.addAttribute("listaDirectores",directorRepository.findAll());
@@ -352,9 +366,7 @@ public class OperadorController {
             model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
             model.addAttribute("listaGeneros",generoRepository.findAll());
             System.out.println("entro al primer if");
-            if (file.get(0).getBytes().length == 0) {
-                model.addAttribute("errorFoto", "Debe adjuntar al menos una foto");
-            }
+
             if(!actoresObra.isPresent()){
                 System.out.println("Error actor");
                 model.addAttribute("errorActor", "Debe seleccionar un género");
@@ -370,7 +382,6 @@ public class OperadorController {
                     model.addAttribute("errorAforo","Debe elegir un aforo menor o igual al de la sala seleccionada: "+funcion.getIdsala().getAforo());
                 }
             }
-
 
             if(funcion.getId()==0){
                 return "operador/funcionFrm";
@@ -388,20 +399,7 @@ public class OperadorController {
             }
             System.out.println("Entro al else");
             funcion.setActors(actoresObra.get());
-            Collections.reverse(file);
             funcionRepository.save(funcion);
-            try{
-                System.out.println("entro al try");
-                for (MultipartFile file1: file ) {
-                    Foto foto= new Foto();
-                    foto.setFoto(file1.getBytes());
-                    foto.setIdfuncion(funcion);
-                    fotoRepository.save(foto);
-                }
-
-            } catch (IOException e){
-                e.printStackTrace();
-            }
             return "redirect:/operador";
         }
 

@@ -86,6 +86,20 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col">
+                            </div>
+                            <div class="col-8">
+                                <label class="form-label">Fotos</label>
+                                <p th:if="${errorFoto!=null}" style="color: #dc3545;font-size: .875em;"> Debe ingresar al menos una foto<p>
+                                <input class="btn" style="color: transparent; width: 146px; height: 40px;" type="file" accept="image/*" id="files" name="files[]" multiple>
+                                <br>
+                                <br>
+                                <output id="list"></output>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col-8">
@@ -101,6 +115,35 @@
                     </form>
                 </div>
             </main>
+            <script>
+                $(document).ready(function() {
+                    if (window.File && window.FileList && window.FileReader) {
+                        $("#files").on("change", function(e) {
+                            var files = e.target.files,
+                                filesLength = files.length;
+                            for (var i = 0; i < filesLength; i++) {
+                                var f = files[i]
+                                var fileReader = new FileReader();
+                                fileReader.onload = (function(e) {
+                                    var file = e.target;
+                                    $("<div class=\"img-thumb-wrapper card shadow\">" +
+                                        "<img class=\"img-thumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                                        "<br/><span class=\"remove\">Remove</span>" +
+                                        "</div>").insertAfter("#files");
+                                    $(".remove").click(function(){
+                                        $(this).parent(".img-thumb-wrapper").remove();
+                                    });
+
+                                });
+                                fileReader.readAsDataURL(f);
+                            }
+                            console.log(files);
+                        });
+                    } else {
+                        alert("Your browser doesn't support to File API")
+                    }
+                });
+            </script>
         </div>
 
     </body>
