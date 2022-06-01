@@ -1,5 +1,6 @@
 package com.mimesis.controller;
 
+import com.mimesis.dto.DTOActoresMejoresCalificados;
 import com.mimesis.dto.DTOBoletosPorFuncion;
 import com.mimesis.dto.DTOTotalBoletosPorFuncion;
 import com.mimesis.entity.*;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -206,11 +208,35 @@ public class OperadorController {
         model.addAttribute("asistentes",info.getCantidadasistentes());
         model.addAttribute("nombre",funcionRepository.findById(info.getIdFuncionTotal()).get().getIdobra().getNombre());
         model.addAttribute("listaFunciones",funcionRepository.findAllById(idFunciones));
+        model.addAttribute("listaActores",actorRepository.findAll());
+        model.addAttribute("listaDirectores",directorRepository.findAll());
+        model.addAttribute("listaObras",obrasRepository.findAll());
+        model.addAttribute("listaActoresMejoresCalificados",actorRepository.obtenerActoresMejoresCalificados());
+        model.addAttribute("listaDirectoresMejoresCalificados",directorRepository.obtenerDirectoresMejoresCalificados());
+        List<DTOActoresMejoresCalificados> listaActoresMejoresCalificados = actorRepository.obtenerActoresMejoresCalificados();
+        for(DTOActoresMejoresCalificados actor:listaActoresMejoresCalificados){
+            System.out.println(actor.getNombre_actor());
+        }
         return "operador/estadisticas";
     }
     @PostMapping("/estadisticaFuncion")
-    public String estadisticaPorFuncion(Model model,@RequestParam("opcion") Integer busqueda){
-        int id = busqueda;
+    public String estadisticaPorFuncion(Model model, @RequestParam("opcion")Optional<Integer> optOpcion, @RequestParam("FechaInicio")Optional<String> optFechaInicio,@RequestParam("FechaFin")Optional<String> optFechaFin){
+        int id;
+        if(optOpcion.isPresent()){
+            id = optOpcion.get();
+        }else{
+            id=1;
+        }
+
+        if(optFechaInicio.isPresent()){
+            System.out.println(optFechaInicio.get());
+        }
+        if(optFechaFin.isPresent()){
+            System.out.println(optFechaFin.get());
+        }
+        String b = String.valueOf(LocalDate.now());
+        System.out.println(b);
+
         DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(id);
 
         List<DTOTotalBoletosPorFuncion> listaDto = funcionRepository.boletosTotal();
@@ -224,6 +250,15 @@ public class OperadorController {
         model.addAttribute("asistentes",info.getCantidadasistentes());
         model.addAttribute("nombre",funcionRepository.findById(info.getIdFuncionTotal()).get().getIdobra().getNombre());
         model.addAttribute("listaFunciones",funcionRepository.findAllById(idFunciones));
+        model.addAttribute("listaActores",actorRepository.findAll());
+        model.addAttribute("listaDirectores",directorRepository.findAll());
+        model.addAttribute("listaObras",obrasRepository.findAll());
+        model.addAttribute("listaActoresMejoresCalificados",actorRepository.obtenerActoresMejoresCalificados());
+        model.addAttribute("listaDirectoresMejoresCalificados",directorRepository.obtenerDirectoresMejoresCalificados());
+        List<DTOActoresMejoresCalificados> listaActoresMejoresCalificados = actorRepository.obtenerActoresMejoresCalificados();
+        for(DTOActoresMejoresCalificados actor:listaActoresMejoresCalificados){
+            System.out.println(actor.getNombre_actor());
+        }
         return "operador/estadisticas";
     }
 

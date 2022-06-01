@@ -1,5 +1,6 @@
 package com.mimesis.repository;
 
+import com.mimesis.dto.DTOActoresMejoresCalificados;
 import com.mimesis.entity.Actor;
 import com.mimesis.entity.Sede;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,12 @@ public interface ActorRepository extends JpaRepository<Actor,Integer> {
 
     @Query(value = "select idactor from calificaciones;",nativeQuery = true)
     List<Integer> obtenerIdCalificacion();
+
+    @Query(nativeQuery = true, value = "SELECT a.nombre as 'nombre_actor', o.nombre as 'nombre_obra', c.calificacion as 'calificacion' FROM actor a\n" +
+            "INNER JOIN funciontieneactor fta ON a.idactor = fta.idactor\n" +
+            "INNER JOIN funcion f ON fta.idfuncion=f.idfuncion\n" +
+            "INNER JOIN obras o ON f.obras_idobras=o.idobras\n" +
+            "INNER JOIN calificaciones c ON a.idactor=c.idactor;")
+    List<DTOActoresMejoresCalificados> obtenerActoresMejoresCalificados();
 
 }

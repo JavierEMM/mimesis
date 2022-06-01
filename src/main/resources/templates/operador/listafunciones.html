@@ -50,6 +50,7 @@
                         <th style="text-align: center;" scope="col">Nombre de la obra</th>
                         <th style="text-align: center;" scope="col">Fecha y Hora</th>
                         <th style="text-align: center;" scope="col">Sede</th>
+                        <th style="text-align: center;" scope="col">Género</th>
                         <th style="text-align: center;" scope="col">Editar</th>
                         <th style="text-align: center;" scope="col">Estado</th>
                         <th style="text-align: center;" scope="col">Restricion de edad</th>
@@ -61,6 +62,7 @@
                     <tr th:each="funcion : ${listaFunciones}">
                         <td style="text-align: center;"th:text="${funcion.idobra.nombre}">Movidick</td>
                         <td style="text-align: center;" th:text="${funcion.fecha} + '  ' + ${funcion.horainicio}">Hoy xd</td>
+                        <td style="text-align: center;" th:text="${funcion.idsala.idsede.nombre}">San Miguel</td>
                         <td style="text-align: center;" th:text="${funcion.idsala.idsede.nombre}">San Miguel</td>
                         <td style="text-align: center;" th:if="${funcion.valido==true}"><a class="btn btn-outline-danger" th:href="@{'/operador/edit' + '?id=' + ${funcion.id}}" th:hidden="${funcion.valido!=true}" ><i class="bi bi-pencil-square"></i></a></td>
                         <!--td style="text-align: center;"><a class="btn btn-outline-danger" th:href="@{'/operador/edit' + '?id=' + ${funcion.id}}" th:if="${funcion.valido==true}" disabled ><i class="bi bi-pencil-square"></i></a></td-->
