@@ -24,6 +24,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -211,8 +212,11 @@ public class OperadorController {
         return "operador/funcionFrm";
     }
     @GetMapping("/estadisticas")
-    public String estadisticas (Model model){
-
+    public String estadisticas (Model model,HttpSession session){
+        session.setAttribute("fechaInicio","2022-01-01");
+        session.setAttribute("fechaFin","2022-12-31");
+        model.addAttribute("fInicioSelected","2022-01-01");
+        model.addAttribute("fFinSelected","2022-12-31");
         DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(1);
         List<DTOTotalBoletosPorFuncion> listaDto = funcionRepository.boletosTotal();
         List <Integer> idFunciones = new ArrayList<>();
@@ -231,13 +235,11 @@ public class OperadorController {
         model.addAttribute("listaActoresMejoresCalificados",actorRepository.obtenerActoresMejoresCalificados());
         model.addAttribute("listaDirectoresMejoresCalificados",directorRepository.obtenerDirectoresMejoresCalificados());
         List<DTOActoresMejoresCalificados> listaActoresMejoresCalificados = actorRepository.obtenerActoresMejoresCalificados();
-        for(DTOActoresMejoresCalificados actor:listaActoresMejoresCalificados){
-            System.out.println(actor.getNombre_actor());
-        }
+
         return "operador/estadisticas";
     }
     @PostMapping("/estadisticaFuncion")
-    public String estadisticaPorFuncion(Model model, @RequestParam("opcion")Optional<Integer> optOpcion, @RequestParam("FechaInicio")Optional<String> optFechaInicio,@RequestParam("FechaFin")Optional<String> optFechaFin){
+    public String estadisticaPorFuncion(Model model, HttpSession session, @RequestParam("opcion")Optional<Integer> optOpcion, @RequestParam("FechaInicio")Optional<String> optFechaInicio, @RequestParam("FechaFin")Optional<String> optFechaFin){
         int id;
         if(optOpcion.isPresent()){
             id = optOpcion.get();
@@ -246,17 +248,23 @@ public class OperadorController {
         }
 
         if(optFechaInicio.isPresent()){
-            System.out.println(optFechaInicio.get());
+            if( optFechaInicio.get().length() !=0 ){
+                session.setAttribute("fechaInicio",optFechaInicio.get());
+                model.addAttribute("fInicioSelected",optFechaInicio.get());
+
+            }
         }
         if(optFechaFin.isPresent()){
-            System.out.println(optFechaFin.get());
+            if( optFechaFin.get().length() !=0 ){
+                session.setAttribute("fechaFin",optFechaFin.get());
+                model.addAttribute("fFinSelected",optFechaFin.get());
+            }
         }
-        String b = String.valueOf(LocalDate.now());
-        System.out.println(b);
+
 
         DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(id);
 
-        List<DTOTotalBoletosPorFuncion> listaDto = funcionRepository.boletosTotal();
+        List<DTOTotalBoletosPorFuncion> listaDto = funcionRepository.boletosTotalFecha((String) session.getAttribute("fechaInicio"),(String) session.getAttribute("fechaFin"));
         List <Integer> idFunciones = new ArrayList<>();
         for (DTOTotalBoletosPorFuncion a : listaDto){
             idFunciones.add(a.getIdFuncionTotal());
@@ -273,9 +281,7 @@ public class OperadorController {
         model.addAttribute("listaActoresMejoresCalificados",actorRepository.obtenerActoresMejoresCalificados());
         model.addAttribute("listaDirectoresMejoresCalificados",directorRepository.obtenerDirectoresMejoresCalificados());
         List<DTOActoresMejoresCalificados> listaActoresMejoresCalificados = actorRepository.obtenerActoresMejoresCalificados();
-        for(DTOActoresMejoresCalificados actor:listaActoresMejoresCalificados){
-            System.out.println(actor.getNombre_actor());
-        }
+
         return "operador/estadisticas";
     }
 

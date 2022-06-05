@@ -301,7 +301,7 @@ public class AdminController {
     }
 
     @PostMapping("/saveactor")
-    public String saveactor(@ModelAttribute("actor") @Valid Actor actor,BindingResult bindingResult,@RequestParam("archivo") MultipartFile file,Model model, RedirectAttributes attr) throws IOException {
+    public String saveactor(@ModelAttribute("actor") @Valid Actor actor,BindingResult bindingResult,@RequestParam("files[]") MultipartFile file,Model model, RedirectAttributes attr) throws IOException {
         if (bindingResult.hasErrors()){
             System.out.println(bindingResult.getAllErrors());
             if (actor.getId() == null) {
@@ -414,7 +414,7 @@ public class AdminController {
     }
 
     @PostMapping("/savedirector")
-    public String savedirector(@ModelAttribute("director") @Valid Director director,BindingResult bindingResult,@RequestParam("archivo") MultipartFile file,Model model, RedirectAttributes attr) throws IOException {
+    public String savedirector(@ModelAttribute("director") @Valid Director director,BindingResult bindingResult,@RequestParam("files[]") MultipartFile file,Model model, RedirectAttributes attr) throws IOException {
         if (bindingResult.hasErrors()){
             System.out.println(bindingResult.getAllErrors());
             if (director.getId() == null) {
