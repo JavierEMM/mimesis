@@ -215,6 +215,7 @@ public class OperadorController {
     public String estadisticas (Model model,HttpSession session){
         session.setAttribute("fechaInicio","2022-01-01");
         session.setAttribute("fechaFin","2022-12-31");
+        session.setAttribute("currentFunFilter","Función más vista");
         model.addAttribute("fInicioSelected","2022-01-01");
         model.addAttribute("fFinSelected","2022-12-31");
         DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(1);
@@ -224,11 +225,12 @@ public class OperadorController {
             idFunciones.add(a.getIdFuncionTotal());
             System.out.println(a.getIdFuncionTotal());
         }
-
+        model.addAttribute("filtroFunciones","Función más vista");
         model.addAttribute("noAsistentes",info.getCantidadboletostotal()- info.getCantidadasistentes());
         model.addAttribute("asistentes",info.getCantidadasistentes());
         model.addAttribute("nombre",funcionRepository.findById(info.getIdFuncionTotal()).get().getIdobra().getNombre());
         model.addAttribute("listaFunciones",funcionRepository.findAllById(idFunciones));
+        model.addAttribute("listaFuncionesVistas",funcionRepository.findAllById(idFunciones));
         model.addAttribute("listaActores",actorRepository.findAll());
         model.addAttribute("listaDirectores",directorRepository.findAll());
         model.addAttribute("listaObras",obrasRepository.findAll());
@@ -239,31 +241,41 @@ public class OperadorController {
         return "operador/estadisticas";
     }
     @PostMapping("/estadisticaFuncion")
-    public String estadisticaPorFuncion(Model model, HttpSession session, @RequestParam("opcion")Optional<Integer> optOpcion, @RequestParam("FechaInicio")Optional<String> optFechaInicio, @RequestParam("FechaFin")Optional<String> optFechaFin){
+    public String estadisticaPorFuncion(Model model, HttpSession session, @RequestParam("opcion")Optional<Integer> optOpcion, @RequestParam("FechaInicio")Optional<String> optFechaInicio, @RequestParam("FechaFin")Optional<String> optFechaFin,
+                                        @RequestParam("filtro")Optional<String> optFiltro                        ){
         int id;
         if(optOpcion.isPresent()){
             id = optOpcion.get();
         }else{
             id=1;
         }
-
+        String filtro;
+        String currentFilter;
+        if(optFiltro.isPresent()){
+            filtro=optFiltro.get();
+        }else{
+            filtro="Función más vista";
+        }
         if(optFechaInicio.isPresent()){
             if( optFechaInicio.get().length() !=0 ){
                 session.setAttribute("fechaInicio",optFechaInicio.get());
-                model.addAttribute("fInicioSelected",optFechaInicio.get());
-
             }
         }
         if(optFechaFin.isPresent()){
             if( optFechaFin.get().length() !=0 ){
                 session.setAttribute("fechaFin",optFechaFin.get());
-                model.addAttribute("fFinSelected",optFechaFin.get());
             }
         }
 
+        if(optFiltro.isPresent()){
+            session.setAttribute("currentFunFilter",optFiltro.get());
+        }
+
+
 
         DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(id);
-
+        System.out.println(session.getAttribute("fechaInicio"));
+        System.out.println(session.getAttribute("fechaFin"));
         List<DTOTotalBoletosPorFuncion> listaDto = funcionRepository.boletosTotalFecha((String) session.getAttribute("fechaInicio"),(String) session.getAttribute("fechaFin"));
         List <Integer> idFunciones = new ArrayList<>();
         for (DTOTotalBoletosPorFuncion a : listaDto){
@@ -271,10 +283,30 @@ public class OperadorController {
             System.out.println(a.getIdFuncionTotal());
         }
 
+        List<Funcion> listaFiltrada = new ArrayList<>();
+        List<DTOBoletosPorFuncion> boletosPorFuncion = new ArrayList<>();
+        if(session.getAttribute("currentFunFilter").equals("Función más vista")){
+            boletosPorFuncion = boletoRepository.boletosporFuncionFechasMas((String) session.getAttribute("fechaInicio"),(String) session.getAttribute("fechaFin"));
+        }else if(session.getAttribute("currentFunFilter").equals("Función menos vista")){
+            boletosPorFuncion=boletoRepository.boletosporFuncionFechasMenos((String) session.getAttribute("fechaInicio"),(String) session.getAttribute("fechaFin"));
+        }else{
+            boletosPorFuncion=boletoRepository.boletosporFuncion();
+        }
+
+        List<Integer> ids = new ArrayList<>();
+            for (DTOBoletosPorFuncion boleto : boletosPorFuncion){
+                ids.add(boleto.getidsalaBoleto());
+        }
+        listaFiltrada=funcionRepository.findAllById(ids);
+
+        model.addAttribute("fInicioSelected",session.getAttribute("fechaInicio"));
+        model.addAttribute("fFinSelected",session.getAttribute("fechaFin"));
+        model.addAttribute("filtroFunciones",session.getAttribute("currentFunFilter"));
         model.addAttribute("noAsistentes",info.getCantidadboletostotal()- info.getCantidadasistentes());
         model.addAttribute("asistentes",info.getCantidadasistentes());
         model.addAttribute("nombre",funcionRepository.findById(info.getIdFuncionTotal()).get().getIdobra().getNombre());
         model.addAttribute("listaFunciones",funcionRepository.findAllById(idFunciones));
+        model.addAttribute("listaFuncionesVistas",listaFiltrada);
         model.addAttribute("listaActores",actorRepository.findAll());
         model.addAttribute("listaDirectores",directorRepository.findAll());
         model.addAttribute("listaObras",obrasRepository.findAll());

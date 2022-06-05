@@ -34,28 +34,32 @@
                         <label for="fechafin" class="letter">Fecha Fin</label>
                         <input id="fechafin" class="form-control" type="date" name="FechaFin" th:value="${fFinSelected}"/>
                     </div>
-                    <div class="col-2" style="text-align: center">
+                    <div class="col-2" style="text-align: center;justify-content: center;align-items: center;">
                         <button type="submit" class="btn btn-primary" >Actualizar</button>
                     </div>
             </form>
                 </div>
+                 <form class="form-inline" method="POST"th:action="@{/operador/estadisticaFuncion}">
                 <div class="row">
-                    <form class="form-inline" method="POST"th:action="@{/operador/estadisticaFuncion}">
-                    <div class="col-xl">
+                    <div class="col-6">
                         <label for="filtrar" class="letter">Filtrar funciones por: </label>
-                        <select id="filtrar" class="form-select" aria-label="Default select example">
-                            <option selected>Mas vistas</option>
-                            <option>Función más vista</option>
-                            <option>Función menos vista</option>
-                            <option>Funcion mejor calificada</option>
+                        <select id="filtrar" class="form-select" aria-label="Default select example" name="filtro">
+                            <option value="Función más vista">Función más vista</option>
+                            <option value="Función menos vista"> Función menos vista</option>
+                            <option value="Funcion mejor calificada">Funcion mejor calificada</option>
                         </select>
                     </div>
+                        <div class="col" style="text-align: center">
+                            <button type="submit" class="btn btn-primary" style="margin: auto;" >Actualizar</button>
+                        </div>
                     </form>
                 </div>
                 <div class="row">
                     <div class="col">
+
                         <table class="table", id="obras">
                             <thead class="thead-dark">
+                                <th th:text="'Filtrado por: '+${filtroFunciones}"></th>
                                 <tr>
                                     <th style="text-align: center;" scope="col">Nombre de la Obra</th>
                                     <th style="text-align: center;" scope="col">Fecha y Hora</th>
@@ -64,7 +68,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="funciones : ${listaFunciones}">
+                                <tr th:each="funciones : ${listaFuncionesVistas}">
                                     <td style="text-align: center;"th:text="${funciones.idobra.nombre}">Hamlet</td>
                                     <td style="text-align: center;" th:text="${funciones.fecha} + ' ' + ${funciones.horainicio}">Martes 29 de Marzo del 2022 <br> 4:00pm-6:00pm</td>
                                     <td style="text-align: center;" th:text="${funciones.idsala.idsede.nombre}">San Borja</td>
