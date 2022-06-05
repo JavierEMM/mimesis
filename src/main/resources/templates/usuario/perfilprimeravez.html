@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="includes/head.html :: head">MIMESIS</head>
+</head>
+<body>
+<header th:replace="includes/navbar.html :: navbar(option = 'Principal')">
+</header>
+<div class="container bootstrap snippets bootdey">
+    <div class="panel-body inf-content">
+        <h1 class="title">Completar perfil</h1>
+        <div id="contenedor2" class="row header-display fondo">
+            <div class="col-md-6" sec:authorize="isAuthenticated()">
+                <form method="POST"  th:action="@{'/perfil/save'}" enctype="multipart/form-data">
+
+                    <div class="mb-3">
+
+                        <input type="hidden" class="form-control"
+                               name="rol" id="recipient-name8" th:value="${session.usuario.rol}">
+                        <input type="hidden" class="form-control"
+                               name="id" id="recipient-name9" th:value="${session.usuario.id}">
+                        <input type="hidden" class="form-control"
+                               name="authprovider" th:value="${session.usuario.authprovider}">
+                        <input type="hidden" class="form-control"
+                               name="emailconfirm" th:value="${session.usuario.emailconfirm}">
+                        <input type="hidden" class="form-control"
+                               name="valido" th:value="${session.usuario.valido}">
+                        <input type="hidden" class="form-control"
+                               name="nombre" id="nombre" th:value="${session.usuario.nombre}">
+                        <input type="hidden" class="form-control"
+                               name="apellido" id="apellido" th:value="${session.usuario.apellido}">
+                        <input type="hidden" class="form-control"
+                               name="correo" id="correo" th:value="${session.usuario.correo}">
+                        <input type="hidden" class="form-control"
+                               name="numerotelefonico" id="numerotelefonico" th:value="${session.usuario.numerotelefonico}">
+                        <input type="hidden" class="form-control"
+                               name="fechanacimiento" id="fechanacimiento" th:value="${session.usuario.fechanacimiento}">
+                        <input type="hidden" class="form-control"
+                               name="contrasena" id="contrasena" th:value="${session.usuario.contrasena}">
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="recipient-name2" class="col-form-label">DNI</label>
+                        <input type="text" class="form-control"
+                               name="dni" id="recipient-name2" th:value="${session.usuario.dni}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name4" class="col-form-label">Direccion</label>
+                        <input name="direccion"  type="text" class="form-control"
+                               id="recipient-name4" th:value="${session.usuario.direccion}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="recipient-name3" class="col-form-label">Foto de perfil</label>
+                        <input type="file" class="form-control"
+                               name="archivo" id="recipient-name3" th:value="${session.usuario.fotoperfil}">
+                    </div>
+
+                    <div class="header-display form-group">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<footer th:replace="includes/footer.html :: footer"></footer>
+</body>
+</html>
