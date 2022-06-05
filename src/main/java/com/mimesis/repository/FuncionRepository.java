@@ -24,6 +24,9 @@ public interface FuncionRepository extends JpaRepository<Funcion,Integer> {
     @Query(nativeQuery = true, value = "SELECT idfuncion as IdFuncionTotal, count(*) as Cantidadboletostotal, sum(estado) as Cantidadasistentes from boleto group by idfuncion;")
     List<DTOTotalBoletosPorFuncion> boletosTotal();
 
+    @Query(nativeQuery = true, value = " SELECT b.idfuncion as IdFuncionTotal, count(*) as Cantidadboletostotal, sum(b.estado) as Cantidadasistentes from boleto b inner join funcion f on f.idfuncion = b.idfuncion where f.fecha>= ?1 and f.fecha<= ?2 group by f.idfuncion;")
+    List<DTOTotalBoletosPorFuncion> boletosTotalFecha(String fechaInicio, String fechaFin);
+
     @Query(nativeQuery = true, value = "SELECT idfuncion as IdFuncionTotal, count(*) as Cantidadboletostotal, sum(estado) as Cantidadasistentes from boleto where idfuncion=?1 ;")
     DTOTotalBoletosPorFuncion boletosbyFuncion(Integer idFuncion);
 
