@@ -22,27 +22,19 @@
                         </div>
                     </div>
                 </form>
-
-                <table class="table table-striped" id="directores">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th style="width: 18%">Nombre</th>
-                        <th style="width: 32%">Correo</th>
-                        <th style="width: 32%">Telefono</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="director : ${listaDirectores}">
-                        <td><img th:src="${director.foto}" style="height: 100px ;width: 70px"></td>
-                        <td th:text="${director.nombre}"></td>
-                        <td th:text="${director.correo}"></td>
-                        <td th:text="${director.telefono}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <div class="col" th:each="director : ${listaDirectores}">
+                        <div class="card shadow-sm">
+                            <img th:src="${director.foto}" style="height: 100px ;width: 70px">
+                            <div class="card-body text-center">
+                                <p th:text="${director.nombre}"></p>
+                                <p th:text="${director.correo}" class="card-text"></p>
+                                <p th:text="${director.telefono}" class="card-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
     </main>
     <script src="https://code.jquery.com/jquery-3.5.1.js"
 

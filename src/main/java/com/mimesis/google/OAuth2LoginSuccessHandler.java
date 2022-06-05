@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,27 +25,22 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        System.out.println("Hola");
+        HttpSession session = request.getSession();
         CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
         Usuario usuario = usuarioRepository.findByCorreo(customOAuth2User.getEmail());
-        String email= customOAuth2User.getEmail();
-        String nombre= customOAuth2User.getFirstName();
-        String apellido=customOAuth2User.getLastName();
-        Boolean verified=customOAuth2User.getVerification();
-        System.out.println("email: "+email);
-        System.out.println("nombre: "+nombre);
-        System.out.println("apellido: "+apellido);
-        System.out.println("verified: "+verified);
-        if(usuario == null){
-            usuario =  new Usuario(nombre,apellido,email,"Cliente",verified,"GOOGLE");
+        String email = customOAuth2User.getEmail();
+        String nombre = customOAuth2User.getFirstName();
+        String apellido = customOAuth2User.getLastName();
+        Boolean verified = customOAuth2User.getVerification();
+        System.out.println("email: " + email);
+        System.out.println("nombre: " + nombre);
+        System.out.println("apellido: " + apellido);
+        System.out.println("verified: " + verified);
+        if (usuario == null) {
+            usuario = new Usuario(nombre, apellido, email, "Cliente", verified, "GOOGLE");
             usuario.setToken(null);
-            usuario.setNumerotelefonico("1");
-            usuario.setDireccion("1");
-            usuario.setDni(1);
-            usuario.setFechanacimiento(LocalDate.now().minusDays(1));
-            System.out.println("valido: "+ usuario.getValido());
-            usuarioRepository.save(usuario);
-        }else{
+            session.setAttribute("usuario", usuario);
+        } else {
             System.out.println("HOLA CAUSA");
             //update user
             System.out.println("Updatea customer");

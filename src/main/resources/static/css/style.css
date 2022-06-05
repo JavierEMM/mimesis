@@ -1528,3 +1528,12 @@ div > .btn-success{
   background: white;
   color: black;
 }
+.im-table{
+  display: inline-block;
+  border-style: solid;
+}
+.im-image{
+  max-width: 100px;
+  max-height: 200px;
+  border-style: solid;
+}

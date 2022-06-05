@@ -41,6 +41,10 @@ public class LoginController {
     public String loginForm(){
         return "login/login";
     }
+    @GetMapping("")
+    public String form(){
+        return "login/login";
+    }
 
     @GetMapping("/verification")
     public String accountValidation(@RequestParam(name = "code",required = false) String code, RedirectAttributes attributes){
@@ -88,10 +92,10 @@ public class LoginController {
                 return "login/login";
             }
         }
-
         session.setAttribute("usuario",usuario);
         if (usuario.getRol().equals("Cliente")) {
             ArrayList<DTOcarrito> carrito = new ArrayList<>();
+            System.out.println("ASDASDASD");
             session.setAttribute("carrito",carrito);
             session.setAttribute("ncarrito",carrito.size());
             return "redirect:/";
