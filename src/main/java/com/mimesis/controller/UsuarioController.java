@@ -34,14 +34,23 @@ public class UsuarioController {
     UsuarioRepository usuarioRepository;
 
     @GetMapping(value={"","/"})
-    public String paginaPrincipal(Model model){
+    public String paginaPrincipal(Model model, HttpSession session){
+        Usuario usuario1 = (Usuario) session.getAttribute("usuario");
+        model.addAttribute("Cliente", usuario1);
+
         return "usuario/main";
     }
 
     @GetMapping("/perfil")
-    public String perfil(){
+    public String perfil(Model model, HttpSession session){
+        Usuario usuario1 = (Usuario) session.getAttribute("usuario");
+        model.addAttribute("Cliente", session.getAttribute("usuario"));
+        if(usuario1.getDireccion()==null || usuario1.getDni()==null || usuario1.getFotoperfil()==null){
+            return "usuario/perfilprimeravez";
+        }
         return "usuario/perfil";
     }
+
     @GetMapping("/perfil1")
     public String perfil1(Model model, @RequestParam(value = "id",required = false) Integer id){
         System.out.println(id);
