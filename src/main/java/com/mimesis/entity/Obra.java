@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "obras")
@@ -30,6 +31,11 @@ public class Obra {
 
     @Column(name = "valido", nullable = false)
     private Boolean valido;
+
+
+
+    @OneToMany(mappedBy = "idobras")
+    private List<Foto> fotosporobra;
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -78,6 +84,14 @@ public class Obra {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public List<Foto> getFotosporobra() {
+        return fotosporobra;
+    }
+
+    public void setFotosporobra(List<Foto> fotosporobra) {
+        this.fotosporobra = fotosporobra;
     }
 
 }
