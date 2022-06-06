@@ -8,6 +8,13 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+:root{
+  --color-primary:#fff;
+  --color-secondary: #040919;
+  --color-second: #f82249;
+}
+
+
 .form-center {
   position: relative;
   width:100%;
@@ -1533,7 +1540,22 @@ div > .btn-success{
   border-style: solid;
 }
 .im-image{
-  max-width: 100px;
-  max-height: 200px;
+  width: 300px;
+  height: 300px;
+  max-width: 500px;
+  max-height: 700px;
   border-style: solid;
+}
+
+.pr-img{
+  width: 500px;
+  height: 550px;
+  max-width: 600px;
+  max-height: 800px;
+  border-style: solid;
+}
+
+.btn-terc{
+  color: var(--color-primary);
+  background-color: var(--color-secondary);
 }

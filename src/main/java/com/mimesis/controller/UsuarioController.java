@@ -1,6 +1,6 @@
 package com.mimesis.controller;
 
-import com.mimesis.dto.DTOcarrito;
+import com.mimesis.entity.Foto;
 import com.mimesis.entity.Usuario;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,19 +9,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("")
 public class UsuarioController {
+    @Autowired
+    FotoRepository fotoRepository;
     @Autowired
     SedesRepository sedesRepository;
     @Autowired
@@ -134,5 +134,16 @@ public class UsuarioController {
         return "usuario/calificacion";
     }
 
+    @GetMapping("/images/{id}")
+    public ResponseEntity<byte[]> imagesMostrar(@PathVariable("id") int id){
+        List<Foto> fotos = fotoRepository.listaFotos(id);
+        if(fotos != null){
+            return new ResponseEntity<>(
+                    fotos.get(0).getFoto(),HttpStatus.OK
+            );
+        }else{
+            return null;
+        }
+    }
 
 }

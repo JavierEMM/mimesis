@@ -15,7 +15,7 @@
           <div class="alert" th:classappend="${alerta}" th:if="${reserva != null}" th:text="${reserva}"></div>
           <div class="row">
             <div class="col-md-6 display-col">
-              <img th:src="@{/img/moby_dick.jpg}" alt="moby_dick" class="img-fluid">
+              <img th:src="@{|/images/${obra.getId()}|}" alt="moby_dick" class="pr-img">
             </div>
 
             <div class="col-md-6 vertical-align">
@@ -33,10 +33,11 @@
                 <div class="col">
                   <form method="post" th:action="@{${'/carrito/reservar?obra='+obra.nombre}}">
                     <h3 class="text-center">Reserva Aquí</h3>
-                    <select class="form-select select-center" name="teatro">
+                    <select th:if="${listaTeatros.size() != 0 && listaTeatros.size() != null}" class="form-select select-center" name="teatro">
                       <option SELECTED>Selecciona el teatro</option>
                       <option th:each="teatro : ${listaTeatros}" th:value="${teatro.id}" th:text="${teatro.nombre +'| '+ teatro.ubicacion}"></option>
                     </select>
+                    <p th:if="${listaTeatros.size() == 0 || listaTeatros.size() == null}" class="text-center mt-3">NO HAY FUNCIONES DISPONIBLES</p>
                     <div class="btn-center">
                       <input type="submit" class="btn btn-success" name="reservar" value="Reservar">
                       <input type="submit" class="btn btn-secondary" name="comprar" value="Comprar">

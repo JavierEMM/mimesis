@@ -6,7 +6,7 @@
     <main>
         <br>
         <div class="page-header text-center">
-            <h1>Actores</h1>
+            <h1 class="mayus">Actores</h1>
         </div>
         <br>
             <div class="container">
@@ -23,8 +23,8 @@
                 </form>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     <div class="col" th:each="actor : ${listaActores}">
-                        <div class="card shadow-sm">
-                            <img th:src="${actor.foto}" style="height: 100px ;width: 70px">
+                        <div class="card shadow-sm header-display">
+                            <img class="im-image" th:src="@{|/actores/${actor.getId()}|}">
                             <div class="card-body text-center">
                                 <p th:text="${actor.nombre}"></p>
                                 <p th:text="${actor.correo}" class="card-text"></p>

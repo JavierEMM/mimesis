@@ -6,7 +6,7 @@
     <main>
         <br>
         <div class="page-header text-center">
-            <h1>Obras</h1>
+            <h1 class="mayus">Obras</h1>
         </div>
         <br>
 
@@ -25,13 +25,11 @@
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col" th:each="funcion : ${listaObras}">
-                    <div class="card shadow-sm">
-                        <img th:src="@{/img/teatro.jpg}">
-                        <>
+                    <div class="card shadow-sm header-display">
+                        <img class="im-image" th:src="@{|/images/${funcion.getId()}|}">
                         <div class="card-body text-center">
-                            <p th:text="${funcion.nombre}"></p>
-                            <p th:text="${'+' + funcion.restricciondeedad}" class="card-text"></p>
-                            <a class="btn btn-primary" th:href="@{'/funciones/detalles'+ '?obra=' + ${funcion.nombre}}">Detalles</a>
+                            <p th:text="${funcion.nombre}+${', +' + funcion.restricciondeedad}"></p>
+                            <a class="btn btn-terc" th:href="@{'/funciones/detalles'+ '?obra=' + ${funcion.nombre}}">Detalles</a>
                         </div>
                     </div>
                 </div>

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -74,15 +75,26 @@ public class CarritoController {
     }
 
     @RequestMapping(value = "/reservar", method = RequestMethod.POST, params = "reservar")
-    public String carritoReservar(Model model, @RequestParam("obra") String nombreObra,@RequestParam("teatro") Integer teatro, RedirectAttributes attributes) throws UnsupportedEncodingException {
+    public String carritoReservar(Model model, @RequestParam("obra") String nombreObra,@RequestParam(value = "teatro",required = false) Integer teatro, RedirectAttributes attributes) throws UnsupportedEncodingException {
         Obra obra = obrasRepository.findByNombre(nombreObra);
-        Optional<Sede> sede = sedesRepository.findById(teatro);
-        List<Funcion> funcionList = funcionRepository.funcionesPorTeatro(teatro,obra.getId());
-        model.addAttribute("listaFunciones", funcionList);
-        model.addAttribute("obra", obra);
-        model.addAttribute("sede",sede.get());
-
-        return "usuario/eligefuncion";
+        if(teatro == null){
+            attributes.addFlashAttribute("alerta","alert-danger");
+            attributes.addFlashAttribute("reserva","Selecciona un teatro valido");
+            return "redirect:/funciones/detalles?obra=" + URLEncoder.encode(nombreObra,"UTF-8");
+        }else {
+            Optional<Sede> sede = sedesRepository.findById(teatro);
+            if (sede.isPresent()) {
+                List<Funcion> funcionList = funcionRepository.funcionesPorTeatro(teatro, obra.getId());
+                model.addAttribute("listaFunciones", funcionList);
+                model.addAttribute("obra", obra);
+                model.addAttribute("sede", sede.get());
+                return "usuario/eligefuncion";
+            } else {
+                attributes.addFlashAttribute("alerta", "alert-danger");
+                attributes.addFlashAttribute("reserva", "Selecciona un teatro valido");
+                return "redirect:/funciones/detalles?obra=" + URLEncoder.encode(nombreObra, "UTF-8");
+            }
+        }
     }
 
 }

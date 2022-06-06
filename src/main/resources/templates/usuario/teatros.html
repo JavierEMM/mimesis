@@ -8,7 +8,7 @@
                 <main>
                     <br>
                     <div class="page-header text-center">
-                        <h1>Teatros</h1>
+                        <h1 class="mayus">Teatros</h1>
                     </div>
                     <br>
                     <div class="container-fluid">
@@ -25,8 +25,8 @@
                     </form>
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                             <div class="col" th:each="teatro : ${listaTeatros}">
-                                <div class="card shadow-sm">
-                                    <img th:src="@{/img/teatro.jpg}">
+                                <div class="card shadow-sm header-display">
+                                    <img class="im-image" th:src="@{|/teatros/${teatro.id}|}">
                                     <div class="card-body text-center">
                                         <p th:text="${teatro.nombre}"></p>
                                         <p th:text="${teatro.ubicacion}" class="card-text"></p>
