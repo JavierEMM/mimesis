@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card-content">
                     <div class="col" th:each="director : ${listaDirectores}">
                         <div class="card shadow-sm header-display">
                             <img class="im-image" th:src="@{|/directores/${director.id}|}">
@@ -36,6 +36,8 @@
                 </div>
             </div>
     </main>
+    <div class="pages">
+    </div>
 <footer th:replace="includes/footer.html :: footer"></footer>
 </body>
 </html>

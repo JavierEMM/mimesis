@@ -1559,3 +1559,43 @@ div > .btn-success{
   color: var(--color-primary);
   background-color: var(--color-secondary);
 }
+.pages{
+  text-align: center;
+  margin: 30px 30px 60px;
+  user-select: none;
+}
+.pages li{
+  display: inline-block;
+  margin: 5px;
+  box-shadow: 0 5px 25px rgb(1 1 1 / 10%);
+}
+.pages li a{
+  color: var(--color-primary);
+  font-size: 1.2em;
+  line-height: 45px;
+  text-decoration: none;
+}
+.previous-pages, .next-pages{
+  background:var(--color-secondary);
+  width: 80px;
+  border-radius: 45px;
+  cursor: pointer;
+}
+.previous-pages:hover{
+  transform: translateX(-5px);
+}
+.next-pages:hover{
+  transform: translateX(5px);
+}
+.current-pages, .dots{
+  background: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 45px;
+}
+.active{
+  background: var(--color-secondary); ;
+}
+.disable{
+  background: #ccc;
+}
