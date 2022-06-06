@@ -11,10 +11,12 @@ import java.util.List;
 
 @Repository
 public interface BoletoRepository extends JpaRepository<Boleto,Integer> {
-    @Query(nativeQuery = true, value = "SELECT idfuncion as idsalaBoleto, count(*) as SumaBoletos from boleto where estado = 1 group by idfuncion;")
+    @Query(nativeQuery = true, value = "SELECT idfuncion as idsalaBoleto, count(estado) as SumaBoletos from boleto group by idfuncion;")
     List<DTOBoletosPorFuncion> boletosporFuncion();
-    @Query(nativeQuery = true, value = "SELECT boleto.idfuncion as idsalaBoleto, count(*) as SumaBoletos from boleto inner join funcion on boleto.idfuncion = funcion.idfuncion where estado = 1 and funcion.fecha >= ?1 and funcion.fecha <= ?2 group by boleto.idfuncion;")
-    List<DTOBoletosPorFuncion> boletosporFuncionFechas(String fechaInicio, String fechaFin);
+    @Query(nativeQuery = true, value = "SELECT boleto.idfuncion as idsalaBoleto, count(estado) as SumaBoletos from boleto inner join funcion on boleto.idfuncion = funcion.idfuncion and funcion.fecha >= ?1 and funcion.fecha <= ?2 group by boleto.idfuncion order by SumaBoletos desc;")
+    List<DTOBoletosPorFuncion> boletosporFuncionFechasMas(String fechaInicio, String fechaFin);
+    @Query(nativeQuery = true, value = "SELECT boleto.idfuncion as idsalaBoleto, count(estado) as SumaBoletos from boleto inner join funcion on boleto.idfuncion = funcion.idfuncion and funcion.fecha >= ?1 and funcion.fecha <= ?2 group by boleto.idfuncion order by SumaBoletos asc;")
+    List<DTOBoletosPorFuncion> boletosporFuncionFechasMenos(String fechaInicio, String fechaFin);
     @Query(nativeQuery = true, value = "SELECT costo from funcion order by idfuncion;")
     List<Double> costoPorFuncion();
 
