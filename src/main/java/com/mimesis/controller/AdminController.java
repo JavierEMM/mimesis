@@ -186,24 +186,25 @@ public class AdminController {
                 String resultUbicacion2 =i.getUbicacion().replace(" ","").replace(".","");
                 if (result.equalsIgnoreCase(result2) && resultUbicacion.equalsIgnoreCase(resultUbicacion2)) {
                     if(i.getValido()){
-                        attr.addFlashAttribute("msg","La sede ya ha sido creada previamente");
-                        attr.addFlashAttribute("opcion","alert-danger");
-                        return "redirect:/admin/sedes";
+                        if(sede.getId() == null){
+                            attr.addFlashAttribute("msg","La sede ya ha sido creada previamente");
+                            attr.addFlashAttribute("opcion","alert-danger");
+                            return "redirect:/admin/sedes";
+                        }
                     }
 
                 }
             }
-
-            sedesRepository.save(sede);
             try {
                 for (MultipartFile file1 : file) {
                     System.out.println(file1);
                     Foto foto = new Foto();
                     foto.setFoto(file1.getBytes());
                     foto.setIdsede(sede);
-                    String msg = "sede " + (foto.getId() == null ? "creada " : "actualizada  ") + "exitosamente";
+                    String msg = "sede " + (sede.getId() == null ? "creada " : "actualizada  ") + "exitosamente";
                     attr.addFlashAttribute("msg", msg);
                     attr.addFlashAttribute("opcion", "alert-success");
+                    sedesRepository.save(sede);
                     fotoRepository.save(foto);
                 }
                 return "redirect:/admin/sedes";
@@ -243,11 +244,13 @@ public class AdminController {
     }
 
     @GetMapping("/editarsedes")
-    public String paginaEditarsedes(@RequestParam("id") Integer id, Model model){
+    public String paginaEditarsedes(@RequestParam("id") Integer id,Model model){
         Optional<Sede> optionalSede = sedesRepository.findById(id);
         if(optionalSede.isPresent()){
             Sede sede = optionalSede.get();
             model.addAttribute("sede",sede);
+            List<Foto> fotoList = fotoRepository.listaFotosxSede(id);
+            model.addAttribute("files",fotoList);
             return "admin/editarsedes";
         } else {
             return "redirect:/admin/sedes";

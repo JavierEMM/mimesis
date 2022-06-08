@@ -11,7 +11,7 @@
             <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 400px; text-align: center">
                 <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
                     <h1 class="pb-2 mb-4 border-bottom">Editar Sedes</h1>
-                    <form method="post" th:action="@{'/admin/savesedesNoImagen'}" th:object="${sede}" enctype="multipart/form-data">
+                    <form method="post" th:action="@{'/admin/savesedes'}" th:object="${sede}" enctype="multipart/form-data">
                         <input type="hidden" th:field="*{id}"/>
                         <input type="hidden" th:field="*{nombre}"/>
                         <div class="mb-3">
@@ -20,11 +20,48 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('ubicacion')}"
                                  th:errors="*{ubicacion}"></div>
                         </div>
+                        <div class="mb-3 vertical-align">
+                            <label class="form-label">Fotos</label>
+                            <p th:if="${errorFoto!=null}" style="color: #dc3545;font-size: .875em;"> Debe ingresar al menos una foto<p>
+                            <input class="form-control" style="color: transparent; width: 146px;  height: 40px;" type="file" accept="image/*" id="files" name="files[]" value="files" multiple>
+                            <br>
+                            <br>
+                            <span><i id="list"></i></span>
+                        </div>
                         <a th:href="@{'/admin/sedes'}" class="btn btn-danger">Cancelar</a>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
                 </section>
             </div>
         </main>
+        <script>
+            $(document).ready(function() {
+                if (window.File && window.FileList && window.FileReader) {
+                    $("#files").on("change", function(e) {
+                        var files = e.target.files,
+                            filesLength = files.length;
+                        for (var i = 0; i < filesLength; i++) {
+                            var f = files[i]
+                            var fileReader = new FileReader();
+                            fileReader.onload = (function(e) {
+                                var file = e.target;
+                                $("<div class=\"img-thumb-wrapper card shadow\">" +
+                                    "<img class=\"img-thumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                                    "<br/><span class=\"remove\">Remove</span>" +
+                                    "</div>").insertAfter("#files");
+                                $(".remove").click(function(){
+                                    $(this).parent(".img-thumb-wrapper").remove();
+                                });
+
+                            });
+                            fileReader.readAsDataURL(f);
+                        }
+                        console.log(files);
+                    });
+                } else {
+                    alert("Your browser doesn't support to File API")
+                }
+            });
+        </script>
     </body>
 </html>
