@@ -32,14 +32,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String nombre = customOAuth2User.getFirstName();
         String apellido = customOAuth2User.getLastName();
         Boolean verified = customOAuth2User.getVerification();
-        System.out.println("email: " + email);
-        System.out.println("nombre: " + nombre);
-        System.out.println("apellido: " + apellido);
-        System.out.println("verified: " + verified);
         if (usuario == null) {
             usuario = new Usuario(nombre, apellido, email, "Cliente", verified, "GOOGLE");
             usuario.setToken(null);
-            session.setAttribute("usuario", usuario);
         } else {
             System.out.println("HOLA CAUSA");
             //update user
@@ -50,6 +45,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             usuario.setApellido(apellido);
             usuarioRepository.save(usuario);
         }
+        session.setAttribute("usuario", usuario);
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }

@@ -12,8 +12,10 @@
                 <div id="contenedor2" class="row header-display fondo">
                     <div class="col-md-4">
 
-                        <img height="400" width="250"
+                        <img height="400" width="250" th:if="${session.usuario.fotoperfil!=null}"
                              th:src="@{|image/${session.usuario.id}|}">
+                        <img height="400" width="250" th:if="${session.usuario.fotoperfil==null}"
+                             th:src="@{/img/noimage.png}">
                     </div>
                     <div class="col-md-6">
                         <div class="table-responsive" sec:authorize="isAuthenticated()">
