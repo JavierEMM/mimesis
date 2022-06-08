@@ -18,7 +18,7 @@ public interface DirectorRepository extends JpaRepository<Director,Integer> {
     @Query(nativeQuery = true, value = "SELECT  * FROM director WHERE nombre like %?1%")
     List<Director> busquedaDirectorporNombre(String nombre);
 
-    @Query(value = "select iddirector from calificaciones;",nativeQuery = true)
+    @Query(value = "select iddirector from calificaciones where iddirector is not null;",nativeQuery = true)
     List<Integer> obtenerIdCalificacion();
 
     @Query(nativeQuery = true, value = "SELECT d.nombre as 'nombre_director', o.nombre as 'nombre_obra', c.calificacion as 'calificacion' FROM director d\n" +

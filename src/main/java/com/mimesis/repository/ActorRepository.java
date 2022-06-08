@@ -17,7 +17,7 @@ public interface ActorRepository extends JpaRepository<Actor,Integer> {
     @Query(nativeQuery = true, value = "SELECT  * FROM actor WHERE nombre like %?1%")
     List<Actor> busquedaActorporNombre(String nombre);
 
-    @Query(value = "select idactor from calificaciones;",nativeQuery = true)
+    @Query(value = "select idactor from calificaciones where idactor is not null;",nativeQuery = true)
     List<Integer> obtenerIdCalificacion();
 
     @Query(nativeQuery = true, value = "SELECT a.nombre as 'nombre_actor', o.nombre as 'nombre_obra', c.calificacion as 'calificacion' FROM actor a\n" +

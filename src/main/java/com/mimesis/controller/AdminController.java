@@ -382,11 +382,13 @@ public class AdminController {
         Optional<Actor> optionalActor = actorRepository.findById(id);
         if(optionalActor.isPresent()){
             List<Integer> listaCalificaciones = actorRepository.obtenerIdCalificacion();
-            for(int i: listaCalificaciones){
-                if(i == id){
-                    attr.addFlashAttribute("msg","El actor presenta calificaciones");
-                    attr.addFlashAttribute("opcion","alert-danger");
-                    return "redirect:/admin/actores";
+            if(listaCalificaciones.size() != 0){
+                for(int i: listaCalificaciones){
+                    if(i == id){
+                        attr.addFlashAttribute("msg","El actor presenta calificaciones");
+                        attr.addFlashAttribute("opcion","alert-danger");
+                        return "redirect:/admin/actores";
+                    }
                 }
             }
             Actor actor = optionalActor.get();
@@ -489,11 +491,13 @@ public class AdminController {
         Optional<Director> optionalDirector = directorRepository.findById(id);
         if(optionalDirector.isPresent()){
             List<Integer> listaCalificaciones = directorRepository.obtenerIdCalificacion();
-            for(int i: listaCalificaciones){
-                if(i == id){
-                    attr.addFlashAttribute("msg","El director presenta calificaciones");
-                    attr.addFlashAttribute("opcion","alert-danger");
-                    return "redirect:/admin/directores";
+            if(listaCalificaciones.size()!=0){
+                for(int i: listaCalificaciones){
+                    if(i == id){
+                        attr.addFlashAttribute("msg","El director presenta calificaciones");
+                        attr.addFlashAttribute("opcion","alert-danger");
+                        return "redirect:/admin/directores";
+                    }
                 }
             }
             Director director = optionalDirector.get();
