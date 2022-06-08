@@ -2,18 +2,20 @@ package com.mimesis.controller;
 
 import com.mimesis.entity.Foto;
 import com.mimesis.entity.Usuario;
+import com.mimesis.google.CustomOAuth2User;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,20 +36,35 @@ public class UsuarioController {
     UsuarioRepository usuarioRepository;
 
     @GetMapping(value={"","/"})
-    public String paginaPrincipal(Model model, HttpSession session){
+    public String paginaPrincipal(@ModelAttribute("usuario") Usuario usuario, Model model, HttpSession session, Authentication auth, RedirectAttributes attr) {
         Usuario usuario1 = (Usuario) session.getAttribute("usuario");
-        model.addAttribute("Cliente", usuario1);
-        session.setAttribute("usuario1",usuario1);
+        if (usuario1 != null) {
+            if(usuario1.getAuthprovider().equals("GOOGLE")){
+               if(usuario1.getRol().equals("Admin") || usuario1.getRol().equals("Operador")){
+                   auth.setAuthenticated(false);
+                   session.invalidate();
+                   attr.addFlashAttribute("mensaje","Ingrese por el usuario y contraseña establecido por la empresa");
+                   return "redirect:/login";
+               }
+            }
+            model.addAttribute("cliente", usuario1);
+            if (usuario1.getId() == null) {
+                return "login/registrogoogle";
+
+            } else {
+                model.addAttribute("cliente", usuario1);
+                return "usuario/main";
+            }
+        }
         return "usuario/main";
     }
 
     @GetMapping("/perfil")
     public String perfil(Model model, HttpSession session){
-        Usuario usuario2 = (Usuario) session.getAttribute("usuario1");
+        Usuario usuario2 = (Usuario) session.getAttribute("usuario");
         model.addAttribute("Cliente", usuario2);
-        System.out.println("Hasta aquí si llega");
-        if(usuario2.getDireccion()==null || usuario2.getDni()==null || usuario2.getFotoperfil()==null){
-            return "usuario/perfilprimeravez";
+        if(usuario2.getFotoperfil()==null){
+            return "usuario/perfil";
         }
         return "usuario/perfil";
     }

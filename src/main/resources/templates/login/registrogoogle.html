@@ -10,12 +10,12 @@
                 <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; color: white;box-shadow: 7px 13px 37px #000;">
                     <h1 class="border-bottom" style="color:crimson"><b>Registro</b></h1>
                     <br>
-                    <form method="POST" th:object="${usuario}" th:action="@{/registrar}">
+                    <form method="POST" th:object="${cliente}" th:action="@{/registrargoogle}" >
                         <div class="row">
                             <div class="col-md-6 mb-4">
-                                <div class="form-outline">
+                                <div class="form-outline" >
                                     <label class="form-label">Nombres </label>
-                                    <input class="form-control" th:classappend="${#fields.hasErrors('nombre') ?'is-invalid':''}" type="text" th:field="*{nombre}" placeholder="Nombres"/>
+                                    <input class="form-control" th:classappend="${#fields.hasErrors('nombre') ?'is-invalid':''}" type="text" th:field="*{nombre}" />
                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
                                          th:errors="*{nombre}">
                                     </div>
@@ -24,7 +24,7 @@
                             <div class="col-md-6 mb-4">
                                 <div class="form-outline">
                                     <label class="form-label">Apellidos </label>
-                                    <input class="form-control" th:classappend="${#fields.hasErrors('apellido')?'is-invalid':''}" type="text" th:field="*{apellido}" placeholder="Apellidos"/>
+                                    <input class="form-control" th:classappend="${#fields.hasErrors('apellido')?'is-invalid':''}" type="text" th:field="*{apellido}" />
                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('apellido')}"
                                          th:errors="*{apellido}">
                                     </div>
@@ -52,7 +52,7 @@
 
                         <div class="form-outline mb-4">
                             <label class="form-label">Correo</label>
-                            <input class="form-control" th:classappend="${(#fields.hasErrors('correo') || emailerror != null) ?'is-invalid':''}" type="email" th:field="*{correo}"  placeholder="Correo"/>
+                            <input class="form-control" th:classappend="${(#fields.hasErrors('correo') || emailerror != null) ?'is-invalid':''}" type="email" th:field="*{correo}"  />
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('correo')}"
                                  th:errors="*{correo}">
                             </div>
@@ -60,28 +60,6 @@
                                  th:text="${emailerror}">
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-4 pb-2">
-                                <div class="form-outline">
-                                    <label class="form-label">Contraseña</label>
-                                    <input class="form-control" th:classappend="${#fields.hasErrors('contrasena')?'is-invalid':''}" type="password" th:field="*{contrasena}"/>
-                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('contrasena')}"
-                                         th:errors="*{contrasena}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-4 pb-2">
-                                <div class="form-outline">
-                                    <label class="form-label">Repita su contraseña</label>
-                                    <input class="form-control" th:classappend="${#fields.hasErrors('contrasena')?'is-invalid':''}" type="password" name="re_contrasena" id="re_contrasena" oninput="check(this)">
-                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('contrasena')}"
-                                         th:errors="*{contrasena}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="row">
                             <div class="col-md-6 mb-4 pb-2">
                                 <div class="form-outline mb-4">
@@ -101,21 +79,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="d-flex align-items-center justify-content-center pb-4">
-                            <div  class="btn btn-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-google" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                    <path d="M17.788 5.108a9 9 0 1 0 3.212 6.892h-8" />
-                                </svg>
-                                <a class="google" th:href="@{/oauth2/authorization/google}">Continuar con Google</a>
-                            </div>
-                        </div>
 
+
+                        </div>
                         <div class="row">
                             <div class="col-md-6 mb-4">
-                                <a><button style="width:150px" type="submit" class="btn btn-primary">Registrar</button></a>
+                                <a><button style="width:150px" type="submit" class="btn btn-primary">Terminar Registro</button></a>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <a href="/login" style="width:150px" class="btn btn-danger">Cancelar</a>

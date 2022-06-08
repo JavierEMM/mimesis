@@ -74,7 +74,6 @@ public class LoginController {
         Usuario usuario;
         try{
             CustomOAuth2User customOAuth2User = (CustomOAuth2User) auth.getPrincipal();
-            System.out.println("Nombre: "+customOAuth2User.getEmail());
             usuario = usuarioRepository.findByCorreo(customOAuth2User.getEmail());
             if(usuario.getRol().equals("Operador") || usuario.getRol().equals("Admin")){
                 auth.setAuthenticated(false);
@@ -83,7 +82,6 @@ public class LoginController {
                 return "login/login";
             }
         }catch (Exception exception){
-            System.out.println("Nombre: "+auth.getName());
             usuario = usuarioRepository.findByCorreo(auth.getName());
             if(usuario.getEmailconfirm() == false){
                 auth.setAuthenticated(false);
@@ -93,9 +91,8 @@ public class LoginController {
             }
         }
         session.setAttribute("usuario",usuario);
-        if (usuario.getRol().equals("Cliente")) {
+        if(usuario.getRol().equals("Cliente")) {
             ArrayList<DTOcarrito> carrito = new ArrayList<>();
-            System.out.println("ASDASDASD");
             session.setAttribute("carrito",carrito);
             session.setAttribute("ncarrito",carrito.size());
             return "redirect:/";
@@ -241,4 +238,26 @@ public class LoginController {
         mimeMessageHelper.setText(message2,true);
         javaMailSender.send(mimeMessage);
     }
+
+
+    @PostMapping("/registrargoogle")
+    public String registrargoogle(@ModelAttribute("cliente") @Valid Usuario usuario, BindingResult bindingResult, RedirectAttributes attributes, HttpServletRequest request, Model model) throws MessagingException, UnsupportedEncodingException {
+        if(bindingResult.hasErrors()){
+            return "login/registrogoogle";
+        }else{
+            Usuario usuarioconfirm = usuarioRepository.findByCorreo(usuario.getCorreo());
+            System.out.println("tamarindo1");
+            if(usuarioconfirm != null){
+                model.addAttribute("emailerror","Credenciales ya registradas");
+                return "login/registrogoogle";
+            }else{
+                usuario.setRol("Cliente");
+                usuario.setAuthprovider("GOOGLE");
+                usuarioRepository.save(usuario);
+                return "redirect:/redirectByRole";
+            }
+        }
+    }
+
+
 }
