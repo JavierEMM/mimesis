@@ -393,16 +393,16 @@ public class OperadorController {
 
 
     @PostMapping("/save")
-    public String newFuncion (@ModelAttribute("funcion")@Valid Funcion funcion, BindingResult bindingResult, Model model, @RequestParam("actoresObra") Optional<List<Actor>> actoresObra) throws IOException {
+    public String newFuncion (@ModelAttribute("funcion") @Valid Funcion funcion, BindingResult bindingResult, Model model, @RequestParam("actoresObra") Optional<List<Actor>> actoresObra) throws IOException {
         System.out.println("entro al controller");
         System.out.println(bindingResult.getAllErrors());
+        model.addAttribute("listaActores",actorRepository.findAll());
+        model.addAttribute("listaObras",obrasRepository.findAll());
+        model.addAttribute("listaDirectores",directorRepository.findAll());
+        model.addAttribute("listaSedes",sedesRepository.findAll());
+        model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
+        model.addAttribute("listaGeneros",generoRepository.findAll());
         if(bindingResult.hasErrors() || !actoresObra.isPresent()|| funcion.getHorainicio().compareTo(funcion.getHorafin())>0 ){
-            model.addAttribute("listaActores",actorRepository.findAll());
-            model.addAttribute("listaObras",obrasRepository.findAll());
-            model.addAttribute("listaDirectores",directorRepository.findAll());
-            model.addAttribute("listaSedes",sedesRepository.findAll());
-            model.addAttribute("listaSalas",salasRepository.findAll(Sort.by("idsede")));
-            model.addAttribute("listaGeneros",generoRepository.findAll());
             System.out.println("entro al primer if");
 
             if(!actoresObra.isPresent()){
@@ -420,14 +420,11 @@ public class OperadorController {
                     model.addAttribute("errorAforo","Debe elegir un aforo menor o igual al de la sala seleccionada: "+funcion.getIdsala().getAforo());
                 }
             }
-
             if(funcion.getId()==0){
                 return "operador/funcionFrm";
             }else{
                 return "operador/editarFrm";
             }
-
-
 
         }else{
             if(funcion.getAforo()>funcion.getIdsala().getAforo()){
@@ -440,7 +437,6 @@ public class OperadorController {
             funcionRepository.save(funcion);
             return "redirect:/operador";
         }
-
     }
 
 

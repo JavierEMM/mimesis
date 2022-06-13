@@ -21,7 +21,7 @@ public class Sala {
     @Column(name = "aforo", nullable = false)
     private Integer aforo;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "idsede", nullable = false)
     private Sede idsede;
 

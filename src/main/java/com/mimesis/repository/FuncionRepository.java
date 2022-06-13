@@ -1,6 +1,7 @@
 package com.mimesis.repository;
 
 import com.mimesis.dto.DTOBoletosPorFuncion;
+import com.mimesis.dto.DTOBoletosValidos;
 import com.mimesis.dto.DTOTotalBoletosPorFuncion;
 import com.mimesis.entity.Funcion;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,5 +33,11 @@ public interface FuncionRepository extends JpaRepository<Funcion,Integer> {
 
     @Query(value="SELECT * FROM mimesis.funcion where fecha >= ?1 and fecha <= ?2 order by fecha asc;",nativeQuery = true)
     List<Funcion> listaBuscarFuncionesFecha(String fInicio,String fFin);
+
+    @Query(nativeQuery = true,value = "SELECT f.idfuncion,f.fecha,f.aforo,f.horainicio,f.iddirector,f.horafin,f.costo,f.idsala,f.valido,f.obras_idobras as 'idobras',(f.aforo-count(b.estado)) as 'boletos' " +
+            "FROM mimesis.boleto b INNER JOIN funcion f ON f.idfuncion = b.idfuncion INNER JOIN sala sa ON sa.idsala = f.idsala INNER JOIN sede se ON se.idsede = sa.idsede " +
+            "WHERE se.idsede = ?1 and f.obras_idobras = ?2 and cast(now() AS datetime) < cast(concat(f.fecha,' ',f.horafin) AS datetime) group by b.idfuncion")
+    List<DTOBoletosValidos> listaFuncionesValidos(Integer idSede, Integer idObra);
+
 
 }

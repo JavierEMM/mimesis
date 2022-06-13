@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+    <head th:replace="includes/head.html :: head">MIMESIS</head>
+    <body style="background-color: white;">
+        <header th:replace="includes/navbar.html :: navbar(option='Historial')"></header>
+        <div class="main">
+            <section class="sign-in">
+                <div class="container">
+                    <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 600px; text-align: center">
+                        <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; color: white;box-shadow: 7px 13px 37px #000;">
+                            <h1 class="border-bottom" style="color:crimson"><b>Validacion de tarjeta</b></h1>
+                            <br>
+                            <form method="POST" th:action="@{/carrito/confirmarcompra}" th:object="${datosTarjeta}">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class="form-label">Nombre</label>
+                                            <input th:field="*{nombre}" class="form-control" type="text" placeholder="Nombre"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class="form-label">Apellido </label>
+                                            <input th:field="*{apellido}" class="form-control" type="text" placeholder="Apellido"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row ">
+                                    <div class="col-md-12 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label">Numero de tarjeta</label>
+                                            <input th:field="*{numeroTarjeta}" class="form-control" type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label">Fecha de Vencimiento</label>
+                                            <input th:field="*{fechaVencimiento}" class="form-control" type="month" placeholder="mm/YY"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4 pb-2">
+                                        <div class="form-outline">
+                                            <label class="form-label">CVV</label>
+                                            <input th:field="*{codigo}" class="form-control" type="number">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-4 pb-2">
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label">Correo</label>
+                                            <input th:field="*{email}" class="form-control form-control" type="email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-4 pb-2">
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label">Monto a pagar</label>
+                                            <input disabled th:value="${session.precioTotal}" class="form-control form-control" type="email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <a><button style="width:150px" type="submit" class="btn btn-primary">Aceptar</button></a>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <a th:href="@{/carrito}" style="width:150px" class="btn btn-danger">Cancelar</a>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+</html>

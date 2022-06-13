@@ -10,8 +10,15 @@ public class Boleto {
     @Column(name = "idboleto", nullable = false)
     private Integer id;
 
+    public Boleto(Boolean estado, Funcion idfuncion, Usuario idusuario, String codigoaleatorio) {
+        this.estado = estado;
+        this.idfuncion = idfuncion;
+        this.idusuario = idusuario;
+        this.codigoaleatorio = codigoaleatorio;
+    }
+
     @Column(name = "estado", nullable = false, length = 45)
-    private String estado;
+    private Boolean estado;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idfuncion", nullable = false)
@@ -23,6 +30,10 @@ public class Boleto {
 
     @Column(name = "codigoaleatorio", nullable = false, length = 45)
     private String codigoaleatorio;
+
+    public Boleto() {
+
+    }
 
     public String getCodigoaleatorio() {
         return codigoaleatorio;
@@ -48,11 +59,11 @@ public class Boleto {
         this.idfuncion = idfuncion;
     }
 
-    public String getEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 

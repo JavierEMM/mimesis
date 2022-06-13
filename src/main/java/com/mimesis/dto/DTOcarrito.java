@@ -10,7 +10,6 @@ public class DTOcarrito {
     private Integer cantidad;
     private Double costoTotal;
 
-
     public Funcion getFuncion() {
         return funcion;
     }

@@ -47,7 +47,7 @@ public class Funcion {
     @NotNull(message = "Debe ingresar un valor")
     private Double costo;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "idsala", nullable = false)
     @NotNull(message = "Debe seleccionar una sala")
     private Sala idsala;
