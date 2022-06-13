@@ -1,6 +1,7 @@
 package com.mimesis.repository;
 
 import com.mimesis.dto.ClientesporSedeDTO;
+import com.mimesis.dto.DTOHistorial;
 import com.mimesis.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,6 +32,17 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
     @Query(value="INSERT INTO usuario (nombre, apellido, correo, contrasena, rol, valido, emailconfirm)\n" +
             "VALUES (?1,?2,?3,?4,?5,1,1);",nativeQuery = true)
     void agregarOperadores(String nombre,String apellido, String correo, String contrasena, String rol);
+
+
+    @Query(nativeQuery = true, value = "Select c.nombre as nombreobra, b.horainicio, count(a.idboleto) as cant,e.nombre as nombresede, a.estado from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +
+            "            left join obras c on b.obras_idobras = c.idobras\n" +
+            "            left join sala d on b.idsala = d.idsala\n" +
+            "            left join sede e on d.idsede = e.idsede\n" +
+            "            where a.idusuario =?1 group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
+    List<DTOHistorial> ObtenerHistorial(Integer id);
+
+
+
 
 
 

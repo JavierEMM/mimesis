@@ -1,6 +1,9 @@
 package com.mimesis.controller;
 
+import com.mimesis.dto.DTOHistorial;
+import com.mimesis.entity.Boleto;
 import com.mimesis.entity.Foto;
+import com.mimesis.entity.Funcion;
 import com.mimesis.entity.Usuario;
 import com.mimesis.google.CustomOAuth2User;
 import com.mimesis.repository.*;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +38,10 @@ public class UsuarioController {
     FuncionRepository funcionRepository;
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    BoletoRepository boletoRepository;
+
 
     @GetMapping(value={"","/"})
     public String paginaPrincipal(@ModelAttribute("usuario") Usuario usuario, Model model, HttpSession session, Authentication auth, RedirectAttributes attr) {
@@ -92,7 +100,7 @@ public class UsuarioController {
         try{
             usuario.setFotoperfil(file.getBytes());
             usuario.setDireccion(direccion);
-           // usuario.setFechanacimiento(fechanacimiento);
+           //usuario.setFechanacimiento(fechanacimiento);
             usuario.setNumerotelefonico(tel);
 
             usuarioRepository.save(usuario);
@@ -118,15 +126,12 @@ public class UsuarioController {
     @GetMapping("image/{id}")
     public ResponseEntity<byte[]> mostrarImagen(@PathVariable("id") int id,HttpSession session){
         Optional<Usuario> opt = usuarioRepository.findById(id);
-        System.out.println(opt);
-        System.out.println("aqui");
-        System.out.println(id);
+
         if(opt.isPresent()){
             Usuario u = opt.get();
 
             byte[] imagenComoBytes = u.getFotoperfil();
-            System.out.println(imagenComoBytes);
-            System.out.println(id);
+
             return new ResponseEntity<>(imagenComoBytes, HttpStatus.OK);
         }else{
             return null;
@@ -142,12 +147,22 @@ public class UsuarioController {
 
 
     @GetMapping("/historial")
-    public String historialCompra(){
+    public String historialCompra(Model model, HttpSession session){
+        Usuario usuario2 = (Usuario) session.getAttribute("usuario");
+        System.out.println(usuario2.getId());
+
+
+        model.addAttribute("Cliente", usuario2);
+
+
+        model.addAttribute("listaHistorial",usuarioRepository.ObtenerHistorial(usuario2.getId()));
+
         return "usuario/historial";
     }
 
     @GetMapping("/calificacion")
     public String calificacion(){
+
         return "usuario/calificacion";
     }
 
