@@ -1,53 +1,59 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       xmlns:sec="http://www.w3.org/1999/xhtml">
-    <head th:replace="includes/head.html :: head">MIMESIS</head>
-    <body>
-        <header th:replace="/includes/navbar.html :: navbar(option='Historial')" id="header" class="d-flex align-items-center">
-        </header>
-        <div class='container container-app'>
-            <main>
-                    <br>
-                    <div class="page-header text-center">
-                        <h1 class="mayus">HISTORIAL DE FUNCIONES</h1>
-                    </div>
-            <div class="row">
-                <div class="col" sec:authorize="isAuthenticated()">
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr >
-                                <th style="text-align: center;" scope="col" >#</th>
-                                <th style="text-align: center;" scope="col">Funcion</th>
-                                <th style="text-align: center;" scope="col" >Fecha/Hora</th>
-                                <th style="text-align: center;" scope="col" >#Tickets</th>
-                                <th style="text-align: center;" scope="col" >Sede</th>
-                                <th style="text-align: center;" scope="col" >Costo</th>
-                                <th style="text-align: center;" scope="col" >Estado</th>
-                                <th style="text-align: center;" scope="col">Calificacion</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="datos,i: ${listaHistorial}">
-                                <td style="text-align: center;" th:text="${i.index + 1}"></td>
-                                <td style="text-align: center;" th:text="${datos.nombrefuncion}"></td>
-                                <td style="text-align: center;" th:text="${datos.horainicio}"></td>
-                                <td style="text-align: center;" th:text="${datos.horainicio}"></td>
-                                <td style="text-align: center;" th:text="${datos.cantTickets}"></td>
-                                <td style="text-align: center;">S/ 50</td>
-                                <td th:text="${datos.estado.equals(1) ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
-                                <td>
-                                    <button th:if="${datos.estado.equals(1)}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion'}">
-                                      Calificacion
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            </main>
+<head th:replace="includes/head.html :: head">MIMESIS</head>
+<body>
+<header th:replace="/includes/navbar.html :: navbar(option='Historial')" id="header" class="d-flex align-items-center">
+</header>
+<div class='container container-app'>
+    <main>
+        <br>
+        <div class="page-header text-center">
+            <h1 class="mayus">HISTORIAL DE FUNCIONES</h1>
         </div>
+        <div class="row">
+            <div class="col" sec:authorize="isAuthenticated()">
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr >
+                        <th style="text-align: center;" scope="col" >#</th>
+                        <th style="text-align: center;" scope="col">Funcion</th>
+                        <th style="text-align: center;" scope="col">Sede</th>
+                        <th style="text-align: center;" scope="col">Sala</th>
+                        <th style="text-align: center;" scope="col" >Fecha</th>
+                        <th style="text-align: center;" scope="col" >Hora Inicio</th>
+                        <th style="text-align: center;" scope="col" >Hora Fin</th>
+                        <th style="text-align: center;" scope="col" >#Tickets</th>
+                        <th style="text-align: center;" scope="col" >Costo</th>
+                        <th style="text-align: center;" scope="col" >Estado</th>
+                        <th style="text-align: center;" scope="col">Calificacion</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="datos,i: ${listaHistorial}">
+                        <td style="text-align: center;" th:text="${i.index + 1}"></td>
+                        <td style="text-align: center;" th:text="${datos.getNombreobra()}"></td>
+                        <td style="text-align: center;" th:text="${datos.getNombresede()}"></td>
+                        <td style="text-align: center;" th:text="${datos.getNombresala()}"></td>
+                        <td style="text-align: center;" th:text="${datos.getFecha()}"></td>
+                        <th style="text-align: center;" th:text="${datos.getHorainicio()}" ></th>
+                        <th style="text-align: center;" th:text="${datos.getHorafin()}" ></th>
+                        <th style="text-align: center;" th:text="${datos.getCantidad()}" ></th>
+                        <th></th>
+                        <td th:text="${datos.getEstado() ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
+                        <td>
+                            <button th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion'}">
+                                Calificacion
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
 
-        <footer th:replace="/includes/footer.html :: footer"></footer>
-    </body>
+<footer th:replace="/includes/footer.html :: footer"></footer>
+</body>
 </html>

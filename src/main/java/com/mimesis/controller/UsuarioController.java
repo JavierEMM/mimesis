@@ -1,11 +1,7 @@
 package com.mimesis.controller;
 
 import com.mimesis.dto.DTOHistorial;
-import com.mimesis.entity.Boleto;
-import com.mimesis.entity.Foto;
-import com.mimesis.entity.Funcion;
-import com.mimesis.entity.Usuario;
-import com.mimesis.google.CustomOAuth2User;
+import com.mimesis.entity.*;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -146,16 +141,18 @@ public class UsuarioController {
     }
 
 
+
     @GetMapping("/historial")
     public String historialCompra(Model model, HttpSession session){
         Usuario usuario2 = (Usuario) session.getAttribute("usuario");
         System.out.println(usuario2.getId());
-
-
-        model.addAttribute("Cliente", usuario2);
-
-
-        model.addAttribute("listaHistorial",usuarioRepository.ObtenerHistorial(usuario2.getId()));
+        List<DTOHistorial> lista = usuarioRepository.ObtenerHistorial(usuario2.getId());
+        System.out.println("hola");
+        System.out.println(lista.size());
+        System.out.println(lista.get(0).getEstado());
+        System.out.println("bye");
+        System.out.println(usuarioRepository.ObtenerHistorial(usuario2.getId()));
+        model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorial(usuario2.getId()));
 
         return "usuario/historial";
     }
