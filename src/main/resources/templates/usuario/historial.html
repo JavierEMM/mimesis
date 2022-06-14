@@ -36,10 +36,10 @@
                         <td style="text-align: center;" th:text="${datos.getNombresede()}"></td>
                         <td style="text-align: center;" th:text="${datos.getNombresala()}"></td>
                         <td style="text-align: center;" th:text="${datos.getFecha()}"></td>
-                        <th style="text-align: center;" th:text="${datos.getHorainicio()}" ></th>
-                        <th style="text-align: center;" th:text="${datos.getHorafin()}" ></th>
-                        <th style="text-align: center;" th:text="${datos.getCantidad()}" ></th>
-                        <th></th>
+                        <th style="text-align: center;" th:text="${datos.getHorainicio()}"></th>
+                        <th style="text-align: center;" th:text="${datos.getHorafin()}"></th>
+                        <th style="text-align: center;" th:text="${datos.getCantidad()}"></th>
+                        <th style="text-align: center;" th:text="${datos.getCostototal()}"></th>
                         <td th:text="${datos.getEstado() ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
                         <td>
                             <button th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion'}">

@@ -12,4 +12,6 @@ public interface DTOHistorial {
     String getNombresede();
     String getNombresala();
     String getEstado();
+
+    String getCostototal();
 }
