@@ -14,4 +14,6 @@ public interface DTOHistorial {
     String getEstado();
 
     String getCostototal();
+
+    Integer getFuncionid();
 }

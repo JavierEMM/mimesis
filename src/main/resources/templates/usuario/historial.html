@@ -42,9 +42,9 @@
                         <th style="text-align: center;" th:text="${datos.getCostototal()}"></th>
                         <td th:text="${datos.getEstado() ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
                         <td>
-                            <button th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion'}">
+                            <a th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${datos.getFuncionid()}}">
                                 Calificacion
-                            </button>
+                            </a>
                         </td>
                     </tr>
                     </tbody>

@@ -1,20 +1,21 @@
 package com.mimesis.controller;
 
+import com.mimesis.entity.Foto;
 import com.mimesis.entity.Funcion;
 import com.mimesis.entity.Obra;
 import com.mimesis.entity.Sede;
+import com.mimesis.repository.FotoRepository;
 import com.mimesis.repository.FuncionRepository;
 import com.mimesis.repository.ObrasRepository;
 import com.mimesis.repository.SedesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -30,6 +31,8 @@ public class FuncionController {
     ObrasRepository obrasRepository;
     @Autowired
     FuncionRepository funcionRepository;
+    @Autowired
+    FotoRepository fotoRepository;
 
     @GetMapping("")
     public String paginaFunciones(@RequestParam(value = "search",required = false) String search,Model model){
@@ -57,6 +60,19 @@ public class FuncionController {
         model.addAttribute("obra",obra1);
         model.addAttribute("listaTeatros",sedes);
         return "usuario/detallesFuncion";
+    }
+
+    @GetMapping("/obras/{id}")
+    public ResponseEntity<byte[]> imagesMostrar(@PathVariable("id") int id){
+        System.out.println(id);
+        List<Foto> fotos = fotoRepository.listaFotosxActor(id);
+        if(fotos != null){
+            return new ResponseEntity<>(
+                    fotos.get(0).getFoto(), HttpStatus.OK
+            );
+        }else{
+            return null;
+        }
     }
 
 }

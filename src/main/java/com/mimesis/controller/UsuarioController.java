@@ -1,5 +1,8 @@
 package com.mimesis.controller;
 
+import com.mimesis.dto.DTOCalificacionActor;
+import com.mimesis.dto.DTOCalificacionDirector;
+import com.mimesis.dto.DTOCalificacionObra;
 import com.mimesis.dto.DTOHistorial;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
@@ -119,7 +122,7 @@ public class UsuarioController {
     }
 
     @GetMapping("image/{id}")
-    public ResponseEntity<byte[]> mostrarImagen(@PathVariable("id") int id,HttpSession session){
+    public ResponseEntity<byte[]> mostrarImagen(@PathVariable("id") int id){
         Optional<Usuario> opt = usuarioRepository.findById(id);
 
         if(opt.isPresent()){
@@ -150,13 +153,6 @@ public class UsuarioController {
 
         return "usuario/historial";
     }
-
-    @GetMapping("/calificacion")
-    public String calificacion(){
-
-        return "usuario/calificacion";
-    }
-
     @GetMapping("/images/{id}")
     public ResponseEntity<byte[]> imagesMostrar(@PathVariable("id") int id){
         List<Foto> fotos = fotoRepository.listaFotos(id);
@@ -168,5 +164,27 @@ public class UsuarioController {
             return null;
         }
     }
+
+    @GetMapping("/calificacion")
+    public String calificacion(Model model, HttpSession session, @RequestParam(value = "idfuncion",required = false) Integer idfuncion){
+        Usuario usuario2 = (Usuario) session.getAttribute("usuario");
+
+        System.out.println(usuario2.getId());
+        System.out.println(idfuncion);
+        List<DTOCalificacionObra> listaobras = usuarioRepository.ObtenerCalificacionObra(usuario2.getId());
+
+        List<DTOCalificacionDirector> listadirector = usuarioRepository.ObtenerCalificacionDirector(usuario2.getId(), idfuncion);
+        List<DTOCalificacionActor> listaactor = usuarioRepository.ObtenerCalificacionActor(usuario2.getId(), idfuncion);
+        System.out.println("hola");
+        System.out.println(listadirector.size());
+        System.out.println("adios");
+        model.addAttribute("listaobras",listaobras);
+        model.addAttribute("listadirector", listadirector);
+        model.addAttribute("listaactor", listaactor);
+
+        return "usuario/calificacion";
+    }
+
+
 
 }

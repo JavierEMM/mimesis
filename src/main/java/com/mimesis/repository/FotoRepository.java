@@ -12,4 +12,7 @@ public interface FotoRepository extends JpaRepository<Foto, Integer> {
     List<Foto> listaFotos(int idobras);
     @Query(nativeQuery = true,value = "SELECT * FROM fotos WHERE idsede = ?1")
     List<Foto> listaFotosxSede(int idsede);
+
+    @Query(nativeQuery = true,value = "SELECT * FROM fotos WHERE idobras = ?1")
+    List<Foto> listaFotosxActor(int idobras);
 }
