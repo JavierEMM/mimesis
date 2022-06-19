@@ -4,7 +4,9 @@ package com.mimesis.dto;
 import com.mimesis.entity.Funcion;
 import com.mimesis.entity.Sede;
 
-public class DTOcarrito {
+import java.io.Serializable;
+
+public class DTOcarrito implements Serializable {
     private Sede sede;
     private Funcion funcion;
     private Integer cantidad;

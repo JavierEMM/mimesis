@@ -5,7 +5,7 @@
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/highcharts-3d.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
-        <header th:replace="/includes/navbar.html :: navbar(option='Operador')" id="header" class="d-flex align-items-center">
+        <header th:replace="includes/navbar.html :: navbar(option='Operador')" id="header" class="d-flex align-items-center">
         </header>
 
 
@@ -265,7 +265,7 @@
             } );
 
         </script>
-        <footer th:replace="/includes/footer.html :: footer"></footer>
+        <footer th:replace="includes/footer.html :: footer"></footer>
         <script th:inline="javascript">
             Highcharts.chart('container', {
                 chart : {

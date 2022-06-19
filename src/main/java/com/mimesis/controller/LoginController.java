@@ -103,7 +103,6 @@ public class LoginController {
         }else {
             return "login/login";
         }
-
     }
     @GetMapping("/registro")
     public String registro(@ModelAttribute("usuario") Usuario usuario){

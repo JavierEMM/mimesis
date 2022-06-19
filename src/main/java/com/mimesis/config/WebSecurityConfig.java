@@ -35,9 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().oauth2Login().loginPage("/login")
                 .userInfoEndpoint().userService(oAuth2UserService).and().successHandler(oAuth2LoginSuccessHandler).redirectionEndpoint();
 
-
-
-        http.logout().logoutSuccessUrl("/");
+        http.logout().logoutSuccessUrl("/").deleteCookies("JSESSIONID").invalidateHttpSession(true);
         http.authorizeRequests()
                 .antMatchers("/historial","/historial/**").hasAuthority("Cliente")
                 .antMatchers("/calificacion","/calificacion/**").hasAuthority("Cliente")

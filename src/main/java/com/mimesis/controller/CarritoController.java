@@ -99,7 +99,7 @@ public class CarritoController {
         return "usuario/compra";
     }
 
-    @RequestMapping(value = "/reservar")
+    @PostMapping(value = "/reservar")
     public String carritoReservar(Model model, @RequestParam("obra") String nombreObra,@RequestParam(value = "teatro",required = false) Integer teatro, RedirectAttributes attributes) throws UnsupportedEncodingException {
         Obra obra = obrasRepository.findByNombre(nombreObra);
         if(teatro == null){
@@ -141,6 +141,8 @@ public class CarritoController {
                 System.out.println("Funcion: " + dtOcarrito.getFuncion().getIdobra().getNombre());
                 enviarQr(usuario,hola,dtOcarrito.getFuncion(),dtOcarrito.getCantidad());
             }
+            ArrayList<DTOcarrito> carrito2 = new ArrayList<>();
+            session.setAttribute("carrito",carrito2);
             return "usuario/historial";
         }
     }

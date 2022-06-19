@@ -3,9 +3,10 @@ package com.mimesis.dto;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class DTOTarjeta {
+public class DTOTarjeta implements Serializable{
 
     private String nombre;
     private String apellido;

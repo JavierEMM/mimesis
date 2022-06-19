@@ -4,10 +4,11 @@ package com.mimesis.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "sala")
-public class Sala {
+public class Sala implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idsala", nullable = false)
