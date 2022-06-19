@@ -137,11 +137,12 @@ public class LoginController {
                     sendVerification(usuario,baseUrl);
                     attributes.addFlashAttribute("alerta","alert-success");
                     attributes.addFlashAttribute("registro","Se le ha enviado un correo de confirmacion a su correo electronico");
+                    return "redirect:/login";
                 }
             }
 
         }
-        return "redirect:/login";
+        return "login/register";
     }
     @GetMapping("/cambiarcontrasenia")
     public String vistaCambio(@ModelAttribute("usuario") Usuario usuario){
