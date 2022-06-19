@@ -1,5 +1,6 @@
 package com.mimesis.controller;
 
+import com.mimesis.dao.DniDao;
 import com.mimesis.dto.DTOcarrito;
 import com.mimesis.entity.Funcion;
 import com.mimesis.entity.Usuario;
@@ -36,6 +37,9 @@ public class LoginController {
 
     @Autowired
     private JavaMailSender javaMailSender;
+
+    @Autowired
+    DniDao dniDao;
 
     @GetMapping("/login")
     public String loginForm(){
@@ -114,25 +118,28 @@ public class LoginController {
         if(bindingResult.hasErrors()){
             return "login/register";
         }else{
-            
-            Usuario usuarioconfirm = usuarioRepository.findByCorreo(usuario.getCorreo());
-            if(usuarioconfirm != null){
-                model.addAttribute("emailerror","Credenciales ya registradas");
-                return "login/register";
-            }else{
-                String contrasena= usuario.getContrasena();
-                usuario.setContrasena(new BCryptPasswordEncoder().encode(contrasena));
-                usuario.setRol("Cliente");
-                usuarioRepository.save(usuario);
-                String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
-                        .replacePath(null)
-                        .build()
-                        .toUriString();
-                //Tengo que enviar correo electronico
-                sendVerification(usuario,baseUrl);
-                attributes.addFlashAttribute("alerta","alert-success");
-                attributes.addFlashAttribute("registro","Se le ha enviado un correo de confirmacion a su correo electronico");
+            if(dniDao.ConsultarDNI(usuario.getDni())){
+                Usuario usuarioconfirm = usuarioRepository.findByCorreo(usuario.getCorreo());
+                if(usuarioconfirm != null){
+                    model.addAttribute("emailerror","Credenciales ya registradas");
+                    return "login/register";
+                }else{
+
+                    String contrasena= usuario.getContrasena();
+                    usuario.setContrasena(new BCryptPasswordEncoder().encode(contrasena));
+                    usuario.setRol("Cliente");
+                    usuarioRepository.save(usuario);
+                    String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+                            .replacePath(null)
+                            .build()
+                            .toUriString();
+                    //Tengo que enviar correo electronico
+                    sendVerification(usuario,baseUrl);
+                    attributes.addFlashAttribute("alerta","alert-success");
+                    attributes.addFlashAttribute("registro","Se le ha enviado un correo de confirmacion a su correo electronico");
+                }
             }
+
         }
         return "redirect:/login";
     }
