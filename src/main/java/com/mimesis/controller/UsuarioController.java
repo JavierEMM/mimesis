@@ -146,12 +146,6 @@ public class UsuarioController {
     public String historialCompra(Model model, HttpSession session){
         Usuario usuario2 = (Usuario) session.getAttribute("usuario");
         System.out.println(usuario2.getId());
-        List<DTOHistorial> lista = usuarioRepository.ObtenerHistorial(usuario2.getId());
-        System.out.println("hola");
-        System.out.println(lista.size());
-        System.out.println(lista.get(0).getEstado());
-        System.out.println("bye");
-        System.out.println(usuarioRepository.ObtenerHistorial(usuario2.getId()));
         model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorial(usuario2.getId()));
 
         return "usuario/historial";
