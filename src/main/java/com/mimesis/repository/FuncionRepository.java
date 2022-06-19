@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FuncionRepository extends JpaRepository<Funcion,Integer> {
@@ -39,5 +40,12 @@ public interface FuncionRepository extends JpaRepository<Funcion,Integer> {
             "WHERE se.idsede = ?1 and f.obras_idobras = ?2 and cast(now() AS datetime) < cast(concat(f.fecha,' ',f.horafin) AS datetime) group by b.idfuncion")
     List<DTOBoletosValidos> listaFuncionesValidos(Integer idSede, Integer idObra);
 
+    @Query(nativeQuery = true,value = "SELECT f.idfuncion,f.fecha,f.aforo,f.horainicio,f.iddirector,f.horafin,f.costo,f.idsala,f.valido,f.obras_idobras \n" +
+            "            FROM funcion f  INNER JOIN sala sa ON sa.idsala = f.idsala INNER JOIN sede se ON se.idsede = sa.idsede \n" +
+            "            WHERE se.idsede = ?1 and f.obras_idobras = ?2 and cast(now() AS datetime) < cast(concat(f.fecha,' ',f.horafin) AS datetime) group by f.idfuncion;")
+    List<Funcion> listaFuncionesValidosCorregida(Integer idSede, Integer idObra);
 
+
+    @Query(nativeQuery = true,value = "SELECT f.aforo - count(estado) as boletos FROM mimesis.boleto b inner join funcion f on b.idfuncion = f.idfuncion where b.idfuncion=?1 group by b.idfuncion;")
+    Optional<Integer> obtenerBoletos(Integer idfuncion);
 }

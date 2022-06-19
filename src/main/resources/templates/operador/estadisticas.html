@@ -34,7 +34,7 @@
                         <label for="fechafin" class="letter">Fecha Fin</label>
                         <input id="fechafin" class="form-control" type="date" name="FechaFin" th:value="${fFinSelected}"/>
                     </div>
-                    <div class="col-2" style="text-align: center;justify-content: center;align-items: center;">
+                    <div class="col-2 header-display" style="text-align: center;justify-content: center;align-items: center;">
                         <button type="submit" class="btn btn-primary" >Actualizar</button>
                     </div>
             </form>
@@ -49,7 +49,7 @@
                             <option value="Funcion mejor calificada">Funcion mejor calificada</option>
                         </select>
                     </div>
-                        <div class="col" style="text-align: center">
+                        <div class="col header-display" style="text-align: center">
                             <button type="submit" class="btn btn-primary" style="margin: auto;" >Actualizar</button>
                         </div>
                     </form>
@@ -68,11 +68,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="funciones : ${listaFuncionesVistas}">
+                                <tr th:each="funciones,i : ${listaFuncionesVistas}">
                                     <td style="text-align: center;"th:text="${funciones.idobra.nombre}">Hamlet</td>
                                     <td style="text-align: center;" th:text="${funciones.fecha} + ' ' + ${funciones.horainicio}">Martes 29 de Marzo del 2022 <br> 4:00pm-6:00pm</td>
                                     <td style="text-align: center;" th:text="${funciones.idsala.idsede.nombre}">San Borja</td>
-                                    <td style="text-align: center;" th:text="${funciones.idsala.aforo}">148</td>
+                                    <td style="text-align: center;" th:text="${cantidadEspectadores.get(i.index)}">148</td>
                                 </tr>
                             </tbody>
                         </table>

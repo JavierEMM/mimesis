@@ -2,6 +2,7 @@ package com.mimesis.controller;
 
 import com.mimesis.dao.TarjetaDao;
 import com.mimesis.dto.DTOBoletosValidos;
+import com.mimesis.dto.DTOFuncionesDisponibles;
 import com.mimesis.dto.DTOTarjeta;
 import com.mimesis.dto.DTOcarrito;
 import com.mimesis.entity.*;
@@ -112,8 +113,24 @@ public class CarritoController {
         }else {
             Optional<Sede> sede = sedesRepository.findById(teatro);
             if (sede.isPresent()) {
-                List<DTOBoletosValidos> funcionList = funcionRepository.listaFuncionesValidos(teatro, obra.getId());
-                model.addAttribute("listaFunciones", funcionList);
+                System.out.println("Este print verifica la obra buscada"+obra.getNombre());
+                System.out.println("Este print verifica la sede buscada"+sede.get().getNombre());
+                List<Funcion> funcionListaDisponible = funcionRepository.listaFuncionesValidosCorregida(teatro,obra.getId());
+                List<DTOFuncionesDisponibles> listaValidos = new ArrayList<>();
+                for(Funcion f : funcionListaDisponible){
+                        Optional<Integer> optBoleto = funcionRepository.obtenerBoletos(f.getId());
+                        Integer boleto =f.getAforo();
+                        if(optBoleto.isPresent()){
+                            boleto= optBoleto.get();
+                        }
+                        listaValidos.add(new DTOFuncionesDisponibles(boleto,f));
+                }
+                //List<DTOBoletosValidos> funcionList = funcionRepository.listaFuncionesValidos(teatro, obra.getId());
+                System.out.println("En esta parte se envian los parametros para seleccionar la funcion");
+                //System.out.println(funcionList);
+                System.out.println(obra.getId());
+                System.out.println(sede.get().getNombre());
+                model.addAttribute("listaFunciones", listaValidos);
                 model.addAttribute("obra", obra);
                 model.addAttribute("sede", sede.get());
                 return "usuario/eligefuncion";
