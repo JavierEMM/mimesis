@@ -24,13 +24,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="funcion,i : ${listaFunciones}">
+                            <tr th:each="f,i : ${listaFunciones}">
                                 <th style="text-align:center;" th:text="${i.index + 1}" ></th>
-                                <td style="text-align: center;" th:text="${funcion.getFecha()}"></td>
-                                <td style="text-align: center;" th:text="${funcion.getHorainicio()}"></td>
-                                <td style="text-align: center;" th:text="${funcion.getHorafin()}"></td>
-                                <td style="text-align: center;" th:text="${funcion.getCosto()}"></td>
-                                <td style="text-align: center;" th:text="${funcion.getBoletos()}"></td>
+                                <td style="text-align: center;" th:text="${f.getFuncion().getFecha()}"></td>
+                                <td style="text-align: center;" th:text="${f.getFuncion().getHorainicio()}"></td>
+                                <td style="text-align: center;" th:text="${f.getFuncion().getHorafin()}"></td>
+                                <td style="text-align: center;" th:text="${f.funcion.getCosto()}"></td>
+                                <td style="text-align: center;" th:text="${f.getBoletos()}"></td>
                                 <td style="text-align: center;">
                                 <form method="post" th:action="@{/carrito/funcion}">
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -46,9 +46,9 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <input class="form-control" type="number" th:max="${funcion.getBoletos()}" min="1" name="cantidad">
-                                                    <input class="form-control" type="hidden" name="funcion" th:value="${funcion.getIdfuncion()}">
-                                                    <input class="form-control" type="hidden" name="boletos" th:value="${funcion.getBoletos()}">
+                                                    <input class="form-control" type="number" th:max="${f.getBoletos()}" min="1" name="cantidad">
+                                                    <input class="form-control" type="hidden" name="funcion" th:value="${f.getFuncion().id}">
+                                                    <input class="form-control" type="hidden" name="boletos" th:value="${f.getBoletos()}">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

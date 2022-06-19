@@ -20,11 +20,11 @@ public interface ActorRepository extends JpaRepository<Actor,Integer> {
     @Query(value = "select idactor from calificaciones where idactor is not null;",nativeQuery = true)
     List<Integer> obtenerIdCalificacion();
 
-    @Query(nativeQuery = true, value = "SELECT a.nombre as 'nombre_actor', o.nombre as 'nombre_obra', c.calificacion as 'calificacion' FROM actor a\n" +
-            "INNER JOIN funciontieneactor fta ON a.idactor = fta.idactor\n" +
-            "INNER JOIN funcion f ON fta.idfuncion=f.idfuncion\n" +
-            "INNER JOIN obras o ON f.obras_idobras=o.idobras\n" +
-            "INNER JOIN calificaciones c ON a.idactor=c.idactor;")
+    @Query(nativeQuery = true, value = "SELECT CONCAT(a.nombre, a.apellido) as nombre, o.nombre as obra, AVG(calificacion) as calificacion FROM calificaciones c\n" +
+            "INNER JOIN actor a ON c.idactor=a.idactor\n" +
+            "INNER JOIN funcion f ON f.idfuncion=c.idfuncion\n" +
+            "INNER JOIN obras o ON o.idobras=f.obras_idobras\n" +
+            "WHERE c.idactor IS NOT NULL")
     List<DTOActoresMejoresCalificados> obtenerActoresMejoresCalificados();
 
 }
