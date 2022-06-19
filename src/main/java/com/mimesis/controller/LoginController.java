@@ -114,6 +114,7 @@ public class LoginController {
         if(bindingResult.hasErrors()){
             return "login/register";
         }else{
+            
             Usuario usuarioconfirm = usuarioRepository.findByCorreo(usuario.getCorreo());
             if(usuarioconfirm != null){
                 model.addAttribute("emailerror","Credenciales ya registradas");
