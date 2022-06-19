@@ -1,5 +1,6 @@
 package com.mimesis.controller;
 
+import com.mimesis.dao.TarjetaDao;
 import com.mimesis.dto.DTOBoletosValidos;
 import com.mimesis.dto.DTOTarjeta;
 import com.mimesis.dto.DTOcarrito;
@@ -30,6 +31,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/carrito")
 public class CarritoController {
+    @Autowired
+    TarjetaDao tarjetaDao;
     @Autowired
     private JavaMailSender javaMailSender;
     @Autowired
@@ -123,27 +126,38 @@ public class CarritoController {
     }
     @PostMapping(value = "/confirmarcompra")
     public String confirmarCompra(@ModelAttribute("datosTarjeta") DTOTarjeta dtoTarjeta, RedirectAttributes attributes,HttpSession session) throws MessagingException, UnsupportedEncodingException {
-        System.out.println("Numero de tarjeta: "+dtoTarjeta.getNumeroTarjeta());
-        if(dtoTarjeta.getNumeroTarjeta() == null){
+        System.out.println("Numero de tarjeta: "+dtoTarjeta.getNumero());
+
+        String fecha = dtoTarjeta.getVencimiento();
+        System.out.println("fecha: "+fecha);
+        dtoTarjeta.setVencimiento(fecha+"-01");
+        System.out.println(dtoTarjeta.getVencimiento());
+
+        if(dtoTarjeta.getNumero() == null){
             attributes.addFlashAttribute("msg","Debe ingresar una tarjeta");
             return "redirect:/carrito/comprar";
         }else{
-            ArrayList<DTOcarrito> carrito =(ArrayList) session.getAttribute("carrito");
-            Usuario usuario = (Usuario) session.getAttribute("usuario");
-            for(DTOcarrito dtOcarrito : carrito){
-                String hola="";
-                for (int i = 0; i<dtOcarrito.getCantidad();i++){
-                    String url= RandomString.make(50);
-                    Boleto boleto = new Boleto(true,dtOcarrito.getFuncion(),usuario, url);
-                    boletoRepository.save(boleto);
-                    hola+="<img style='margin-right:15px;' src="+"https://api.qrserver.com/v1/create-qr-code/?data="+url+"&size=200x200>";
+            if(tarjetaDao.consultaTarjeta(dtoTarjeta)){
+                ArrayList<DTOcarrito> carrito =(ArrayList) session.getAttribute("carrito");
+                Usuario usuario = (Usuario) session.getAttribute("usuario");
+                for(DTOcarrito dtOcarrito : carrito){
+                    String hola="";
+                    for (int i = 0; i<dtOcarrito.getCantidad();i++){
+                        String url= RandomString.make(50);
+                        Boleto boleto = new Boleto(true,dtOcarrito.getFuncion(),usuario, url);
+                        boletoRepository.save(boleto);
+                        hola+="<img style='margin-right:15px;' src="+"https://api.qrserver.com/v1/create-qr-code/?data="+url+"&size=200x200>";
+                    }
+                    System.out.println("Funcion: " + dtOcarrito.getFuncion().getIdobra().getNombre());
+                    enviarQr(usuario,hola,dtOcarrito.getFuncion(),dtOcarrito.getCantidad());
                 }
-                System.out.println("Funcion: " + dtOcarrito.getFuncion().getIdobra().getNombre());
-                enviarQr(usuario,hola,dtOcarrito.getFuncion(),dtOcarrito.getCantidad());
+                ArrayList<DTOcarrito> carrito2 = new ArrayList<>();
+                session.setAttribute("carrito",carrito2);
+                return "usuario/historial";
+            }else {
+                attributes.addFlashAttribute("msg","Debe ingresar una tarjeta");
+                return "redirect:/carrito/comprar";
             }
-            ArrayList<DTOcarrito> carrito2 = new ArrayList<>();
-            session.setAttribute("carrito",carrito2);
-            return "usuario/historial";
         }
     }
     public void enviarQr(Usuario usuario,String baseUrl,Funcion funcion,Integer cantidad) throws MessagingException, UnsupportedEncodingException {

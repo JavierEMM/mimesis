@@ -9,14 +9,11 @@ import java.time.LocalDate;
 public class DTOTarjeta implements Serializable{
 
     private String nombre;
-    private String apellido;
-    private Integer numeroTarjeta;
-
-
-    private String fechaVencimiento;
-
-    private Integer codigo;
-    private String email;
+    private String apellidos;
+    private String numero;
+    private String vencimiento;
+    private Integer verificacion;
+    private String correo;
 
     public String getNombre() {
         return nombre;
@@ -26,43 +23,43 @@ public class DTOTarjeta implements Serializable{
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public Integer getNumeroTarjeta() {
-        return numeroTarjeta;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setNumeroTarjeta(Integer numeroTarjeta) {
-        this.numeroTarjeta = numeroTarjeta;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
-    public String getFechaVencimiento() {
-        return fechaVencimiento;
+    public String getVencimiento() {
+        return vencimiento;
     }
 
-    public void setFechaVencimiento(String fechaVencimiento) {
-        this.fechaVencimiento = fechaVencimiento;
+    public void setVencimiento(String vencimiento) {
+        this.vencimiento = vencimiento;
     }
 
-    public Integer getCodigo() {
-        return codigo;
+    public Integer getVerificacion() {
+        return verificacion;
     }
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setVerificacion(Integer verificacion) {
+        this.verificacion = verificacion;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 }
