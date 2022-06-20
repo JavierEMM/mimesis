@@ -108,6 +108,8 @@ public class LoginController {
             return "login/login";
         }
     }
+
+
     @GetMapping("/registro")
     public String registro(@ModelAttribute("usuario") Usuario usuario){
         return "login/register";
@@ -117,15 +119,15 @@ public class LoginController {
     public String registrar(@ModelAttribute("usuario") @Valid Usuario usuario, BindingResult bindingResult, RedirectAttributes attributes, HttpServletRequest request, Model model) throws MessagingException, UnsupportedEncodingException {
         if(bindingResult.hasErrors()){
             return "login/register";
-        }else{
-            if(dniDao.ConsultarDNI(usuario.getDni())){
+        }else {
+            if (dniDao.ConsultarDNI(usuario.getDni())) {
                 Usuario usuarioconfirm = usuarioRepository.findByCorreo(usuario.getCorreo());
-                if(usuarioconfirm != null){
-                    model.addAttribute("emailerror","Credenciales ya registradas");
+                if (usuarioconfirm != null) {
+                    model.addAttribute("emailerror", "Credenciales ya registradas");
                     return "login/register";
-                }else{
+                } else {
 
-                    String contrasena= usuario.getContrasena();
+                    String contrasena = usuario.getContrasena();
                     usuario.setContrasena(new BCryptPasswordEncoder().encode(contrasena));
                     usuario.setRol("Cliente");
                     usuarioRepository.save(usuario);
@@ -134,16 +136,18 @@ public class LoginController {
                             .build()
                             .toUriString();
                     //Tengo que enviar correo electronico
-                    sendVerification(usuario,baseUrl);
-                    attributes.addFlashAttribute("alerta","alert-success");
-                    attributes.addFlashAttribute("registro","Se le ha enviado un correo de confirmacion a su correo electronico");
+                    sendVerification(usuario, baseUrl);
+                    attributes.addFlashAttribute("alerta", "alert-success");
+                    attributes.addFlashAttribute("registro", "Se le ha enviado un correo de confirmacion a su correo electronico");
                     return "redirect:/login";
                 }
             }
-
+            attributes.addFlashAttribute("msg","Sus datos no se han podido guardar debido a que no se ingresó un número de DNI valido. Por favor ingrese DNI valido");
+            attributes.addFlashAttribute("opcion","alert-danger");
         }
-        return "login/register";
+        return "redirect:/registro";
     }
+
     @GetMapping("/cambiarcontrasenia")
     public String vistaCambio(@ModelAttribute("usuario") Usuario usuario){
         return "login/nuevacontrasenia";
