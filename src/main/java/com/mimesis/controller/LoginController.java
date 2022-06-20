@@ -140,9 +140,10 @@ public class LoginController {
                     return "redirect:/login";
                 }
             }
-
+            attributes.addFlashAttribute("msg","Sus datos no se han podido guardar debido a que no se ingresó un número de DNI valido. Por favor ingrese DNI valido");
+            attributes.addFlashAttribute("opcion","alert-danger");
         }
-        return "login/register";
+        return "redirect:/registro";
     }
     @GetMapping("/cambiarcontrasenia")
     public String vistaCambio(@ModelAttribute("usuario") Usuario usuario){
