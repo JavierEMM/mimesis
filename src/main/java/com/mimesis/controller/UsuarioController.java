@@ -171,7 +171,7 @@ public class UsuarioController {
 
         System.out.println(usuario2.getId());
         System.out.println(idfuncion);
-        List<DTOCalificacionObra> listaobras = usuarioRepository.ObtenerCalificacionObra(usuario2.getId());
+        List<DTOCalificacionObra> listaobras = usuarioRepository.ObtenerCalificacionObra(usuario2.getId(),idfuncion);
 
         List<DTOCalificacionDirector> listadirector = usuarioRepository.ObtenerCalificacionDirector(usuario2.getId(), idfuncion);
         List<DTOCalificacionActor> listaactor = usuarioRepository.ObtenerCalificacionActor(usuario2.getId(), idfuncion);

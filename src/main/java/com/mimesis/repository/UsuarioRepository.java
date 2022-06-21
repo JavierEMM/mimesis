@@ -47,10 +47,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
 
     @Query(nativeQuery = true, value = "Select f.foto as fotoobra, o.nombre as nombreobra, p.calificacion as calificacionobra,f.idobras as idobra\n" +
             "from fotos f left join funcion c on f.idobras = c.obras_idobras\n" +
-            "             left join obras o on c.obras_idobras = o.idobras\n" +
-            "                       left join calificaciones p on c.idfuncion = p.idfuncion\n" +
-            "                  where p.idusuario = ?1 group by f.foto,o.nombre,p.calificacion;")
-    List<DTOCalificacionObra> ObtenerCalificacionObra(Integer id);
+            "left join obras o on c.obras_idobras = o.idobras\n" +
+            "left join calificaciones p on c.idfuncion = p.idfuncion\n" +
+            "where p.idusuario=?1 and p.idfuncion=?2 group by f.foto,o.nombre,p.calificacion;")
+    List<DTOCalificacionObra> ObtenerCalificacionObra(Integer id, Integer idfuncion);
 
     @Query(nativeQuery = true, value = "Select g.foto as fotodirector,g.nombre as nombredirector,g.apellido as apellidodirector,g.correo as correodirector,p.calificacion as calificaciondirector, g.iddirector as fotodirectores\n" +
             "from director g left join calificaciones p on g.iddirector = p.iddirector\n" +
