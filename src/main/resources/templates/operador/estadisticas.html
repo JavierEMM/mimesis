@@ -37,7 +37,7 @@
                     <div class="col-2 header-display" style="text-align: center;justify-content: center;align-items: center;">
                         <button type="submit" class="btn btn-primary" >Actualizar</button>
                     </div>
-            </form>
+                </form>
                 </div>
                  <form class="form-inline" method="POST"th:action="@{/operador/estadisticaFuncion}">
                 <div class="row">
@@ -52,7 +52,7 @@
                         <div class="col header-display" style="text-align: center">
                             <button type="submit" class="btn btn-primary" style="margin: auto;" >Actualizar</button>
                         </div>
-                    </form>
+                 </form>
                 </div>
                 <div class="row">
                     <div class="col">
@@ -92,14 +92,14 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th style="text-align: center;" scope="col">Nombre</th>
-                                            <th style="text-align: center;" scope="col">Nombre de la obra</th>
+                                            <th style="text-align: center;" scope="col">Apellido</th>
                                             <th style="text-align: center;" scope="col">Puntuación</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr th:each="actor : ${listaActoresMejoresCalificados}">
-                                            <td style="text-align: center;"th:text="${actor.getNombre_actor()}">Mark</td>
-                                            <td style="text-align: center;"th:text="${actor.getNombre_obra()}">Movidick</td>
+                                            <td style="text-align: center;"th:text="${actor.getNombre()}"></td>
+                                            <td style="text-align: center;"th:text="${actor.getApellido()}"></td>
                                             <td style="text-align: center;"th:text="${actor.getCalificacion()}">:o</td>
                                         </tr>
                                     </tbody>
@@ -119,14 +119,14 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th style="text-align: center;" scope="col">Nombre</th>
-                                            <th style="text-align: center;" scope="col">Nombre de la obra</th>
+                                            <th style="text-align: center;" scope="col">Apellido</th>
                                             <th style="text-align: center;" scope="col">Puntuación</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr th:each="directores : ${listaDirectoresMejoresCalificados}">
-                                            <td style="text-align: center;"th:text="${directores.getNombre_director()}">Mark2</td>
-                                            <td style="text-align: center;"th:text="${directores.getNombre_obra()}">Movidick</td>
+                                            <td style="text-align: center;"th:text="${directores.getNombre()}">Mark2</td>
+                                            <td style="text-align: center;"th:text="${directores.getApellido()}">Movidick</td>
                                             <td style="text-align: center;"th:text="${directores.getCalificacion()}">:o</td>
                                         </tr>
                                     </tbody>

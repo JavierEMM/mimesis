@@ -128,6 +128,17 @@ public class OperadorController {
         return "operador/listafunciones";
     }
 
+    @PostMapping("/searchAct")
+    public String buscarBestoActores(Model model,@RequestParam("busqueda") String busqueda,@RequestParam("categoria") String categoria){
+        if(categoria.equalsIgnoreCase("Nombre")){
+            model.addAttribute("listaFunciones",funcionRepository.listaBuscarFuncionesNombre(busqueda));
+        }else{
+            model.addAttribute("listaFunciones",funcionRepository.listaBuscarFuncionesGenero(busqueda));
+        }
+
+        return "operador/listafunciones";
+    }
+
     @GetMapping(value = {"/obras"})
     public String paginaPrincipalObras(Model model){
         model.addAttribute("listaObras",obrasRepository.findAll());
