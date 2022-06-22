@@ -13,40 +13,56 @@
             <div class="row">
                 <div class="col">
                     <h2>OBRA</h2>
-                    <table class="table">
+                    <form method="POST"  th:action="@{/guardarcalificacion}" >
+                    <table class="table" id="tabla_obra">
                         <thead class="thead-dark">
                             <tr>
                                 <th style="text-align: center;" scope="col">Foto</th>
                                 <th style="text-align: center;" scope="col">Funcion</th>
                                 <th style="text-align: center;" scope="col">Calificacion</th>
+                                <th style="text-align: center;" scope="col">Valores Calificacion</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="obras,i: ${listaobras}">
+                            <tr>
                                 <td style="text-align: center;">
                                     <img width="40rem" height="40rem"
-                                         th:src="@{|/funciones/obras/${obras.getIdobra()}|}">
+                                         th:src="@{|/funciones/obras/${obra.idobra}|}">
                                 </td>
-                                <td style="text-align: center;" th:text="${obras.getNombreObra()}">
+                                <td style="text-align: center;" th:text="${obra.nombreobra}">
                                     Mobydick
                                 </td>
-                                <td style="text-align: center;" th:text="${obras.getCalificacionobra()}">
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="1estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="2estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="3estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="4estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="5estrella"></span>
+                                <td style="text-align: center;" >
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="1obra"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="2obra"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="3obra"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="4obra"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="5obra"></span>
+                                </td>
+                                <td>
+                                    <input type="text" class="calificacion form-control" name="idcalificaciones" hidden>
+                                </td>
+                                <td>
+                                    <input type="text" class="calificacion form-control" name="idusuario" th:text="${session.usuario.id}" hidden>
+                                </td>
+                                <td>
+                                    <input type="text" class="calificacion form-control" name="idfuncion" th:text="${obra.idfuncion}" hidden>
+                                </td>
+                                <td>
+                                    <button type="submit" class="ver btn btn-primary">Calificar</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    </form>
                 </div>
             </div>
             <br>
             <div class="row">
                 <div class="col">
                     <h2>DIRECTOR</h2>
-                    <table class="table">
+                    <table class="table" id="tabla_director">
                         <thead class="thead-dark">
                             <tr>
                                 <th style="text-align: center;" scope="col">Foto</th>
@@ -54,24 +70,29 @@
                                 <th style="text-align: center;" scope="col">Apellido</th>
                                 <th style="text-align: center;" scope="col">Correo</th>
                                 <th style="text-align: center;" scope="col">Calificacion</th>
+                                <th style="text-align: center;" scope="col">Valores Calificacion</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="director,i: ${listadirector}">
+                            <tr>
                                 <td style="text-align: center;">
                                     <img width="40rem" height="40rem"
-                                         th:src="@{|/directores/${director.getFotodirectores()}|}">
+                                         th:src="@{|/directores/${director.iddirector}|}">
 
                                 </td>
-                                <td style="text-align: center;" th:text="${director.getNombredirector()}">Juan</td>
-                                <td style="text-align: center;"th:text="${director.getApellidodirector()}">Perez</td>
-                                <td style="text-align: center;" th:text="${director.getCorreodirector()}">juan.perez@gmail.com</td>
-                                <td style="text-align: center;"th:text="${director.getCalificaciondirector()}">
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="21estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="22estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="23estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="24estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="25estrella"></span>
+                                <td style="text-align: center;" th:text="${director.nombredirector}">Juan</td>
+                                <td style="text-align: center;"th:text="${director.apellidodirector}">Perez</td>
+                                <td style="text-align: center;" th:text="${director.correodirector}">juan.perez@gmail.com</td>
+                                <td style="text-align: center;">
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="1director"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="2director"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="3director"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="4director"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="5director"></span>
+                                </td>
+                                <td>
+                                    <input type="text" class="calificacion form-control" name="califidirector" hidden>
+
                                 </td>
                             </tr>
                         </tbody>
@@ -82,7 +103,7 @@
             <div class="row">
                 <div class="col">
                     <h2>ACTORES</h2>
-                    <table class="table">
+                    <table class="table" id="tabla_actor">
                         <thead class="thead-dark">
                             <tr>
                                 <th style="text-align: center;" scope="col">Foto</th>
@@ -90,6 +111,7 @@
                                 <th style="text-align: center;" scope="col">Apellido</th>
                                 <th style="text-align: center;" scope="col">Correo</th>
                                 <th style="text-align: center;" scope="col">Calificacion</th>
+                                <th style="text-align: center;" scope="col">Valores Calificacion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,12 +124,16 @@
                                 <td style="text-align: center;" th:text="${actor.getNombreactor()}">Cachin</td>
                                 <td style="text-align: center;" th:text="${actor.getApellidoactor()}">Alcantara</td>
                                 <td style="text-align: center;" th:text="${actor.getCorreoactor()}">alcantara.12@gmail.com</td>
-                                <td style="text-align: center;" th:text="${actor.getCalificacionactor()}">
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="11estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="12estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="13estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="14estrella"></span>
-                                    <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="15estrella"></span>
+                                <td style="text-align: center;" >
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="1actor"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="2actor"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="3actor"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="4actor"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" id="5actor"></span>
+                                </td>
+                                <td>
+                                    <input type="text" class="calificacion form-control" disabled>
+
                                 </td>
                             </tr>
                         </tbody>
@@ -120,19 +146,73 @@
         </div>
         <footer th:replace="/includes/footer.html :: footer"></footer>
         <script>
-            var contador;
-            function calificar(item){
-                console.log(item);
-                contador=item.id[0];//capturamos el primer caracter
-                let nombre = item.id.substring(1);
+
+            $('#tabla_obra').on('click','tr .fa-star',function (e){
+                let count;
+                count = e.currentTarget.id[0];
+                let nombre1 = e.currentTarget.id.substring(1);
+                let row = $(this).closest("tr");
+                row.find('.calificacion').val(count);
                 for(let i=0;i<5;i++){
-                    if(i<contador){
-                        document.getElementById((i+1)+nombre).style.color="orange";
+                    if(i<count){
+                        document.getElementById((i+1)+nombre1).style.color="orange";
                     }else{
-                        document.getElementById((i+1)+nombre).style.color="black";
+                        document.getElementById((i+1)+nombre1).style.color="black";
                     }
                 }
-            }
+            });
+
+            $('#tabla_director').on('click','tr .fa-star',function (e){
+                let count;
+                count = e.currentTarget.id[0];
+                let nombre2 = e.currentTarget.id.substring(1);
+                let row = $(this).closest("tr");
+                row.find('.calificacion').val(count);
+                for(let i=0;i<5;i++){
+                    if(i<count){
+                        document.getElementById((i+1)+nombre2).style.color="orange";
+                    }else{
+                        document.getElementById((i+1)+nombre2).style.color="black";
+                    }
+                }
+            });
+
+            $('#tabla_actor').on('click','tr .fa-star',function (e){
+                let count;
+                count = e.currentTarget.id[0];
+                let nombre3 = e.currentTarget.id.substring(1);
+                let row = $(this).closest("tr");
+                row.find('.calificacion').val(count);
+                for(let i=0;i<5;i++){
+                    if(i<count){
+                        document.getElementById((i+1)+nombre3).style.color="orange";
+                    }else{
+                        document.getElementById((i+1)+nombre3).style.color="black";
+                    }
+                }
+            });
+
+            $('#tabla_obra').on('click','tr .ver',function (){
+                let row = $(this).closest("tr");
+                let nombre = row.find("td:eq(1)").text();
+                let calificacion = row.find("td:eq(3)").text();
+                alert("la calificacion de "+nombre+"es de "+calificacion+"estellas")
+
+            });
+            $('#tabla_director').on('click','tr .ver',function (){
+                let row = $(this).closest("tr");
+                let nombre = row.find("td:eq(1)").text();
+                let calificacion = row.find("td:eq(3)").text();
+                alert("la calificacion de "+nombre+"es de "+calificacion+"estellas")
+
+            });
+            $('#tabla_actor').on('click','tr .ver',function (){
+                let row = $(this).closest("tr");
+                let nombre = row.find("td:eq(1)").text();
+                let calificacion = row.find("td:eq(3)").text();
+                alert("la calificacion de "+nombre+"es de "+calificacion+"estellas")
+
+            });
         </script>
     </body>
 </html>

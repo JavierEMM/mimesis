@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +40,13 @@ public class UsuarioController {
 
     @Autowired
     BoletoRepository boletoRepository;
+
+    @Autowired
+    ObrasRepository obrasRepository;
+
+    @Autowired
+    CalificacionRepository calificacionRepository;
+
 
 
     @GetMapping(value={"","/"})
@@ -148,8 +156,8 @@ public class UsuarioController {
     @GetMapping("/historial")
     public String historialCompra(Model model, HttpSession session){
         Usuario usuario2 = (Usuario) session.getAttribute("usuario");
-        System.out.println(usuario2.getId());
-        model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorial(usuario2.getId()));
+
+        model.addAttribute("listaHistorial", usuarioRepository.historialbackup(usuario2.getId()));
 
         return "usuario/historial";
     }
@@ -166,23 +174,58 @@ public class UsuarioController {
     }
 
     @GetMapping("/calificacion")
-    public String calificacion(Model model, HttpSession session, @RequestParam(value = "idfuncion",required = false) Integer idfuncion){
+    public String calificacion(Model model, HttpSession session, @RequestParam(value = "idfuncion",required = false)Integer idfuncion){
         Usuario usuario2 = (Usuario) session.getAttribute("usuario");
 
-        System.out.println(usuario2.getId());
-        System.out.println(idfuncion);
-        List<DTOCalificacionObra> listaobras = usuarioRepository.ObtenerCalificacionObra(usuario2.getId());
+        DTOCalificacionObra dtoCalificacionObra = new DTOCalificacionObra();
+        dtoCalificacionObra.setIdfuncion(idfuncion);
+        Obra obra = obrasRepository.getById(idfuncion);
+        dtoCalificacionObra.setNombreobra(obra.getNombre());
+        dtoCalificacionObra.setIdobra(obra.getId());
 
-        List<DTOCalificacionDirector> listadirector = usuarioRepository.ObtenerCalificacionDirector(usuario2.getId(), idfuncion);
+
+        DTOCalificacionDirector dtoCalificacionDirector = new DTOCalificacionDirector();
+        dtoCalificacionDirector.setIdfuncion(idfuncion);
+        Director director = directorRepository.getById(idfuncion);
+        dtoCalificacionDirector.setNombredirector(director.getNombre());
+        dtoCalificacionDirector.setApellidodirector(director.getApellido());
+        dtoCalificacionDirector.setCorreodirector(director.getCorreo());
+        dtoCalificacionDirector.setIddirector(director.getId());
+
         List<DTOCalificacionActor> listaactor = usuarioRepository.ObtenerCalificacionActor(usuario2.getId(), idfuncion);
-        System.out.println("hola");
-        System.out.println(listadirector.size());
-        System.out.println("adios");
-        model.addAttribute("listaobras",listaobras);
-        model.addAttribute("listadirector", listadirector);
+
+        model.addAttribute("obra",dtoCalificacionObra);
+        model.addAttribute("director", dtoCalificacionDirector);
         model.addAttribute("listaactor", listaactor);
 
         return "usuario/calificacion";
+    }
+
+    @PostMapping("/guardarcalificacion")
+    public String guardarCalificacionObra(@RequestParam("idcalificaciones")Integer calificacionobra,
+                              @RequestParam("idusuario")Usuario idusuario,
+                              @RequestParam("idfuncion")Funcion idfuncion,
+                              Model model){
+        System.out.println("llegamos aqui");
+        System.out.println(idfuncion);
+        System.out.println(idusuario);
+
+
+        DTOCalificacionObra dtoCalificacionObra= new DTOCalificacionObra();
+        System.out.println(dtoCalificacionObra.getCalificacion());
+        dtoCalificacionObra.setCalificacion(calificacionobra);
+
+
+        Calificacion calificacion = new Calificacion();
+        calificacion.setCalificacion(dtoCalificacionObra.getCalificacion());
+
+        calificacion.setIdfuncion(idfuncion);
+        calificacion.setIdusuario(idusuario);
+
+        calificacionRepository.save(calificacion);
+
+        System.out.println("se guardo");
+        return "redirect:/historial";
     }
 
 

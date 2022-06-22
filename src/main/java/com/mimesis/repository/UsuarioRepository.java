@@ -47,10 +47,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
 
     @Query(nativeQuery = true, value = "Select f.foto as fotoobra, o.nombre as nombreobra, p.calificacion as calificacionobra,f.idobras as idobra\n" +
             "from fotos f left join funcion c on f.idobras = c.obras_idobras\n" +
-            "             left join obras o on c.obras_idobras = o.idobras\n" +
-            "                       left join calificaciones p on c.idfuncion = p.idfuncion\n" +
-            "                  where p.idusuario = ?1 group by f.foto,o.nombre,p.calificacion;")
-    List<DTOCalificacionObra> ObtenerCalificacionObra(Integer id);
+            "left join obras o on c.obras_idobras = o.idobras\n" +
+            "left join calificaciones p on c.idfuncion = p.idfuncion\n" +
+            "left join boleto b on b.idfuncion = c.idfuncion\n" +
+            "where p.idusuario=?1 and p.idfuncion=?2 group by p.calificacion;")
+    List<DTOCalificacionObra> ObtenerCalificacionObra(Integer id, Integer idfuncion);
 
     @Query(nativeQuery = true, value = "Select g.foto as fotodirector,g.nombre as nombredirector,g.apellido as apellidodirector,g.correo as correodirector,p.calificacion as calificaciondirector, g.iddirector as fotodirectores\n" +
             "from director g left join calificaciones p on g.iddirector = p.iddirector\n" +
@@ -64,6 +65,18 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "left join funcion f on f.idfuncion = c.idfuncion\n" +
             "where p.idusuario = ?1 and p.idfuncion = ?2 group by h.foto,h.nombre,h.apellido,h.correo,p.calificacion;")
     List<DTOCalificacionActor> ObtenerCalificacionActor(Integer idusuario,Integer idfuncion);
+
+    @Query(nativeQuery = true, value = "Select a.idboleto as idboleto,c.nombre as nombreobra, b.fecha as fecha, b.horainicio as horainicio,b.horafin as horafin, \n" +
+            "            count(a.idboleto) as cantidad,e.nombre as nombresede,d.nombre as nombresala, a.estado as estado, b.costo*count(a.idboleto) as costototal, b.idfuncion as funcionid ,\n" +
+            "            count(ca.idcalificaciones) as cuentacal\n" +
+            "            from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +
+            "                        left join obras c on b.obras_idobras = c.idobras\n" +
+            "                       left join sala d on b.idsala = d.idsala\n" +
+            "                       left join sede e on d.idsede = e.idsede\n" +
+            "                       left join usuario u on a.idusuario = u.idusuario\n" +
+            "                       left join calificaciones ca on b.idfuncion = ca.idfuncion and u.idusuario = ca.idusuario\n" +
+            "                       where a.idusuario =?1 group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
+    List<DTOhistorialbackup> historialbackup(Integer idusuario);
 
 
 

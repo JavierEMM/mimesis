@@ -32,6 +32,9 @@ public class Boleto implements Serializable {
     @Column(name = "codigoaleatorio", nullable = false, length = 45)
     private String codigoaleatorio;
 
+    @Column(name = "calificacion", nullable = false, length = 45)
+    private Boolean calificacion;
+
     public Boleto() {
 
     }
@@ -74,5 +77,13 @@ public class Boleto implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Boolean getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(Boolean calificacion) {
+        this.calificacion = calificacion;
     }
 }
