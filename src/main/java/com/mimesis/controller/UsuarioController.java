@@ -157,7 +157,7 @@ public class UsuarioController {
     public String historialCompra(Model model, HttpSession session){
         Usuario usuario2 = (Usuario) session.getAttribute("usuario");
 
-        model.addAttribute("listaHistorial", usuarioRepository.historialbackup(usuario2.getId()));
+        model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorial(usuario2.getId()));
 
         return "usuario/historial";
     }
