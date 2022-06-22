@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-    <head th:replace="includes/head.html :: head">MIMESIS</head>
+<head th:replace="includes/head.html :: head">MIMESIS</head>
 <body style="background-color: white;">
 
 <div class="main">
@@ -10,6 +10,12 @@
                 <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; color: white;box-shadow: 7px 13px 37px #000;">
                     <h1 class="border-bottom" style="color:crimson"><b>Registro</b></h1>
                     <br>
+                    <div th:if="${msg != null}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span th:text="${msg}">Registro Exitoso</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
                     <form method="POST" th:object="${usuario}" th:action="@{/registrar}">
                         <div class="row">
                             <div class="col-md-6 mb-4">
@@ -85,22 +91,22 @@
                         <div class="row">
                             <div class="col-md-6 mb-4 pb-2">
                                 <div class="form-outline mb-4">
-                                     <label class="form-label">Número de celular</label>
-                                      <input th:classappend="${#fields.hasErrors('numerotelefonico')?'is-invalid':''}" type="tel" th:field="*{numerotelefonico}" class="form-control form-control">
-                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('numerotelefonico')}"
-                                             th:errors="*{numerotelefonico}">
-                                        </div>
-                                </div>
-                            </div>
-                                <div class="col-md-6 mb-4 pb-2">
-                                    <div class="form-outline mb-4">
-                                          <label class="form-label">Direccion</label>
-                                          <input class="form-control" th:classappend="${#fields.hasErrors('direccion')?'is-invalid':''}" type="text" th:field="*{direccion}" >
-                                          <div class="invalid-feedback" th:if="${#fields.hasErrors('direccion')}"
-                                             th:errors="*{direccion}">
-                                          </div>
+                                    <label class="form-label">Número de celular</label>
+                                    <input th:classappend="${#fields.hasErrors('numerotelefonico')?'is-invalid':''}" type="tel" th:field="*{numerotelefonico}" class="form-control form-control">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('numerotelefonico')}"
+                                         th:errors="*{numerotelefonico}">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6 mb-4 pb-2">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label">Direccion</label>
+                                    <input class="form-control" th:classappend="${#fields.hasErrors('direccion')?'is-invalid':''}" type="text" th:field="*{direccion}" >
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('direccion')}"
+                                         th:errors="*{direccion}">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="d-flex align-items-center justify-content-center pb-4">
@@ -115,10 +121,10 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-4">
-                                      <a><button style="width:150px" type="submit" class="btn btn-primary">Registrar</button></a>
+                                <a><button style="width:150px" type="submit" class="btn btn-primary">Registrar</button></a>
                             </div>
                             <div class="col-md-6 mb-4">
-                                    <a href="/login" style="width:150px" class="btn btn-danger">Cancelar</a>
+                                <a href="/login" style="width:150px" class="btn btn-danger">Cancelar</a>
                             </div>
                         </div>
 
