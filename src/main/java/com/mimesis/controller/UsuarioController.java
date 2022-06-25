@@ -157,8 +157,23 @@ public class UsuarioController {
     public String historialCompra(Model model, HttpSession session,@RequestParam(value="search",required = false) String search){
         Usuario usuario2 = (Usuario) session.getAttribute("usuario");
         System.out.println(search);
+
+
         if(search!=null){
-            model.addAttribute("listaHistorial",usuarioRepository.ObtenerHistorialporObra(usuario2.getId(),search));
+            if(search.equalsIgnoreCase("asistido")){
+                System.out.println("entro");
+                Integer idestado = 0;
+                model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorialporEstado(usuario2.getId(),idestado));
+            }else{
+                if(search.equalsIgnoreCase("pendiente")){
+                    System.out.println("entro2");
+                    Integer idestado = 1;
+                    model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorialporEstado(usuario2.getId(),idestado));
+                }else{
+                    model.addAttribute("listaHistorial",usuarioRepository.ObtenerHistorialporObra(usuario2.getId(),search));
+                    model.addAttribute("listaHistorial2",usuarioRepository.ObtenerHistorialporSede(usuario2.getId(),search));
+                }
+            }
         }else{
             model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorial(usuario2.getId()));
         }
