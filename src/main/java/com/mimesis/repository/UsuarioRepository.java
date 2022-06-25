@@ -68,7 +68,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "            where b.idusuario =?1 and f.idfuncion=?2 group by h.foto,h.nombre,h.apellido,h.correo;")
     List<DTOCalificacionActor> ObtenerCalificacionActor(Integer idusuario,Integer idfuncion);
 
-    @Query(nativeQuery = true, value = "Select c.nombre as nombreobra, b.fecha as fecha, b.horainicio as horainicio,b.horafin as horafin, \n" +
+    @Query(nativeQuery = true, value = "Select c.idobras as idobras, b.iddirector as directorid,c.nombre as nombreobra, b.fecha as fecha, b.horainicio as horainicio,b.horafin as horafin, \n" +
             "count(a.idboleto) as cantidad,e.nombre as nombresede,d.nombre as nombresala, a.estado as estado, b.costo*count(a.idboleto) as costototal, b.idfuncion as funcionid \n" +
             "from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +
             "            left join obras c on b.obras_idobras = c.idobras\n" +
