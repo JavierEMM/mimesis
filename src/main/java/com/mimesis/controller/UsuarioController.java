@@ -154,11 +154,14 @@ public class UsuarioController {
 
 
     @GetMapping("/historial")
-    public String historialCompra(Model model, HttpSession session){
+    public String historialCompra(Model model, HttpSession session,@RequestParam(value="search",required = false) String search){
         Usuario usuario2 = (Usuario) session.getAttribute("usuario");
-
-        model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorial(usuario2.getId()));
-
+        System.out.println(search);
+        if(search!=null){
+            model.addAttribute("listaHistorial",usuarioRepository.ObtenerHistorialporObra(usuario2.getId(),search));
+        }else{
+            model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorial(usuario2.getId()));
+        }
         return "usuario/historial";
     }
     @GetMapping("/images/{id}")
@@ -174,19 +177,21 @@ public class UsuarioController {
     }
 
     @GetMapping("/calificacion")
-    public String calificacion(Model model, HttpSession session, @RequestParam(value = "idfuncion",required = false)Integer idfuncion){
+    public String calificacion(Model model, HttpSession session, @RequestParam(value = "idfuncion",required = false)Integer idfuncion,
+                               @RequestParam(value = "idobras",required = false)Integer idobras,
+                               @RequestParam(value = "directorid",required = false)Integer directorid){
         Usuario usuario2 = (Usuario) session.getAttribute("usuario");
 
         DTOCalificacionObra dtoCalificacionObra = new DTOCalificacionObra();
         dtoCalificacionObra.setIdfuncion(idfuncion);
-        Obra obra = obrasRepository.getById(idfuncion);
+        Obra obra = obrasRepository.getById(idobras);
         dtoCalificacionObra.setNombreobra(obra.getNombre());
         dtoCalificacionObra.setIdobra(obra.getId());
 
 
         DTOCalificacionDirector dtoCalificacionDirector = new DTOCalificacionDirector();
         dtoCalificacionDirector.setIdfuncion(idfuncion);
-        Director director = directorRepository.getById(idfuncion);
+        Director director = directorRepository.getById(directorid);
         dtoCalificacionDirector.setNombredirector(director.getNombre());
         dtoCalificacionDirector.setApellidodirector(director.getApellido());
         dtoCalificacionDirector.setCorreodirector(director.getCorreo());

@@ -35,7 +35,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
     void agregarOperadores(String nombre,String apellido, String correo, String contrasena, String rol);
 
 
-    @Query(nativeQuery = true, value = "Select c.nombre as nombreobra, b.fecha as fecha, b.horainicio as horainicio,b.horafin as horafin, \n" +
+    @Query(nativeQuery = true, value = "Select c.idobras as idobras, b.iddirector as directorid,c.nombre as nombreobra, b.fecha as fecha, b.horainicio as horainicio,b.horafin as horafin, \n" +
             "count(a.idboleto) as cantidad,e.nombre as nombresede,d.nombre as nombresala, a.estado as estado, b.costo*count(a.idboleto) as costototal, b.idfuncion as funcionid \n" +
             "from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +
             "            left join obras c on b.obras_idobras = c.idobras\n" +
@@ -59,10 +59,21 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "where p.idusuario = ?1 and p.idfuncion= ?2 group by g.foto,g.nombre,g.apellido,g.correo,p.calificacion;")
     List<DTOCalificacionDirector> ObtenerCalificacionDirector(Integer idusuario, Integer idfuncion);
 
-    @Query(nativeQuery = true, value = "Select h.foto as fotoactor,h.nombre as nombreactor,h.apellido as apellidoactor,h.correo as correoactor,p.calificacion as calificacionactor, h.idactor as actorid\n" +
-            "from actor h left join calificaciones p on h.idactor = p.idactor\n" +
-            "left join funciontieneactor c on h.idactor = c.idactor\n" +
-            "left join funcion f on f.idfuncion = c.idfuncion\n" +
-            "where p.idusuario = ?1 and p.idfuncion = ?2 group by h.foto,h.nombre,h.apellido,h.correo,p.calificacion;")
+    @Query(nativeQuery = true, value = "Select h.foto as fotoactor,h.nombre as nombreactor,h.apellido as apellidoactor,h.correo as correoactor, h.idactor as actorid\n" +
+            "            from actor h \n" +
+            "            inner join funciontieneactor c on h.idactor = c.idactor\n" +
+            "            inner join funcion f on f.idfuncion = c.idfuncion\n" +
+            "            inner join boleto b on b.idfuncion = f.idfuncion\n" +
+            "            inner join usuario u on u.idusuario = b.idusuario\n" +
+            "            where b.idusuario =?1 and f.idfuncion=?2 group by h.foto,h.nombre,h.apellido,h.correo;")
     List<DTOCalificacionActor> ObtenerCalificacionActor(Integer idusuario,Integer idfuncion);
+
+    @Query(nativeQuery = true, value = "Select c.nombre as nombreobra, b.fecha as fecha, b.horainicio as horainicio,b.horafin as horafin, \n" +
+            "count(a.idboleto) as cantidad,e.nombre as nombresede,d.nombre as nombresala, a.estado as estado, b.costo*count(a.idboleto) as costototal, b.idfuncion as funcionid \n" +
+            "from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +
+            "            left join obras c on b.obras_idobras = c.idobras\n" +
+            "            left join sala d on b.idsala = d.idsala\n" +
+            "            left join sede e on d.idsede = e.idsede\n" +
+            "            where a.idusuario =?1 and c.nombre like %?2% group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
+    List<DTOHistorial> ObtenerHistorialporObra(Integer id,String nombre);
 }

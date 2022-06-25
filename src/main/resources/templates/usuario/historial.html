@@ -11,12 +11,23 @@
         <div class="page-header text-center">
             <h1 class="mayus">HISTORIAL DE FUNCIONES</h1>
         </div>
+        <form class="form-group mb-3" method="get" th:action="@{/historial}">
+            <div class="row">
+                <div class="col-8">
+                    <input type="text" class="form-control" placeholder="Texto a buscar" name="search" >
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                    <a class="btn btn-outline-danger ml-2" th:href="@{/historial}">Limpiar</a>
+                </div>
+            </div>
+        </form>
         <div class="row">
             <div class="col" sec:authorize="isAuthenticated()">
                 <table class="table">
                     <thead class="thead-dark">
                     <tr >
-                        <th style="text-align: center;" scope="col" >#</th>
+                        <th style="text-align: center;" scope="col">#</th>
                         <th style="text-align: center;" scope="col">Funcion</th>
                         <th style="text-align: center;" scope="col">Sede</th>
                         <th style="text-align: center;" scope="col">Sala</th>
@@ -42,7 +53,8 @@
                         <th style="text-align: center;" th:text="${datos.getCostototal()}"></th>
                         <td th:text="${datos.getEstado() ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
                         <td>
-                            <a th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${datos.getFuncionid()}}">
+                            <a th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${datos.getFuncionid()}
+                            + '&idobras='+ ${datos.getIdobras()} + '&directorid='+ ${datos.getDirectorid()}}">
                                 Calificacion
                             </a>
                         </td>

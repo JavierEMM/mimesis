@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public interface DTOHistorial {
+
+    Integer getIdobras();
+    Integer getDirectorid();
     String getNombreobra();
     LocalDate getFecha();
     LocalTime getHorainicio();
