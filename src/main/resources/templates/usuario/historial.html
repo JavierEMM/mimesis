@@ -13,10 +13,30 @@
         </div>
         <form class="form-group mb-3" method="get" th:action="@{/historial}">
             <div class="row">
-                <div class="col-8">
+                <div class="col-3">
+                    <label class="letter">Filtrar por rango de fecha</label>
                     <input type="text" class="form-control" placeholder="Texto a buscar" name="search" >
+
                 </div>
-                <div class="col">
+                <div class="col-2">
+                    <label for="fechainicio" class="letter">Fecha Inicio</label>
+                    <input id="fechainicio" class="form-control" type="date" name="FechaInicio" th:value="${fInicioSelected}"/>
+                </div>
+                <div class="col-2">
+                    <label for="fechafin" class="letter">Fecha Fin</label>
+                    <input id="fechafin" class="form-control" type="date" name="FechaFin" th:value="${fFinSelected}"/>
+                </div>
+                <div class="col-2 mt-4">
+
+                    <select class="form-select" name="categoria" >
+                        <option value="Nombre">Funcion</option>
+                        <option value="Sede">Sede</option>
+                        <option value="Estado">Estado</option>
+                        <option value="Fecha">Fecha</option>
+                    </select>
+                </div>
+                <div class="col mt-4">
+
                     <button class="btn btn-outline-primary" type="submit">Buscar</button>
                     <a class="btn btn-outline-danger ml-2" th:href="@{/historial}">Limpiar</a>
                 </div>
@@ -68,32 +88,6 @@
                             </form>
                         </td>
                     </tr>
-                    <!--tr th:each="datos,i: ${listaHistorial2}">
-                        <td style="text-align: center;" th:text="${i.index + 1}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombreobra()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombresede()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombresala()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getFecha()}"></td>
-                        <th style="text-align: center;" th:text="${datos.getHorainicio()}"></th>
-                        <th style="text-align: center;" th:text="${datos.getHorafin()}"></th>
-                        <th style="text-align: center;" th:text="${datos.getCantidad()}"></th>
-                        <th style="text-align: center;" th:text="${datos.getCostototal()}"></th>
-                        <td th:text="${datos.getEstado() ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
-                        <td>
-                            <a th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${datos.getFuncionid()}
-                            + '&idobras='+ ${datos.getIdobras()} + '&directorid='+ ${datos.getDirectorid()}}">
-                                Calificacion
-                            </a>
-                        </td>
-                        <td class="text-center" >
-                            <form id="idfuncion" method="get" th:action="@{'/historial/borrarfuncion?idfuncion=' + ${datos.getFuncionid()}}">
-                                <input name="idfuncion" th:value="${datos.getFuncionid()}" type="hidden"/>
-                                <button  onclick="return confirm('¿Esta seguro que desea cancelar la compra de esta función?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr-->
                     </tbody>
                 </table>
             </div>

@@ -155,27 +155,24 @@ public class UsuarioController {
 
 
     @GetMapping("/historial")
-    public String historialCompra(Model model, HttpSession session,@RequestParam(value="search",required = false) String search,@RequestParam(value = "idfuncion",required = false)Integer idfuncion){
+    public String historialCompra(Model model, HttpSession session,@RequestParam(value="search",required = false) String search,
+                                  @RequestParam(value="categoria",required = false) String categoria,
+                                  @RequestParam(value="FechaInicio",required = false) String optFechaInicio, @RequestParam(value="FechaFin",required = false)String optFechaFin){
         Usuario usuario2 = (Usuario) session.getAttribute("usuario");
-
-        if(search!=null){
-            if(search.equalsIgnoreCase("asistido")){
-                System.out.println("entro");
-                Integer idestado = 0;
-                model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorialporEstado(usuario2.getId(),idestado));
-
+        System.out.println(search);
+        if(search != null) {
+            if (categoria.equalsIgnoreCase("Nombre")) {
+                model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorialporObra(usuario2.getId(), search));
             }
-            if(search.equalsIgnoreCase("pendiente")){
-                System.out.println("entro2");
-                Integer idestado = 1;
-                model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorialporEstado(usuario2.getId(),idestado));
+            if (categoria.equalsIgnoreCase("Sede")) {
+                model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorialporSede(usuario2.getId(), search));
             }
-            model.addAttribute("listaHistorial",usuarioRepository.ObtenerHistorialporObra(usuario2.getId(),search));
-            model.addAttribute("listaHistorial2",usuarioRepository.ObtenerHistorialporSede(usuario2.getId(),search));
+            if(categoria.equalsIgnoreCase("Fecha")){
+                model.addAttribute("listaHistorial",usuarioRepository.ObtenerHistorialporFecha(usuario2.getId(),optFechaInicio,optFechaFin));
+            }
 
-        }
 
-        else{
+        }else{
             model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorial(usuario2.getId()));
         }
         return "usuario/historial";
