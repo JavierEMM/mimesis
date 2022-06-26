@@ -81,12 +81,12 @@
                 <div class="row">
                     <div class="col">
                         <div class="row">
-                            <form class="form-inline" method="POST"th:action="@{/operador/estadisticaFuncion}">
+                            <form class="form-inline" method="POST"th:action="@{/operador/searchAct}">
                             <div class="col">
 
                                     <h4 class="letter">Actores mejores calificados:</h4>
                                     <div class = "box" style="margin-bottom: 10px;">
-                                        <input  type="text" name="search" placeholder="Buscar" class="form-control mr-sm-2" autocomplete = "off">
+                                        <input  type="text" name="busqueda" placeholder="Buscar" class="form-control mr-sm-2" autocomplete = "off">
                                     </div>
                                 <table class="table", id="actores">
                                     <thead class="thead-dark">
@@ -108,12 +108,12 @@
                             </form>
                         </div>
                         <div class="row">
-                            <form class="form-inline" method="POST"th:action="@{/operador/estadisticaFuncion}">
+                            <form class="form-inline" method="POST"th:action="@{/operador/searchDir}">
                             <div class="col">
 
                                     <h4 class="letter">Directores mejores calificados:</h4>
                                     <div class = "box" style="margin-bottom: 10px;">
-                                        <input  type="text" name="search" placeholder="Buscar" class="form-control mr-sm-2" autocomplete = "off">
+                                        <input  type="text" name="busqueda" placeholder="Buscar" class="form-control mr-sm-2" autocomplete = "off">
                                     </div>
                                 <table class="table", id="directores">
                                     <thead class="thead-dark">

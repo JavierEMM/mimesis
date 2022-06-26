@@ -129,14 +129,17 @@ public class OperadorController {
     }
 
     @PostMapping("/searchAct")
-    public String buscarBestoActores(Model model,@RequestParam("busqueda") String busqueda,@RequestParam("categoria") String categoria){
-        if(categoria.equalsIgnoreCase("Nombre")){
-            model.addAttribute("listaFunciones",funcionRepository.listaBuscarFuncionesNombre(busqueda));
-        }else{
-            model.addAttribute("listaFunciones",funcionRepository.listaBuscarFuncionesGenero(busqueda));
-        }
+    public String buscarBestoActores(Model model,@RequestParam("busqueda") String busqueda){
+            model.addAttribute("listaBestoAct",actorRepository.busquedaActor(busqueda));
 
-        return "operador/listafunciones";
+        return "operador/estadisticas";
+    }
+
+    @PostMapping("/searchDir")
+    public String buscarBestoDir(Model model,@RequestParam("busqueda") String busqueda){
+        model.addAttribute("listaBestoDir",directorRepository.busquedaDirector(busqueda));
+
+        return "operador/estadisticas";
     }
 
     @GetMapping(value = {"/obras"})
