@@ -60,7 +60,7 @@
                             </a>
                         </td>
                         <td class="text-center" >
-                            <form id="idboleto" method="get" th:action="@{'/borrarboleto?idboleto=' + ${datos.getFuncionid()}}">
+                            <form id="idboleto" method="get" th:action="@{'/borrarboleto?idboleto=' + ${}}">
                                 <input name="idfuncion" th:value="${datos.getFuncionid()}" type="hidden"/>
                                 <button  onclick="return confirm('¿Esta seguro que desea cancelar la compra de esta función?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                                     <i class="bi bi-trash"></i>

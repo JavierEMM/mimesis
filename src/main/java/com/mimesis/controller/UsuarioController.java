@@ -163,7 +163,7 @@ public class UsuarioController {
                 System.out.println("entro");
                 Integer idestado = 0;
                 model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorialporEstado(usuario2.getId(),idestado));
-
+                model.addAttribute("listaIdboleto", boletoRepository.boletoPendiente());
             }
             if(search.equalsIgnoreCase("pendiente")){
                 System.out.println("entro2");
