@@ -162,7 +162,9 @@ public class UsuarioController {
             if(search.equalsIgnoreCase("asistido")){
                 System.out.println("entro");
                 Integer idestado = 0;
-                model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorialporEstado(usuario2.getId(),idestado));
+                List<DTOHistorial> listaHistorial = usuarioRepository.ObtenerHistorialporEstado(usuario2.getId(),idestado);
+
+                model.addAttribute("listaHistorial", listaHistorial);
             }
             if(search.equalsIgnoreCase("pendiente")){
                 System.out.println("entro2");
