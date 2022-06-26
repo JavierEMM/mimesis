@@ -34,14 +34,14 @@
                                     Mobydick
                                 </td>
                                 <td style="text-align: center;" >
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="1obra"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="2obra"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="3obra"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="4obra"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="5obra"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="1obra+''+${obra.idobra}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="2obra+''+${obra.idobra}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="3obra+''+${obra.idobra}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="4obra+''+${obra.idobra}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="5obra+''+${obra.idobra}"></span>
                                 </td>
                                 <td>
-                                    <input type="text" class="calificacion form-control" name="idcalificaciones" hidden>
+                                    <input type="text" class="calificacion form-control" name="idcalificaciones" disabled>
                                 </td>
                                 <td>
                                     <input type="text" class="calificacion form-control" name="idusuario" th:text="${session.usuario.id}" hidden>
@@ -84,14 +84,14 @@
                                 <td style="text-align: center;"th:text="${director.apellidodirector}">Perez</td>
                                 <td style="text-align: center;" th:text="${director.correodirector}">juan.perez@gmail.com</td>
                                 <td style="text-align: center;">
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="1director"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="2director"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="3director"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="4director"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="5director"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="1director+''+${director.iddirector}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="2director+''+${director.iddirector}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="3director+''+${director.iddirector}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="4director+''+${director.iddirector}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="5director+''+${director.iddirector}"></span>
                                 </td>
                                 <td>
-                                    <input type="text" class="calificacion form-control" name="califidirector" hidden>
+                                    <input type="text" class="calificacion form-control" name="califidirector" disabled>
 
                                 </td>
                             </tr>
@@ -125,11 +125,11 @@
                                 <td style="text-align: center;" th:text="${actor.getApellidoactor()}">Alcantara</td>
                                 <td style="text-align: center;" th:text="${actor.getCorreoactor()}">alcantara.12@gmail.com</td>
                                 <td style="text-align: center;" >
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="1actor"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="2actor"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="3actor"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="4actor"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" id="5actor"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="1actor+''+${actor.getActorid()}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="2actor+''+${actor.getActorid()}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="3actor+''+${actor.getActorid()}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="4actor+''+${actor.getActorid()}"></span>
+                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="5actor+''+${actor.getActorid()}"></span>
                                 </td>
                                 <td>
                                     <input type="text" class="calificacion form-control" disabled>
