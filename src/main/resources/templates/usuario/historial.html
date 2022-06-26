@@ -13,10 +13,30 @@
         </div>
         <form class="form-group mb-3" method="get" th:action="@{/historial}">
             <div class="row">
-                <div class="col-8">
+                <div class="col-3">
+                    <label class="letter">Filtrar por rango de fecha</label>
                     <input type="text" class="form-control" placeholder="Texto a buscar" name="search" >
+
                 </div>
-                <div class="col">
+                <div class="col-2">
+                    <label for="fechainicio" class="letter">Fecha Inicio</label>
+                    <input id="fechainicio" class="form-control" type="date" name="FechaInicio" th:value="${fInicioSelected}"/>
+                </div>
+                <div class="col-2">
+                    <label for="fechafin" class="letter">Fecha Fin</label>
+                    <input id="fechafin" class="form-control" type="date" name="FechaFin" th:value="${fFinSelected}"/>
+                </div>
+                <div class="col-2 mt-4">
+
+                    <select id="searchby" class="form-select" name="categoria" >
+                        <option value="Nombre">Funcion</option>
+                        <option value="Sede">Sede</option>
+                        <option value="Estado">Estado</option>
+                        <option value="Fecha">Fecha</option>
+                    </select>
+                </div>
+                <div class="col mt-4">
+
                     <button class="btn btn-outline-primary" type="submit">Buscar</button>
                     <a class="btn btn-outline-danger ml-2" th:href="@{/historial}">Limpiar</a>
                 </div>
@@ -28,72 +48,46 @@
                     <thead class="thead-dark">
                     <tr>
                         <th style="text-align: center;" scope="col" ><i class="bi bi-arrow-down-up"></i></th>
-                        <th style="text-align: center;" scope="col">Funcion<i class="bi bi-arrow-down-up"></i></th>
-                        <th style="text-align: center;" scope="col">Sede<i class="bi bi-arrow-down-up"></i></th>
+                        <th style="text-align: center;" scope="col">Funcion</th>
+                        <th style="text-align: center;" scope="col">Sede</th>
                         <th style="text-align: center;" scope="col">Sala</th>
                         <th style="text-align: center;" scope="col" >Fecha<i class="bi bi-arrow-down-up"></i></th>
                         <th style="text-align: center;" scope="col" >Hora Inicio</th>
                         <th style="text-align: center;" scope="col" >Hora Fin</th>
-                        <th style="text-align: center;" scope="col" >#Tickets<i class="bi bi-arrow-down-up"></i></th>
-                        <th style="text-align: center;" scope="col" >Costo<i class="bi bi-arrow-down-up"></i></th>
-                        <th style="text-align: center;" scope="col" >Estado<i class="bi bi-arrow-down-up"></i></th>
+                        <th style="text-align: center;" scope="col" >#Tickets</th>
+                        <th style="text-align: center;" scope="col" >Costo</th>
+                        <th style="text-align: center;" scope="col" >Estado de la Función</th>
                         <th style="text-align: center;" scope="col">Calificacion</th>
-                        <th style="text-align: center;" scope="col">Eliminar</th>
+
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="datos,i: ${listaHistorial}">
+                    <tr th:each="datos,i: ${listaHistorialporBoleto}">
                         <td style="text-align: center;" th:text="${i.index + 1}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombreobra()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombresede()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombresala()}"></td>
+                        <td style="text-align: center;" th:text="${datos.getNombreObra()}"></td>
+                        <td style="text-align: center;" th:text="${datos.getNombreSede()}"></td>
+                        <td style="text-align: center;" th:text="${datos.getNombreSala()}"></td>
                         <td style="text-align: center;" th:text="${datos.getFecha()}"></td>
-                        <th style="text-align: center;" th:text="${datos.getHorainicio()}"></th>
-                        <th style="text-align: center;" th:text="${datos.getHorafin()}"></th>
-                        <th style="text-align: center;" th:text="${datos.getCantidad()}"></th>
-                        <th style="text-align: center;" th:text="${datos.getCostototal()}"></th>
+                        <td style="text-align: center;" th:text="${datos.getHoraInicio()}"></td>
+                        <td style="text-align: center;" th:text="${datos.getHoraFin()}"></td>
+                        <td style="text-align: center;" th:text="${datos.getCantidad()}"></td>
+                        <td style="text-align: center;" th:text="${datos.getCostoTotal()}"></td>
                         <td th:text="${datos.getEstado() ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
                         <td>
                             <a th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${datos.getFuncionid()}
-                            + '&idobras='+ ${datos.getIdobras()} + '&directorid='+ ${datos.getDirectorid()}}">
+                            + '&idobras='+ ${datos.getIdObras()} + '&directorid='+ ${datos.getDirectorId()}}">
                                 Calificacion
                             </a>
                         </td>
                         <td class="text-center" >
-                            <form id="idboleto" method="get" th:action="@{'/borrarboleto?idboleto=' + ${}}">
-                                <input name="idfuncion" th:value="${datos.getFuncionid()}" type="hidden"/>
+                            <form id="idboleto" method="get" th:action="@{'/borrarboleto?idboleto=' + ${datos.getListadeIdBoleto()}}">
+                                <input name="idboleto" th:value="${datos.getListadeIdBoleto()}" type="hidden"/>
                                 <button  onclick="return confirm('¿Esta seguro que desea cancelar la compra de esta función?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
                         </td>
                     </tr>
-                    <!--tr th:each="datos,i: ${listaHistorial2}">
-                        <td style="text-align: center;" th:text="${i.index + 1}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombreobra()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombresede()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombresala()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getFecha()}"></td>
-                        <th style="text-align: center;" th:text="${datos.getHorainicio()}"></th>
-                        <th style="text-align: center;" th:text="${datos.getHorafin()}"></th>
-                        <th style="text-align: center;" th:text="${datos.getCantidad()}"></th>
-                        <th style="text-align: center;" th:text="${datos.getCostototal()}"></th>
-                        <td th:text="${datos.getEstado() ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
-                        <td>
-                            <a th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${datos.getFuncionid()}
-                            + '&idobras='+ ${datos.getIdobras()} + '&directorid='+ ${datos.getDirectorid()}}">
-                                Calificacion
-                            </a>
-                        </td>
-                        <td class="text-center" >
-                            <form id="idfuncion" method="get" th:action="@{'/historial/borrarfuncion?idfuncion=' + ${datos.getFuncionid()}}">
-                                <input name="idfuncion" th:value="${datos.getFuncionid()}" type="hidden"/>
-                                <button  onclick="return confirm('¿Esta seguro que desea cancelar la compra de esta función?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr-->
                     </tbody>
                 </table>
             </div>
@@ -145,6 +139,5 @@
     } );
 </script>
 <footer th:replace="includes/footer.html :: footer"></footer>
-
 </body>
 </html>
