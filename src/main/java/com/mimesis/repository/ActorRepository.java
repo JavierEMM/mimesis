@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface ActorRepository extends JpaRepository<Actor,Integer> {
-    @Query(nativeQuery = true, value = "SELECT  * FROM actor WHERE concat(nombre,' ',apellido) like %?1%")
+    @Query(nativeQuery = true, value = "SELECT  * FROM actor WHERE concat(nombre,' ',apellido) like %?1%;")
     List<Actor> busquedaActor(String nombre);
 
     @Query(nativeQuery = true, value = "SELECT  * FROM actor WHERE nombre like %?1%")
@@ -24,5 +24,8 @@ public interface ActorRepository extends JpaRepository<Actor,Integer> {
             "inner join actor a on a.idactor=c.idactor \n" +
             "where c.idactor IS NOT NULL group by c.idactor;")
     List<DTOActoresMejoresCalificados> obtenerActoresMejoresCalificados();
+
+    @Query(nativeQuery = true, value = "SELECT * FROM actor a WHERE a.nombre or a.apellido like %?1%;")
+    List<Actor> busquedaBestoAct(String busqueda);
 
 }

@@ -19,5 +19,4 @@ public interface BoletoRepository extends JpaRepository<Boleto,Integer> {
     List<DTOBoletosPorFuncion> boletosporFuncionFechasMenos(String fechaInicio, String fechaFin);
     @Query(nativeQuery = true, value = "SELECT costo from funcion order by idfuncion;")
     List<Double> costoPorFuncion();
-
 }

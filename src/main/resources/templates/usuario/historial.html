@@ -56,7 +56,8 @@
                         <th style="text-align: center;" scope="col" >Hora Fin</th>
                         <th style="text-align: center;" scope="col" >#Tickets<i class="bi bi-arrow-down-up"></i></th>
                         <th style="text-align: center;" scope="col" >Costo<i class="bi bi-arrow-down-up"></i></th>
-                        <th style="text-align: center;" scope="col" >Estado<i class="bi bi-arrow-down-up"></i></th>
+                        <th style="text-align: center;" scope="col" >Estado de la Función<i class="bi bi-arrow-down-up"></i></th>
+                        <th style="text-align: center;" scope="col" >Estado de la Compra<i class="bi bi-arrow-down-up"></i></th>
                         <th style="text-align: center;" scope="col">Calificacion</th>
                         <th style="text-align: center;" scope="col">Eliminar</th>
                     </tr>
@@ -80,7 +81,7 @@
                             </a>
                         </td>
                         <td class="text-center" >
-                            <form id="idboleto" method="get" th:action="@{'/borrarboleto?idboleto=' + ${datos.getFuncionid()}}">
+                            <form id="idboleto" method="get" th:action="@{'/borrarboleto?idboleto=' + ${}}">
                                 <input name="idfuncion" th:value="${datos.getFuncionid()}" type="hidden"/>
                                 <button  onclick="return confirm('¿Esta seguro que desea cancelar la compra de esta función?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                                     <i class="bi bi-trash"></i>
