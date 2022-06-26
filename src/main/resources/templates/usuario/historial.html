@@ -24,19 +24,19 @@
         </form>
         <div class="row">
             <div class="col" sec:authorize="isAuthenticated()">
-                <table class="table"id="historial">
+                <table class="table table-stripped" id="historial">
                     <thead class="thead-dark">
-                    <tr >
-                        <th style="text-align: center;" scope="col">#</th>
-                        <th style="text-align: center;" scope="col">Funcion</th>
-                        <th style="text-align: center;" scope="col">Sede</th>
+                    <tr>
+                        <th style="text-align: center;" scope="col" ><i class="bi bi-arrow-down-up"></i></th>
+                        <th style="text-align: center;" scope="col">Funcion<i class="bi bi-arrow-down-up"></i></th>
+                        <th style="text-align: center;" scope="col">Sede<i class="bi bi-arrow-down-up"></i></th>
                         <th style="text-align: center;" scope="col">Sala</th>
-                        <th style="text-align: center;" scope="col" >Fecha</th>
+                        <th style="text-align: center;" scope="col" >Fecha<i class="bi bi-arrow-down-up"></i></th>
                         <th style="text-align: center;" scope="col" >Hora Inicio</th>
                         <th style="text-align: center;" scope="col" >Hora Fin</th>
-                        <th style="text-align: center;" scope="col" >#Tickets</th>
-                        <th style="text-align: center;" scope="col" >Costo</th>
-                        <th style="text-align: center;" scope="col" >Estado</th>
+                        <th style="text-align: center;" scope="col" >#Tickets<i class="bi bi-arrow-down-up"></i></th>
+                        <th style="text-align: center;" scope="col" >Costo<i class="bi bi-arrow-down-up"></i></th>
+                        <th style="text-align: center;" scope="col" >Estado<i class="bi bi-arrow-down-up"></i></th>
                         <th style="text-align: center;" scope="col">Calificacion</th>
                     </tr>
                     </thead>
@@ -110,10 +110,10 @@
                 infoFiltered: "(filtrado de _MAX_ elementos en total)",
                 infoPostFix: "",
                 paginate: {
-                    first: "Ultimo",
+                    first: "Primero",
                     previous: "Anterior",
                     next: "Siguiente",
-                    last: "Primero"
+                    last: "Ultimo"
                 },
                 aria: {
                     sortAscending: ": active para ordenar la columna en orden ascendente",
@@ -123,7 +123,7 @@
             scrollY: 300,
             lengthMenu: [ [5, 10, -1], [5, 10, "All"] ],
             "searching": false,
-            "ordering": false,
+            "ordering": true,
         });
     } );
 </script>
