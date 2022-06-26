@@ -95,5 +95,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "                       where a.idusuario =?1 and a.estado=?2 group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
     List<DTOHistorial> ObtenerHistorialporEstado(Integer id,Integer estado);
 
+    @Query(nativeQuery = true, value = "select f.fecha, f.horainicio, b.idboleto from funcion f \n" +
+            "inner join boleto b on f.idfuncion = b.idfuncion\n" +
+            "inner join usuario u on b.idusuario = u.idusuario where u.idusuario=?1 and f.idfuncion=?2")
+    DTOObtenerHoraFuncion ObtenerByIdUsuarioIdfuncion(Integer idusuario,Integer idfuncion);
+
+
 
 }
