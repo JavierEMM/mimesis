@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.thymeleaf.util.StringUtils.length;
+
 @Controller
 @RequestMapping("")
 public class UsuarioController {
@@ -173,7 +175,27 @@ public class UsuarioController {
 
 
         }else{
-            model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorial(usuario2.getId()));
+            List<DTOHistorial> listaHistorial = usuarioRepository.ObtenerHistorial(usuario2.getId());
+            List<DTOHistorialporBoleto> listaHistorialporBoleto = new ArrayList<>();
+            for (DTOHistorial i: listaHistorial){
+                Integer idObras = i.getIdobras();
+                Integer directorId = i.getDirectorid();
+                String nombreObra = i.getNombreobra();
+                LocalDate fecha = i.getFecha();
+                LocalTime horaInicio = i.getHorainicio();
+                LocalTime horaFin = i.getHorafin();
+                Integer cantidad = i.getCantidad();
+                String nombreSede = i.getNombresede();
+                String nombreSala = i.getNombresala();
+                String estado = i.getEstado();
+                String costoTotal = i.getCostototal();
+                Integer funcionId = i.getFuncionid();
+                DTOHistorialporBoleto boleto = new DTOHistorialporBoleto(idObras,directorId,nombreObra,fecha,horaInicio,horaFin,cantidad,nombreSede,nombreSala,estado,costoTotal,funcionId);
+                List<Integer> listaIdboleto = boletoRepository.boletosPorUsuarioFuncion(usuario2.getId(),funcionId);
+                boleto.setListadeIdBoleto(listaIdboleto);
+                listaHistorialporBoleto.add(boleto);
+            }
+            model.addAttribute("listaHistorialporBoleto", listaHistorialporBoleto);
         }
         return "usuario/historial";
     }
@@ -247,14 +269,19 @@ public class UsuarioController {
     }
 
     @GetMapping("/borrarboleto")
-    public  String borrar(@RequestParam("idfuncion") Integer id, RedirectAttributes attr){
-        Optional<Boleto> optionalBoleto = boletoRepository.findById(id);
-        if(optionalBoleto.isPresent()){
-            boletoRepository.deleteById(id);
-            attr.addFlashAttribute("msg","Funcion borrada exitosamente");
-            attr.addFlashAttribute("opcion","alert-danger");
-        }
-        return "redirect:/admin/salas";
+    public  String borrar(@RequestParam("idboleto") String ids, RedirectAttributes attr){
+
+        int tamanio = length(ids);
+
+        //for(int i: listaIdBoleto){
+            //Optional<Boleto> optionalBoleto = boletoRepository.findById(i);
+            //if(optionalBoleto.isPresent()){
+                //boletoRepository.deleteById(i);
+            //}
+            //System.out.println(i);
+        //}
+
+        return "redirect:/historial";
     }
 
 }
