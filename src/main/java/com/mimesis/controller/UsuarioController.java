@@ -4,6 +4,7 @@ import com.mimesis.dto.*;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -93,10 +94,13 @@ public class UsuarioController {
 
 
     @PostMapping("/perfil/save")
-    public String guardarPerfil(@RequestParam("archivo") MultipartFile file, Usuario usuario,
+    public String guardarPerfil(@RequestParam("archivo") MultipartFile file,
                                 @RequestParam("direccion") String direccion,
-                                @RequestParam("numerotelefonico") String tel,
+                                @RequestParam("fechanacimiento") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechanacimiento,
+                                @RequestParam("numerotelefonico") String tel, HttpSession session,
                                 Model model) {
+        String usuario2 = (String) session.getAttribute("usuario");
+        Usuario usuario = usuarioRepository.findByCorreo(usuario2);
         try {
             if(file.getOriginalFilename().equals("") || file.getOriginalFilename().equalsIgnoreCase(null) ){
                 System.out.println("AQUI 1");
@@ -105,7 +109,7 @@ public class UsuarioController {
                 usuario.setFotoperfil(file.getBytes());
             }
             usuario.setDireccion(direccion);
-            //usuario.setFechanacimiento(fechanacimiento);
+            usuario.setFechanacimiento(fechanacimiento);
             usuario.setNumerotelefonico(tel);
             usuarioRepository.save(usuario);
             return "redirect:/perfil";
