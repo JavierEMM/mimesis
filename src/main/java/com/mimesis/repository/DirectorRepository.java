@@ -25,4 +25,9 @@ public interface DirectorRepository extends JpaRepository<Director,Integer> {
             "INNER JOIN calificaciones c ON d.iddirector=c.iddirector\n" +
             "where d.iddirector IS NOT NULL group by d.iddirector;")
     List<DTODirectoresMejoresCalificados> obtenerDirectoresMejoresCalificados();
+
+    @Query(nativeQuery = true, value = "SELECT d.nombre, d.apellido, avg(c.calificacion) as calificacion FROM director d\n" +
+            "inner join calificaciones c on d.iddirector=c.iddirector\n" +
+            "WHERE concat(d.nombre,' ',d.apellido) like %?1% group by d.iddirector")
+    List<DTODirectoresMejoresCalificados> busquedaBestoDir(String busqueda);
 }

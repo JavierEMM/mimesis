@@ -76,7 +76,7 @@
                                 <label for="iddirector" >Director</label>
                                 <select class="form-select" id="iddirector" th:field="*{iddirector}" th:classappend="${#fields.hasErrors('iddirector')?'is-invalid':''}">
                                     <option th:value="-1">-Seleccione-</option>
-                                    <option th:each="director : ${listaDirectores}" th:value="${director.id}" th:text="${director.nombre}">Mark</option>
+                                    <option th:each="director : ${listaDirectores}" th:value="${director.id}" th:text="${director.nombre}+' '+${director.apellido}">Mark</option>
                                 </select>
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('iddirector')}"
                                      th:errors="*{iddirector}"></div>

@@ -129,15 +129,157 @@ public class OperadorController {
     }
 
     @PostMapping("/searchAct")
-    public String buscarBestoActores(Model model,@RequestParam("busqueda") String busqueda){
-            model.addAttribute("listaBestoAct",actorRepository.busquedaActor(busqueda));
+    public String buscarBestoAct(Model model, HttpSession session, @RequestParam("opcion")Optional<Integer> optOpcion, @RequestParam("FechaInicio")Optional<String> optFechaInicio, @RequestParam("FechaFin")Optional<String> optFechaFin,
+                                        @RequestParam("filtro")Optional<String> optFiltro, @RequestParam(value = "busqueda", required = false) String busqueda){
+        int id;
+        if(optOpcion.isPresent()){
+            id = optOpcion.get();
+        }else{
+            id=1;
+        }
+        String filtro;
+        String currentFilter;
+        if(optFiltro.isPresent()){
+            filtro=optFiltro.get();
+        }else{
+            filtro="Función más vista";
+        }
+        if(optFechaInicio.isPresent()){
+            if( optFechaInicio.get().length() !=0 ){
+                session.setAttribute("fechaInicio",optFechaInicio.get());
+            }
+        }
+        if(optFechaFin.isPresent()){
+            if( optFechaFin.get().length() !=0 ){
+                session.setAttribute("fechaFin",optFechaFin.get());
+            }
+        }
+
+        if(optFiltro.isPresent()){
+            session.setAttribute("currentFunFilter",optFiltro.get());
+        }
+
+        System.out.println("holi, llego");
+
+        DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(id);
+        System.out.println(session.getAttribute("fechaInicio"));
+        System.out.println(session.getAttribute("fechaFin"));
+        List<DTOTotalBoletosPorFuncion> listaDto = funcionRepository.boletosTotalFecha((String) session.getAttribute("fechaInicio"),(String) session.getAttribute("fechaFin"));
+        List <Integer> idFunciones = new ArrayList<>();
+        for (DTOTotalBoletosPorFuncion a : listaDto){
+            idFunciones.add(a.getIdFuncionTotal());
+        }
+
+        List<Funcion> listaFiltrada = new ArrayList<>();
+        List <Integer> cantidadEspectadores = new ArrayList<>();
+        List<DTOBoletosPorFuncion> boletosPorFuncion = new ArrayList<>();
+        if(session.getAttribute("currentFunFilter").equals("Función más vista")){
+            boletosPorFuncion = boletoRepository.boletosporFuncionFechasMas((String) session.getAttribute("fechaInicio"),(String) session.getAttribute("fechaFin"));
+        }else if(session.getAttribute("currentFunFilter").equals("Función menos vista")){
+            boletosPorFuncion=boletoRepository.boletosporFuncionFechasMenos((String) session.getAttribute("fechaInicio"),(String) session.getAttribute("fechaFin"));
+        }else{
+            boletosPorFuncion=boletoRepository.boletosporFuncion();
+        }
+
+        for (DTOBoletosPorFuncion boleto : boletosPorFuncion){
+            System.out.println("Obteniendo los ids: "+boleto.getidsalaBoleto());
+            Optional<Funcion> funcion = funcionRepository.findById(boleto.getidsalaBoleto());
+            listaFiltrada.add(funcion.get());
+            cantidadEspectadores.add(boleto.getSumaBoletos());
+        }
+        session.setAttribute("bestoAct", busqueda);
+        model.addAttribute("cantidadEspectadores",cantidadEspectadores);
+        model.addAttribute("fInicioSelected",session.getAttribute("fechaInicio"));
+        model.addAttribute("fFinSelected",session.getAttribute("fechaFin"));
+        model.addAttribute("filtroFunciones",session.getAttribute("currentFunFilter"));
+        model.addAttribute("noAsistentes",info.getCantidadboletostotal()- info.getCantidadasistentes());
+        model.addAttribute("asistentes",info.getCantidadasistentes());
+        model.addAttribute("nombre",funcionRepository.findById(info.getIdFuncionTotal()).get().getIdobra().getNombre());
+        model.addAttribute("listaFunciones",funcionRepository.findAllById(idFunciones));
+        model.addAttribute("listaFuncionesVistas",listaFiltrada);
+        model.addAttribute("listaActores",actorRepository.findAll());
+        model.addAttribute("listaDirectores",directorRepository.findAll());
+        model.addAttribute("listaObras",obrasRepository.findAll());
+        model.addAttribute("listaActoresMejoresCalificados",actorRepository.busquedaBestoAct((String)session.getAttribute("bestoAct")));
+        model.addAttribute("listaDirectoresMejoresCalificados",directorRepository.busquedaBestoDir((String)session.getAttribute("bestoDir")));
 
         return "operador/estadisticas";
     }
 
     @PostMapping("/searchDir")
-    public String buscarBestoDir(Model model,@RequestParam("busqueda") String busqueda){
-        model.addAttribute("listaBestoDir",directorRepository.busquedaDirector(busqueda));
+    public String buscarBestoDir(Model model, HttpSession session, @RequestParam("opcion")Optional<Integer> optOpcion, @RequestParam("FechaInicio")Optional<String> optFechaInicio, @RequestParam("FechaFin")Optional<String> optFechaFin,
+                                 @RequestParam("filtro")Optional<String> optFiltro, @RequestParam(value = "busqueda", required = false) String busqueda){
+        int id;
+        if(optOpcion.isPresent()){
+            id = optOpcion.get();
+        }else{
+            id=1;
+        }
+        String filtro;
+        String currentFilter;
+        if(optFiltro.isPresent()){
+            filtro=optFiltro.get();
+        }else{
+            filtro="Función más vista";
+        }
+        if(optFechaInicio.isPresent()){
+            if( optFechaInicio.get().length() !=0 ){
+                session.setAttribute("fechaInicio",optFechaInicio.get());
+            }
+        }
+        if(optFechaFin.isPresent()){
+            if( optFechaFin.get().length() !=0 ){
+                session.setAttribute("fechaFin",optFechaFin.get());
+            }
+        }
+
+        if(optFiltro.isPresent()){
+            session.setAttribute("currentFunFilter",optFiltro.get());
+        }
+
+
+
+        DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(id);
+        System.out.println(session.getAttribute("fechaInicio"));
+        System.out.println(session.getAttribute("fechaFin"));
+        List<DTOTotalBoletosPorFuncion> listaDto = funcionRepository.boletosTotalFecha((String) session.getAttribute("fechaInicio"),(String) session.getAttribute("fechaFin"));
+        List <Integer> idFunciones = new ArrayList<>();
+        for (DTOTotalBoletosPorFuncion a : listaDto){
+            idFunciones.add(a.getIdFuncionTotal());
+        }
+
+        List<Funcion> listaFiltrada = new ArrayList<>();
+        List <Integer> cantidadEspectadores = new ArrayList<>();
+        List<DTOBoletosPorFuncion> boletosPorFuncion = new ArrayList<>();
+        if(session.getAttribute("currentFunFilter").equals("Función más vista")){
+            boletosPorFuncion = boletoRepository.boletosporFuncionFechasMas((String) session.getAttribute("fechaInicio"),(String) session.getAttribute("fechaFin"));
+        }else if(session.getAttribute("currentFunFilter").equals("Función menos vista")){
+            boletosPorFuncion=boletoRepository.boletosporFuncionFechasMenos((String) session.getAttribute("fechaInicio"),(String) session.getAttribute("fechaFin"));
+        }else{
+            boletosPorFuncion=boletoRepository.boletosporFuncion();
+        }
+
+        for (DTOBoletosPorFuncion boleto : boletosPorFuncion){
+            System.out.println("Obteniendo los ids: "+boleto.getidsalaBoleto());
+            Optional<Funcion> funcion = funcionRepository.findById(boleto.getidsalaBoleto());
+            listaFiltrada.add(funcion.get());
+            cantidadEspectadores.add(boleto.getSumaBoletos());
+        }
+        session.setAttribute("bestoDir", busqueda);
+        model.addAttribute("cantidadEspectadores",cantidadEspectadores);
+        model.addAttribute("fInicioSelected",session.getAttribute("fechaInicio"));
+        model.addAttribute("fFinSelected",session.getAttribute("fechaFin"));
+        model.addAttribute("filtroFunciones",session.getAttribute("currentFunFilter"));
+        model.addAttribute("noAsistentes",info.getCantidadboletostotal()- info.getCantidadasistentes());
+        model.addAttribute("asistentes",info.getCantidadasistentes());
+        model.addAttribute("nombre",funcionRepository.findById(info.getIdFuncionTotal()).get().getIdobra().getNombre());
+        model.addAttribute("listaFunciones",funcionRepository.findAllById(idFunciones));
+        model.addAttribute("listaFuncionesVistas",listaFiltrada);
+        model.addAttribute("listaActores",actorRepository.findAll());
+        model.addAttribute("listaDirectores",directorRepository.findAll());
+        model.addAttribute("listaObras",obrasRepository.findAll());
+        model.addAttribute("listaActoresMejoresCalificados",actorRepository.busquedaBestoAct((String)session.getAttribute("bestoAct")));
+        model.addAttribute("listaDirectoresMejoresCalificados",directorRepository.busquedaBestoDir((String)session.getAttribute("bestoDir")));
 
         return "operador/estadisticas";
     }
@@ -225,6 +367,8 @@ public class OperadorController {
         session.setAttribute("fechaInicio","2022-01-01");
         session.setAttribute("fechaFin","2022-12-31");
         session.setAttribute("currentFunFilter","Función más vista");
+        session.setAttribute("bestoActor", "");
+        session.setAttribute("bestoDir", "");
         model.addAttribute("fInicioSelected","2022-01-01");
         model.addAttribute("fFinSelected","2022-12-31");
         DTOTotalBoletosPorFuncion info = funcionRepository.boletosbyFuncion(1);
