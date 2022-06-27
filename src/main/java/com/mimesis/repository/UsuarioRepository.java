@@ -35,8 +35,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
     void agregarOperadores(String nombre,String apellido, String correo, String contrasena, String rol);
 
 
-    @Query(nativeQuery = true, value = "Select c.idobras as idobras, b.iddirector as directorid,c.nombre as nombreobra, b.fecha as fecha, b.horainicio as horainicio,b.horafin as horafin, \n" +
-            "count(a.idboleto) as cantidad,e.nombre as nombresede,d.nombre as nombresala, a.estado as estado, b.costo*count(a.idboleto) as costototal, b.idfuncion as funcionid \n" +
+    @Query(nativeQuery = true, value = "Select b.idfuncion as idfuncion,count(a.idboleto) as cantidad,b.costo*count(a.idboleto) as costototal, a.estado as estado " +
             "from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +
             "            left join obras c on b.obras_idobras = c.idobras\n" +
             "            left join sala d on b.idsala = d.idsala\n" +
@@ -68,8 +67,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "            where b.idusuario =?1 and f.idfuncion=?2 group by h.foto,h.nombre,h.apellido,h.correo;")
     List<DTOCalificacionActor> ObtenerCalificacionActor(Integer idusuario,Integer idfuncion);
 
-    @Query(nativeQuery = true, value = "Select c.idobras as idobras, b.iddirector as directorid,c.nombre as nombreobra, b.fecha as fecha, b.horainicio as horainicio,b.horafin as horafin, \n" +
-            "count(a.idboleto) as cantidad,e.nombre as nombresede,d.nombre as nombresala, a.estado as estado, b.costo*count(a.idboleto) as costototal, b.idfuncion as funcionid \n" +
+    @Query(nativeQuery = true, value = "Select b.idfuncion as idfuncion,count(a.idboleto) as cantidad,b.costo*count(a.idboleto) as costototal, a.estado as estado " +
             "from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +
             "            left join obras c on b.obras_idobras = c.idobras\n" +
             "            left join sala d on b.idsala = d.idsala\n" +
@@ -77,8 +75,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "            where a.idusuario =?1 and c.nombre like %?2% group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
     List<DTOHistorial> ObtenerHistorialporObra(Integer id,String nombre);
 
-    @Query(nativeQuery = true, value = "Select c.idobras as idobras, b.iddirector as directorid,c.nombre as nombreobra, b.fecha as fecha, b.horainicio as horainicio,b.horafin as horafin,\n" +
-            "            count(a.idboleto) as cantidad,e.nombre as nombresede,d.nombre as nombresala, a.estado as estado, b.costo*count(a.idboleto) as costototal, b.idfuncion as funcionid\n" +
+    @Query(nativeQuery = true, value = "Select b.idfuncion as idfuncion,count(a.idboleto) as cantidad,b.costo*count(a.idboleto) as costototal, a.estado as estado " +
             "            from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +
             "                       left join obras c on b.obras_idobras = c.idobras\n" +
             "                       left join sala d on b.idsala = d.idsala\n" +
@@ -100,8 +97,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "inner join usuario u on b.idusuario = u.idusuario where u.idusuario=?1 and f.idfuncion=?2")
     DTOObtenerHoraFuncion ObtenerByIdUsuarioIdfuncion(Integer idusuario,Integer idfuncion);
 
-    @Query(nativeQuery = true, value = "Select c.idobras as idobras, b.iddirector as directorid,c.nombre as nombreobra, b.fecha as fecha, b.horainicio as horainicio,b.horafin as horafin, \n" +
-            "count(a.idboleto) as cantidad,e.nombre as nombresede,d.nombre as nombresala, a.estado as estado, b.costo*count(a.idboleto) as costototal, b.idfuncion as funcionid \n" +
+    @Query(nativeQuery = true, value = "Select b.idfuncion as idfuncion,count(a.idboleto) as cantidad,b.costo*count(a.idboleto) as costototal, a.estado as estado " +
             "from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +
             "            left join obras c on b.obras_idobras = c.idobras\n" +
             "            left join sala d on b.idsala = d.idsala\n" +

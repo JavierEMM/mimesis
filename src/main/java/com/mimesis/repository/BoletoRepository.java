@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Repository
@@ -23,4 +24,6 @@ public interface BoletoRepository extends JpaRepository<Boleto,Integer> {
             "inner join boleto b on f.idfuncion = b.idfuncion\n" +
             "inner join usuario u on b.idusuario = u.idusuario where u.idusuario=?1 and f.idfuncion=?2")
     List<Integer> boletosPorUsuarioFuncion(Integer idusuario, Integer idfuncion);
+    @Query(nativeQuery = true, value = "SELECT * FROM boleto WHERE idfuncion = ?1 and idusuario = ?2")
+    List<Boleto> boletoFuncionyUsuario(Integer idfuncion, Integer idusuario);
 }

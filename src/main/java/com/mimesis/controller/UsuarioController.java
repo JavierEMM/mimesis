@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,19 +48,18 @@ public class UsuarioController {
     CalificacionRepository calificacionRepository;
 
 
-
-    @GetMapping(value={"","/"})
+    @GetMapping(value = {"", "/"})
     public String paginaPrincipal(Model model, HttpSession session, Authentication auth, RedirectAttributes attr) {
         String correo = (String) session.getAttribute("usuario");
         Usuario usuario = usuarioRepository.findByCorreo(correo);
         if (usuario != null) {
-            if(usuario.getAuthprovider().equals("GOOGLE")){
-               if(usuario.getRol().equals("Admin") || usuario.getRol().equals("Operador")){
-                   auth.setAuthenticated(false);
-                   session.invalidate();
-                   attr.addFlashAttribute("mensaje","Ingrese por el usuario y contraseña establecido por la empresa");
-                   return "redirect:/login";
-               }
+            if (usuario.getAuthprovider().equals("GOOGLE")) {
+                if (usuario.getRol().equals("Admin") || usuario.getRol().equals("Operador")) {
+                    auth.setAuthenticated(false);
+                    session.invalidate();
+                    attr.addFlashAttribute("mensaje", "Ingrese por el usuario y contraseña establecido por la empresa");
+                    return "redirect:/login";
+                }
             }
             model.addAttribute("cliente", usuario);
             if (usuario.getId() == null) {
@@ -74,43 +74,43 @@ public class UsuarioController {
     }
 
     @GetMapping("/perfil")
-    public String perfil(Model model, HttpSession session){
+    public String perfil(Model model, HttpSession session) {
         String usuario2 = (String) session.getAttribute("usuario");
         Usuario usuario = usuarioRepository.findByCorreo(usuario2);
         model.addAttribute("cliente", usuario);
-        if(usuario.getFotoperfil()==null){
+        if (usuario.getFotoperfil() == null) {
             return "usuario/perfil";
         }
         return "usuario/perfil";
     }
 
     @GetMapping("/perfil1")
-    public String perfil1(Model model, @RequestParam(value = "id",required = false) Integer id){
+    public String perfil1(Model model, @RequestParam(value = "id", required = false) Integer id) {
         System.out.println(id);
-        model.addAttribute("lista",usuarioRepository.findById(id));
+        model.addAttribute("lista", usuarioRepository.findById(id));
         return "usuario/perfil";
     }
 
 
     @PostMapping("/perfil/save")
     public String guardarPerfil(@RequestParam("archivo") MultipartFile file, Usuario usuario,
-                                @RequestParam("direccion")String direccion,
-                                @RequestParam("numerotelefonico")String tel,
-                                Model model){
+                                @RequestParam("direccion") String direccion,
+                                @RequestParam("numerotelefonico") String tel,
+                                Model model) {
 
-        if(file.isEmpty()){
+        if (file.isEmpty()) {
             System.out.println("AQUI 1");
             model.addAttribute("msg", "Debe subir una imagen");
             return "usuario/editarperfil";
         }
-        try{
+        try {
             usuario.setFotoperfil(file.getBytes());
             usuario.setDireccion(direccion);
-           //usuario.setFechanacimiento(fechanacimiento);
+            //usuario.setFechanacimiento(fechanacimiento);
             usuario.setNumerotelefonico(tel);
             usuarioRepository.save(usuario);
             return "redirect:/perfil";
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             model.addAttribute("msg", "ocurrio un error al subir el archivo");
             return "usuario/editarperfil";
@@ -118,7 +118,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/perfil/editar")
-    public String editarPerfil(HttpSession session, Model model){
+    public String editarPerfil(HttpSession session, Model model) {
         String usuario2 = (String) session.getAttribute("usuario");
         Usuario usuario = usuarioRepository.findByCorreo(usuario2);
         model.addAttribute("usuario", usuario);
@@ -126,71 +126,68 @@ public class UsuarioController {
     }
 
     @GetMapping("image/{id}")
-    public ResponseEntity<byte[]> mostrarImagen(@PathVariable("id") int id){
+    public ResponseEntity<byte[]> mostrarImagen(@PathVariable("id") int id) {
         Optional<Usuario> opt = usuarioRepository.findById(id);
 
-        if(opt.isPresent()){
+        if (opt.isPresent()) {
             Usuario u = opt.get();
 
             byte[] imagenComoBytes = u.getFotoperfil();
 
             return new ResponseEntity<>(imagenComoBytes, HttpStatus.OK);
-        }else{
+        } else {
             return null;
         }
     }
 
     @GetMapping("perfil/google")
-    public String perfilGoogle(){
+    public String perfilGoogle() {
         return "usuario/perfilprimeravez";
     }
 
 
-
     @GetMapping("/historial")
-    public String historialCompra(Model model, HttpSession session,@RequestParam(value="search",required = false) String search,
-                                  @RequestParam(value="categoria",required = false) String categoria,
-                                  @RequestParam(value="FechaInicio",required = false) String optFechaInicio, @RequestParam(value="FechaFin",required = false)String optFechaFin){
+    public String historialCompra(Model model, HttpSession session, @RequestParam(value = "search", required = false) String search,
+                                  @RequestParam(value = "categoria", required = false) String categoria,
+                                  @RequestParam(value = "FechaInicio", required = false) String optFechaInicio, @RequestParam(value = "FechaFin", required = false) String optFechaFin) {
         String usuario1 = (String) session.getAttribute("usuario");
         Usuario usuario2 = usuarioRepository.findByCorreo(usuario1);
-
-        if(search != null) {
+        List<DTOHistorial> listaHistorial = new ArrayList<>();
+        if (search != null) {
             if (categoria.equalsIgnoreCase("Nombre")) {
-                model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorialporObra(usuario2.getId(), search));
+                listaHistorial = usuarioRepository.ObtenerHistorialporObra(usuario2.getId(),search);
             }
             if (categoria.equalsIgnoreCase("Sede")) {
-                model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorialporSede(usuario2.getId(), search));
+                listaHistorial= usuarioRepository.ObtenerHistorialporSede(usuario2.getId(),search);
             }
-            if(categoria.equalsIgnoreCase("Fecha")){
-                model.addAttribute("listaHistorial",usuarioRepository.ObtenerHistorialporFecha(usuario2.getId(),optFechaInicio,optFechaFin));
+            if (categoria.equalsIgnoreCase("Fecha")) {
+                listaHistorial = usuarioRepository.ObtenerHistorialporFecha(usuario2.getId(), optFechaInicio, optFechaFin);
             }
-
-
-        }else{
-            List<DTOHistorial> listaHistorial = usuarioRepository.ObtenerHistorial(usuario2.getId());
-            List<DTOHistorialporBoleto> listaHistorialporBoleto = new ArrayList<>();
-            for (DTOHistorial i: listaHistorial){
-                Integer idObras = i.getIdobras();
-                Integer directorId = i.getDirectorid();
-                String nombreObra = i.getNombreobra();
-                LocalDate fecha = i.getFecha();
-                LocalTime horaInicio = i.getHorainicio();
-                LocalTime horaFin = i.getHorafin();
-                Integer cantidad = i.getCantidad();
-                String nombreSede = i.getNombresede();
-                String nombreSala = i.getNombresala();
-                String estado = i.getEstado();
-                String costoTotal = i.getCostototal();
-                Integer funcionId = i.getFuncionid();
-                DTOHistorialporBoleto boleto = new DTOHistorialporBoleto(idObras,directorId,nombreObra,fecha,horaInicio,horaFin,cantidad,nombreSede,nombreSala,estado,costoTotal,funcionId);
-                List<Integer> listaIdboleto = boletoRepository.boletosPorUsuarioFuncion(usuario2.getId(),funcionId);
-                boleto.setListadeIdBoleto(listaIdboleto);
-                listaHistorialporBoleto.add(boleto);
-            }
-            model.addAttribute("listaHistorialporBoleto", listaHistorialporBoleto);
+        } else {
+            listaHistorial = usuarioRepository.ObtenerHistorial(usuario2.getId());
         }
-        return "usuario/historial";
+        List<DTOHistorialporBoleto> list = new ArrayList<>();
+        for (DTOHistorial i :listaHistorial){
+            DTOHistorialporBoleto dtoHistorialporBoleto =  new DTOHistorialporBoleto();
+            Optional<Funcion> funcion =  funcionRepository.findById(i.getIdfuncion());
+            if(funcion.isPresent()){
+                dtoHistorialporBoleto.setFuncion(funcion.get());
+                dtoHistorialporBoleto.setCantidad(i.getCantidad());
+                dtoHistorialporBoleto.setCostoTotal(i.getCostototal());
+                dtoHistorialporBoleto.setBoletoValido((i.getEstado() == 1 ? true : false));
+                dtoHistorialporBoleto.setValidar(restarFechas(funcion.get().getFecha(),funcion.get().getHorainicio(),2));
+                list.add(dtoHistorialporBoleto);
+            }else{
+                model.addAttribute("error","error");
+                return "usuario/historial";
+            }
+        }
+
+        model.addAttribute("listaHistorial2",list);
+        return"usuario/historial";
     }
+
+
 
     @GetMapping("/images/{id}")
     public ResponseEntity<byte[]> imagesMostrar(@PathVariable("id") int id){
@@ -213,18 +210,23 @@ public class UsuarioController {
 
         DTOCalificacionObra dtoCalificacionObra = new DTOCalificacionObra();
         dtoCalificacionObra.setIdfuncion(idfuncion);
-        Obra obra = obrasRepository.getById(idfuncion);
-        dtoCalificacionObra.setNombreobra(obra.getNombre());
-        dtoCalificacionObra.setIdobra(obra.getId());
-
+        Optional<Obra> obra = obrasRepository.findById(idobras);
+        if(obra.isPresent()){
+            dtoCalificacionObra.setNombreobra(obra.get().getNombre());
+            dtoCalificacionObra.setIdobra(obra.get().getId());
+        }else{
+            return "redirect:/historial";
+        }
 
         DTOCalificacionDirector dtoCalificacionDirector = new DTOCalificacionDirector();
         dtoCalificacionDirector.setIdfuncion(idfuncion);
-        Director director = directorRepository.getById(idfuncion);
-        dtoCalificacionDirector.setNombredirector(director.getNombre());
-        dtoCalificacionDirector.setApellidodirector(director.getApellido());
-        dtoCalificacionDirector.setCorreodirector(director.getCorreo());
-        dtoCalificacionDirector.setIddirector(director.getId());
+        Optional<Director> director = directorRepository.findById(directorid);
+        if(director.isPresent()){
+            dtoCalificacionDirector.setNombredirector(director.get().getNombre());
+            dtoCalificacionDirector.setApellidodirector(director.get().getApellido());
+            dtoCalificacionDirector.setCorreodirector(director.get().getCorreo());
+            dtoCalificacionDirector.setIddirector(director.get().getId());
+        }
 
         List<DTOCalificacionActor> listaactor = usuarioRepository.ObtenerCalificacionActor(usuario2.getId(), idfuncion);
 
@@ -236,44 +238,77 @@ public class UsuarioController {
     }
 
     @PostMapping("/guardarcalificacion")
-    public String guardarCalificacionObra(@RequestParam("idcalificaciones")Integer calificacionobra,
-                              @RequestParam("idusuario")Usuario idusuario,
-                              @RequestParam("idfuncion")Funcion idfuncion,
-                              Model model){
-        System.out.println("llegamos aqui");
-        System.out.println(idfuncion);
-        System.out.println(idusuario);
+    public String guardarCalificacionObra(@RequestParam("idfuncion") Integer idfuncion, @RequestParam("idcalificaciones") Integer calificacionobra,
+                              Model model, HttpSession session){
 
+        String usuario = (String) session.getAttribute("usuario");
+        Usuario usuario2 = usuarioRepository.findByCorreo(usuario);
 
-        DTOCalificacionObra dtoCalificacionObra= new DTOCalificacionObra();
-        System.out.println(dtoCalificacionObra.getCalificacion());
-        dtoCalificacionObra.setCalificacion(calificacionobra);
+        Optional<Funcion> funcion = funcionRepository.findById(idfuncion);
+        if(funcion.isPresent()){
+            DTOCalificacionObra dtoCalificacionObra= new DTOCalificacionObra();
+            System.out.println(dtoCalificacionObra.getCalificacion());
+            dtoCalificacionObra.setCalificacion(calificacionobra);
 
+            Calificacion calificacion = new Calificacion();
+            calificacion.setCalificacion(dtoCalificacionObra.getCalificacion());
 
-        Calificacion calificacion = new Calificacion();
-        calificacion.setCalificacion(dtoCalificacionObra.getCalificacion());
+            calificacion.setIdfuncion(funcion.get());
+            calificacion.setIdusuario(usuario2);
 
-        calificacion.setIdfuncion(idfuncion);
-        calificacion.setIdusuario(idusuario);
-
-        calificacionRepository.save(calificacion);
-
-        System.out.println("se guardo");
-        return "redirect:/historial";
-    }
-
-    @GetMapping("/borrarboleto")
-    public  String borrar(@RequestParam("idboleto") String ids, RedirectAttributes attr){
-
-        //for(int i: listaIdBoleto){
-            //Optional<Boleto> optionalBoleto = boletoRepository.findById(i);
-            //if(optionalBoleto.isPresent()){
-                //boletoRepository.deleteById(i);
-            //}
-            //System.out.println(i);
-        //}
+            calificacionRepository.save(calificacion);
+        }
 
         return "redirect:/historial";
     }
 
+    @PostMapping("/borrarboleto")
+    public  String borrar(@RequestParam("idfuncion") Integer ids, RedirectAttributes attr, HttpSession session){
+        String correo = (String)  session.getAttribute("usuario");
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
+        List<Boleto> boletos = boletoRepository.boletoFuncionyUsuario(ids,usuario.getId());
+        boletoRepository.deleteAll(boletos);
+        return "redirect:/historial";
+    }
+
+    public Boolean restarFechas(LocalDate fecha, LocalTime hora,Integer rango){
+        Integer anho = fecha.getYear();
+        Integer mes = fecha.getMonth().getValue();
+        Integer day = fecha.getDayOfMonth();
+        Integer horas = hora.getHour();
+        LocalDateTime fecha_actual = LocalDateTime.now();
+        Boolean respuesta = true;
+        if(anho-fecha_actual.getYear() >= 0){
+            if (anho-fecha_actual.getYear() > 0){
+                respuesta = true;
+            }else if(anho-fecha_actual.getYear() == 0){
+                if((mes-fecha_actual.getMonth().getValue()) >= 0){
+                    if(mes-fecha_actual.getMonth().getValue() == 0){
+                        if(day-fecha_actual.getDayOfMonth() >= rango){
+                            if(day-fecha_actual.getDayOfMonth() == rango){
+                                if(horas - fecha_actual.getHour()>=0){
+                                    if(horas-fecha_actual.getHour() == 0){
+                                        respuesta = false;
+                                    }else{
+                                        respuesta = true;
+                                    }
+                                }else{
+                                    respuesta = false;
+                                }
+                            }else{
+                                respuesta = true;
+                            }
+                        }else{
+                            respuesta = false;
+                        }
+                    }else{
+                        respuesta = true;
+                    }
+                }else{
+                    respuesta =false;
+                }
+            }
+        }
+        return respuesta;
+    }
 }

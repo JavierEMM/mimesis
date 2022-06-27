@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body>
-        <header th:replace="/includes/navbar.html :: navbar(option = 'Historial')" id="header" class="d-flex align-items-center">
+        <header th:replace="includes/navbar.html :: navbar(option = 'Historial')" id="header" class="d-flex align-items-center">
         </header>
         <div class="container">
             <div class="row" >
@@ -20,7 +20,6 @@
                                 <th style="text-align: center;" scope="col">Foto</th>
                                 <th style="text-align: center;" scope="col">Funcion</th>
                                 <th style="text-align: center;" scope="col">Calificacion</th>
-                                <th style="text-align: center;" scope="col">Valores Calificacion</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -41,13 +40,10 @@
                                     <span class="fa fa-star"  style="cursor: pointer;" th:id="5obra+''+${obra.idobra}"></span>
                                 </td>
                                 <td>
-                                    <input type="text" class="calificacion form-control" name="idcalificaciones" disabled>
+                                    <input type="hidden" min="0" max="5" class="calificacion form-control" name="idcalificaciones">
                                 </td>
                                 <td>
-                                    <input type="text" class="calificacion form-control" name="idusuario" th:text="${session.usuario.id}" hidden>
-                                </td>
-                                <td>
-                                    <input type="text" class="calificacion form-control" name="idfuncion" th:text="${obra.idfuncion}" hidden>
+                                    <input type="hidden" class="calificacion form-control" name="idfuncion" th:value="${obra.idfuncion}">
                                 </td>
                                 <td>
                                     <button type="submit" class="ver btn btn-primary">Calificar</button>
@@ -70,7 +66,6 @@
                                 <th style="text-align: center;" scope="col">Apellido</th>
                                 <th style="text-align: center;" scope="col">Correo</th>
                                 <th style="text-align: center;" scope="col">Calificacion</th>
-                                <th style="text-align: center;" scope="col">Valores Calificacion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,8 +86,7 @@
                                     <span class="fa fa-star"  style="cursor: pointer;" th:id="5director+''+${director.iddirector}"></span>
                                 </td>
                                 <td>
-                                    <input type="text" class="calificacion form-control" name="califidirector" disabled>
-
+                                    <input type="hidden" class="calificacion form-control" name="califidirector">
                                 </td>
                             </tr>
                         </tbody>
@@ -111,7 +105,6 @@
                                 <th style="text-align: center;" scope="col">Apellido</th>
                                 <th style="text-align: center;" scope="col">Correo</th>
                                 <th style="text-align: center;" scope="col">Calificacion</th>
-                                <th style="text-align: center;" scope="col">Valores Calificacion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -132,7 +125,7 @@
                                     <span class="fa fa-star"  style="cursor: pointer;" th:id="5actor+''+${actor.getActorid()}"></span>
                                 </td>
                                 <td>
-                                    <input type="text" class="calificacion form-control" disabled>
+                                    <input type="hidden" class="calificacion form-control">
 
                                 </td>
                             </tr>
@@ -144,7 +137,7 @@
 
 
         </div>
-        <footer th:replace="/includes/footer.html :: footer"></footer>
+        <footer th:replace="includes/footer.html :: footer"></footer>
         <script>
 
             $('#tabla_obra').on('click','tr .fa-star',function (e){
@@ -196,21 +189,21 @@
                 let row = $(this).closest("tr");
                 let nombre = row.find("td:eq(1)").text();
                 let calificacion = row.find("td:eq(3)").text();
-                alert("la calificacion de "+nombre+"es de "+calificacion+"estellas")
+                //alert("la calificacion de "+nombre+"es de "+calificacion+"estellas")
 
             });
             $('#tabla_director').on('click','tr .ver',function (){
                 let row = $(this).closest("tr");
                 let nombre = row.find("td:eq(1)").text();
                 let calificacion = row.find("td:eq(3)").text();
-                alert("la calificacion de "+nombre+"es de "+calificacion+"estellas")
+                //alert("la calificacion de "+nombre+"es de "+calificacion+"estellas")
 
             });
             $('#tabla_actor').on('click','tr .ver',function (){
                 let row = $(this).closest("tr");
                 let nombre = row.find("td:eq(1)").text();
                 let calificacion = row.find("td:eq(3)").text();
-                alert("la calificacion de "+nombre+"es de "+calificacion+"estellas")
+                //alert("la calificacion de "+nombre+"es de "+calificacion+"estellas")
 
             });
         </script>

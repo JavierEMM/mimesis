@@ -20,11 +20,11 @@
                 </div>
                 <div class="col-2">
                     <label for="fechainicio" class="letter">Fecha Inicio</label>
-                    <input id="fechainicio" class="form-control" type="date" name="FechaInicio" th:value="${fInicioSelected}"/>
+                    <input id="fechainicio" class="form-control" type="date" name="FechaInicio"/>
                 </div>
                 <div class="col-2">
                     <label for="fechafin" class="letter">Fecha Fin</label>
-                    <input id="fechafin" class="form-control" type="date" name="FechaFin" th:value="${fFinSelected}"/>
+                    <input id="fechafin" class="form-control" type="date" name="FechaFin"/>
                 </div>
                 <div class="col-2 mt-4">
 
@@ -62,25 +62,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="datos,i: ${listaHistorialporBoleto}">
+                    <tr th:each="funcion,i : ${listaHistorial2}">
                         <td style="text-align: center;" th:text="${i.index + 1}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombreObra()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombreSede()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getNombreSala()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getFecha()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getHoraInicio()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getHoraFin()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getCantidad()}"></td>
-                        <td style="text-align: center;" th:text="${datos.getCostoTotal()}"></td>
-                        <td th:text="${datos.getEstado() ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
+                        <td style="text-align: center;" th:text="${funcion.getFuncion().getIdobra().nombre}"></td>
+                        <td style="text-align: center;" th:text="${funcion.getFuncion().getIdsala().getIdsede().getNombre()}"></td>
+                        <td style="text-align: center;" th:text="${funcion.getFuncion().getIdsala().getNombre()}"></td>
+                        <td style="text-align: center;" th:text="${funcion.getFuncion().fecha}"></td>
+                        <td style="text-align: center;" th:text="${funcion.getFuncion().horainicio}"></td>
+                        <td style="text-align: center;" th:text="${funcion.getFuncion().horafin}"></td>
+                        <td style="text-align: center;" th:text="${funcion.getCantidad()}"></td>
+                        <td style="text-align: center;" th:text="${funcion.getCostoTotal()}"></td>
+                        <td th:text="${funcion.getBoletoValido() ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
                         <td>
-                            <a th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${datos.getFuncionid()}
-                            + '&idobras='+ ${datos.getIdObras()} + '&directorid='+ ${datos.getDirectorId()}}">
+                            <a th:if="${!funcion.getBoletoValido()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${funcion.getFuncion().id}
+                            + '&idobras='+ ${funcion.getFuncion().getIdobra().id} + '&directorid='+ ${funcion.getFuncion().getIddirector().id}}">
                                 Calificacion
                             </a>
                         </td>
-                        <td class="text-center" >
-                            <form id="idboleto" method="get" th:action="@{'/borrarboleto?idboleto'}">
+                        <td th:if="${funcion.validar}" class="text-center" >
+                            <form method="post" th:action="@{'/borrarboleto?idfuncion='+${funcion.getFuncion().id}}">
                                 <button  onclick="return confirm('¿Esta seguro que desea cancelar la compra de esta función?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                                     <i class="bi bi-trash"></i>
                                 </button>
