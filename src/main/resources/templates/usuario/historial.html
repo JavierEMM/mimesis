@@ -74,7 +74,7 @@
                         <td style="text-align: center;" th:text="${datos.getCostoTotal()}"></td>
                         <td th:text="${datos.getEstado() ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
                         <td>
-                            <a th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${datos.getFuncionid()}
+                            <a th:if="${!datos.getEstado()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${datos.getFuncionId()}
                             + '&idobras='+ ${datos.getIdObras()} + '&directorid='+ ${datos.getDirectorId()}}">
                                 Calificacion
                             </a>
