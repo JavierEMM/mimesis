@@ -31,18 +31,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/processLogin")
-                .defaultSuccessUrl("/redirectByRole")
-                .and().oauth2Login().loginPage("/login")
-                .userInfoEndpoint().userService(oAuth2UserService).and().successHandler(oAuth2LoginSuccessHandler).redirectionEndpoint();
+                .defaultSuccessUrl("/redirectByRole",true);
+
+
 
         http.logout().logoutSuccessUrl("/").deleteCookies("JSESSIONID").invalidateHttpSession(true);
+
         http.authorizeRequests()
-                .antMatchers("/historial","/historial/**").hasAuthority("Cliente")
-                .antMatchers("/calificacion","/calificacion/**").hasAuthority("Cliente")
-                .antMatchers("/carrito","/carrito/**").hasAuthority("Cliente")
+                .antMatchers("/historial","/historial/**").hasAnyAuthority("Cliente","ROLE_USER")
+                .antMatchers("/calificacion","/calificacion/**").hasAnyAuthority("Cliente","ROLE_USER")
+                .antMatchers("/carrito","/carrito/**").hasAnyAuthority("Cliente","ROLE_USER")
                 .antMatchers("/operador","/operador/**").hasAuthority("Operador")
                 .antMatchers("/admin","/admin/**").hasAuthority("Admin")
-                .anyRequest().permitAll();
+                .anyRequest().permitAll()
+                .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint().userService(oAuth2UserService)
+                .and()
+                .defaultSuccessUrl("/redirectByRole",true);
     }
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception{

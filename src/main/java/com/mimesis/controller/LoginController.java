@@ -45,10 +45,6 @@ public class LoginController {
     public String loginForm(){
         return "login/login";
     }
-    @GetMapping("")
-    public String form(){
-        return "login/login";
-    }
 
     @GetMapping("/verification")
     public String accountValidation(@RequestParam(name = "code",required = false) String code, RedirectAttributes attributes){
@@ -79,12 +75,30 @@ public class LoginController {
         try{
             CustomOAuth2User customOAuth2User = (CustomOAuth2User) auth.getPrincipal();
             usuario = usuarioRepository.findByCorreo(customOAuth2User.getEmail());
+            String email = customOAuth2User.getEmail();
+            String nombre = customOAuth2User.getFirstName();
+            String apellido = customOAuth2User.getLastName();
+            Boolean verified = customOAuth2User.getVerification();
+            if (usuario == null) {
+                usuario = new Usuario(nombre, apellido, email, "Cliente", verified, "GOOGLE");
+                usuario.setToken(null);
+                usuario.setEmailconfirm(true);
+                model.addAttribute("cliente", usuario);
+                return "login/registrogoogle";
+            } else {
+                usuario.setToken(null);
+                usuario.setNombre(nombre);
+                usuario.setAuthprovider("GOOGLE");
+                usuario.setApellido(apellido);
+                usuarioRepository.save(usuario);
+            }
             if(usuario.getRol().equals("Operador") || usuario.getRol().equals("Admin")){
                 auth.setAuthenticated(false);
                 session.invalidate();
                 model.addAttribute("mensaje","Ingrese por el usuario y contraseña establecido por la empresa");
                 return "login/login";
             }
+            session.setAttribute("usuario",usuario.getCorreo());
         }catch (Exception exception){
             usuario = usuarioRepository.findByCorreo(auth.getName());
             if(usuario.getEmailconfirm() == false){
@@ -93,8 +107,8 @@ public class LoginController {
                 model.addAttribute("mensaje","Valide su cuenta antes de ingresar");
                 return "login/login";
             }
+            session.setAttribute("usuario",usuario.getCorreo());
         }
-        session.setAttribute("usuario",usuario);
         if(usuario.getRol().equals("Cliente")) {
             ArrayList<DTOcarrito> carrito = new ArrayList<>();
             session.setAttribute("carrito",carrito);
@@ -263,6 +277,8 @@ public class LoginController {
                 model.addAttribute("emailerror","Credenciales ya registradas");
                 return "login/registrogoogle";
             }else{
+                usuario.setToken(null);
+                usuario.setEmailconfirm(true);
                 usuario.setRol("Cliente");
                 usuario.setAuthprovider("GOOGLE");
                 usuarioRepository.save(usuario);

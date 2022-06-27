@@ -21,7 +21,7 @@
                         </thead>
                         <tbody>
                             <tr th:each="funcion,i : ${carrito}">
-                                <td><img th:src="@{/img/moby_dick.jpg}" width="30rem" height="30rem">
+                                <td><img th:src="@{|/images/${funcion.funcion.idobra.getId()}|}" width="30rem" height="30rem">
                                 </td>
                                 <td class="text-center text-lg text-medium" th:text="${funcion.funcion.idobra.nombre}"></td>
                                 <td class="text-center text-lg text-medium" th:text="${funcion.funcion.fecha}"></td>
@@ -45,8 +45,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-
         </div>
         <footer th:replace="includes/footer.html :: footer"></footer>
     </body>

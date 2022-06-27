@@ -35,10 +35,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         if (usuario == null) {
             usuario = new Usuario(nombre, apellido, email, "Cliente", verified, "GOOGLE");
             usuario.setToken(null);
+            System.out.println("HOLA");
         } else {
-            System.out.println("HOLA CAUSA");
-            //update user
-            System.out.println("Updatea customer");
+            System.out.println("HOLA2");
             usuario.setToken(null);
             usuario.setNombre(nombre);
             usuario.setAuthprovider("GOOGLE");

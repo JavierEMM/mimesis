@@ -6,10 +6,7 @@ import com.mimesis.dto.DTOFuncionesDisponibles;
 import com.mimesis.dto.DTOTarjeta;
 import com.mimesis.dto.DTOcarrito;
 import com.mimesis.entity.*;
-import com.mimesis.repository.BoletoRepository;
-import com.mimesis.repository.FuncionRepository;
-import com.mimesis.repository.ObrasRepository;
-import com.mimesis.repository.SedesRepository;
+import com.mimesis.repository.*;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
@@ -32,6 +29,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/carrito")
 public class CarritoController {
+    @Autowired
+    UsuarioRepository usuarioRepository;
     @Autowired
     TarjetaDao tarjetaDao;
     @Autowired
@@ -125,9 +124,8 @@ public class CarritoController {
                         }
                         listaValidos.add(new DTOFuncionesDisponibles(boleto,f));
                 }
-                //List<DTOBoletosValidos> funcionList = funcionRepository.listaFuncionesValidos(teatro, obra.getId());
+
                 System.out.println("En esta parte se envian los parametros para seleccionar la funcion");
-                //System.out.println(funcionList);
                 System.out.println(obra.getId());
                 System.out.println(sede.get().getNombre());
                 model.addAttribute("listaFunciones", listaValidos);
@@ -156,7 +154,8 @@ public class CarritoController {
         }else{
             if(tarjetaDao.consultaTarjeta(dtoTarjeta)){
                 ArrayList<DTOcarrito> carrito =(ArrayList) session.getAttribute("carrito");
-                Usuario usuario = (Usuario) session.getAttribute("usuario");
+                String usuario2 = (String) session.getAttribute("usuario");
+                Usuario usuario = usuarioRepository.findByCorreo(usuario2);
                 for(DTOcarrito dtOcarrito : carrito){
                     String hola="";
                     for (int i = 0; i<dtOcarrito.getCantidad();i++){
@@ -170,7 +169,7 @@ public class CarritoController {
                 }
                 ArrayList<DTOcarrito> carrito2 = new ArrayList<>();
                 session.setAttribute("carrito",carrito2);
-                return "usuario/historial";
+                return "redirect:/historial";
             }else {
                 attributes.addFlashAttribute("msg","Debe ingresar una tarjeta");
                 return "redirect:/carrito/comprar";
@@ -189,6 +188,7 @@ public class CarritoController {
         message2+="<p>@Mimesis teatros</p>";
         mimeMessage(usuario, subject, name, message2);
     }
+
     private void mimeMessage(Usuario usuario, String subject, String name, String message2) throws MessagingException, UnsupportedEncodingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
