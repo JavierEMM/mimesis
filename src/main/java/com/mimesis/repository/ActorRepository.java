@@ -25,7 +25,9 @@ public interface ActorRepository extends JpaRepository<Actor,Integer> {
             "where c.idactor IS NOT NULL group by c.idactor")
     List<DTOActoresMejoresCalificados> obtenerActoresMejoresCalificados();
 
-    @Query(nativeQuery = true, value = "SELECT * FROM actor a WHERE a.nombre or a.apellido like %?1%")
-    List<Actor> busquedaBestoAct(String busqueda);
+    @Query(nativeQuery = true, value = "SELECT a.nombre, a.apellido, avg(c.calificacion) as calificacion FROM actor a \n" +
+            "inner join calificaciones c on a.idactor=c.idactor\n" +
+            "WHERE concat(a.nombre,' ',a.apellido) like %?1% group by a.idactor")
+    List<DTOActoresMejoresCalificados> busquedaBestoAct(String busqueda);
 
 }
