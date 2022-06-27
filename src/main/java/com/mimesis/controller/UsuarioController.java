@@ -97,14 +97,13 @@ public class UsuarioController {
                                 @RequestParam("direccion") String direccion,
                                 @RequestParam("numerotelefonico") String tel,
                                 Model model) {
-
-        if (file.isEmpty()) {
-            System.out.println("AQUI 1");
-            model.addAttribute("msg", "Debe subir una imagen");
-            return "usuario/editarperfil";
-        }
         try {
-            usuario.setFotoperfil(file.getBytes());
+            if(file.getOriginalFilename().equals("") || file.getOriginalFilename().equalsIgnoreCase(null) ){
+                System.out.println("AQUI 1");
+            }else{
+                System.out.println("AQUI 2");
+                usuario.setFotoperfil(file.getBytes());
+            }
             usuario.setDireccion(direccion);
             //usuario.setFechanacimiento(fechanacimiento);
             usuario.setNumerotelefonico(tel);
@@ -238,27 +237,59 @@ public class UsuarioController {
     }
 
     @PostMapping("/guardarcalificacion")
-    public String guardarCalificacionObra(@RequestParam("idfuncion") Integer idfuncion, @RequestParam("idcalificaciones") Integer calificacionobra,
-                              Model model, HttpSession session){
+    public String guardarCalificacionObra(@RequestParam("idfuncion") Integer idfuncion,
+                                          @RequestParam("idcalificaciones") Integer calificacionobra,
+                                          @RequestParam("director") Integer iddirector,
+                                          @RequestParam("califidirector") Integer calificaciondirector,
+                                          @RequestParam("actor") List<Integer> idactor,
+                                          @RequestParam(value = "caliactores") List<Integer> listaCalificaciones,
+                                        Model model, HttpSession session, RedirectAttributes attributes){
 
         String usuario = (String) session.getAttribute("usuario");
         Usuario usuario2 = usuarioRepository.findByCorreo(usuario);
 
         Optional<Funcion> funcion = funcionRepository.findById(idfuncion);
-        if(funcion.isPresent()){
-            DTOCalificacionObra dtoCalificacionObra= new DTOCalificacionObra();
-            System.out.println(dtoCalificacionObra.getCalificacion());
-            dtoCalificacionObra.setCalificacion(calificacionobra);
+        List<Calificacion> calificacions = calificacionRepository.findUsuario(usuario2.getId());
+        if(calificacions.isEmpty() || calificacions == null){
+            if(funcion.isPresent()){
+                DTOCalificacionObra dtoCalificacionObra= new DTOCalificacionObra();
+                System.out.println(dtoCalificacionObra.getCalificacion());
+                dtoCalificacionObra.setCalificacion(calificacionobra);
 
-            Calificacion calificacion = new Calificacion();
-            calificacion.setCalificacion(dtoCalificacionObra.getCalificacion());
+                Calificacion calificacion = new Calificacion();
+                calificacion.setCalificacion(dtoCalificacionObra.getCalificacion());
 
-            calificacion.setIdfuncion(funcion.get());
-            calificacion.setIdusuario(usuario2);
+                calificacion.setIdfuncion(funcion.get());
+                calificacion.setIdusuario(usuario2);
 
-            calificacionRepository.save(calificacion);
+                calificacionRepository.save(calificacion);
+            }
+            Optional<Director> director = directorRepository.findById(iddirector);
+            if(director.isPresent()){
+                Calificacion calificacion = new Calificacion();
+                calificacion.setCalificacion(calificaciondirector);
+                calificacion.setIddirector(director.get());
+                calificacion.setIdfuncion(funcion.get());
+                calificacion.setIdusuario(usuario2);
+                calificacionRepository.save(calificacion);
+            }else {
+                return "redirect:/historial";
+            }
+            List<Actor> actores= actorRepository.findAllById(idactor);
+            int i = 0;
+            for(Actor actor : actores){
+                Calificacion calificacion =  new Calificacion();
+                calificacion.setCalificacion(listaCalificaciones.get(i));
+                calificacion.setIdactor(actor);
+                calificacion.setIdfuncion(funcion.get());
+                calificacion.setIdusuario(usuario2);
+                calificacionRepository.save(calificacion);
+                i++;
+            }
+        }else{
+            attributes.addFlashAttribute("alerta","alert-danger");
+            attributes.addFlashAttribute("reserva","No se puede calificar de nuevo");
         }
-
         return "redirect:/historial";
     }
 

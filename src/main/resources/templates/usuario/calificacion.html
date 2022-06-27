@@ -10,130 +10,135 @@
                     <p class="title">Calificacion</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <h2>OBRA</h2>
-                    <form method="POST"  th:action="@{/guardarcalificacion}" >
-                    <table class="table" id="tabla_obra">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th style="text-align: center;" scope="col">Foto</th>
-                                <th style="text-align: center;" scope="col">Funcion</th>
-                                <th style="text-align: center;" scope="col">Calificacion</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="text-align: center;">
-                                    <img width="40rem" height="40rem"
-                                         th:src="@{|/funciones/obras/${obra.idobra}|}">
-                                </td>
-                                <td style="text-align: center;" th:text="${obra.nombreobra}">
-                                    Mobydick
-                                </td>
-                                <td style="text-align: center;" >
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="1obra+''+${obra.idobra}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="2obra+''+${obra.idobra}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="3obra+''+${obra.idobra}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="4obra+''+${obra.idobra}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="5obra+''+${obra.idobra}"></span>
-                                </td>
-                                <td>
-                                    <input type="hidden" min="0" max="5" class="calificacion form-control" name="idcalificaciones">
-                                </td>
-                                <td>
-                                    <input type="hidden" class="calificacion form-control" name="idfuncion" th:value="${obra.idfuncion}">
-                                </td>
-                                <td>
-                                    <button type="submit" class="ver btn btn-primary">Calificar</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    </form>
+            <form method="POST"  th:action="@{/guardarcalificacion}" >
+                <div class="row">
+                    <div class="col">
+                        <h2>OBRA</h2>
+
+                        <table class="table" id="tabla_obra">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th style="text-align: center;" scope="col">Foto</th>
+                                    <th style="text-align: center;" scope="col">Funcion</th>
+                                    <th style="text-align: center;" scope="col">Calificacion</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center;">
+                                        <img width="40rem" height="40rem"
+                                             th:src="@{|/funciones/obras/${obra.idobra}|}">
+                                    </td>
+                                    <td style="text-align: center;" th:text="${obra.nombreobra}">
+                                        Mobydick
+                                    </td>
+                                    <td style="text-align: center;" >
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="1obra+''+${obra.idobra}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="2obra+''+${obra.idobra}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="3obra+''+${obra.idobra}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="4obra+''+${obra.idobra}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="5obra+''+${obra.idobra}"></span>
+                                    </td>
+                                    <td>
+                                        <input type="hidden" value="0" min="0" max="5" class="calificacion form-control" name="idcalificaciones">
+                                    </td>
+                                    <td>
+                                        <input type="hidden" class="calificacion form-control" name="idfuncion" th:value="${obra.idfuncion}">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
                 </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col">
-                    <h2>DIRECTOR</h2>
-                    <table class="table" id="tabla_director">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th style="text-align: center;" scope="col">Foto</th>
-                                <th style="text-align: center;" scope="col">Nombre</th>
-                                <th style="text-align: center;" scope="col">Apellido</th>
-                                <th style="text-align: center;" scope="col">Correo</th>
-                                <th style="text-align: center;" scope="col">Calificacion</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="text-align: center;">
-                                    <img width="40rem" height="40rem"
-                                         th:src="@{|/directores/${director.iddirector}|}">
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <h2>DIRECTOR</h2>
+                        <table class="table" id="tabla_director">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th style="text-align: center;" scope="col">Foto</th>
+                                    <th style="text-align: center;" scope="col">Nombre</th>
+                                    <th style="text-align: center;" scope="col">Apellido</th>
+                                    <th style="text-align: center;" scope="col">Correo</th>
+                                    <th style="text-align: center;" scope="col">Calificacion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center;">
+                                        <img width="40rem" height="40rem"
+                                             th:src="@{|/directores/${director.iddirector}|}">
 
-                                </td>
-                                <td style="text-align: center;" th:text="${director.nombredirector}">Juan</td>
-                                <td style="text-align: center;"th:text="${director.apellidodirector}">Perez</td>
-                                <td style="text-align: center;" th:text="${director.correodirector}">juan.perez@gmail.com</td>
-                                <td style="text-align: center;">
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="1director+''+${director.iddirector}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="2director+''+${director.iddirector}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="3director+''+${director.iddirector}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="4director+''+${director.iddirector}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="5director+''+${director.iddirector}"></span>
-                                </td>
-                                <td>
-                                    <input type="hidden" class="calificacion form-control" name="califidirector">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    </td>
+                                    <td style="text-align: center;" th:text="${director.nombredirector}">Juan</td>
+                                    <td style="text-align: center;"th:text="${director.apellidodirector}">Perez</td>
+                                    <td style="text-align: center;" th:text="${director.correodirector}">juan.perez@gmail.com</td>
+                                    <td style="text-align: center;">
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="1director+''+${director.iddirector}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="2director+''+${director.iddirector}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="3director+''+${director.iddirector}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="4director+''+${director.iddirector}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="5director+''+${director.iddirector}"></span>
+                                    </td>
+                                    <td>
+                                        <input name="director" type="hidden"   th:value="${director.getIddirector()}">
+                                        <input type="hidden" class="calificacion form-control" name="califidirector" value="0">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col">
-                    <h2>ACTORES</h2>
-                    <table class="table" id="tabla_actor">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th style="text-align: center;" scope="col">Foto</th>
-                                <th style="text-align: center;" scope="col">Nombre</th>
-                                <th style="text-align: center;" scope="col">Apellido</th>
-                                <th style="text-align: center;" scope="col">Correo</th>
-                                <th style="text-align: center;" scope="col">Calificacion</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="actor,i: ${listaactor}">
-                                <td style="text-align: center;">
-                                    <img width="40rem" height="40rem"
-                                         th:src="@{|/actores/${actor.getActorid()}|}">
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <h2>ACTORES</h2>
+                        <table class="table" id="tabla_actor">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th style="text-align: center;" scope="col">Foto</th>
+                                    <th style="text-align: center;" scope="col">Nombre</th>
+                                    <th style="text-align: center;" scope="col">Apellido</th>
+                                    <th style="text-align: center;" scope="col">Correo</th>
+                                    <th style="text-align: center;" scope="col">Calificacion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="actor,i: ${listaactor}">
+                                    <td style="text-align: center;">
+                                        <img width="40rem" height="40rem"
+                                             th:src="@{|/actores/${actor.getActorid()}|}">
 
-                                </td>
-                                <td style="text-align: center;" th:text="${actor.getNombreactor()}">Cachin</td>
-                                <td style="text-align: center;" th:text="${actor.getApellidoactor()}">Alcantara</td>
-                                <td style="text-align: center;" th:text="${actor.getCorreoactor()}">alcantara.12@gmail.com</td>
-                                <td style="text-align: center;" >
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="1actor+''+${actor.getActorid()}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="2actor+''+${actor.getActorid()}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="3actor+''+${actor.getActorid()}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="4actor+''+${actor.getActorid()}"></span>
-                                    <span class="fa fa-star"  style="cursor: pointer;" th:id="5actor+''+${actor.getActorid()}"></span>
-                                </td>
-                                <td>
-                                    <input type="hidden" class="calificacion form-control">
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    </td>
+                                    <td style="text-align: center;" th:text="${actor.getNombreactor()}">Cachin</td>
+                                    <td style="text-align: center;" th:text="${actor.getApellidoactor()}">Alcantara</td>
+                                    <td style="text-align: center;" th:text="${actor.getCorreoactor()}">alcantara.12@gmail.com</td>
+                                    <td style="text-align: center;" >
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="1actor+''+${actor.getActorid()}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="2actor+''+${actor.getActorid()}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="3actor+''+${actor.getActorid()}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="4actor+''+${actor.getActorid()}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="5actor+''+${actor.getActorid()}"></span>
+                                    </td>
+                                    <td>
+                                        <input name="actor" type="hidden"   th:value="${actor.getActorid()}">
+                                        <input name="caliactores" type="hidden" class="calificacion form-control" value="0">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col header-display">
+                        <button type="submit" class="ver btn btn-primary">Calificar</button>
+                    </div>
+                </div>
 
+            </form>
 
 
         </div>
