@@ -166,6 +166,14 @@ public class UsuarioController {
             if (categoria.equalsIgnoreCase("Fecha")) {
                 listaHistorial = usuarioRepository.ObtenerHistorialporFecha(usuario2.getId(), optFechaInicio, optFechaFin);
             }
+            if(categoria.equalsIgnoreCase("Asistido")){
+                listaHistorial = usuarioRepository.ObtenerHistorialporEstado(usuario2.getId(),0);
+                System.out.println(listaHistorial.size());
+            }
+            if(categoria.equalsIgnoreCase("Pendiente")){
+
+                listaHistorial = usuarioRepository.ObtenerHistorialporEstado(usuario2.getId(),1);
+            }
         } else {
             listaHistorial = usuarioRepository.ObtenerHistorial(usuario2.getId());
         }
@@ -291,6 +299,9 @@ public class UsuarioController {
                 i++;
             }
         }else{
+            System.out.println("llego:");
+            System.out.println(calificacions.size());
+            model.addAttribute("listacalificaciones",calificacions);
             attributes.addFlashAttribute("alerta","alert-danger");
             attributes.addFlashAttribute("reserva","No se puede calificar de nuevo");
         }
