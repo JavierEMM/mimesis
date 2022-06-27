@@ -43,7 +43,7 @@
             </div>
         </form>
         <div class="row">
-            <div class="col" sec:authorize="isAuthenticated()">
+            <div class="col">
                 <table class="table table-stripped" id="historial">
                     <thead class="thead-dark">
                     <tr>
@@ -80,8 +80,7 @@
                             </a>
                         </td>
                         <td class="text-center" >
-                            <form id="idboleto" method="get" th:action="@{'/borrarboleto?idboleto=' + ${datos.getListadeIdBoleto()}}">
-                                <input name="idboleto" th:value="${datos.getListadeIdBoleto()}" type="hidden"/>
+                            <form id="idboleto" method="get" th:action="@{'/borrarboleto?idboleto'}">
                                 <button  onclick="return confirm('¿Esta seguro que desea cancelar la compra de esta función?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                                     <i class="bi bi-trash"></i>
                                 </button>

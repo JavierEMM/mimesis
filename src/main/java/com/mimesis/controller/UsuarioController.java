@@ -16,14 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.thymeleaf.util.StringUtils.length;
 
 @Controller
 @RequestMapping("")
@@ -53,23 +49,24 @@ public class UsuarioController {
 
 
     @GetMapping(value={"","/"})
-    public String paginaPrincipal(@ModelAttribute("usuario") Usuario usuario, Model model, HttpSession session, Authentication auth, RedirectAttributes attr) {
-        Usuario usuario1 = (Usuario) session.getAttribute("usuario");
-        if (usuario1 != null) {
-            if(usuario1.getAuthprovider().equals("GOOGLE")){
-               if(usuario1.getRol().equals("Admin") || usuario1.getRol().equals("Operador")){
+    public String paginaPrincipal(Model model, HttpSession session, Authentication auth, RedirectAttributes attr) {
+        String correo = (String) session.getAttribute("usuario");
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
+        if (usuario != null) {
+            if(usuario.getAuthprovider().equals("GOOGLE")){
+               if(usuario.getRol().equals("Admin") || usuario.getRol().equals("Operador")){
                    auth.setAuthenticated(false);
                    session.invalidate();
                    attr.addFlashAttribute("mensaje","Ingrese por el usuario y contraseña establecido por la empresa");
                    return "redirect:/login";
                }
             }
-            model.addAttribute("cliente", usuario1);
-            if (usuario1.getId() == null) {
+            model.addAttribute("cliente", usuario);
+            if (usuario.getId() == null) {
                 return "login/registrogoogle";
 
             } else {
-                model.addAttribute("cliente", usuario1);
+                model.addAttribute("cliente", usuario);
                 return "usuario/main";
             }
         }
@@ -78,9 +75,10 @@ public class UsuarioController {
 
     @GetMapping("/perfil")
     public String perfil(Model model, HttpSession session){
-        Usuario usuario2 = (Usuario) session.getAttribute("usuario");
-        model.addAttribute("Cliente", usuario2);
-        if(usuario2.getFotoperfil()==null){
+        String usuario2 = (String) session.getAttribute("usuario");
+        Usuario usuario = usuarioRepository.findByCorreo(usuario2);
+        model.addAttribute("cliente", usuario);
+        if(usuario.getFotoperfil()==null){
             return "usuario/perfil";
         }
         return "usuario/perfil";
@@ -95,40 +93,35 @@ public class UsuarioController {
 
 
     @PostMapping("/perfil/save")
-    public String guardarPerfil(@RequestParam("archivo")MultipartFile file, Usuario usuario,
+    public String guardarPerfil(@RequestParam("archivo") MultipartFile file, Usuario usuario,
                                 @RequestParam("direccion")String direccion,
                                 @RequestParam("numerotelefonico")String tel,
-                                Model model, HttpSession session){
+                                Model model){
 
         if(file.isEmpty()){
+            System.out.println("AQUI 1");
             model.addAttribute("msg", "Debe subir una imagen");
             return "usuario/editarperfil";
         }
-
-
         try{
             usuario.setFotoperfil(file.getBytes());
             usuario.setDireccion(direccion);
            //usuario.setFechanacimiento(fechanacimiento);
             usuario.setNumerotelefonico(tel);
-
             usuarioRepository.save(usuario);
-            session.setAttribute("usuario",usuario);
-            Integer usuario1 = usuario.getId();
-
-            return "redirect:/perfil1?id="+usuario1;
+            return "redirect:/perfil";
         } catch (IOException e){
             e.printStackTrace();
             model.addAttribute("msg", "ocurrio un error al subir el archivo");
-            return "usuario/perfilprimeravez";
+            return "usuario/editarperfil";
         }
     }
 
     @GetMapping("/perfil/editar")
-    public String editarPerfil(@RequestParam("id")Integer id, Model model){
-
-        Optional<Usuario> user = usuarioRepository.findById(id);
-        model.addAttribute("usuario", user.get());
+    public String editarPerfil(HttpSession session, Model model){
+        String usuario2 = (String) session.getAttribute("usuario");
+        Usuario usuario = usuarioRepository.findByCorreo(usuario2);
+        model.addAttribute("usuario", usuario);
         return "usuario/editarperfil";
     }
 
@@ -149,8 +142,6 @@ public class UsuarioController {
 
     @GetMapping("perfil/google")
     public String perfilGoogle(){
-
-
         return "usuario/perfilprimeravez";
     }
 
@@ -160,8 +151,9 @@ public class UsuarioController {
     public String historialCompra(Model model, HttpSession session,@RequestParam(value="search",required = false) String search,
                                   @RequestParam(value="categoria",required = false) String categoria,
                                   @RequestParam(value="FechaInicio",required = false) String optFechaInicio, @RequestParam(value="FechaFin",required = false)String optFechaFin){
-        Usuario usuario2 = (Usuario) session.getAttribute("usuario");
-        System.out.println(search);
+        String usuario1 = (String) session.getAttribute("usuario");
+        Usuario usuario2 = usuarioRepository.findByCorreo(usuario1);
+
         if(search != null) {
             if (categoria.equalsIgnoreCase("Nombre")) {
                 model.addAttribute("listaHistorial", usuarioRepository.ObtenerHistorialporObra(usuario2.getId(), search));
@@ -199,6 +191,7 @@ public class UsuarioController {
         }
         return "usuario/historial";
     }
+
     @GetMapping("/images/{id}")
     public ResponseEntity<byte[]> imagesMostrar(@PathVariable("id") int id){
         List<Foto> fotos = fotoRepository.listaFotos(id);
@@ -215,18 +208,19 @@ public class UsuarioController {
     public String calificacion(Model model, HttpSession session, @RequestParam(value = "idfuncion",required = false)Integer idfuncion,
                                @RequestParam(value = "idobras",required = false)Integer idobras,
                                @RequestParam(value = "directorid",required = false)Integer directorid){
-        Usuario usuario2 = (Usuario) session.getAttribute("usuario");
+        String usuario = (String) session.getAttribute("usuario");
+        Usuario usuario2 = usuarioRepository.findByCorreo(usuario);
 
         DTOCalificacionObra dtoCalificacionObra = new DTOCalificacionObra();
         dtoCalificacionObra.setIdfuncion(idfuncion);
-        Obra obra = obrasRepository.getById(idobras);
+        Obra obra = obrasRepository.getById(idfuncion);
         dtoCalificacionObra.setNombreobra(obra.getNombre());
         dtoCalificacionObra.setIdobra(obra.getId());
 
 
         DTOCalificacionDirector dtoCalificacionDirector = new DTOCalificacionDirector();
         dtoCalificacionDirector.setIdfuncion(idfuncion);
-        Director director = directorRepository.getById(directorid);
+        Director director = directorRepository.getById(idfuncion);
         dtoCalificacionDirector.setNombredirector(director.getNombre());
         dtoCalificacionDirector.setApellidodirector(director.getApellido());
         dtoCalificacionDirector.setCorreodirector(director.getCorreo());
@@ -270,8 +264,6 @@ public class UsuarioController {
 
     @GetMapping("/borrarboleto")
     public  String borrar(@RequestParam("idboleto") String ids, RedirectAttributes attr){
-
-        int tamanio = length(ids);
 
         //for(int i: listaIdBoleto){
             //Optional<Boleto> optionalBoleto = boletoRepository.findById(i);
