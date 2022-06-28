@@ -83,14 +83,13 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "                       where a.idusuario =?1 and e.nombre like %?2%  group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
     List<DTOHistorial> ObtenerHistorialporSede(Integer id,String nombresede);
 
-    @Query(nativeQuery = true, value = "Select c.idobras as idobras, b.iddirector as directorid,c.nombre as nombreobra, b.fecha as fecha, b.horainicio as horainicio,b.horafin as horafin,\n" +
-            "            count(a.idboleto) as cantidad,e.nombre as nombresede,d.nombre as nombresala, a.estado as estado, b.costo*count(a.idboleto) as costototal, b.idfuncion as funcionid\n" +
-            "            from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +
-            "                       left join obras c on b.obras_idobras = c.idobras\n" +
-            "                       left join sala d on b.idsala = d.idsala\n" +
-            "                        left join sede e on d.idsede = e.idsede\n" +
-            "                       where a.idusuario =?1 and a.estado=?2 group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
-    List<DTOHistorial> ObtenerHistorialporEstado(Integer id,Integer estado);
+    @Query(nativeQuery = true, value = "Select b.idfuncion as idfuncion,count(a.idboleto) as cantidad,b.costo*count(a.idboleto) as costototal, a.estado as estado \n" +
+            "                        from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +
+            "                                   left join obras c on b.obras_idobras = c.idobras\n" +
+            "                                   left join sala d on b.idsala = d.idsala\n" +
+            "                                    left join sede e on d.idsede = e.idsede\n" +
+            "                                   where a.idusuario =?1 and a.estado=?2 group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
+    List<DTOHistorial> ObtenerHistorialporEstado(Integer id,int estado);
 
     @Query(nativeQuery = true, value = "select f.fecha, f.horainicio, b.idboleto from funcion f \n" +
             "            inner join boleto b on f.idfuncion = b.idfuncion\n" +

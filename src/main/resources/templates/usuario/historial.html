@@ -13,8 +13,7 @@
         </div>
         <form class="form-group mb-3" method="get" th:action="@{/historial}">
             <div class="row">
-                <div class="col-3">
-                    <label class="letter">Filtrar por rango de fecha</label>
+                <div class="col-3 mt-4">
                     <input type="text" class="form-control" placeholder="Texto a buscar" name="search" >
 
                 </div>
@@ -31,12 +30,12 @@
                     <select id="searchby" class="form-select" name="categoria" >
                         <option value="Nombre">Funcion</option>
                         <option value="Sede">Sede</option>
-                        <option value="Estado">Estado</option>
+                        <option value="Asistido">Asistido</option>
+                        <option value="Pendiente">Pendiente</option>
                         <option value="Fecha">Fecha</option>
                     </select>
                 </div>
                 <div class="col mt-4">
-
                     <button class="btn btn-outline-primary" type="submit">Buscar</button>
                     <a class="btn btn-outline-danger ml-2" th:href="@{/historial}">Limpiar</a>
                 </div>
@@ -45,7 +44,7 @@
         <div class="row">
             <div class="col">
                 <div class="alert" th:classappend="${alerta}" th:if="${reserva != null}" th:text="${reserva}"></div>
-                <table class="table table-stripped" id="historial">
+                <table id="historial" class="table table-stripped">
                     <thead class="thead-dark">
                     <tr>
                         <th style="text-align: center;" scope="col" ><i class="bi bi-arrow-down-up"></i></th>
@@ -59,6 +58,7 @@
                         <th style="text-align: center;" scope="col" >Costo</th>
                         <th style="text-align: center;" scope="col" >Estado de la Función</th>
                         <th style="text-align: center;" scope="col">Calificacion</th>
+                        <th></th>
 
                     </tr>
                     </thead>
@@ -73,12 +73,13 @@
                         <td style="text-align: center;" th:text="${funcion.getFuncion().horafin}"></td>
                         <td style="text-align: center;" th:text="${funcion.getCantidad()}"></td>
                         <td style="text-align: center;" th:text="${funcion.getCostoTotal()}"></td>
-                        <td th:text="${funcion.getBoletoValido() ? 'Vigente' : 'Asistido'}" style="text-align: center;"></td>
+                        <td th:text="${funcion.getBoletoValido() ? 'Pendiente' : 'Asistido'}" style="text-align: center;"></td>
                         <td>
-                            <a th:if="${!funcion.getBoletoValido()}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${funcion.getFuncion().id}
+                            <a th:if="${!funcion.getBoletoValido() && listacalificaciones != null}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${funcion.getFuncion().id}
                             + '&idobras='+ ${funcion.getFuncion().getIdobra().id} + '&directorid='+ ${funcion.getFuncion().getIddirector().id}}">
                                 Calificacion
                             </a>
+                            <label th:if="listacalificaciones != null"> Usted ya califico esta función</label>
                         </td>
                         <td th:if="${funcion.validar}" class="text-center" >
                             <form method="post" th:action="@{'/borrarboleto?idfuncion='+${funcion.getFuncion().id}}">
@@ -95,7 +96,6 @@
     </main>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.js"
-
         crossorigin="anonymous">
 </script>
 
@@ -106,6 +106,7 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"
         crossorigin="anonymous">
 </script>
+
 <script>
     $(document).ready( function () {
         $('#historial').DataTable({
