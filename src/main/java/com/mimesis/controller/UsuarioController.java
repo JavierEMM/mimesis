@@ -113,13 +113,15 @@ public class UsuarioController {
                 if(usuario3.getNumerotelefonico().equals(null)){
                     model.addAttribute("msg","Debe ingresar un número telefónico");
                     model.addAttribute("opcion","alert-danger");
+                    return "redirect:/perfil/editar";
                 }else{
                     model.addAttribute("msg","Debe ingresar una dirección");
                     model.addAttribute("opcion","alert-danger");
+                    return "redirect:/perfil/editar";
                 }
             }
 
-            return "usuario/editarperfil";
+            return "redirect:/perfil/editar";
         }
 
         try {
