@@ -109,18 +109,23 @@ public class UsuarioController {
         if(bindingResult.hasErrors()){
             System.out.println(usuario3.getNumerotelefonico());
             System.out.println("Jose");
-            if(usuario3.getDireccion().equals("") || usuario3.getNumerotelefonico().equals("")){
-                if(usuario3.getNumerotelefonico().equals("")){
-                    attr.addFlashAttribute("msg","Debe ingresar un número telefónico");
-                    attr.addFlashAttribute("opcion","alert-danger");
+            if(usuario3.getDireccion().equals("") || usuario3.getNumerotelefonico().equals("")) {
+                if (usuario3.getNumerotelefonico().equals("")) {
+                    attr.addFlashAttribute("msg", "Debe ingresar un número telefónico");
+                    attr.addFlashAttribute("opcion", "alert-danger");
                     return "redirect:/perfil/editar";
-                }else{
-                    attr.addFlashAttribute("msg","Debe ingresar una dirección");
-                    attr.addFlashAttribute("opcion","alert-danger");
+                } else {
+                    attr.addFlashAttribute("msg", "Debe ingresar una dirección");
+                    attr.addFlashAttribute("opcion", "alert-danger");
                     return "redirect:/perfil/editar";
                 }
             }
 
+            return "redirect:/perfil/editar";
+        }
+        if(usuario3.getNumerotelefonico().length()!=9){
+            attr.addFlashAttribute("msg","Debe ingresar un número de 9 dígitos");
+            attr.addFlashAttribute("opcion","alert-danger");
             return "redirect:/perfil/editar";
         }
 
