@@ -63,7 +63,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="funcion,i : ${listaHistorial2}">
+                    <tr th:each="funcion,i : ${listaHistorial}">
                         <td style="text-align: center;" th:text="${i.index + 1}"></td>
                         <td style="text-align: center;" th:text="${funcion.getFuncion().getIdobra().nombre}"></td>
                         <td style="text-align: center;" th:text="${funcion.getFuncion().getIdsala().getIdsede().getNombre()}"></td>
@@ -81,8 +81,8 @@
                             </a>
                             <label th:if="${funcion.getCalificacions().size() != 0}"> Usted ya califico esta función</label>
                         </td>
-                        <td th:if="${funcion.validar}" class="text-center" >
-                            <form method="post" th:action="@{'/borrarboleto?idfuncion='+${funcion.getFuncion().id}}">
+                        <td>
+                            <form th:if="${funcion.validar}"  method="post" th:action="@{'/borrarboleto?idfuncion='+${funcion.getFuncion().id}}">
                                 <button  onclick="return confirm('¿Esta seguro que desea cancelar la compra de esta función?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">
                                     <i class="bi bi-trash"></i>
                                 </button>
