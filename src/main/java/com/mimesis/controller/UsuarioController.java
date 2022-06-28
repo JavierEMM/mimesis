@@ -21,9 +21,12 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.thymeleaf.util.StringUtils.length;
 
 @Controller
 @RequestMapping("")
@@ -105,6 +108,17 @@ public class UsuarioController {
         System.out.println(bindingResult.getAllErrors());
         if(bindingResult.hasErrors()){
             System.out.println("Jose");
+
+            if(usuario3.getDireccion().equals(null)){
+                if(usuario3.getNumerotelefonico().equals(null)){
+                    model.addAttribute("msg","Debe ingresar un número telefónico");
+                    model.addAttribute("opcion","alert-danger");
+                }else{
+                    model.addAttribute("msg","Debe ingresar una dirección");
+                    model.addAttribute("opcion","alert-danger");
+                }
+            }
+
             return "usuario/editarperfil";
         }
 
@@ -156,6 +170,7 @@ public class UsuarioController {
     }
 
 
+
     @GetMapping("/historial")
     public String historialCompra(Model model, HttpSession session, @RequestParam(value = "search", required = false) String search,
                                   @RequestParam(value = "categoria", required = false) String categoria,
@@ -199,6 +214,7 @@ public class UsuarioController {
                 model.addAttribute("error","error");
                 return "usuario/historial";
             }
+            model.addAttribute("listaHistorialporBoleto", dtoHistorialporBoleto);
         }
 
         model.addAttribute("listaHistorial2",list);
@@ -233,6 +249,7 @@ public class UsuarioController {
             dtoCalificacionObra.setNombreobra(obra.get().getNombre());
             dtoCalificacionObra.setIdobra(obra.get().getId());
         }else{
+
             return "redirect:/historial";
         }
 

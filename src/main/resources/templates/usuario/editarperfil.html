@@ -8,6 +8,11 @@
 </header>
 <div class="container bootstrap snippets bootdey">
     <div class="panel-body inf-content">
+        <div th:if="${msg != null}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <span th:text="${msg}">Registro Exitoso</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         <h1 class="title">Editar perfil</h1>
         <div id="contenedor2" class="row header-display fondo">
             <div class="col-md-6">
