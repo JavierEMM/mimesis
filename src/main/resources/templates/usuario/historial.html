@@ -75,11 +75,11 @@
                         <td style="text-align: center;" th:text="${funcion.getCostoTotal()}"></td>
                         <td th:text="${funcion.getBoletoValido() ? 'Pendiente' : 'Asistido'}" style="text-align: center;"></td>
                         <td>
-                            <a th:if="${!funcion.getBoletoValido() && listacalificaciones != null}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${funcion.getFuncion().id}
+                            <a th:if="${!funcion.getBoletoValido() && funcion.getCalificacions().size() == 0}" class="btn btn-outline-success flex-shrink-0" th:href="@{'/calificacion' + '?idfuncion='+ ${funcion.getFuncion().id}
                             + '&idobras='+ ${funcion.getFuncion().getIdobra().id} + '&directorid='+ ${funcion.getFuncion().getIddirector().id}}">
                                 Calificacion
                             </a>
-                            <label th:if="listacalificaciones != null"> Usted ya califico esta función</label>
+                            <label th:if="${funcion.getCalificacions().size() != 0}"> Usted ya califico esta función</label>
                         </td>
                         <td th:if="${funcion.validar}" class="text-center" >
                             <form method="post" th:action="@{'/borrarboleto?idfuncion='+${funcion.getFuncion().id}}">

@@ -215,6 +215,9 @@ public class UsuarioController {
                 dtoHistorialporBoleto.setCantidad(i.getCantidad());
                 dtoHistorialporBoleto.setCostoTotal(i.getCostototal());
                 dtoHistorialporBoleto.setBoletoValido((i.getEstado() == 1 ? true : false));
+                List<Calificacion> calificacions = calificacionRepository.findFuncionyUsuario(usuario2.getId(),funcion.get().getId());
+                System.out.println("SIZE: "+calificacions.size() +"EMPTY: "+ calificacions.isEmpty());
+                dtoHistorialporBoleto.setCalificacions(calificacions);
                 dtoHistorialporBoleto.setValidar(restarFechas(funcion.get().getFecha(),funcion.get().getHorainicio(),2));
                 list.add(dtoHistorialporBoleto);
             }else{
@@ -249,6 +252,7 @@ public class UsuarioController {
         String usuario = (String) session.getAttribute("usuario");
         Usuario usuario2 = usuarioRepository.findByCorreo(usuario);
 
+        System.out.println("FUNCION CAL: "+idfuncion);
         DTOCalificacionObra dtoCalificacionObra = new DTOCalificacionObra();
         dtoCalificacionObra.setIdfuncion(idfuncion);
         Optional<Obra> obra = obrasRepository.findById(idobras);
@@ -290,9 +294,9 @@ public class UsuarioController {
 
         String usuario = (String) session.getAttribute("usuario");
         Usuario usuario2 = usuarioRepository.findByCorreo(usuario);
-
+        System.out.println("FUNCION: "+idfuncion);
         Optional<Funcion> funcion = funcionRepository.findById(idfuncion);
-        List<Calificacion> calificacions = calificacionRepository.findUsuario(usuario2.getId());
+        List<Calificacion> calificacions = calificacionRepository.findFuncionyUsuario(usuario2.getId(),funcion.get().getId());
         if(calificacions.isEmpty() || calificacions == null){
             if(funcion.isPresent()){
                 DTOCalificacionObra dtoCalificacionObra= new DTOCalificacionObra();

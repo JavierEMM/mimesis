@@ -1,5 +1,6 @@
 package com.mimesis.dto;
 
+import com.mimesis.entity.Calificacion;
 import com.mimesis.entity.Funcion;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ public class DTOHistorialporBoleto {
     private String costoTotal;
     private Boolean boletoValido;
     private Boolean validar;
+    private List<Calificacion> calificacions;
     public DTOHistorialporBoleto() {
     }
     public String getCostoTotal() {
@@ -53,5 +55,13 @@ public class DTOHistorialporBoleto {
 
     public void setBoletoValido(Boolean boletoValido) {
         this.boletoValido = boletoValido;
+    }
+
+    public List<Calificacion> getCalificacions() {
+        return calificacions;
+    }
+
+    public void setCalificacions(List<Calificacion> calificacions) {
+        this.calificacions = calificacions;
     }
 }

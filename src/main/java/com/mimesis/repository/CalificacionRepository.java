@@ -11,4 +11,6 @@ public interface CalificacionRepository extends JpaRepository<Calificacion,Integ
 
     @Query(nativeQuery = true,value = "SELECT * FROM calificaciones WHERE idusuario = ?1")
     List<Calificacion> findUsuario(Integer id);
+    @Query(nativeQuery = true,value = "SELECT * FROM calificaciones WHERE idusuario = ?1 and idfuncion  = ?2")
+    List<Calificacion> findFuncionyUsuario(Integer id,Integer idfuncion);
 }
