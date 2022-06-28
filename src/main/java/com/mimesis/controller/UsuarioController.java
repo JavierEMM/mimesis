@@ -104,19 +104,19 @@ public class UsuarioController {
 
         //String usuario2 = (String) session.getAttribute("usuario");
         Usuario usuario = usuarioRepository.findByCorreo(usuario3.getCorreo());
-        System.out.println(usuario.getClass().getSimpleName());
-        System.out.println(bindingResult.getAllErrors());
+        System.out.println(usuario3.getNumerotelefonico());
+        System.out.println("Jose");
         if(bindingResult.hasErrors()){
+            System.out.println(usuario3.getNumerotelefonico());
             System.out.println("Jose");
-
-            if(usuario3.getDireccion().equals(null) || usuario3.getNumerotelefonico().equals(null) ){
-                if(usuario3.getNumerotelefonico().equals(null)){
-                    model.addAttribute("msg","Debe ingresar un número telefónico");
-                    model.addAttribute("opcion","alert-danger");
+            if(usuario3.getDireccion().equals("") || usuario3.getNumerotelefonico().equals("")){
+                if(usuario3.getNumerotelefonico().equals("")){
+                    attr.addFlashAttribute("msg","Debe ingresar un número telefónico");
+                    attr.addFlashAttribute("opcion","alert-danger");
                     return "redirect:/perfil/editar";
                 }else{
-                    model.addAttribute("msg","Debe ingresar una dirección");
-                    model.addAttribute("opcion","alert-danger");
+                    attr.addFlashAttribute("msg","Debe ingresar una dirección");
+                    attr.addFlashAttribute("opcion","alert-danger");
                     return "redirect:/perfil/editar";
                 }
             }
