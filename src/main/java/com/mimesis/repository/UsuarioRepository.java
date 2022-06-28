@@ -93,9 +93,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
     List<DTOHistorial> ObtenerHistorialporEstado(Integer id,Integer estado);
 
     @Query(nativeQuery = true, value = "select f.fecha, f.horainicio, b.idboleto from funcion f \n" +
-            "inner join boleto b on f.idfuncion = b.idfuncion\n" +
-            "inner join usuario u on b.idusuario = u.idusuario where u.idusuario=?1 and f.idfuncion=?2")
-    DTOObtenerHoraFuncion ObtenerByIdUsuarioIdfuncion(Integer idusuario,Integer idfuncion);
+            "            inner join boleto b on f.idfuncion = b.idfuncion\n" +
+            "            inner join usuario u on b.idusuario = u.idusuario where u.idusuario=?1")
+    List<DTOObtenerHoraFuncion>  ObtenerByfuncion(Integer idusuario);
 
     @Query(nativeQuery = true, value = "Select b.idfuncion as idfuncion,count(a.idboleto) as cantidad,b.costo*count(a.idboleto) as costototal, a.estado as estado " +
             "from boleto a left join funcion b on a.idfuncion=b.idfuncion\n" +

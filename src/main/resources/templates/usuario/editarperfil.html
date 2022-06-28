@@ -11,25 +11,38 @@
         <h1 class="title">Editar perfil</h1>
         <div id="contenedor2" class="row header-display fondo">
             <div class="col-md-6">
-                <form method="POST"  th:action="@{/perfil/save}" enctype="multipart/form-data" th:object="${usuario}">
-
+                <form method="post"  th:action="@{/perfil/save}" th:object="${usuario}" enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{nombre}"/>
+                    <input type="hidden" th:field="*{apellido}"/>
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{correo}"/>
+                    <input type="hidden" th:field="*{contrasena}"/>
+                    <input type="hidden" th:field="*{dni}"/>
+                    <input type="hidden" th:field="*{rol}"/>
+                    <input type="hidden" th:field="*{valido}"/>
+                    <input type="hidden" th:field="*{emailconfirm}"/>
+                    <input type="hidden" th:field="*{authprovider}"/>
+                    <input type="hidden" th:field="*{resetpwdtoken}"/>
                     <div class="mb-3">
                         <div class="mb-3">
-                            <label for="numerotelefonico" class="col-form-label">Numero Telefonico</label>
-                            <input type="text" class="form-control"
-                                   name="numerotelefonico" id="numerotelefonico" th:field="*{numerotelefonico}">
+                            <label class="col-form-label">Numero Telefonico</label>
+                            <input type="text" class="form-control" th:field="*{numerotelefonico}" th:classappend="${#fields.hasErrors('numerotelefonico')?'is-invaid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('numerotelefonico')}"
+                                 th:errors="*{numerotelefonico}"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="fechanacimiento" class="col-form-label">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control"
-                                   name="fechanacimiento" id="fechanacimiento" th:field="*{fechanacimiento}">
+                            <label class="col-form-label">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" th:field="*{fechanacimiento}" th:classappend="${#fields.hasErrors('fechanacimiento')?'is-invaid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('fechanacimiento')}"
+                                 th:errors="*{fechanacimiento}"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="direccion" class="col-form-label">Direccion</label>
-                            <input name="direccion"  type="text" class="form-control"
-                                     id="direccion" th:field="*{direccion}">
+                            <label class="col-form-label">Direccion</label>
+                            <input type="text" class="form-control" th:field="*{direccion}" th:classappend="${#fields.hasErrors('direccion')?'is-invaid':''}">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('direccion')}"
+                                 th:errors="*{direccion}"></div>
                         </div>
 
                         <div class="mb-3">

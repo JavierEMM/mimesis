@@ -37,7 +37,7 @@ public class Usuario implements Serializable{
     @Size(max = 255, message = "La contraseña no puede contener más de 255 caracteres")
     private String contrasena;
 
-    @Column(name = "numerotelefonico", length = 45)
+    @Column(name = "numerotelefonico", length = 50)
     @NotBlank(message = "Debe agregar un numero de contacto")
     private String numerotelefonico;
 
@@ -49,6 +49,7 @@ public class Usuario implements Serializable{
 
     @Column(name = "direccion")
     @Size(max = 45,message = "La direccion no puede pasar de 45 caracteres")
+    @NotBlank(message = "Debe agregar una dirección")
     private String direccion;
 
     @Column(name = "fotoperfil")

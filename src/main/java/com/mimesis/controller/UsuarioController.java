@@ -10,11 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -94,13 +96,18 @@ public class UsuarioController {
 
 
     @PostMapping("/perfil/save")
-    public String guardarPerfil(@RequestParam("archivo") MultipartFile file,
-                                @RequestParam("direccion") String direccion,
-                                @RequestParam("fechanacimiento") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechanacimiento,
-                                @RequestParam("numerotelefonico") String tel, HttpSession session,
-                                Model model) {
-        String usuario2 = (String) session.getAttribute("usuario");
-        Usuario usuario = usuarioRepository.findByCorreo(usuario2);
+    public String guardarPerfil(@ModelAttribute("usuario") @Valid Usuario usuario3, BindingResult bindingResult , Model model , @RequestParam("archivo") MultipartFile file,
+                            HttpSession session, RedirectAttributes attr) {
+
+        //String usuario2 = (String) session.getAttribute("usuario");
+        Usuario usuario = usuarioRepository.findByCorreo(usuario3.getCorreo());
+        System.out.println(usuario.getClass().getSimpleName());
+        System.out.println(bindingResult.getAllErrors());
+        if(bindingResult.hasErrors()){
+            System.out.println("Jose");
+            return "usuario/editarperfil";
+        }
+
         try {
             if(file.getOriginalFilename().equals("") || file.getOriginalFilename().equalsIgnoreCase(null) ){
                 System.out.println("AQUI 1");
@@ -108,9 +115,9 @@ public class UsuarioController {
                 System.out.println("AQUI 2");
                 usuario.setFotoperfil(file.getBytes());
             }
-            usuario.setDireccion(direccion);
-            usuario.setFechanacimiento(fechanacimiento);
-            usuario.setNumerotelefonico(tel);
+            usuario.setDireccion(usuario3.getDireccion());
+            usuario.setFechanacimiento(usuario3.getFechanacimiento());
+            usuario.setNumerotelefonico(usuario3.getNumerotelefonico());
             usuarioRepository.save(usuario);
             return "redirect:/perfil";
         } catch (IOException e) {
