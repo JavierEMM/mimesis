@@ -109,7 +109,7 @@ public class UsuarioController {
         if(bindingResult.hasErrors()){
             System.out.println("Jose");
 
-            if(usuario3.getDireccion().equals(null)){
+            if(usuario3.getDireccion().equals(null) || usuario3.getNumerotelefonico().equals(null) ){
                 if(usuario3.getNumerotelefonico().equals(null)){
                     model.addAttribute("msg","Debe ingresar un número telefónico");
                     model.addAttribute("opcion","alert-danger");
