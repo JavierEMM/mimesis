@@ -543,16 +543,25 @@ public class AdminController {
     }
 
     @PostMapping("/saveoperador")
-    public String savesedes(@ModelAttribute("usuario") @Valid Usuario usuario,BindingResult bindingResult, RedirectAttributes attr){
-        if(bindingResult.hasErrors()){
+    public String savesedes(@ModelAttribute("usuario") @Valid Usuario usuario,BindingResult bindingResult, RedirectAttributes attr, Model model) {
+
+        System.out.println(bindingResult.getAllErrors());
+
+        if (bindingResult.hasErrors()) {
             return "admin/agregaroperador";
+        } else {
+            Usuario usuarioconfirm = usuarioRepository.findByCorreo(usuario.getCorreo());
+            if (usuarioconfirm != null) {
+                model.addAttribute("emailerror", "Credenciales ya registradas");
+                return "admin/agregaroperador";
+            }
+            String contra = usuario.getContrasena();
+            usuario.setContrasena(new BCryptPasswordEncoder().encode(contra));
+            usuarioRepository.save(usuario);
+            attr.addFlashAttribute("msg", "Operador creado exitosamente");
+            attr.addFlashAttribute("opcion", "alert-success");
+            return "redirect:/admin/operadores";
         }
-        String contra = usuario.getContrasena();
-        usuario.setContrasena(new BCryptPasswordEncoder().encode(contra));
-        usuarioRepository.save(usuario);
-        attr.addFlashAttribute("msg","Operador creado exitosamente");
-        attr.addFlashAttribute("opcion","alert-success");
-        return "redirect:/admin/operadores";
     }
 
     @GetMapping("/borraroperador")
