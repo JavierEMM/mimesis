@@ -181,35 +181,43 @@ public class UsuarioController {
     @GetMapping("/historial")
     public String historialCompra(Model model, HttpSession session, @RequestParam(value = "search", required = false) String search,
                                   @RequestParam(value = "categoria", required = false) String categoria,
-                                  @RequestParam(value = "FechaInicio", required = false) String optFechaInicio, @RequestParam(value = "FechaFin", required = false) String optFechaFin) {
+                                  @RequestParam(value = "FechaInicio", required = false) String optFechaInicio, @RequestParam(value = "FechaFin", required = false) String optFechaFin,
+                                  RedirectAttributes attr) {
         String usuario1 = (String) session.getAttribute("usuario");
         Usuario usuario2 = usuarioRepository.findByCorreo(usuario1);
         List<DTOHistorial> listaHistorial = new ArrayList<>();
+
         if (search != null) {
             if (categoria.equalsIgnoreCase("Nombre")) {
                 listaHistorial = usuarioRepository.ObtenerHistorialporObra(usuario2.getId(),search);
+                System.out.println(listaHistorial.size());
             }
             if (categoria.equalsIgnoreCase("Sede")) {
                 listaHistorial= usuarioRepository.ObtenerHistorialporSede(usuario2.getId(),search);
             }
             if (categoria.equalsIgnoreCase("Fecha")) {
+                if(optFechaInicio.isEmpty() || optFechaFin.isEmpty()){
+                    attr.addFlashAttribute("msg", "Por favor seleccione una rango de fechas valido");
+                    attr.addFlashAttribute("opcion", "alert-danger");
+                    return "redirect:/historial";
+                }
                 listaHistorial = usuarioRepository.ObtenerHistorialporFecha(usuario2.getId(), optFechaInicio, optFechaFin);
             }
             if(categoria.equalsIgnoreCase("Asistido")){
                 listaHistorial = usuarioRepository.ObtenerHistorialporEstado(usuario2.getId(),0);
-                System.out.println(listaHistorial.size());
             }
             if(categoria.equalsIgnoreCase("Pendiente")){
-
                 listaHistorial = usuarioRepository.ObtenerHistorialporEstado(usuario2.getId(),1);
             }
         } else {
             listaHistorial = usuarioRepository.ObtenerHistorial(usuario2.getId());
         }
+
         List<DTOHistorialporBoleto> list = new ArrayList<>();
         for (DTOHistorial i :listaHistorial){
             DTOHistorialporBoleto dtoHistorialporBoleto =  new DTOHistorialporBoleto();
             Optional<Funcion> funcion =  funcionRepository.findById(i.getIdfuncion());
+
             if(funcion.isPresent()){
                 dtoHistorialporBoleto.setFuncion(funcion.get());
                 dtoHistorialporBoleto.setCantidad(i.getCantidad());
@@ -224,10 +232,13 @@ public class UsuarioController {
                 model.addAttribute("error","error");
                 return "usuario/historial";
             }
+
+
             model.addAttribute("listaHistorialporBoleto", dtoHistorialporBoleto);
+
         }
 
-        model.addAttribute("listaHistorial2",list);
+        model.addAttribute("listaHistorial",list);
         return"usuario/historial";
     }
 

@@ -13,8 +13,9 @@
         </div>
         <form class="form-group mb-3" method="get" th:action="@{/historial}">
             <div class="row">
+                <div th:if="${msg != null}" th:text="${msg}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert"></div>
                 <div class="col-3 mt-4">
-                    <input type="text" class="form-control" placeholder="Texto a buscar" name="search" >
+                    <input id="buscar" type="text" class="form-control" placeholder="Buscar en historial" name="search" >
 
                 </div>
                 <div class="col-2">
@@ -25,8 +26,8 @@
                     <label for="fechafin" class="letter">Fecha Fin</label>
                     <input id="fechafin" class="form-control" type="date" name="FechaFin"/>
                 </div>
-                <div class="col-2 mt-4">
-
+                <div class="col-2">
+                    <label for="buscar" class="letter">Filtrar por:</label>
                     <select id="searchby" class="form-select" name="categoria" >
                         <option value="Nombre">Funcion</option>
                         <option value="Sede">Sede</option>
@@ -35,9 +36,9 @@
                         <option value="Fecha">Fecha</option>
                     </select>
                 </div>
-                <div class="col mt-4">
-                    <button class="btn btn-outline-primary" type="submit">Buscar</button>
-                    <a class="btn btn-outline-danger ml-2" th:href="@{/historial}">Limpiar</a>
+                <div class="col mt-4 d-flex">
+                    <button class="ms-auto btn btn-outline-primary" type="submit">Buscar</button>
+                    <a class="ms-4 btn btn-outline-danger" th:href="@{/historial}">Limpiar</a>
                 </div>
             </div>
         </form>
@@ -115,10 +116,10 @@
                 infoEmpty: "No existen datos.",
                 loadingRecords: "Cargando...",
                 zeroRecords: "No se encontraron datos con tu busqueda",
-                emptyTable: "No hay datos disponibles en la tabla.",
+                emptyTable: "No hay datos disponibles para mostrar",
                 lengthMenu: "",
                 info: "",
-                infoEmpty: "No existen datos.",
+                infoEmpty: "",
                 infoFiltered: "(filtrado de _MAX_ elementos en total)",
                 infoPostFix: "",
                 paginate: {
