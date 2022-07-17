@@ -30,10 +30,12 @@ public class Usuario implements Serializable{
 
     @Column(name = "correo", nullable = false,unique = true)
     @Email(message = "Debe ser un correo valido")
+    @NotBlank(message = "Ingrese su correo")
     @Size(max = 255, message = "El correo no puedo contener más de a 255 caracteres")
     private String correo;
 
     @Column(name = "contrasena", nullable = false)
+    @NotBlank(message = "Ingrese una contraseña")
     @Size(max = 255, message = "La contraseña no puede contener más de 255 caracteres")
     private String contrasena;
 

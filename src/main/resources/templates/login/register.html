@@ -9,13 +9,6 @@
             <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 600px; text-align: center">
                 <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; color: white;box-shadow: 7px 13px 37px #000;">
                     <h1 class="border-bottom" style="color:crimson"><b>Registro</b></h1>
-                    <br>
-                    <div th:if="${msg != null}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert">
-                        <i class="bi bi-check-circle-fill"></i>
-                        <span th:text="${msg}">Registro Exitoso</span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-
                     <form method="POST" th:object="${usuario}" th:action="@{/registrar}">
                         <div class="row">
                             <div class="col-md-6 mb-4">
@@ -70,7 +63,7 @@
                             <div class="col-md-6 mb-4 pb-2">
                                 <div class="form-outline">
                                     <label class="form-label">Contraseña</label>
-                                    <input class="form-control" th:classappend="${#fields.hasErrors('contrasena')?'is-invalid':''}" type="password" th:field="*{contrasena}"/>
+                                    <input class="form-control" th:classappend="${#fields.hasErrors('contrasena') ?'is-invalid':''}" type="password" th:field="*{contrasena}"/>
                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('contrasena')}"
                                          th:errors="*{contrasena}">
                                     </div>

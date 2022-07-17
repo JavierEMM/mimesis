@@ -1,5 +1,6 @@
 package com.mimesis.controller;
 
+import com.mimesis.dao.DniDao;
 import com.mimesis.dto.DTOCompararID;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
@@ -42,6 +43,9 @@ public class AdminController {
 
     @Autowired
     FotoRepository fotoRepository;
+
+    @Autowired
+    DniDao dniDao;
 
     @GetMapping("/salas")
     public String paginaSalas(Model model){
@@ -197,7 +201,7 @@ public class AdminController {
             }
             try {
                 for (MultipartFile file1 : file) {
-                    System.out.println(file1);
+                    System.out.println(file1.getClass().getSimpleName());
                     Foto foto = new Foto();
                     foto.setFoto(file1.getBytes());
                     foto.setIdsede(sede);
@@ -234,7 +238,10 @@ public class AdminController {
         Optional<Sede> opt = sedesRepository.findById(id);
         if (opt.isPresent()) {
             Sede sedefoto = opt.get();
-            byte[] imagenComoBytes = sedefoto.getFotosporsede().get(0).getFoto();
+            Integer tamanio =(opt.get().getFotosporsede().size() -1 );
+            System.out.println("JOSEEE");
+            System.out.println(tamanio);
+            byte[] imagenComoBytes = sedefoto.getFotosporsede().get(tamanio).getFoto();
             return new ResponseEntity<>(
                     imagenComoBytes,
                     HttpStatus.OK);
@@ -550,18 +557,24 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admin/agregaroperador";
         } else {
-            Usuario usuarioconfirm = usuarioRepository.findByCorreo(usuario.getCorreo());
-            if (usuarioconfirm != null) {
-                model.addAttribute("emailerror", "Credenciales ya registradas");
-                return "admin/agregaroperador";
+            if (dniDao.ConsultarDNI(usuario.getDni())) {
+                Usuario usuarioconfirm = usuarioRepository.findByCorreo(usuario.getCorreo());
+                if (usuarioconfirm != null) {
+                    model.addAttribute("emailerror", "Credenciales ya registradas");
+                    return "admin/agregaroperador";
+                } else {
+                    String contra = usuario.getContrasena();
+                    usuario.setContrasena(new BCryptPasswordEncoder().encode(contra));
+                    usuarioRepository.save(usuario);
+                    attr.addFlashAttribute("msg", "Operador creado exitosamente");
+                    attr.addFlashAttribute("opcion", "alert-success");
+                    return "redirect:/admin/operadores";
+
+                }
             }
-            String contra = usuario.getContrasena();
-            usuario.setContrasena(new BCryptPasswordEncoder().encode(contra));
-            usuarioRepository.save(usuario);
-            attr.addFlashAttribute("msg", "Operador creado exitosamente");
-            attr.addFlashAttribute("opcion", "alert-success");
-            return "redirect:/admin/operadores";
+            model.addAttribute("dnierror", "Dni no valido");
         }
+        return "admin/agregaroperador";
     }
 
     @GetMapping("/borraroperador")
