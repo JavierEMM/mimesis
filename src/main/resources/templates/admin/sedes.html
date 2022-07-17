@@ -6,10 +6,8 @@
             <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
         </section>
         <div class="container mt-3"></div>
-        <div class="container mt-3">
-            <div class="col-md-4 offset-md-4">
+        <div class="container mt-3" style="text-align: center; padding-bottom: 20px;" >
                 <h2 class="pb-2 border-bottom">Gestión de sedes</h2>
-            </div>
         </div>
         <div class="container">
             <div class="row">
@@ -23,7 +21,7 @@
                             <a class="btn btn-outline-danger ml-2" th:href="@{/admin/sedes}">Limpiar</a>
                         </div>
                         <div class="col-2">
-                            <a class="btn btn-secondary" th:href="@{'/admin/agregarsedes'}">Agregar sede</a>
+                            <a class="btn btn-dark" th:href="@{'/admin/agregarsedes'}">Agregar sede</a>
                         </div>
                     </div>
                 </form>
@@ -33,7 +31,7 @@
                 <span th:text="${msg}">Registro Exitoso</span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <table class="table table-striped" id="sedes1">
+            <table class="table " id="sedes1">
                 <thead class="thead-dark">
                     <tr>
                         <th class="text-center">#</th>

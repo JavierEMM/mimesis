@@ -34,7 +34,7 @@
                         <label for="fechafin" class="letter">Fecha Fin</label>
                         <input id="fechafin" class="form-control" type="date" name="FechaFin" th:value="${fFinSelected}"/>
                     </div>
-                    <div class="col-2 header-display" style="text-align: center;justify-content: center;align-items: center;">
+                    <div class="col-2 header-display" style="text-align: center;justify-content: center;align-items: center; padding-top:20px">
                         <button type="submit" class="btn btn-primary" >Actualizar</button>
                     </div>
                 </form>
@@ -49,7 +49,7 @@
                             <option value="Funcion mejor calificada">Funcion mejor calificada</option>
                         </select>
                     </div>
-                        <div class="col header-display" style="text-align: center">
+                        <div class="col header-display" style="text-align: center;padding-top:20px">
                             <button type="submit" class="btn btn-primary" style="margin: auto;" >Actualizar</button>
                         </div>
                  </form>
@@ -59,7 +59,8 @@
 
                         <table class="table", id="obras">
                             <thead class="thead-dark">
-                                <th th:text="'Filtrado por: '+${filtroFunciones}"></th>
+                                <th colspan="4"> Lista de funciones <span class="badge bg-dark" th:text="${filtroFunciones}" ></span></th>
+                                <!--<th th:text="'Filtrado por: '+${filtroFunciones}"></th>-->
                                 <tr>
                                     <th style="text-align: center;" scope="col">Nombre de la Obra</th>
                                     <th style="text-align: center;" scope="col">Fecha y Hora</th>
@@ -77,6 +78,7 @@
                             </tbody>
                         </table>
                     </div>
+
                 </div>
                 <div class="row">
                     <div class="col">
@@ -90,6 +92,7 @@
                                     </div>
                                 <table class="table", id="actores">
                                     <thead class="thead-dark">
+                                        <th colspan="4"> Lista de Actores</th>
                                         <tr>
                                             <th style="text-align: center;" scope="col">Nombre</th>
                                             <th style="text-align: center;" scope="col">Apellido</th>
@@ -117,6 +120,7 @@
                                     </div>
                                 <table class="table", id="directores">
                                     <thead class="thead-dark">
+                                        <th colspan="4"> Lista de Directores</th>
                                         <tr>
                                             <th style="text-align: center;" scope="col">Nombre</th>
                                             <th style="text-align: center;" scope="col">Apellido</th>

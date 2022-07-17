@@ -24,7 +24,7 @@
                         <a class="btn btn-outline-danger ml-2" th:href="@{/admin/actores}">Limpiar</a>
                     </div>
                     <div class="col-2">
-                        <a class="btn btn-secondary" th:href="@{'/admin/agregaractor'}">Agregar actor</a>
+                        <a class="btn btn-dark" th:href="@{'/admin/agregaractor'}">Agregar actor</a>
                     </div>
                 </div>
             </form>
@@ -35,9 +35,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <div>
-            <h1 style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">Lista de Actores</h1>
-            <div style="margin-right: auto; margin-left: auto; margin-top: 20px; max-width: 1000px;">
-                <table class="table table-striped" id="actores">
+            <h1 >Lista de Actores</h1>
+            <div >
+                <table class="table" id="actores">
                     <thead class="thead-dark">
                         <tr>
                             <th class="text-center">#</th>
@@ -116,7 +116,7 @@
                             sortDescending: ": active para ordenar la columna en orden descendente"
                         }
                     },
-                    scrollY: 300,
+                    scrollY: 400,
                     lengthMenu: [ [5, 10, -1], [5, 10, "All"] ],
                     "searching": false,
                     "ordering": false,

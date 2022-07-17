@@ -6,10 +6,8 @@
             <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
         </section>
         <div class="container mt-3"></div>
-        <div class="container mt-3">
-            <div class="col-md-4 offset-md-4">
-                <h2 class="pb-2 border-bottom">Gestión de Salas</h2>
-            </div>
+        <div class="container mt-3" style="text-align: center; padding-bottom: 20px;">
+                <h2 class="pb-2 border-bottom" >Gestión de Salas</h2>
         </div>
         <div class="container">
             <div class="row">
@@ -26,7 +24,7 @@
                             <a class="btn btn-primary" th:href="@{/admin/salas}">Listar</a>
                         </div>
                         <div class="col-2">
-                            <a class="btn btn-secondary" th:href="@{'/admin/agregarsalas'}">Agregar Sala</a>
+                            <a class="btn btn-dark" th:href="@{'/admin/agregarsalas'}">Agregar Sala</a>
                         </div>
                     </div>
                 </form>
@@ -36,7 +34,7 @@
                 <span th:text="${msg}">Registro Exitoso</span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <table class="table table-striped" id="salas1">
+            <table class="table " id="salas1">
                 <thead class="thead-dark">
                     <tr>
                         <th class="text-center">Nombre de la sala</th>
