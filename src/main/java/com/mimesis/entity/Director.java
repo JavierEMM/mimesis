@@ -30,9 +30,9 @@ public class Director implements Serializable {
     private String correo;
 
     @Column(name = "telefono", nullable = false)
-    @Digits(integer = 9, fraction=0)
-    @Max(value=9)
-    @Min(value=8)
+    @Digits(integer = 10, fraction=0)
+    @Max(value=999999999,message = "Debe ser un numero de 9 cifras")
+    @Min(value=100000000, message = "Debe ser un numero de 9 cifras")
     @NotNull(message = "Debe agregar un numero de contacto")
     private Integer telefono;
 
