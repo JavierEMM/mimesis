@@ -2,38 +2,36 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body>
-        <header th:replace="includes/navbar.html :: navbar(option = 'Historial')" id="header" class="d-flex align-items-center">
-        </header>
         <div class="container">
-            <div class="row" >
-                <div class="col-xl">
-                    <p class="title">Calificacion</p>
-                </div>
+            <header th:replace="includes/navbar.html :: navbar(option = 'Historial')" id="header" class="d-flex align-items-center">
+            </header>
+            <div class="row title-page">
+                <h1 class="text-page">Calificación</h1>
+                <h4 class="text-page">califica nuestra obra y el desempeño de nuestros actores y director</h4>
             </div>
             <form method="POST"  th:action="@{/guardarcalificacion}" >
-                <div class="row">
-                    <div class="col">
-                        <h2>OBRA</h2>
-
+                <div class="row title-page">
+                    <div class="col" style="padding: 20px;">
+                        <h2 class="text-page" style="padding: 20px;">OBRA</h2>
                         <table class="table" id="tabla_obra">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th style="text-align: center;" scope="col">Foto</th>
-                                    <th style="text-align: center;" scope="col">Funcion</th>
-                                    <th style="text-align: center;" scope="col">Calificacion</th>
+                                    <th class="th-carrito" scope="col">Foto</th>
+                                    <th class="th-carrito" scope="col">Funcion</th>
+                                    <th class="th-carrito" scope="col">Calificacion</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="text-align: center;">
+                                    <td class="td-carrito">
                                         <img width="40rem" height="40rem"
                                              th:src="@{|/funciones/obras/${obra.idobra}|}">
                                     </td>
-                                    <td style="text-align: center;" th:text="${obra.nombreobra}">
+                                    <td class="td-carrito" th:text="${obra.nombreobra}">
                                         Mobydick
                                     </td>
-                                    <td style="text-align: center;" >
+                                    <td class="td-carrito" >
                                         <span class="fa fa-star"  style="cursor: pointer;" th:id="1obra+''+${obra.idobra}"></span>
                                         <span class="fa fa-star"  style="cursor: pointer;" th:id="2obra+''+${obra.idobra}"></span>
                                         <span class="fa fa-star"  style="cursor: pointer;" th:id="3obra+''+${obra.idobra}"></span>
@@ -53,30 +51,30 @@
                     </div>
                 </div>
                 <br>
-                <div class="row">
-                    <div class="col">
-                        <h2>DIRECTOR</h2>
+                <div class="row title-page">
+                    <div class="col" style="padding: 20px;">
+                        <h2 class="text-page" style="padding: 20px;">DIRECTOR</h2>
                         <table class="table" id="tabla_director">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th style="text-align: center;" scope="col">Foto</th>
-                                    <th style="text-align: center;" scope="col">Nombre</th>
-                                    <th style="text-align: center;" scope="col">Apellido</th>
-                                    <th style="text-align: center;" scope="col">Correo</th>
-                                    <th style="text-align: center;" scope="col">Calificacion</th>
+                                    <th class="th-carrito" scope="col">Foto</th>
+                                    <th class="th-carrito" scope="col">Nombre</th>
+                                    <th class="th-carrito" scope="col">Apellido</th>
+                                    <th class="th-carrito" scope="col">Correo</th>
+                                    <th class="th-carrito" scope="col">Calificacion</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="text-align: center;">
+                                    <td class="td-carrito">
                                         <img width="40rem" height="40rem"
                                              th:src="@{|/directores/${director.iddirector}|}">
 
                                     </td>
-                                    <td style="text-align: center;" th:text="${director.nombredirector}">Juan</td>
-                                    <td style="text-align: center;"th:text="${director.apellidodirector}">Perez</td>
-                                    <td style="text-align: center;" th:text="${director.correodirector}">juan.perez@gmail.com</td>
-                                    <td style="text-align: center;">
+                                    <td class="td-carrito" th:text="${director.nombredirector}">Juan</td>
+                                    <td class="td-carrito" th:text="${director.apellidodirector}">Perez</td>
+                                    <td class="td-carrito" th:text="${director.correodirector}">juan.perez@gmail.com</td>
+                                    <td class="td-carrito">
                                         <span class="fa fa-star"  style="cursor: pointer;" th:id="1director+''+${director.iddirector}"></span>
                                         <span class="fa fa-star"  style="cursor: pointer;" th:id="2director+''+${director.iddirector}"></span>
                                         <span class="fa fa-star"  style="cursor: pointer;" th:id="3director+''+${director.iddirector}"></span>
@@ -93,29 +91,29 @@
                     </div>
                 </div>
                 <br>
-                <div class="row">
-                    <div class="col">
-                        <h2>ACTORES</h2>
+                <div class="row title-page">
+                    <div class="col" style="padding: 20px;">
+                        <h2 class="text-page" style="padding: 20px;">ACTORES</h2>
                         <table class="table" id="tabla_actor">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th style="text-align: center;" scope="col">Foto</th>
-                                    <th style="text-align: center;" scope="col">Nombre</th>
-                                    <th style="text-align: center;" scope="col">Apellido</th>
-                                    <th style="text-align: center;" scope="col">Correo</th>
-                                    <th style="text-align: center;" scope="col">Calificacion</th>
+                                    <th class="th-carrito" scope="col">Foto</th>
+                                    <th class="th-carrito" scope="col">Nombre</th>
+                                    <th class="th-carrito" scope="col">Apellido</th>
+                                    <th class="th-carrito" scope="col">Correo</th>
+                                    <th class="th-carrito" scope="col">Calificacion</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="actor,i: ${listaactor}">
-                                    <td style="text-align: center;">
+                                    <td class="td-carrito">
                                         <img width="40rem" height="40rem"
                                              th:src="@{|/actores/${actor.getId()}|}">
                                     </td>
-                                    <td style="text-align: center;" th:text="${actor.getNombre()}">Cachin</td>
-                                    <td style="text-align: center;" th:text="${actor.getApellido()}">Alcantara</td>
-                                    <td style="text-align: center;" th:text="${actor.getCorreo()}">alcantara.12@gmail.com</td>
-                                    <td style="text-align: center;" >
+                                    <td class="td-carrito" th:text="${actor.getNombre()}">Cachin</td>
+                                    <td class="td-carrito" th:text="${actor.getApellido()}">Alcantara</td>
+                                    <td class="td-carrito" th:text="${actor.getCorreo()}">alcantara.12@gmail.com</td>
+                                    <td class="td-carrito" >
                                         <span class="fa fa-star"  style="cursor: pointer;" th:id="1actor+''+${actor.getId()}"></span>
                                         <span class="fa fa-star"  style="cursor: pointer;" th:id="2actor+''+${actor.getId()}"></span>
                                         <span class="fa fa-star"  style="cursor: pointer;" th:id="3actor+''+${actor.getId()}"></span>
@@ -131,19 +129,16 @@
                         </table>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col header-display">
+                <div class="row title-page">
+                    <div class="col d-flex justify-content-center align-items-center">
                         <button type="submit" class="ver btn btn-primary">Calificar</button>
                     </div>
                 </div>
 
             </form>
-
-
+            <footer th:replace="includes/footer.html :: footer"></footer>
         </div>
-        <footer th:replace="includes/footer.html :: footer"></footer>
         <script>
-
             $('#tabla_obra').on('click','tr .fa-star',function (e){
                 let count;
                 count = e.currentTarget.id[0];

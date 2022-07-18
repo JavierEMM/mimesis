@@ -173,6 +173,7 @@ public class UsuarioController {
                                   @RequestParam(value = "categoria", required = false) String categoria,
                                   @RequestParam(value = "FechaInicio", required = false) String optFechaInicio, @RequestParam(value = "FechaFin", required = false) String optFechaFin,
                                   RedirectAttributes attr) {
+
         String usuario1 = (String) session.getAttribute("usuario");
         Usuario usuario2 = usuarioRepository.findByCorreo(usuario1);
         List<DTOHistorial> listaHistorial = new ArrayList<>();
