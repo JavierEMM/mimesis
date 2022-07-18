@@ -110,21 +110,20 @@
                                 <tr th:each="actor,i: ${listaactor}">
                                     <td style="text-align: center;">
                                         <img width="40rem" height="40rem"
-                                             th:src="@{|/actores/${actor.getActorid()}|}">
-
+                                             th:src="@{|/actores/${actor.getId()}|}">
                                     </td>
-                                    <td style="text-align: center;" th:text="${actor.getNombreactor()}">Cachin</td>
-                                    <td style="text-align: center;" th:text="${actor.getApellidoactor()}">Alcantara</td>
-                                    <td style="text-align: center;" th:text="${actor.getCorreoactor()}">alcantara.12@gmail.com</td>
+                                    <td style="text-align: center;" th:text="${actor.getNombre()}">Cachin</td>
+                                    <td style="text-align: center;" th:text="${actor.getApellido()}">Alcantara</td>
+                                    <td style="text-align: center;" th:text="${actor.getCorreo()}">alcantara.12@gmail.com</td>
                                     <td style="text-align: center;" >
-                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="1actor+''+${actor.getActorid()}"></span>
-                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="2actor+''+${actor.getActorid()}"></span>
-                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="3actor+''+${actor.getActorid()}"></span>
-                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="4actor+''+${actor.getActorid()}"></span>
-                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="5actor+''+${actor.getActorid()}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="1actor+''+${actor.getId()}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="2actor+''+${actor.getId()}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="3actor+''+${actor.getId()}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="4actor+''+${actor.getId()}"></span>
+                                        <span class="fa fa-star"  style="cursor: pointer;" th:id="5actor+''+${actor.getId()}"></span>
                                     </td>
                                     <td>
-                                        <input name="actor" type="hidden"   th:value="${actor.getActorid()}">
+                                        <input name="actor" type="hidden"   th:value="${actor.getId()}">
                                         <input name="caliactores" type="hidden" class="calificacion form-control" value="0">
                                     </td>
                                 </tr>

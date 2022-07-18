@@ -2,44 +2,68 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body>
-        <header th:replace="includes/navbar.html :: navbar(option='Teatros')"></header>
-        <div class='container container-app'>
-            <div id="content">
-                <main>
-                    <br>
-                    <div class="page-header text-center">
-                        <h1 class="mayus">Teatros</h1>
+        <div class="container">
+            <header th:replace="includes/navbar.html :: navbar(option='Teatros')"></header>
+            <div class="row title-page">
+                <h1 class="text-page">Teatros</h1>
+                <h4 class="text-page">Disfruta de las mejores obras en nuestros locales</h4>
+            </div>
+            <div class="form-buscador">
+                <form class="form-group" method="post" th:action="@{/teatros/buscar}">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input class="form-control" placeholder="¿Qué obra desea buscar?" name="search">
+                        </div>
+                        <div class="col-lg-2 d-flex justify-content-center">
+                            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                        </div>
                     </div>
-                    <br>
-                    <div class="container-fluid">
-                    <form class="form-group mb-3" method="post" th:action="@{/teatros/buscar}">
-                        <div class="row">
-                            <div class="col-10">
-                                <input class="form-control" placeholder="Texto a buscar" name="search" >
+                </form>
+            </div>
+            <div class="row subtitle-page">
+                <h2 class="text-page">nuestros teatros</h2>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 g-2 contenido-pagination">
+                <div class="col theatre-sep" th:each="teatro : ${listaTeatros}">
+                    <div class="contenido">
+                        <div class="row theatre-page">
+                            <div class="col">
+                                <img class="theatre-image" th:src="@{|/teatros/${teatro.id}|}">
                             </div>
                             <div class="col">
-                                <button class="btn btn-outline-primary" type="submit">Buscar</button>
-                                <a class="btn btn-outline-danger ml-2" th:href="@{/teatros}">Limpiar</a>
-                            </div>
-                        </div>
-                    </form>
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card-content">
-                            <div class="col" th:each="teatro : ${listaTeatros}">
-                                <div class="card shadow-sm header-display">
-                                    <img class="im-image" th:src="@{|/teatros/${teatro.id}|}">
-                                    <div class="card-body text-center">
-                                        <p th:text="${teatro.nombre}"></p>
-                                        <p th:text="${teatro.ubicacion}" class="card-text"></p>
+                                <div class="row theatre-row1">
+                                    <div class="col">
+                                        <h2 class="theatre-title" th:text="${'Teatro '+ teatro.nombre}">Teatro San Miguel</h2>
+                                        <div class="theatre-title1">
+                                            <div class="theatre-location">
+                                                <div class="row" style="width: 100%;">
+                                                    <div class="col">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-pin" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#f82249" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                            <circle cx="12" cy="11" r="3" />
+                                                            <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+                                                        </svg>
+                                                        <h2  th:text="${teatro.ubicacion}">
+                                                        </h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row theatre-row2">
+                                    <div class="col">
+                                        <h2 class="theatre-foot" th:text="${teatro.valido == true ? 'Abierto' : 'Cerrado' }"></h2>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </main>
+                </div>
             </div>
+            <div class="pages">
+            </div>
+            <footer th:replace="includes/footer.html :: footer"></footer>
         </div>
-        <div class="pages">
-        </div>
-    <footer th:replace="includes/footer.html :: footer"></footer>
     </body>
 </html>

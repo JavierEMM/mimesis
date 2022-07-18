@@ -1,73 +1,187 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <header th:fragment="navbar(option)" style="background-color: black;" id="header" class="d-flex align-items-center ">
-        <div class="container-fluid container-xxl d-flex align-items-center">
-            <div class="me-auto" id="logo">
-                <a sec:authorize="hasAnyAuthority('Operador')" th:href="@{/operador}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
-                <a sec:authorize="hasAnyAuthority('Cliente','ROLE_USER')"  th:href="@{/}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
-                <a sec:authorize="isAnonymous()"  th:href="@{/}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
-                <a sec:authorize="hasAnyAuthority('Admin')"  th:href="@{/admin}"><img th:src="@{/img/logo.png}" alt="MIMESIS"></a>
-            </div>
-            <nav id="navbar" class="navbar navbar-expand-lg order-lg-0">
-                <div class="collapse navbar-collapse">
-                    <ul sec:authorize="isAnonymous()" class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li th:if="${option=='Principal'}"><a   class="nav-link scrollto active" th:href="@{/}">Página Principal</a></li>
-                        <li th:if="${option!='Principal'}"><a   class="nav-link scrollto " th:href="@{/}">Página Principal</a></li>
-                        <li th:if="${option=='Teatros'}" ><a  class="nav-link scrollto active"  th:href="@{/teatros}">Teatros</a></li>
-                        <li th:if="${option!='Teatros'}"><a  class="nav-link scrollto"  th:href="@{/teatros}">Teatros</a></li>
-                        <li th:if="${option=='Funciones'}"><a  class="nav-link scrollto active" th:href="@{/funciones}">Obras</a></li>
-                        <li th:if="${option!='Funciones'}" ><a class="nav-link scrollto" th:href="@{/funciones}">Obras</a></li>
-                        <li th:if="${option=='Actores'}"><a  class="nav-link scrollto active" th:href="@{/actores}">Actores</a></li>
-                        <li th:if="${option!='Actores'}"><a  class="nav-link scrollto" th:href="@{/actores}">Actores</a></li>
-                        <li th:if="${option=='Directores'}" ><a  class="nav-link scrollto active" th:href="@{/directores}">Directores</a></li>
-                        <li th:if="${option!='Directores'}" ><a class="nav-link scrollto " th:href="@{/directores}">Directores</a></li>
-                    </ul>
-                    <ul sec:authorize="hasAnyAuthority('Cliente','ROLE_USER')" class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li th:if="${option=='Principal'}"><a   class="nav-link scrollto active" th:href="@{/}">Página Principal</a></li>
-                        <li th:if="${option!='Principal'}"><a   class="nav-link scrollto " th:href="@{/}">Página Principal</a></li>
-                        <li th:if="${option=='Teatros'}" ><a  class="nav-link scrollto active"  th:href="@{/teatros}">Teatros</a></li>
-                        <li th:if="${option!='Teatros'}"><a  class="nav-link scrollto"  th:href="@{/teatros}">Teatros</a></li>
-                        <li th:if="${option=='Funciones'}"><a  class="nav-link scrollto active" th:href="@{/funciones}">Obras</a></li>
-                        <li th:if="${option!='Funciones'}"><a class="nav-link scrollto" th:href="@{/funciones}">Obras</a></li>
-                        <li th:if="${option=='Actores'}"><a  class="nav-link scrollto active" th:href="@{/actores}">Actores</a></li>
-                        <li th:if="${option!='Actores'}"><a  class="nav-link scrollto" th:href="@{/actores}">Actores</a></li>
-                        <li th:if="${option=='Directores'}" ><a  class="nav-link scrollto active" th:href="@{/directores}">Directores</a></li>
-                        <li th:if="${option!='Directores'}" ><a class="nav-link scrollto " th:href="@{/directores}">Directores</a></li>
-                        <li th:if="${option=='Historial'}" ><a class="nav-link scrollto active" th:href="@{/historial}">Historial</a></li>
-                        <li th:if="${option!='Historial'}" ><a class="nav-link scrollto" th:href="@{/historial}">Historial</a></li>
-                    </ul>
-
-                    <ul sec:authorize="hasAnyAuthority('Operador')" class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li th:if="${option=='Funciones'}"><a  class="nav-link scrollto active" th:href="@{/operador}">Funciones</a></li>
-                        <li th:if="${option!='Funciones'}" ><a class="nav-link scrollto" th:href="@{/operador}">Funciones</a></li>
-                        <li th:if="${option=='Obras'}"><a  class="nav-link scrollto active" th:href="@{/operador/obras}">Obras</a></li>
-                        <li th:if="${option!='Obras'}"><a  class="nav-link scrollto" th:href="@{/operador/obras}">Obras</a></li>
-                    </ul>
-
-
+    <header th:fragment="navbar">
+        <div class ="row">
+            <nav class="navbar d-flex justify-content-center responsive-nav align-items-center">
+                <div sec:authorize="isAnonymous()" class="container rounded-3 row">
+                    <div class="col-md-3 d-flex justify-content-center">
+                        <a class="navbar-brand" th:href="@{/}">
+                            <img th:src="@{/img/logoWhiteFace.png}" alt="imagen" width="30" height="24" class="d-inline-block align-text-top">
+                            <span class="titulo">mí</span><span class="titulo2">mesis</span>
+                        </a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a class="nav-links" th:href="@{/}">Página Principal</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{/funciones}" class="nav-links">Obras</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{/teatros}" class="nav-links" >Teatros</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a  class="nav-links" th:href="@{/actores}">Actores</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{/directores}" class="nav-links">Directores</a>
+                    </div>
+                    <div class="col-md">
+                        <div class="dropdown d-flex justify-content-lg-end justify-content-center">
+                            <a th:href="@{/login}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="56" height="56" viewBox="0 0 24 24" stroke-width="1.5" stroke="#f82249" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <circle cx="12" cy="12" r="9" />
+                                    <circle cx="12" cy="10" r="3" />
+                                    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div sec:authorize="hasAnyAuthority('Cliente','ROLE_USER')" class="container rounded-3 row">
+                    <div class="col-md-2 d-flex justify-content-center">
+                        <a th:href="@{/}" class="navbar-brand">
+                            <img th:src="@{/img/logoWhiteFace.png}" alt="imagen" width="30" height="24" class="d-inline-block align-text-top">
+                            <span class="titulo">mí</span><span class="titulo2">mesis</span>
+                        </a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a class="nav-links" th:href="@{/}">Página Principal</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{/funciones}" class="nav-links">Obras</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{/teatros}" class="nav-links" >Teatros</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a  class="nav-links" th:href="@{/actores}">Actores</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{/directores}" class="nav-links">Directores</a>
+                    </div>
+                    <div sec:authorize="hasAnyAuthority('Cliente','ROLE_USER')" class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{/historial}" class="nav-links">Historial</a>
+                    </div>
+                    <div class="col-md">
+                        <div class="dropdown d-flex justify-content-lg-end justify-content-center">
+                            <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="56" height="56" viewBox="0 0 24 24" stroke-width="1.5" stroke="#f82249" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <circle cx="12" cy="12" r="9" />
+                                    <circle cx="12" cy="10" r="3" />
+                                    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+                                </svg>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <form method="get" th:action="@{/perfil}">
+                                        <button type="submit" class="dropdown-item" >Perfil</button>
+                                    </form>
+                                <li>
+                                    <form method="post" th:action="@{/logout}">
+                                        <button type="submit" class="dropdown-item" >Cerrar sesión</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="d-flex justify-content-lg-end justify-content-center">
+                            <a th:href="@{/carrito}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart" width="52" height="52" viewBox="-2 0 32 24" stroke-width="2" stroke="#f82249" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <circle cx="6" cy="19" r="2" />
+                                    <circle cx="17" cy="19" r="2" />
+                                    <circle cx="12" cy="12" r="13" />
+                                    <path d="M17 17h-11v-14h-2" />
+                                    <path d="M6 5l14 1l-1 7h-13" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div sec:authorize="hasAnyAuthority('Admin')" class="container rounded-3 row">
+                    <div class="col-md-3 d-flex justify-content-center">
+                        <a th:href="@{/admin}" class="navbar-brand">
+                            <img th:src="@{/img/logoWhiteFace.png}" alt="imagen" width="30" height="24" class="d-inline-block align-text-top">
+                            <span class="titulo">mí</span><span class="titulo2">mesis</span>
+                        </a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a class="nav-links" th:href="@{'/admin/salas'}">Salas</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{'/admin/sedes'}" class="nav-links">Sedes</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{'/admin/operadores'}" class="nav-links" >Operadores</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a  class="nav-links" th:href="@{'/admin/clientes'}">Clientes</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{'/admin/actores'}" class="nav-links">Actores</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{'/admin/directores'}" class="nav-links">Directores</a>
+                    </div>
+                    <div class="col-md">
+                        <div class="dropdown d-flex justify-content-lg-end justify-content-center">
+                            <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="56" height="56" viewBox="0 0 24 24" stroke-width="1.5" stroke="#f82249" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <circle cx="12" cy="12" r="9" />
+                                    <circle cx="12" cy="10" r="3" />
+                                    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+                                </svg>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <form method="post" th:action="@{/logout}">
+                                        <button type="submit" class="dropdown-item" >Cerrar sesión</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div sec:authorize="hasAnyAuthority('Operador')" class="container rounded-3 row">
+                    <div class="col-md-3 d-flex justify-content-center">
+                        <a th:href="@{/admin}" class="navbar-brand">
+                            <img th:src="@{/img/logoWhiteFace.png}" alt="imagen" width="30" height="24" class="d-inline-block align-text-top">
+                            <span class="titulo">mí</span><span class="titulo2">mesis</span>
+                        </a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a class="nav-links" th:href="@{/operador}">Funciones</a>
+                    </div>
+                    <div class="col-md d-flex justify-content-center text-center">
+                        <a th:href="@{/operador/obras}" class="nav-links">Obras</a>
+                    </div>
+                    <div class="col-md">
+                        <div class="dropdown d-flex justify-content-lg-end justify-content-center">
+                            <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="56" height="56" viewBox="0 0 24 24" stroke-width="1.5" stroke="#f82249" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <circle cx="12" cy="12" r="9" />
+                                    <circle cx="12" cy="10" r="3" />
+                                    <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+                                </svg>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <form method="post" th:action="@{/logout}">
+                                        <button type="submit" class="dropdown-item" >Cerrar sesión</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </nav>
-            <div class="dropdown" sec:authorize="hasAnyAuthority('Cliente','ROLE_USER')">
-                <a class="btn btn-outline-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class='bi bi-person-circle'></i>
-                    Usuario
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <li><a th:href="@{/perfil}" class="dropdown-item" >Ver perfil</a></li>
-                    <li>
-                        <form th:action="@{/logout}" method="post">
-                            <button type="submit" class="dropdown-item" >Cerrar sesión</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-            <a class="buy-tickets scrollto" sec:authorize="hasAnyAuthority('Cliente','ROLE_USER')" th:href="@{/carrito}"><i class="bi-cart-fill me-1"></i>Carrito</a>
-            <a class="buy-tickets scrollto" sec:authorize="isAnonymous()" th:href="@{/login}">Iniciar Sesion</a>
-            <a class="buy-tickets scrollto" sec:authorize="isAnonymous()" th:href="@{/registro}">Registrarse</a>
-            <form sec:authorize="hasAnyAuthority('Operador','Admin')" th:action="@{/logout}" method="post">
-                <button type="submit" class="buy-tickets scrollto"><i style="margin-right: 4px; " class="bi bi-person-fill"></i>Cerrar Sesion</button>
-            </form>
         </div>
     </header>
+</html>
 

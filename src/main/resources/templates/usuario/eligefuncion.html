@@ -2,36 +2,36 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body>
-        <header th:replace="includes/navbar.html :: navbar(option='Funciones')" id="header" class="d-flex align-items-center">
-        </header>
+
         <div class="container">
-            <div class="row" >
-                <div class="col-xl">
-                    <p class="title" th:text="${sede.nombre + ' ' + obra.nombre}"></p>
-                </div>
+            <header th:replace="includes/navbar.html :: navbar(option='Funciones')" id="header" class="d-flex align-items-center">
+            </header>
+            <div class="row title-page">
+                <h1 class="text-page" th:text="${sede.nombre + ' ' + obra.nombre}"></h1>
+                <h4 class="text-page">elija el horario y sus boletos de preferencia</h4>
             </div>
-            <div class="row">
+            <div class="row title-page">
                 <div class="col">
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
-                                <th style="text-align: center;" scope="col">#</th>
-                                <th style="text-align: center;" scope="col">Fecha</th>
-                                <th style="text-align: center;" scope="col">Hora inicio</th>
-                                <th style="text-align: center;" scope="col">Hora Fin</th>
-                                <th style="text-align: center;" scope="col">Costo</th>
-                                <th style="text-align: center;" scope="col">Boletos disponibles</th>
+                                <th class="th-carrito" scope="col">#</th>
+                                <th class="th-carrito" scope="col">Fecha</th>
+                                <th class="th-carrito" scope="col">Hora inicio</th>
+                                <th class="th-carrito" scope="col">Hora Fin</th>
+                                <th class="th-carrito" scope="col">Costo</th>
+                                <th class="th-carrito" scope="col">Boletos disponibles</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="f,i : ${listaFunciones}">
-                                <th style="text-align:center;" th:text="${i.index + 1}" ></th>
-                                <td style="text-align: center;" th:text="${f.getFuncion().getFecha()}"></td>
-                                <td style="text-align: center;" th:text="${f.getFuncion().getHorainicio()}"></td>
-                                <td style="text-align: center;" th:text="${f.getFuncion().getHorafin()}"></td>
-                                <td style="text-align: center;" th:text="${f.funcion.getCosto()}"></td>
-                                <td style="text-align: center;" th:text="${f.getBoletos()}"></td>
-                                <td style="text-align: center;">
+                                <th class="td-carrito" th:text="${i.index + 1}" ></th>
+                                <td class="td-carrito" th:text="${f.getFuncion().getFecha()}"></td>
+                                <td class="td-carrito" th:text="${f.getFuncion().getHorainicio()}"></td>
+                                <td class="td-carrito" th:text="${f.getFuncion().getHorafin()}"></td>
+                                <td class="td-carrito" th:text="${f.funcion.getCosto()}"></td>
+                                <td class="td-carrito"th:text="${f.getBoletos()}"></td>
+                                <td class="td-carrito">
                                 <form method="post" th:action="@{/carrito/funcion}">
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     Seleccionar
@@ -65,7 +65,8 @@
                     </table>
                 </div>
             </div>
+            <footer th:replace="includes/footer.html :: footer"></footer>
         </div>
-        <footer th:replace="includes/footer.html :: footer"></footer>
+
     </body>
 </html>
