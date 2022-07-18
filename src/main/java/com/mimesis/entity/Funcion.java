@@ -68,6 +68,10 @@ public class Funcion implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
+    @ManyToMany
+    @JoinTable(name = "funciontieneactor",joinColumns = @JoinColumn(name = "idfuncion"),
+    inverseJoinColumns = @JoinColumn(name = "idactor"))
+    private List<Actor> actors;
 
     public void setId(int id) {
         this.id = id;
@@ -88,12 +92,6 @@ public class Funcion implements Serializable {
     public void setActors(List<Actor> actors) {
         this.actors = actors;
     }
-
-    @ManyToMany
-    @JoinTable(name = "funciontieneactor",
-            joinColumns = @JoinColumn(name = "idfuncion"),
-            inverseJoinColumns = @JoinColumn(name = "idactor"))
-    private List<Actor> actors = new ArrayList<>();
 
     public LocalDate getFecha() {
         return fecha;

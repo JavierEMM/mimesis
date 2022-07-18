@@ -2,14 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body style="background-color: white;">
-        <header th:replace="includes/navbar.html :: navbar(option='Historial')"></header>
-        <div class="main">
+        <div class="container">
+            <header th:replace="includes/navbar.html :: navbar"></header>
+            <div class="row title-page">
+                <h1 class="text-page">Pago con Tarjeta</h1>
+                <h4 class="text-page">Ingrese los datos de pago y disfrute de su función :), le llegaran sus boletos al correo</h4>
+            </div>
             <section class="sign-in">
                 <div class="container">
                     <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 600px; text-align: center">
                         <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; color: white;box-shadow: 7px 13px 37px #000;">
-                            <h1 class="border-bottom" style="color:crimson"><b>Validacion de tarjeta</b></h1>
-                            <br>
                             <form method="POST" th:action="@{/carrito/confirmarcompra}" th:object="${datosTarjeta}">
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
@@ -79,6 +81,7 @@
                     </div>
                 </div>
             </section>
+            <footer th:replace="includes/footer.html :: footer"></footer>
         </div>
     </body>
 </html>

@@ -1,122 +1,133 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<footer id="footer" th:fragment="footer">
-        <script type="text/javascript">
-                function getPageList(totalpages,page,maxLenght){
-                        function range(start,end){
-                                return Array.from(Array(end-start+1),(_,i) => i +start);
-                        }
-                        var sideWidth=maxLenght < 9 ? 1 : 2;
-                        var leftWidth=(maxLenght-sideWidth*2 - 3 ) >> 1;
-                        var rightWidth=(maxLenght-sideWidth*2 - 3 ) >> 1;
-
-                        if(totalpages <= maxLenght){
-                                return range(1,totalpages);
-                        }
-                        if(page<= maxLenght-sideWidth-1-rightWidth){
-                                return range(1,maxLenght-sideWidth-1).concat(0,range(totalpages-sideWidth+1,totalpages));
-                        }
-                        if(page>= maxLenght-sideWidth-1-rightWidth){
-                                return range(1,sideWidth).concat(0,range(totalpages-sideWidth-rightWidth-leftWidth-1,totalpages));
-                        }
-                        return range(1,sideWidth).concat(0,range(page-leftWidth,page+rightWidth),0,range(totalpages-sideWidth+1,totalpages));
-                }
-                $(function (){
-                        var numberOfItems = $(".card-content .card").length;
-                        var limitPerPage = 6;//Limite por pagina
-                        var totalPages=Math.ceil(numberOfItems / limitPerPage);
-                        var paginationSize=5;
-                        var currentPage;
-                        function showPage(whichPage){
-                                if(whichPage<1 || whichPage > totalPages) return false;
-                                currentPage=whichPage;
-                                $(".card-content .card").hide().slice((currentPage-1)*limitPerPage,currentPage*limitPerPage).show();
-                                $(".pages li").slice(1,-1).remove()
-                                getPageList(totalPages,currentPage,paginationSize).forEach(item =>{
-                                        $("<li>").addClass("pages-item").addClass(item ? "current-pages" : "dots").toggleClass("active",item === currentPage).append($("<a>").addClass("pages-link")
-                                                .attr({href :"javascript:void(0)"}).text(item || "...")).insertBefore(".next-pages");
-                                })
-                                $(".previous-pages").toggleClass("disable",currentPage === 1);
-                                $(".next-pages").toggleClass("disable",currentPage === totalPages);
-                                return true;
-                        }
-                        $(".pages").append(
-                                $("<li>").addClass("pages-item").addClass("previous-pages").append($("<a>").addClass("pages-link").attr({href: "javascript:void(0)"}).text("Prev")),
-                                $("<li>").addClass("pages-item").addClass("next-pages").append($("<a>").addClass("pages-link").attr({href: "javascript:void(0)"}).text("Next"))
-                        );
-                        $(".card-content").show();
-                        showPage(1);
-                        $(document).on("click",".pages li.current-pages:not(.active)",function (){
-                                showPage(+$(this).text());
-                        });
-                        $(".next-pages").on("click",function (){
-                                showPage(currentPage+1);
-                        });
-                        $(".previous-pages").on("click",function (){
-                                showPage(currentPage-1);
-                        });
-                });
-        </script>
-        <div class="footer-top">
-                <div class="container">
+        <div class="row footer-page" th:fragment="footer">
+                <div class="col">
                         <div class="row">
-
-                                <div class="col-lg-3 col-md-6 footer-info">
-                                        <img th:src="@{/img/logo.png}" alt="TheEvenet">
-                                        <p>“Si es absolutamente necesario que el arte o el teatro sirvan para algo, será para enseñar a la gente que hay actividades que no sirven para nada y que es indispensable que las haya.”</p>
+                                <div class="col-3" style="margin-right: 2px;">
+                                        <img class="im-footer" th:src="@{/img/logo.png}">
                                 </div>
-
-                                <div class="col-lg-3 col-md-6 footer-links">
-                                        <h4>Links Utiles</h4>
-                                        <ul>
-                                                <li><i class="bi bi-chevron-right"></i> <a href="#">Pagina Principal</a></li>
-                                                <li><i class="bi bi-chevron-right"></i> <a href="#">Equipo</a></li>
-                                                <li><i class="bi bi-chevron-right"></i> <a href="#">Horarios</a></li>
-                                                <li><i class="bi bi-chevron-right"></i> <a href="#">Actores</a></li>
-                                                <li><i class="bi bi-chevron-right"></i> <a href="#">Directores</a></li>
-                                        </ul>
-                                </div>
-
-                                <div class="col-lg-3 col-md-6 footer-links">
-                                        <h4>Informacion</h4>
-                                        <ul>
-                                                <li><i class="bi bi-chevron-right"></i> <a href="#">Presidente</a></li>
-                                                <li><i class="bi bi-chevron-right"></i> <a href="#">Administradores</a></li>
-                                                <li><i class="bi bi-chevron-right"></i> <a href="#">Operadores</a></li>
-                                                <li><i class="bi bi-chevron-right"></i> <a href="#">Programdores</a></li>
-                                        </ul>
-                                </div>
-
-                                <div class="col-lg-3 col-md-6 footer-contact">
-                                        <h4>Contactnos</h4>
-                                        <p>
-                                                Av. Universitaria 1801 <br>
-                                                Lima, Lima 535022<br>
-                                                Peru <br>
-                                                <strong>Telefono:</strong> +1 963852741 <br>
-                                                <strong>Email:</strong> Pucp@pucp.edu.pe<br>
-                                        </p>
-                                        <div class="social-links">
-                                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                                                <a href="#" class="google-plus"><i class="bi bi-instagram"></i></a>
-                                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                <div class="col-sm-2" style="margin-right: 2px;">
+                                        <div class="row">
+                                                <div class="col">
+                                                        <h2 class="footer-title footer-section">programación</h2>
+                                                </div>
                                         </div>
-
+                                        <div class="row">
+                                                <div class="col">
+                                                        <a class="footer-text">Nuestras obras</a>
+                                                </div>
+                                        </div>
                                 </div>
-
+                                <div class="col-md-2" style="margin-right: 2px;">
+                                        <div class="row">
+                                                <div class="col">
+                                                        <h2 class="footer-title footer-section">sobre mimesis</h2>
+                                                </div>
+                                        </div>
+                                        <div class="row">
+                                                <div class="col">
+                                                        <a class="footer-text">Pagina Principal</a>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="col-lg-2" style="margin-right: 2px;">
+                                        <div class="row">
+                                                <div class="col">
+                                                        <h2 class="footer-title footer-section">contáctanos</h2>
+                                                </div>
+                                        </div>
+                                        <div class="row">
+                                                <div class="col">
+                                                        <a class="footer-text">Teatrosmimesis@gmail.com</a>
+                                                </div>
+                                                <div class="col">
+                                                        <a class="footer-text">+51 982981718</a>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="col-xl-2" style="margin-right: 2px;">
+                                        <div class="row">
+                                                <div class="col">
+                                                        <h2 class="footer-title footer-section">Creadores</h2>
+                                                </div>
+                                        </div>
+                                        <div class="col">
+                                                <a class="footer-text">Javier Marroquin</a>
+                                        </div>
+                                        <div class="col">
+                                                <a class="footer-text">Diego Vargas</a>
+                                        </div>
+                                        <div class="col">
+                                                <a class="footer-text">Jose Ortiz</a>
+                                        </div>
+                                        <div class="col">
+                                                <a class="footer-text">Leonardo Ayala</a>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="col d-flex justify-content-center align-items-center">
+                                        <div class="copyright">
+                                                &copy; Copyright <strong>Mímesis</strong>. All Rights Reserved
+                                        </div>
+                                </div>
                         </div>
                 </div>
-        </div>
+                <script type="text/javascript">
+                        function getPageList(totalpages,page,maxLenght){
+                                function range(start,end){
+                                        return Array.from(Array(end-start+1),(_,i) => i +start);
+                                }
+                                var sideWidth=maxLenght < 9 ? 1 : 2;
+                                var leftWidth=(maxLenght-sideWidth*2 - 3 ) >> 1;
+                                var rightWidth=(maxLenght-sideWidth*2 - 3 ) >> 1;
 
-        <div class="container">
-                <div class="copyright">
-                        &copy; Copyright <strong>TheEvent</strong>. All Rights Reserved
-                </div>
-                <div class="credits">
-                        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                </div>
+                                if(totalpages <= maxLenght){
+                                        return range(1,totalpages);
+                                }
+                                if(page<= maxLenght-sideWidth-1-rightWidth){
+                                        return range(1,maxLenght-sideWidth-1).concat(0,range(totalpages-sideWidth+1,totalpages));
+                                }
+                                if(page>= maxLenght-sideWidth-1-rightWidth){
+                                        return range(1,sideWidth).concat(0,range(totalpages-sideWidth-rightWidth-leftWidth-1,totalpages));
+                                }
+                                return range(1,sideWidth).concat(0,range(page-leftWidth,page+rightWidth),0,range(totalpages-sideWidth+1,totalpages));
+                        }
+                        $(function (){
+                                var numberOfItems = $(".contenido-pagination .contenido").length;
+                                var limitPerPage = 10;//Limite por pagina
+                                var totalPages=Math.ceil(numberOfItems / limitPerPage);
+                                var paginationSize=4;
+                                var currentPage;
+                                function showPage(whichPage){
+                                        if(whichPage<1 || whichPage > totalPages) return false;
+                                        currentPage=whichPage;
+                                        $(".contenido-pagination .contenido").hide().slice((currentPage-1)*limitPerPage,currentPage*limitPerPage).show();
+                                        $(".pages li").slice(1,-1).remove()
+                                        getPageList(totalPages,currentPage,paginationSize).forEach(item =>{
+                                                $("<li>").addClass("pages-item").addClass(item ? "current-pages" : "dots").toggleClass("active",item === currentPage).append($("<a>").addClass("pages-link")
+                                                        .attr({href :"javascript:void(0)"}).text(item || "...")).insertBefore(".next-pages");
+                                        })
+                                        $(".previous-pages").toggleClass("disable",currentPage === 1);
+                                        $(".next-pages").toggleClass("disable",currentPage === totalPages);
+                                        return true;
+                                }
+                                $(".pages").append(
+                                        $("<li>").addClass("pages-item").addClass("previous-pages").append($("<a>").addClass("pages-link").attr({href: "javascript:void(0)"}).text("Prev")),
+                                        $("<li>").addClass("pages-item").addClass("next-pages").append($("<a>").addClass("pages-link").attr({href: "javascript:void(0)"}).text("Next"))
+                                );
+                                $(".contenido-pagination").show();
+                                showPage(1);
+                                $(document).on("click",".pages li.current-pages:not(.active)",function (){
+                                        showPage(+$(this).text());
+                                });
+                                $(".next-pages").on("click",function (){
+                                        showPage(currentPage+1);
+                                });
+                                $(".previous-pages").on("click",function (){
+                                        showPage(currentPage-1);
+                                });
+                        });
+                </script>
         </div>
-</footer>
 </html>
