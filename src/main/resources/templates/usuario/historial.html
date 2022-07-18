@@ -10,6 +10,7 @@
             <h1 class="text-page">Historial de funciones</h1>
             <h4 class="text-page">revisa tu historial y califica</h4>
         </div>
+        <div th:if="${msg != null}" th:text="${msg}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert"></div>
         <div class="form-buscador">
             <form class="form-group mb-3" method="get" th:action="@{/historial}">
                 <div class="row">
@@ -59,7 +60,7 @@
                             </tr>
                         </thead>
                         <tbody class="historial-content contenido-pagination">
-                            <tr class="historial" th:each="funcion,i : ${listaHistorial2}">
+                            <tr class="historial" th:each="funcion,i : ${listaHistorial}">
                                 <div class="contenido">
                                 <td class="td-carrito" th:text="${i.index + 1}"></td>
                                 <td class="td-carrito" th:text="${funcion.getFuncion().getIdobra().nombre}"></td>
