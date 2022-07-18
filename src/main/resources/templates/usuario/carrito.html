@@ -8,12 +8,14 @@
             <form method="post" enctype="multipart/form-data">
                 <div class="table-responsive shopping-cart">
                     <h1 class="mayus">Mi carrito</h1>
-                    <table class="table">
+                    <div th:if="${aviso != null}" th:text="${aviso}" class="alert alert-dismissible fade show" role="alert"></div>
+                <table class="table">
                         <thead>
                             <tr>
-                                <th>IMAGEN</th>
-                                <th>Funcion</th>
-                                <th class="text-center">Fecha/Hora</th>
+                                <th>Imagen</th>
+                                <th>Función</th>
+                                <th class="text-center">Fecha</th>
+                                <th class="text-center">Hora</th>
                                 <th class="text-center">Cantidad</th>
                                 <th class="text-center">Sede</th>
                                 <th class="text-center">Costo</th>
@@ -25,6 +27,7 @@
                                 </td>
                                 <td class="text-center text-lg text-medium" th:text="${funcion.funcion.idobra.nombre}"></td>
                                 <td class="text-center text-lg text-medium" th:text="${funcion.funcion.fecha}"></td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.funcion.horainicio+' - '+funcion.funcion.horafin}"></td>
                                 <td class="text-center text-lg text-medium" th:text="${funcion.cantidad}"></td>
                                 <td class="text-center text-lg text-medium" th:text="${funcion.sede.nombre}"></td>
                                 <td class="text-center text-lg text-medium" th:text="${funcion.costoTotal}"></td>
@@ -38,8 +41,14 @@
                     </table>
                     <div class="shopping-cart-footer">
                         <div class="column header-display">
-                            <a type="button" class="btn btn-success" th:href="@{/carrito/comprar}">
+                            <a th:if="${aviso == null}" type="button" class="btn btn-success" th:href="@{/carrito/comprar}">
                                 Comprar Ahora
+                            </a>
+                            <button th:if="${aviso != null}" type="button" class="btn btn-success" th:href="@{/carrito/comprar}" disabled>
+                                Comprar Ahora
+                            </button>
+                            <a class="btn btn-secondary ms-2" th:href="@{/funciones}">
+                                Seguir Comprando
                             </a>
                         </div>
                     </div>
