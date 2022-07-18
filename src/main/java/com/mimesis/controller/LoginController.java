@@ -29,6 +29,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 public class LoginController {
@@ -142,18 +144,25 @@ public class LoginController {
                 } else {
 
                     String contrasena = usuario.getContrasena();
-                    usuario.setContrasena(new BCryptPasswordEncoder().encode(contrasena));
-                    usuario.setRol("Cliente");
-                    usuarioRepository.save(usuario);
-                    String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
-                            .replacePath(null)
-                            .build()
-                            .toUriString();
-                    //Tengo que enviar correo electronico
-                    sendVerification(usuario, baseUrl);
-                    attributes.addFlashAttribute("alerta", "alert-success");
-                    attributes.addFlashAttribute("registro", "Se le ha enviado un correo de confirmacion a su correo electronico");
-                    return "redirect:/login";
+                    contrasenaisValid(contrasena);
+//                    System.out.println(contrasenaisValid(contrasena));
+                    if (contrasenaisValid(contrasena)) {
+                        usuario.setContrasena(new BCryptPasswordEncoder().encode(contrasena));
+                        usuario.setRol("Cliente");
+                        usuarioRepository.save(usuario);
+                        String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+                                .replacePath(null)
+                                .build()
+                                .toUriString();
+                        //Tengo que enviar correo electronico
+                        sendVerification(usuario, baseUrl);
+                        attributes.addFlashAttribute("alerta", "alert-success");
+                        attributes.addFlashAttribute("registro", "Se le ha enviado un correo de confirmacion a su correo electronico");
+                        return "redirect:/login";
+                    }
+                    attributes.addFlashAttribute("alerta","alert-danger");
+                    attributes.addFlashAttribute("registro","Ingrese una contraseña válida");
+                    return "redirect:/registro";
                 }
             }
             attributes.addFlashAttribute("msg","Sus datos no se han podido guardar debido a que no se ingresó un número de DNI valido. Por favor ingrese DNI valido");
@@ -285,6 +294,15 @@ public class LoginController {
                 return "redirect:/redirectByRole";
             }
         }
+    }
+
+    public boolean contrasenaisValid(String contrasena) {
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=/.|:!¡()¬?_¿><'*°-])(?=\\S+$).{8,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(contrasena);
+//        System.out.println(matcher.find());
+//        System.out.println("Jose");
+        return matcher.find();
     }
 
 
