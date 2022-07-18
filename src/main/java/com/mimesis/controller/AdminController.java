@@ -440,8 +440,28 @@ public class AdminController {
                 return "admin/agregardirector";
             }
             else{
+                List<Director> listadirectores = directorRepository.findAll();
+                String result = director.getNombre().replace(" ", "");
+                String resultapellido = director.getApellido().replace(" ", "");
+                String resultcorreo = director.getCorreo().replace(" ","");
+                for(Director i : listadirectores){
+                    String result2 = i.getNombre().replace(" ","");
+                    String resultapellido2 = i.getApellido().replace(" ","");
+                    String resultcorreo2 = i.getCorreo().replace(" ","");
+                    if(result.equalsIgnoreCase(result2) && resultapellido.equalsIgnoreCase(resultapellido2)){
+                        if(i.getValido()){
+                            attr.addFlashAttribute("msg","El director ya ha sido creado previamente");
+                            attr.addFlashAttribute("opcion","alert-danger");
+                            return "redirect:/admin/directores";
+                        }
+
+                    }if(resultcorreo.equalsIgnoreCase(resultcorreo2)){
+                        model.addAttribute("emailerror", "Credenciales ya registradas");
+                        return "admin/agregardirector";
+                    }
+                }
                 director.setFoto(file.getBytes());
-                String msg = "Director " + "creado " + "exitosamente";
+                String msg = "Director " + (director.getId()== null ? "creado " : "actualizado") + "exitosamente";
                 attr.addFlashAttribute("msg", msg);
                 attr.addFlashAttribute("opcion", "alert-success");
                 directorRepository.save(director);
