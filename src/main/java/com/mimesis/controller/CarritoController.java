@@ -22,6 +22,8 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -71,7 +73,46 @@ public class CarritoController {
                 funcions.add(dtOcarrito);
                 session.setAttribute("carrito",funcions);
                 session.setAttribute("ncarrito",funcions.size());
+
+                int i;
+                int j;
+                for (i=0;i< funcions.size() ;i++){
+                     for(j=0; j<i; j++){
+                         LocalDate date1 = funcions.get(j).getFuncion().getFecha();
+                         LocalDate date2 = funcions.get(i).getFuncion().getFecha();
+
+                         int valor1= date1.compareTo(date2);
+                         System.out.println(valor1);
+
+                         if(valor1==0){
+                             System.out.println("entro aqui x3");
+                             LocalTime time_inicio1 = funcions.get(j).getFuncion().getHorainicio();
+                             LocalTime time_inicio2 = funcions.get(i).getFuncion().getHorainicio();
+                             LocalTime time_fin2 = funcions.get(i).getFuncion().getHorafin();
+
+                             int value1 = time_inicio1.compareTo(time_inicio2);
+                             int value2 = time_inicio1.compareTo(time_fin2);
+                             System.out.println(time_inicio1);
+                             System.out.println(time_inicio2);
+                             System.out.println(time_fin2);
+
+                             if(value1!= 0){
+                                 System.out.println("bandera");
+                                 if(value2 < 0){
+                                     System.out.println("llego aqui");
+                                     model.addAttribute("aviso", "Aviso: Las funciones no deben cruzarse entre ellas, porfavor seleccione una función válida");
+                                    // attributes.addFlashAttribute("aviso","Las funciones no se deben cruzarse entre ellas, porfavor seleccione una función válida");
+                                     // attributes.addFlashAttribute("alerta","alert-danger");
+
+                                 }
+                             }
+                         }
+                     }
+                }
+
+
                 model.addAttribute("carrito",funcions);
+
                 return "usuario/carrito";
             }else{
                 attributes.addFlashAttribute("alerta","alert-danger");

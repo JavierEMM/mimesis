@@ -3,54 +3,58 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body>
-        <div class="container">
-            <header th:replace="includes/navbar.html :: navbar"></header>
-            <div class="row title-page">
-                <h1 class="text-page">carrito de compras</h1>
-                <h4 class="text-page">Compra y disfruta de nuestras funciones</h4>
-            </div>
-            <div class="row title-page">
-                <form method="post" enctype="multipart/form-data">
-                    <div class="table-responsive">
-                        <table class="table shopping-cart" >
-                            <thead>
-                                <tr>
-                                    <th class="text-center th-carrito">Imagen</th>
-                                    <th class="text-center th-carrito">funcion</th>
-                                    <th class="text-center th-carrito">Fecha/Hora</th>
-                                    <th class="text-center th-carrito">Cantidad</th>
-                                    <th class="text-center th-carrito">Sede</th>
-                                    <th class="text-center th-carrito">Costo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="funcion,i : ${carrito}">
-                                    <td class="td-carrito"><img th:src="@{|/images/${funcion.funcion.idobra.getId()}|}" width="30rem" height="30rem">
-                                    </td>
-                                    <td class="text-center td-carrito" th:text="${funcion.funcion.idobra.nombre}"></td>
-                                    <td class="text-center td-carrito" th:text="${funcion.funcion.fecha}"></td>
-                                    <td class="text-center td-carrito" th:text="${funcion.cantidad}"></td>
-                                    <td class="text-center td-carrito" th:text="${funcion.sede.nombre}"></td>
-                                    <td class="text-center td-carrito" th:text="${funcion.costoTotal}"></td>
-                                    <td class="text-center">
-                                        <a th:href="@{${'/carrito/borrar?num='+i.index}}" class="btn btn-outline-danger flex-shrink-0">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="shopping-cart-footer">
-                            <div class="col d-flex justify-content-center">
-                                <a type="button" class="btn btn-success td-carrito" th:href="@{/carrito/comprar}">
-                                    Comprar Ahora
-                                </a>
-                            </div>
+        <header th:replace="includes/navbar.html :: navbar(option='Funciones')"></header>
+        <div class="container padding-bottom-3x mb-1" style=" margin-top: 25px;">
+            <form method="post" enctype="multipart/form-data">
+                <div class="table-responsive shopping-cart">
+                    <h1 class="mayus">Mi carrito</h1>
+                    <div th:if="${aviso != null}" th:text="${aviso}" class="alert alert-dismissible fade show" role="alert"></div>
+                <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Función</th>
+                                <th class="text-center">Fecha</th>
+                                <th class="text-center">Hora</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-center">Sede</th>
+                                <th class="text-center">Costo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="funcion,i : ${carrito}">
+                                <td><img th:src="@{|/images/${funcion.funcion.idobra.getId()}|}" width="30rem" height="30rem">
+                                </td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.funcion.idobra.nombre}"></td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.funcion.fecha}"></td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.funcion.horainicio+' - '+funcion.funcion.horafin}"></td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.cantidad}"></td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.sede.nombre}"></td>
+                                <td class="text-center text-lg text-medium" th:text="${funcion.costoTotal}"></td>
+                                <td class="text-center">
+                                    <a th:href="@{${'/carrito/borrar?num='+i.index}}" class="btn btn-outline-danger flex-shrink-0">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="shopping-cart-footer">
+                        <div class="column header-display">
+                            <a th:if="${aviso == null}" type="button" class="btn btn-success" th:href="@{/carrito/comprar}">
+                                Comprar Ahora
+                            </a>
+                            <button th:if="${aviso != null}" type="button" class="btn btn-success" th:href="@{/carrito/comprar}" disabled>
+                                Comprar Ahora
+                            </button>
+                            <a class="btn btn-secondary ms-2" th:href="@{/funciones}">
+                                Seguir Comprando
+                            </a>
                         </div>
                     </div>
-                </form>
-            </div>
-            <footer th:replace="includes/footer.html :: footer"></footer>
+                </div>
+            </form>
         </div>
+        <footer th:replace="includes/footer.html :: footer"></footer>
     </body>
 </html>
