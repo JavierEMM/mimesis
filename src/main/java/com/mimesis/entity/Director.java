@@ -2,10 +2,7 @@ package com.mimesis.entity;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @Entity
@@ -32,7 +29,10 @@ public class Director implements Serializable {
     @Size(max = 255, message = "El correo no puedo contener más de a 255 caracteres")
     private String correo;
 
-    @Column(name = "telefono", nullable = false, length = 45)
+    @Column(name = "telefono", nullable = false)
+    @Digits(integer = 9, fraction=0)
+    @Max(value=9)
+    @Min(value=8)
     @NotNull(message = "Debe agregar un numero de contacto")
     private Integer telefono;
 
