@@ -4,7 +4,6 @@ import com.mimesis.dto.*;
 import com.mimesis.entity.*;
 import com.mimesis.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,12 +20,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.thymeleaf.util.StringUtils.length;
 
 @Controller
 @RequestMapping("")
@@ -80,9 +76,10 @@ public class UsuarioController {
     }
 
     @GetMapping("/perfil")
-    public String perfil(Model model, HttpSession session) {
+    public String perfil(Model model, HttpSession session,@ModelAttribute("usuario") Usuario usuario) {
         String usuario2 = (String) session.getAttribute("usuario");
-        Usuario usuario = usuarioRepository.findByCorreo(usuario2);
+        Usuario usuario1 = usuarioRepository.findByCorreo(usuario2);
+        usuario = usuario1;
         model.addAttribute("cliente", usuario);
         if (usuario.getFotoperfil() == null) {
             return "usuario/perfil";
@@ -99,46 +96,38 @@ public class UsuarioController {
 
 
     @PostMapping("/perfil/save")
-    public String guardarPerfil(@ModelAttribute("usuario") @Valid Usuario usuario3, BindingResult bindingResult , Model model , @RequestParam("archivo") MultipartFile file,
-                            HttpSession session, RedirectAttributes attr) {
-
-        //String usuario2 = (String) session.getAttribute("usuario");
-        Usuario usuario = usuarioRepository.findByCorreo(usuario3.getCorreo());
-        System.out.println(usuario3.getNumerotelefonico());
-        System.out.println("Jose");
+    public String guardarPerfil(@ModelAttribute("usuario") @Valid Usuario usuario, BindingResult bindingResult , Model model , @RequestParam("archivo") MultipartFile file, RedirectAttributes attr) {
         if(bindingResult.hasErrors()){
-            System.out.println(usuario3.getNumerotelefonico());
-            System.out.println("Jose");
-            if(usuario3.getDireccion().equals("") || usuario3.getNumerotelefonico().equals("")) {
-                if (usuario3.getNumerotelefonico().equals("")) {
+            System.out.println(usuario.getNumerotelefonico());
+            System.out.println("TIENE ERRORES: "+usuario.getId()+" "+usuario.getDni());
+            if(usuario.getDireccion().equals("") || usuario.getNumerotelefonico().equals("")) {
+                if (usuario.getNumerotelefonico().equals("")) {
                     attr.addFlashAttribute("msg", "Debe ingresar un número telefónico");
                     attr.addFlashAttribute("opcion", "alert-danger");
-                    return "redirect:/perfil/editar";
+                    return "usuario/editarperfil";
                 } else {
                     attr.addFlashAttribute("msg", "Debe ingresar una dirección");
                     attr.addFlashAttribute("opcion", "alert-danger");
-                    return "redirect:/perfil/editar";
+                    return "usuario/editarperfil";
                 }
             }
-
-            return "redirect:/perfil/editar";
+            return "usuario/editarperfil";
         }
-        if(usuario3.getNumerotelefonico().length()!=9){
-            attr.addFlashAttribute("msg","Debe ingresar un número de 9 dígitos");
-            attr.addFlashAttribute("opcion","alert-danger");
-            return "redirect:/perfil/editar";
+        if(usuario.getNumerotelefonico().length()!=9){
+            model.addAttribute("msg","Debe ingresar un número de 9 dígitos");
+            return "usuario/editarperfil";
         }
 
         try {
             if(file.getOriginalFilename().equals("") || file.getOriginalFilename().equalsIgnoreCase(null) ){
                 System.out.println("AQUI 1");
+                Optional<Usuario> usuario2 =  usuarioRepository.findById(usuario.getId());
+                usuario.setFotoperfil(usuario2.get().getFotoperfil());
             }else{
                 System.out.println("AQUI 2");
                 usuario.setFotoperfil(file.getBytes());
             }
-            usuario.setDireccion(usuario3.getDireccion());
-            usuario.setFechanacimiento(usuario3.getFechanacimiento());
-            usuario.setNumerotelefonico(usuario3.getNumerotelefonico());
+
             usuarioRepository.save(usuario);
             return "redirect:/perfil";
         } catch (IOException e) {
@@ -149,9 +138,10 @@ public class UsuarioController {
     }
 
     @GetMapping("/perfil/editar")
-    public String editarPerfil(HttpSession session, Model model) {
-        String usuario2 = (String) session.getAttribute("usuario");
-        Usuario usuario = usuarioRepository.findByCorreo(usuario2);
+    public String editarPerfil(@ModelAttribute("usuario") Usuario usuario, HttpSession session, Model model) {
+        String usuario1 = (String) session.getAttribute("usuario");
+        Usuario usuario2 = usuarioRepository.findByCorreo(usuario1);
+        usuario = usuario2;
         model.addAttribute("usuario", usuario);
         return "usuario/editarperfil";
     }
@@ -183,6 +173,7 @@ public class UsuarioController {
                                   @RequestParam(value = "categoria", required = false) String categoria,
                                   @RequestParam(value = "FechaInicio", required = false) String optFechaInicio, @RequestParam(value = "FechaFin", required = false) String optFechaFin,
                                   RedirectAttributes attr) {
+
         String usuario1 = (String) session.getAttribute("usuario");
         Usuario usuario2 = usuarioRepository.findByCorreo(usuario1);
         List<DTOHistorial> listaHistorial = new ArrayList<>();
@@ -242,6 +233,11 @@ public class UsuarioController {
         return"usuario/historial";
     }
 
+  //  @GetMapping("/mostrarcali")
+   // public String mostrarcalificacion() {
+     //   return "usuario/mostrarcalificacion";
+   // }
+
 
 
     @GetMapping("/images/{id}")
@@ -284,9 +280,12 @@ public class UsuarioController {
             dtoCalificacionDirector.setCorreodirector(director.get().getCorreo());
             dtoCalificacionDirector.setIddirector(director.get().getId());
         }
-
-        List<DTOCalificacionActor> listaactor = usuarioRepository.ObtenerCalificacionActor(usuario2.getId(), idfuncion);
-
+        Optional<Funcion> funcion = funcionRepository.findById(idfuncion);
+        List<Actor> listaactor =  new ArrayList<>();
+        if(funcion.isPresent()){
+            System.out.println("ENTRA AQUI PERO NO LLEGA NADA");
+            listaactor = funcion.get().getActors();
+        }
         model.addAttribute("obra",dtoCalificacionObra);
         model.addAttribute("director", dtoCalificacionDirector);
         model.addAttribute("listaactor", listaactor);

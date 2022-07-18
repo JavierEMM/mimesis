@@ -4,49 +4,46 @@
 <head th:replace="includes/head.html :: head">MIMESIS</head>
 </head>
 <body>
-<header th:replace="includes/navbar.html :: navbar(option = 'Principal')">
-</header>
-<div class="container bootstrap snippets bootdey">
-    <div class="panel-body inf-content">
-        <br>
-        <div th:if="${msg != null}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert">
-            <i class="bi bi-check-circle-fill"></i>
-            <span th:text="${msg}">Registro Exitoso</span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="container">
+        <header th:replace="includes/navbar.html :: navbar">
+        </header>
+        <div class="row title-page">
+            <h1 class="text-page">Editar perfil</h1>
+            <h4 class="text-page">Información personal</h4>
         </div>
-        <h1 class="title">Editar perfil</h1>
-        <div id="contenedor2" class="row header-display fondo">
+        <div class="row title-page">
             <div class="col-md-6">
                 <form method="post"  th:action="@{/perfil/save}" th:object="${usuario}" enctype="multipart/form-data">
-                    <input type="hidden" th:field="*{nombre}"/>
-                    <input type="hidden" th:field="*{apellido}"/>
-                    <input type="hidden" th:field="*{id}"/>
-                    <input type="hidden" th:field="*{correo}"/>
-                    <input type="hidden" th:field="*{contrasena}"/>
-                    <input type="hidden" th:field="*{dni}"/>
-                    <input type="hidden" th:field="*{rol}"/>
-                    <input type="hidden" th:field="*{valido}"/>
-                    <input type="hidden" th:field="*{emailconfirm}"/>
-                    <input type="hidden" th:field="*{authprovider}"/>
-                    <input type="hidden" th:field="*{resetpwdtoken}"/>
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{nombre}">
+                    <input type="hidden" th:field="*{apellido}">
+                    <input type="hidden" th:field="*{correo}">
+                    <input type="hidden" th:field="*{contrasena}">
+                    <input type="hidden" th:field="*{rol}">
+                    <input type="hidden" th:field="*{valido}">
+                    <input type="hidden" th:field="*{emailconfirm}">
+                    <input type="hidden" th:field="*{dni}">
+
                     <div class="mb-3">
                         <div class="mb-3">
                             <label class="col-form-label">Numero Telefonico</label>
-                            <input type="text" class="form-control" th:field="*{numerotelefonico}" th:classappend="${#fields.hasErrors('numerotelefonico')?'is-invaid':''}">
+                            <input type="text" class="form-control" th:field="*{numerotelefonico}" th:classappend="${(#fields.hasErrors('numerotelefonico') || msg != null) ? 'is-invalid':''}">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('numerotelefonico')}"
                                  th:errors="*{numerotelefonico}"></div>
+                            <div class="invalid-feedback" th:if="${msg != null}"
+                                 th:text="${msg}"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="col-form-label">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control" th:field="*{fechanacimiento}" th:classappend="${#fields.hasErrors('fechanacimiento')?'is-invaid':''}">
+                            <input type="date" class="form-control" th:field="*{fechanacimiento}" th:classappend="${#fields.hasErrors('fechanacimiento')?'is-invalid':''}">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('fechanacimiento')}"
                                  th:errors="*{fechanacimiento}"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="col-form-label">Direccion</label>
-                            <input type="text" class="form-control" th:field="*{direccion}" th:classappend="${#fields.hasErrors('direccion')?'is-invaid':''}">
+                            <input type="text" class="form-control" th:field="*{direccion}" th:classappend="${#fields.hasErrors('direccion')?'is-invalid':''}">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('direccion')}"
                                  th:errors="*{direccion}"></div>
                         </div>
@@ -54,7 +51,7 @@
                         <div class="mb-3">
                             <label for="recipient-name3" class="col-form-label">Foto de perfil</label>
                             <input type="file" class="form-control"
-                                 name="archivo" id="recipient-name3" accept="image/*">
+                                   name="archivo" id="recipient-name3" accept="image/*">
                         </div>
                     </div>
 
@@ -64,13 +61,8 @@
                     </div>
                 </form>
             </div>
-
         </div>
+        <footer th:replace="includes/footer.html :: footer"></footer>
     </div>
-</div>
-</div>
-<br>
-<br>
-<footer th:replace="includes/footer.html :: footer"></footer>
 </body>
 </html>

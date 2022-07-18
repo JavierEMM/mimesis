@@ -306,7 +306,7 @@ public class OperadorController {
         return "operador/obraFrm";
     }
 
-    @PostMapping("saveobra")
+    @PostMapping("/saveobra")
     public String newObra (@ModelAttribute("obra")@Valid Obra obra, BindingResult bindingResult,Model model,  @RequestParam("files[]") List<MultipartFile> file ) throws IOException {
 
         if(bindingResult.hasErrors()|| file.get(0).getBytes().length == 0){

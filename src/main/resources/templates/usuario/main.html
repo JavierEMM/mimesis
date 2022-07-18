@@ -2,16 +2,43 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="includes/head.html :: head">MIMESIS</head>
     <body style="background: black">
-        <header th:replace="includes/navbar.html :: navbar(option = 'Principal')">
-        </header>
-
-        <main class="hero">
-            <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
-                <h1 class="mb-4 pb-0">Teatros<br>MI<span>MESIS</span></h1>
-                <p class="mb-4 pb-0">El arte de imitar a la naturaleza</p>
+        <div class="container">
+            <header th:replace="includes/navbar.html :: navbar">
+            </header>
+        </div>
+        <div class="row">
+            <div class="col-12 homepage">
+                <div class="text-center imagen">
+                    <div class="datos">
+                        <h1 class="mb-4 pb-0"><span class="titulo2">Teatros</span><br><span class="titulo">mí</span><span class="titulo2">mesis</span></h1>
+                        <p class="mb-4 pb-0" style="color:white;">El arte de imitar a la naturaleza</p>
+                    </div>
+                    <img id="scroll" class="sliders" th:src="@{img/teatro-06b.jpg}" width="100%" height="100%" alt="hola"!-->
+                </div>
             </div>
-        </main>
-
-        <footer th:replace="includes/footer.html :: footer"></footer>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var imagen = [];
+                imagen[0] = "img/teatro-06b.jpg";
+                imagen[1] = "img/depositphotos_22528899-stock-photo-empty-theatre-auditorium.jpg";
+                imagen[2] = "img/teatro-leonardus-2.jpg";
+                let longitud = imagen.length;
+                let element = document.getElementById("scroll");
+                var indicator = 0;
+                function cambiarImagen(){
+                    element.src = imagen[indicator];
+                    if(indicator<2){
+                        indicator++;
+                    }else{
+                        indicator = 0;
+                    }
+                }
+                setInterval(cambiarImagen,4000);
+            });
+        </script>
+        <div class="container">
+            <footer th:replace="includes/footer.html :: footer"></footer>
+        </div>
     </body>
 </html>

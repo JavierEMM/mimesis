@@ -2,42 +2,68 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="includes/head.html :: head">MIMESIS</head>
 <body>
+    <div class="container">
         <header th:replace="includes/navbar.html :: navbar(option ='Funciones')"></header>
-    <main>
-        <br>
-        <div class="page-header text-center">
-            <h1 class="mayus">Obras</h1>
-        </div>
-        <br>
-
-        <div class="container">
-            <form class="form-group mb-3" method="post" th:action="@{/funciones/buscar}">
-                <div class="row">
-                    <div class="col-10">
-                        <input class="form-control" placeholder="Texto a buscar" name="search">
+            <div class="row title-page">
+                <h1 class="text-page">obras</h1>
+                <h4 class="text-page">vive la emoción de todas nuestras obras</h4>
+            </div>
+            <div class="form-buscador">
+                <form class="form-group" method="post" th:action="@{/funciones/buscar}">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input class="form-control" placeholder="¿Qué obra desea buscar?" name="search">
+                        </div>
+                        <div class="col-lg-2 d-flex justify-content-center">
+                            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                        </div>
                     </div>
-                    <div class="col">
-                        <button class="btn btn-outline-primary" type="submit">Buscar</button>
-                        <a class="btn btn-outline-danger ml-2" th:href="@{/funciones}">Limpiar</a>
-                    </div>
-                </div>
-            </form>
-
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card-content" style="display: none;">
-                <div class="col" th:each="funcion : ${listaObras}">
-                    <div class="card shadow-sm header-display">
-                        <img class="im-image" th:src="@{|/images/${funcion.getId()}|}">
-                        <div class="card-body text-center">
-                            <p th:text="${funcion.nombre}+${', +' + funcion.restricciondeedad}"></p>
-                            <a class="btn btn-terc" th:href="@{'/funciones/detalles'+ '?obra=' + ${funcion.nombre}}">Detalles</a>
+                </form>
+            </div>
+            <div class="row subtitle-page">
+                <h2 class="text-page">nuestras obras</h2>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-5 contenido-pagination" style="display: none;">
+                <div class="col contenido" th:each="funcion : ${listaObras}">
+                    <div>
+                        <div class="row">
+                            <div class="col header-display">
+                                <div class="link-div">
+                                    <a class="image-link" th:href="@{'/funciones/detalles'+ '?obra=' + ${funcion.nombre}}">
+                                        <h4 class="plus-see">+</h4>
+                                        <h5 class="titulo-funcion" th:text="${funcion.nombre}"></h5>
+                                        <h6 class="contenido-funcion" th:text="${funcion.getGeneroIdgenero().nombre +' | +'+ funcion.restricciondeedad}">Funcion</h6>
+                                    </a>
+                                </div>
+                                <img class="im-image" th:src="@{|/images/${funcion.getId()}|}">
+                            </div>
+                        </div>
+                        <div class="row carta-baja">
+                            <div class="col header-display">
+                                <a th:href="@{'/funciones/detalles'+ '?obra=' + ${funcion.nombre}}" class="link-bajo">más información</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <div class="pages">
+                    </div>
+                </div>
+            </div>
+            <footer th:replace="includes/footer.html :: footer"></footer>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $('.image-link').children().hide();
+                    $('.image-link').mouseover(function (){
+                        $(this).children().show();
+                    });
+                    $('.image-link').mouseout(function (){
+                        $(this).children().hide();
+                    });
+                });
+            </script>
         </div>
-    </main>
-    <div class="pages">
-    </div>
-<footer th:replace="includes/footer.html :: footer"></footer>
 </body>
 </html>

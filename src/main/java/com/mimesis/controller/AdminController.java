@@ -20,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/admin")
@@ -570,7 +572,7 @@ public class AdminController {
     }
 
     @PostMapping("/saveoperador")
-    public String savesedes(@ModelAttribute("usuario") @Valid Usuario usuario,BindingResult bindingResult, RedirectAttributes attr, Model model) {
+    public String saveoperador(@ModelAttribute("usuario") @Valid Usuario usuario,BindingResult bindingResult, RedirectAttributes attr, Model model) {
 
         System.out.println(bindingResult.getAllErrors());
 
@@ -584,11 +586,20 @@ public class AdminController {
                     return "admin/agregaroperador";
                 } else {
                     String contra = usuario.getContrasena();
-                    usuario.setContrasena(new BCryptPasswordEncoder().encode(contra));
-                    usuarioRepository.save(usuario);
-                    attr.addFlashAttribute("msg", "Operador creado exitosamente");
-                    attr.addFlashAttribute("opcion", "alert-success");
-                    return "redirect:/admin/operadores";
+                    contrasenaisValid(contra);
+                    System.out.println("StephBefore");
+                    if(contrasenaisValid(contra)) {
+                        usuario.setContrasena(new BCryptPasswordEncoder().encode(contra));
+                        System.out.println("Steph");
+                        usuarioRepository.save(usuario);
+                        attr.addFlashAttribute("msg", "Operador creado exitosamente");
+                        attr.addFlashAttribute("opcion", "alert-success");
+                        return "redirect:/admin/operadores";
+                    }
+                    System.out.println("StephAfter");
+                    attr.addFlashAttribute("alerta","alert-danger");
+                    attr.addFlashAttribute("registro","Ingrese una contraseña válida");
+                    return "redirect:/admin/agregaroperador";
 
                 }
             }
@@ -606,6 +617,15 @@ public class AdminController {
             attr.addFlashAttribute("opcion","alert-danger");
         }
         return "redirect:/admin/operadores";
+    }
+
+    public boolean contrasenaisValid(String contrasena) {
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=/.|:!¡()¬?_¿><'*°-])(?=\\S+$).{8,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(contrasena);
+//        System.out.println(matcher.find());
+        System.out.println("Josesito");
+        return matcher.find();
     }
 
 }

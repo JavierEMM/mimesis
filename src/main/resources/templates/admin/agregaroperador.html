@@ -13,6 +13,11 @@
 <body>
 
 <div class="container mt-5" style="margin-right: auto; margin-left: auto; max-width: 500px;">
+    <div th:if="${registro != null}" class="alert alert-dismissible fade show" th:classappend="${alerta}" role="alert">
+        <i class="bi bi-check-circle-fill"></i>
+        <span th:text="${registro}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
         <div style="max-width: 1000px; text-align: center">
             <h1 class="pb-2 mb-4 border-bottom">Agregar Operador</h1>
@@ -87,6 +92,11 @@
                     <input type="password" class="form-control" th:field="*{contrasena}" th:classappend="${#fields.hasErrors('contrasena')?'is-invalid':''}"/>
                     <div class="invalid-feedback" th:if="${#fields.hasErrors('contrasena')}"
                          th:errors="*{contrasena}"></div>
+                    <ul>
+                        <li>Debe tener una letra en mayúscula</li>
+                        <li>Debe tener un número</li>
+                        <li>Debe contener al menos un caracter: @,?,#,.,/</li>
+                    </ul>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Repita su contraseña</label>
