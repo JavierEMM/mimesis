@@ -39,7 +39,7 @@
                     <div class="d-flex justify-content-center align-items-center container-select">
                       <select th:if="${listaTeatros.size() != 0 && listaTeatros.size() != null}" class="form-select select-center" name="teatro">
                         <option SELECTED value="0">Selecciona el teatro</option>
-                        <option th:each="teatro : ${listaTeatros}" th:value="${teatro.id}" th:text="${teatro.nombre +'| '+ teatro.ubicacion}"></option>
+                        <option th:each="teatro : ${listaTeatros}" th:value="${teatro.id}" th:if="${teatro.valido}"S th:text="${teatro.nombre +'| '+ teatro.ubicacion}"></option>
                       </select>
                       <p th:if="${listaTeatros.size() == 0 || listaTeatros.size() == null}" class="text-center mt-3">NO HAY FUNCIONES DISPONIBLES</p>
                     </div>

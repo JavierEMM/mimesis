@@ -40,7 +40,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "            left join obras c on b.obras_idobras = c.idobras\n" +
             "            left join sala d on b.idsala = d.idsala\n" +
             "            left join sede e on d.idsede = e.idsede\n" +
-            "            where a.idusuario =?1 group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
+            "            where a.idusuario =?1 group by b.idfuncion")
     List<DTOHistorial> ObtenerHistorial(Integer id);
 
 
@@ -63,7 +63,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "            left join obras c on b.obras_idobras = c.idobras\n" +
             "            left join sala d on b.idsala = d.idsala\n" +
             "            left join sede e on d.idsede = e.idsede\n" +
-            "            where a.idusuario =?1 and c.nombre like %?2% group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
+            "            where a.idusuario =?1 and c.nombre like %?2% group by b.idfuncion;")
     List<DTOHistorial> ObtenerHistorialporObra(Integer id,String nombre);
 
     @Query(nativeQuery = true, value = "Select b.idfuncion as idfuncion,count(a.idboleto) as cantidad,b.costo*count(a.idboleto) as costototal, MAX(a.estado) as estado " +
@@ -71,7 +71,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "                       left join obras c on b.obras_idobras = c.idobras\n" +
             "                       left join sala d on b.idsala = d.idsala\n" +
             "                        left join sede e on d.idsede = e.idsede\n" +
-            "                       where a.idusuario =?1 and e.nombre like %?2%  group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
+            "                       where a.idusuario =?1 and e.nombre like %?2%  group by b.idfuncion")
     List<DTOHistorial> ObtenerHistorialporSede(Integer id,String nombresede);
 
     @Query(nativeQuery = true, value = "Select b.idfuncion as idfuncion,count(a.idboleto) as cantidad,b.costo*count(a.idboleto) as costototal, MAX(a.estado) as estado \n" +
@@ -79,7 +79,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "                                   left join obras c on b.obras_idobras = c.idobras\n" +
             "                                   left join sala d on b.idsala = d.idsala\n" +
             "                                    left join sede e on d.idsede = e.idsede\n" +
-            "                                   where a.idusuario =?1 and a.estado=?2 group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
+            "                                   where a.idusuario =?1 and a.estado=?2 group by b.idfuncion;")
     List<DTOHistorial> ObtenerHistorialporEstado(Integer id,int estado);
 
     @Query(nativeQuery = true, value = "select f.fecha, f.horainicio, b.idboleto from funcion f \n" +
@@ -92,7 +92,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
             "            left join obras c on b.obras_idobras = c.idobras\n" +
             "            left join sala d on b.idsala = d.idsala\n" +
             "            left join sede e on d.idsede = e.idsede\n" +
-            "            where a.idusuario =?1 and b.fecha >= ?2 and b.fecha <= ?3 group by b.idfuncion,b.horainicio,c.idobras,c.nombre,e.nombre;")
+            "            where a.idusuario =?1 and b.fecha >= ?2 and b.fecha <= ?3 group by b.idfuncion;")
     List<DTOHistorial> ObtenerHistorialporFecha(Integer id,String fecha1,String fecha2);
 
 

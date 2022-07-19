@@ -214,6 +214,22 @@ public class UsuarioController {
                 dtoHistorialporBoleto.setCantidad(i.getCantidad());
                 dtoHistorialporBoleto.setCostoTotal(i.getCostototal());
                 dtoHistorialporBoleto.setBoletoValido((i.getEstado() == 1 ? true : false));
+                LocalDate date = LocalDate.now();
+                LocalTime time = LocalTime.now();
+                LocalDate dateobra = funcion.get().getFecha();
+                LocalTime timeobra = funcion.get().getHorafin();
+                int datevalue = dateobra.compareTo(date);
+                int timevalue = timeobra.compareTo(time);
+                if(datevalue == 0){
+                    if(timevalue < 0){
+                        System.out.println("Entro aqui 1");
+                        dtoHistorialporBoleto.setBoletoValido(false);
+                    }
+                }
+                if(datevalue<0){
+                    System.out.println("Entro aqui 2");
+                    dtoHistorialporBoleto.setBoletoValido(false);
+                }
                 List<Calificacion> calificacions = calificacionRepository.findFuncionyUsuario(usuario2.getId(),funcion.get().getId());
                 System.out.println("SIZE: "+calificacions.size() +"EMPTY: "+ calificacions.isEmpty());
                 dtoHistorialporBoleto.setCalificacions(calificacions);
@@ -223,12 +239,8 @@ public class UsuarioController {
                 model.addAttribute("error","error");
                 return "usuario/historial";
             }
-
-
             model.addAttribute("listaHistorialporBoleto", dtoHistorialporBoleto);
-
         }
-
         model.addAttribute("listaHistorial",list);
         return"usuario/historial";
     }

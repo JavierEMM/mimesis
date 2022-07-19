@@ -39,7 +39,7 @@ public class Obra implements Serializable {
     private List<Foto> fotosporobra;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "genero_idgenero", nullable = false)
     @NotNull(message = "Debe seleccionar un género")
     private Genero generoIdgenero;

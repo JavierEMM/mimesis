@@ -24,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="f,i : ${listaFunciones}">
+                            <tr th:each="f,i : ${listaFunciones}" th:if="${((f.funcion.valido) && f.boletos >0)}">
                                 <th class="td-carrito" th:text="${i.index + 1}" ></th>
                                 <td class="td-carrito" th:text="${f.getFuncion().getFecha()}"></td>
                                 <td class="td-carrito" th:text="${f.getFuncion().getHorainicio()}"></td>
@@ -36,7 +36,6 @@
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     Seleccionar
                                 </button>
-
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -60,13 +59,11 @@
                                 </form>
                                 </td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>
             </div>
             <footer th:replace="includes/footer.html :: footer"></footer>
         </div>
-
     </body>
 </html>

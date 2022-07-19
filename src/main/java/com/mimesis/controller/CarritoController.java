@@ -62,64 +62,62 @@ public class CarritoController {
             attributes.addFlashAttribute("reserva","Por favor, al seleccionar funcion seleccione una cantidad valida");
             return "redirect:/funciones/detalles?obra=" + URLEncoder.encode(funcion2.get().getIdobra().getNombre(),"UTF-8");
         }else{
-            if(boletos>=cantidad){
+            if(boletos>=cantidad) {
                 Sede sede = sedesRepository.sedePorFuncion(funcion);
                 ArrayList<DTOcarrito> funcions = (ArrayList) session.getAttribute("carrito");
                 DTOcarrito dtOcarrito = new DTOcarrito();
                 dtOcarrito.setFuncion(funcion2.get());
                 dtOcarrito.setCantidad(cantidad);
-                dtOcarrito.setCostoTotal(funcion2.get().getCosto()*cantidad);
+                dtOcarrito.setCostoTotal(funcion2.get().getCosto() * cantidad);
                 dtOcarrito.setSede(sede);
                 funcions.add(dtOcarrito);
-                session.setAttribute("carrito",funcions);
-                session.setAttribute("ncarrito",funcions.size());
-
+                System.out.println(funcions.get(0).getFuncion().getIdobra().getNombre());
+                System.out.println("carrito size: " + funcions.size());
                 int i;
                 int j;
-                for (i=0;i< funcions.size() ;i++){
-                     for(j=0; j<i; j++){
-                         LocalDate date1 = funcions.get(j).getFuncion().getFecha();
-                         LocalDate date2 = funcions.get(i).getFuncion().getFecha();
+                for (i = 0; i < funcions.size(); i++) {
+                    for (j = 0; j < i; j++) {
+                        if (i != j) {
+                            LocalDate date1 = funcions.get(j).getFuncion().getFecha();
+                            LocalDate date2 = funcions.get(i).getFuncion().getFecha();
+                            System.out.println("ENTRA 2");
+                            int valor1 = date1.compareTo(date2);
+                            System.out.println(valor1);
 
-                         int valor1= date1.compareTo(date2);
-                         System.out.println(valor1);
+                            if (valor1 == 0) {
+                                System.out.println("entro aqui x3");
+                                LocalTime time_inicio1 = funcions.get(j).getFuncion().getHorainicio();
+                                LocalTime time_inicio2 = funcions.get(i).getFuncion().getHorainicio();
+                                LocalTime time_fin2 = funcions.get(i).getFuncion().getHorafin();
 
-                         if(valor1==0){
-                             System.out.println("entro aqui x3");
-                             LocalTime time_inicio1 = funcions.get(j).getFuncion().getHorainicio();
-                             LocalTime time_inicio2 = funcions.get(i).getFuncion().getHorainicio();
-                             LocalTime time_fin2 = funcions.get(i).getFuncion().getHorafin();
+                                int value1 = time_inicio1.compareTo(time_inicio2);
+                                int value2 = time_inicio1.compareTo(time_fin2);
+                                System.out.println(time_inicio1);
+                                System.out.println(time_inicio2);
+                                System.out.println(time_fin2);
 
-                             int value1 = time_inicio1.compareTo(time_inicio2);
-                             int value2 = time_inicio1.compareTo(time_fin2);
-                             System.out.println(time_inicio1);
-                             System.out.println(time_inicio2);
-                             System.out.println(time_fin2);
-
-                             if(value1!= 0){
-                                 System.out.println("bandera");
-                                 if(value2 < 0){
-                                     System.out.println("llego aqui");
-                                     model.addAttribute("aviso", "Aviso: Las funciones no deben cruzarse entre ellas, porfavor seleccione una función válida");
-                                    // attributes.addFlashAttribute("aviso","Las funciones no se deben cruzarse entre ellas, porfavor seleccione una función válida");
-                                     // attributes.addFlashAttribute("alerta","alert-danger");
-
-                                 }
-                             }
-                         }
-                     }
+                                if (value1 != 0) {
+                                    System.out.println("bandera");
+                                    if (value2 < 0) {
+                                        System.out.println("llego aqui");
+                                        attributes.addFlashAttribute("aviso", "Las funciones no se deben cruzarse entre ellas, porfavor seleccione una función válida");
+                                        attributes.addFlashAttribute("alerta", "alert-danger");
+                                        return "redirect:/funciones/detalles?obra=" + URLEncoder.encode(funcion2.get().getIdobra().getNombre(), "UTF-8");
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-
-
-                model.addAttribute("carrito",funcions);
-
-                return "usuario/carrito";
+                System.out.println("SALE ENVIA SESSION");
+                session.setAttribute("carrito",funcions);
+                session.setAttribute("ncarrito",funcions.size());
+                return "redirect:/carrito";
             }else{
                 attributes.addFlashAttribute("alerta","alert-danger");
                 attributes.addFlashAttribute("reserva","Selecciona una cantidad valida");
                 return "redirect:/funciones/detalles?obra=" + URLEncoder.encode(funcion2.get().getIdobra().getNombre(),"UTF-8");
-            }
-
+                }
         }
     }
     @GetMapping("/borrar")
@@ -203,7 +201,8 @@ public class CarritoController {
                         String url= RandomString.make(50);
                         Boleto boleto = new Boleto(true,dtOcarrito.getFuncion(),usuario, url);
                         boletoRepository.save(boleto);
-                        hola+="<img style='margin-right:15px;' src="+"https://api.qrserver.com/v1/create-qr-code/?data="+url+"&size=200x200>";
+                        url="http://20.213.81.205:8087/qr/boleto/"+url;
+                        hola+="<img style='margin-right:15px;' src="+"https://api.qrserver.com/v1/create-qr-code/?data="+url+" width:'200px' height='200px'>";
                     }
                     System.out.println("Funcion: " + dtOcarrito.getFuncion().getIdobra().getNombre());
                     enviarQr(usuario,hola,dtOcarrito.getFuncion(),dtOcarrito.getCantidad());

@@ -32,7 +32,7 @@ public class Funcion implements Serializable {
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime horainicio;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "iddirector", nullable = false)
     @NotNull(message = "Debe escoger un director")
     private Director iddirector;
@@ -58,7 +58,7 @@ public class Funcion implements Serializable {
 
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "obras_idobras", nullable = false)
     @NotNull(message = "Debe seleccionar una obra")
     private Obra idobra;
