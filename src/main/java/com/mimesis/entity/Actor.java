@@ -1,10 +1,7 @@
 package com.mimesis.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 
@@ -33,6 +30,9 @@ public class Actor implements Serializable {
     private String correo;
 
     @Column(name = "telefono", nullable = false, length = 45)
+    @Digits(integer = 10, fraction=0)
+    @Max(value=999999999,message = "Debe ser un numero de 9 cifras")
+    @Min(value=100000000, message = "Debe ser un numero de 9 cifras")
     @NotNull(message = "Debe agregar un numero de contacto")
     private Integer telefono;
 
