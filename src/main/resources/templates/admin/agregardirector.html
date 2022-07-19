@@ -10,6 +10,11 @@
         <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
             <div style="max-width: 1000px; text-align: center">
                 <h1 class="pb-2 mb-4 border-bottom">Agregar Director</h1>
+                <div th:if="${msg != null}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span th:text="${msg}">Registro Exitoso</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 <form method="post" th:action="@{'/admin/savedirector'}" th:object="${director}" enctype="multipart/form-data">
                     <input type="hidden" th:field="*{id}"/>
                     <input type="hidden" th:field="*{valido}" th:value="1"/>
