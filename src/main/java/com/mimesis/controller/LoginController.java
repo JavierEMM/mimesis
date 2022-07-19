@@ -137,6 +137,7 @@ public class LoginController {
             return "login/register";
         }else {
             if (dniDao.ConsultarDNI(usuario.getDni())) {
+                System.out.println("eeeeeeeeeeeee");
                 Usuario usuarioconfirm = usuarioRepository.findByCorreo(usuario.getCorreo());
                 if (usuarioconfirm != null) {
                     model.addAttribute("emailerror", "Credenciales ya registradas");
@@ -165,8 +166,9 @@ public class LoginController {
                     return "redirect:/registro";
                 }
             }
-            attributes.addFlashAttribute("msg","Sus datos no se han podido guardar debido a que no se ingresó un número de DNI valido. Por favor ingrese DNI valido");
-            attributes.addFlashAttribute("opcion","alert-danger");
+            System.out.println("ddddddddddddd");
+            attributes.addFlashAttribute("alerta","alert-danger");
+            attributes.addFlashAttribute("registro","Sus datos no se han podido guardar debido a que no se ingresó un número de DNI valido. Por favor ingrese DNI valido");
         }
         return "redirect:/registro";
     }
