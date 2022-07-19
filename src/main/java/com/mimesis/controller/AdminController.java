@@ -438,8 +438,9 @@ public class AdminController {
             }
         }else {
             if(file.isEmpty()){
-                model.addAttribute("msg","Debe subir un archivo");
-                return "admin/agregardirector";
+                attr.addFlashAttribute("msg","Debe subir un archivo");
+                attr.addFlashAttribute("opcion", "alert-danger");
+                return "redirect:/admin/agregardirector";
             }
             else{
                 List<Director> listadirectores = directorRepository.findAll();
