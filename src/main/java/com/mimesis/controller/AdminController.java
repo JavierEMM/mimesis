@@ -323,16 +323,36 @@ public class AdminController {
             }
         }else {
             if(file.isEmpty()){
-                model.addAttribute("msg","Debe subir un archivo");
-                return "admin/agregaractor";
+                attr.addFlashAttribute("msg","Debe subir un archivo");
+                attr.addFlashAttribute("opcion", "alert-danger");
+                return "redirect:/admin/agregaractor";
             }
             else{
-                    actor.setFoto(file.getBytes());
-                    String msg = "Actor " + "creado " + "exitosamente";
-                    attr.addFlashAttribute("msg", msg);
-                    attr.addFlashAttribute("opcion", "alert-success");
-                    actorRepository.save(actor);
-                    return "redirect:/admin/actores";
+                List<Actor> listaactores = actorRepository.findAll();
+                String result = actor.getNombre().replace(" ", "");
+                String resultapellido = actor.getApellido().replace(" ", "");
+                String resultcorreo = actor.getCorreo().replace(" ","");
+                for(Actor i : listaactores){
+                    String result2 = i.getNombre().replace(" ","");
+                    String resultapellido2 = i.getApellido().replace(" ","");
+                    String resultcorreo2 = i.getCorreo().replace(" ","");
+                    if(result.equalsIgnoreCase(result2) && resultapellido.equalsIgnoreCase(resultapellido2)){
+                        if(i.getValido()){
+                            attr.addFlashAttribute("msg","El actor ya ha sido creado previamente");
+                            attr.addFlashAttribute("opcion","alert-danger");
+                            return "redirect:/admin/actores";
+                        }
+                    }if(resultcorreo.equalsIgnoreCase(resultcorreo2)){
+                        model.addAttribute("emailerror", "Credenciales ya registradas");
+                        return "admin/agregaractor";
+                    }
+                }
+                actor.setFoto(file.getBytes());
+                String msg = "Actor " + "creado " + "exitosamente";
+                attr.addFlashAttribute("msg", msg);
+                attr.addFlashAttribute("opcion", "alert-success");
+                actorRepository.save(actor);
+                return "redirect:/admin/actores";
             }
         }
     }

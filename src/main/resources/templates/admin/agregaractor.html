@@ -12,6 +12,11 @@
                 <section style="max-width:100%; background: black; padding:30px; margin: auto; border-radius: 4px; font-family: 'Century Gothic'; color: white;box-shadow: 7px 13px 37px #000;">
                     <div style="max-width: 1000px; text-align: center">
                         <h1 class="pb-2 mb-4 border-bottom">Agregar Actor</h1>
+                        <div th:if="${msg != null}" class="alert alert-dismissible fade show" th:classappend="${opcion}" role="alert">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span th:text="${msg}">Registro Exitoso</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <form method="post" th:action="@{'/admin/saveactor'}" th:object="${actor}" enctype="multipart/form-data">
                             <input type="hidden" th:field="*{id}"/>
                             <input type="hidden" th:field="*{valido}" th:value="1"/>
@@ -32,6 +37,9 @@
                                 <input type="text" class="form-control" th:field="*{correo}" th:classappend="${#fields.hasErrors('correo')?'is-invalid':''}"/>
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('correo')}"
                                      th:errors="*{correo}"></div>
+                                <div th:if="${emailerror != null}" class="invalid-feedback"
+                                     th:text="${emailerror}">
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Telefono del Actor</label>
