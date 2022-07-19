@@ -24,8 +24,8 @@
             <h2 class="text-page">nuestros actores</h2>
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 contenido-pagination">
-            <div class="col actor-sep" th:each="actor : ${listaActores}">
-                <div class="contenido">
+            <div class="col actor-sep contenido" th:each="actor : ${listaActores}">
+                <div>
                     <div class="row actor-page">
                         <div class="col">
                             <img class="actor-image" th:src="@{|/actores/${actor.getId()}|}">

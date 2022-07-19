@@ -1,19 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
     <head th:replace="includes/head.html :: head">MIMESIS</head>
-    <body style="background-color: white;">
-        <section>
-            <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
-        </section>
-        <div class="container mt-3"></div>
-        <div class="container mt-3">
-            <div class="col-md-4 offset-md-4">
-                <h2 class="pb-2 border-bottom">Gestión de Actores</h2>
-            </div>
-        </div>
-
+    <body>
     <div class="container">
-        <div class="row">
+        <header th:replace="includes/navbar.html :: navbar(option='Actores')"></header>
+        <div class="row title-page" >
+            <h1 class="text-page">GESTIÓN DE ACTORES</h1>
+        </div>
+        <div class="row" style="margin-bottom: 0px; margin-top: 20px;">
             <form class="form-group mb-3" method="post" th:action="@{/admin/searchactores}">
                 <div class="row" >
                     <div class="col-8">
@@ -54,17 +48,17 @@
 
                     <tbody>
                         <tr th:each="actor,i : ${listaActores}">
-                            <td th:text="${i.index + 1}"></td>
-                            <td th:text="${actor.nombre}"></td>
-                            <td th:text="${actor.apellido}"></td>
-                            <td th:text="${actor.correo}"></td>
-                            <td th:text="${actor.telefono}"></td>
-                            <td><img th:if="${actor.foto !=null}" th:src="@{|imageactores/${actor.id}|}" width="50" height="50"></td>
-                            <td th:text="${actor.valido == true ? 'Vigente' : 'No vigente'}"></td>
-                            <td  class="text-center text-lg text-medium">
+                            <td  style="text-align: center;"  th:text="${i.index + 1}"></td>
+                            <td  style="text-align: center;"  th:text="${actor.nombre}"></td>
+                            <td  style="text-align: center;"  th:text="${actor.apellido}"></td>
+                            <td  style="text-align: center;"  th:text="${actor.correo}"></td>
+                            <td  style="text-align: center;"  th:text="${actor.telefono}"></td>
+                            <td  style="text-align: center;" ><img th:if="${actor.foto !=null}" th:src="@{|imageactores/${actor.id}|}" width="50" height="50"></td>
+                            <td  style="text-align: center;"  th:text="${actor.valido == true ? 'Vigente' : 'No vigente'}"></td>
+                            <td  style="text-align: center;"   class="text-center text-lg text-medium">
                                 <a th:if="${actor.valido==true}" class="btn btn-primary" th:href="@{'/admin/editaractor?id='+${actor.id}}"><i class="bi bi-pencil-square"></i></a>
                             </td>
-                            <td  class="text-center">
+                            <td   style="text-align: center;"   class="text-center">
                                 <form id="1" method="post" th:action="@{'/admin/borraractor?id='+${actor.id}}">
                                     <input name="test" value="1" type="hidden"/>
                                     <button th:if="${actor.valido==true}" onclick="return confirm('¿Esta seguro que desea eliminar al actor?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">

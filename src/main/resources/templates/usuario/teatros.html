@@ -24,8 +24,8 @@
                 <h2 class="text-page">nuestros teatros</h2>
             </div>
             <div class="row row-cols-1 row-cols-md-2 g-2 contenido-pagination">
-                <div class="col theatre-sep" th:each="teatro : ${listaTeatros}">
-                    <div class="contenido">
+                <div class="col theatre-sep contenido" th:each="teatro : ${listaTeatros}">
+                    <div>
                         <div class="row theatre-page">
                             <div class="col">
                                 <img class="theatre-image" th:src="@{|/teatros/${teatro.id}|}">

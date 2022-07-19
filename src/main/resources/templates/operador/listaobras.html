@@ -2,15 +2,13 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head th:replace="includes/head.html :: head">MIMESIS</head>
   <body>
-    <header th:replace="includes/navbar.html :: navbar(option= 'Obras')" id="header" class="d-flex align-items-center">
-    </header>
     <div class="container">
-      <div class="row" >
-        <div class="col-xl">
-          <p class="title">Lista de Obras</p>
-        </div>
+      <header th:replace="includes/navbar.html :: navbar(option= 'Obras')" id="header" class="d-flex align-items-center">
+      </header>
+      <div class="row title-page" >
+          <h1 class="text-page">LISTA DE OBRAS</h1>
       </div>
-      <div class="row" style="margin-bottom: 0px">
+      <div class="row" style="margin-bottom: 0px;margin-top: 20px;">
         <form class="form-group mb-3" method="post" th:action="@{/operador/searchObra}">
           <div class="row">
             <div class="col-8">
