@@ -167,10 +167,11 @@ public class LoginController {
                 }
             }
             System.out.println("ddddddddddddd");
-            attributes.addFlashAttribute("alerta","alert-danger");
-            attributes.addFlashAttribute("registro","Sus datos no se han podido guardar debido a que no se ingresó un número de DNI valido. Por favor ingrese DNI valido");
+            //attributes.addFlashAttribute("alerta","alert-danger");
+            //attributes.addFlashAttribute("registro","Sus datos no se han podido guardar debido a que no se ingresó un número de DNI valido. Por favor ingrese DNI valido");
+            model.addAttribute("dnierror", "Dni no valido");
         }
-        return "redirect:/registro";
+        return "login/register";
     }
 
     @GetMapping("/cambiarcontrasenia")

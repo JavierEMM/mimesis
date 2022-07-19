@@ -40,9 +40,12 @@
                             <div class="col-md-6 mb-4 pb-2">
                                 <div class="form-outline">
                                     <label class="form-label">DNI</label>
-                                    <input class="form-control" th:classappend="${#fields.hasErrors('dni')?'is-invalid':''}" type="number" th:field="*{dni}">
+                                    <input class="form-control" th:classappend="${(#fields.hasErrors('dni') || dnierror !=null) ?'is-invalid':''}" type="number" th:field="*{dni}">
                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('dni')}"
                                          th:errors="*{dni}">
+                                    </div>
+                                    <div th:if="${dnierror != null}" class="invalid-feedback"
+                                         th:text="${dnierror}">
                                     </div>
                                 </div>
                             </div>
