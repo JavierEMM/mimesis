@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
     <head th:replace="includes/head.html :: head">MIMESIS</head>
-    <body style="background-color: white;">
-        <section>
-            <header th:replace="includes/navbaradmin.html :: navbar-usuario"></header>
-        </section>
-        <div class="container mt-3"></div>
-        <div class="container mt-3" style="text-align: center; padding-bottom: 20px;" >
-                <h2 class="pb-2 border-bottom">Gestión de sedes</h2>
-        </div>
+    <body >
         <div class="container">
+            <header th:replace="includes/navbar.html :: navbar(option='Sedes')"></header>
+            <div class="row title-page" >
+                <h1 class="text-page">GESTIÓN DE SEDES</h1>
+            </div>
             <div class="row">
                 <form class="form-group mb-3" method="post" th:action="@{/admin/searchsedes}">
-                    <div class="row" >
+                    <div class="row" style="margin-bottom: 0px; margin-top: 20px;">
                         <div class="col-8">
                             <input class="form-control" placeholder="Buscar nombre de la sede" name="search" >
                         </div>
@@ -46,14 +43,14 @@
 
                 <tbody>
                     <tr th:each="sede,i : ${listaSedes}">
-                        <td th:text="${i.index + 1}"></td>
-                        <td th:text="${sede.nombre}"></td>
-                        <td th:text="${sede.ubicacion}"></td>
-                        <td><img th:if="${sede.fotosporsede !=null}" th:src="@{|imagesedes/${sede.id}|}" width="50" height="50" ></td>
-                        <td th:text="${sede.valido == true ? 'Vigente' : 'No vigente'}"></td>
-                        <td class="text-center" ><a th:if="${sede.valido == true}" class="btn btn-primary" th:href="@{'/admin/editarsedes?id=' + ${sede.id}}"><i class="bi bi-pencil-square"></i></a>
+                        <td  style="text-align: center;"  th:text="${i.index + 1}"></td>
+                        <td  style="text-align: center;"  th:text="${sede.nombre}"></td>
+                        <td  style="text-align: center;"  th:text="${sede.ubicacion}"></td>
+                        <td  style="text-align: center;" ><img th:if="${sede.fotosporsede !=null}" th:src="@{|imagesedes/${sede.id}|}" width="50" height="50" ></td>
+                        <td  style="text-align: center;"  th:text="${sede.valido == true ? 'Vigente' : 'No vigente'}"></td>
+                        <td  style="text-align: center;"  class="text-center" ><a th:if="${sede.valido == true}" class="btn btn-primary" th:href="@{'/admin/editarsedes?id=' + ${sede.id}}"><i class="bi bi-pencil-square"></i></a>
                         </td>
-                        <td class="text-center" >
+                        <td  style="text-align: center;"  class="text-center" >
                             <form id="id" method="get" th:action="@{'/admin/borrarsede?id=' + ${sede.id}}">
                                 <input name="id" th:value="${sede.id}" type="hidden"/>
                                 <button th:if="${sede.valido==true}" onclick="return confirm('¿Esta seguro que desea eliminar la sede?')"  class="btn btn-outline-danger flex-shrink-0" type="submit">

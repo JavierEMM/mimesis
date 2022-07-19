@@ -104,7 +104,7 @@
                 </div>
                 <div sec:authorize="hasAnyAuthority('Admin')" class="container rounded-3 row">
                     <div class="col-md-3 d-flex justify-content-center">
-                        <a th:href="@{/admin}" class="navbar-brand">
+                        <a th:href="@{/admin/salas}" class="navbar-brand">
                             <img th:src="@{/img/logoWhiteFace.png}" alt="imagen" width="30" height="24" class="d-inline-block align-text-top">
                             <span class="titulo">mí</span><span class="titulo2">mesis</span>
                         </a>
@@ -149,7 +149,7 @@
                 </div>
                 <div sec:authorize="hasAnyAuthority('Operador')" class="container rounded-3 row">
                     <div class="col-md-3 d-flex justify-content-center">
-                        <a th:href="@{/admin}" class="navbar-brand">
+                        <a th:href="@{/operador}" class="navbar-brand">
                             <img th:src="@{/img/logoWhiteFace.png}" alt="imagen" width="30" height="24" class="d-inline-block align-text-top">
                             <span class="titulo">mí</span><span class="titulo2">mesis</span>
                         </a>

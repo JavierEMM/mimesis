@@ -7,6 +7,21 @@
 .responsive-nav {
   background-color: var(--color-primario);
 }
+.remove{
+  color: #cccccc;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border: 1px solid #4869df;
+  background: #4869df;
+  border-radius: 10px;
+  text-align: center;
+
+}
+.remove:hover{
+  color: #4869df;
+  background: #cccccc;
+}
+
 .nav-links{
   text-decoration: none;
   color:  var(--color-terciario);
